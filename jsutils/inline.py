@@ -5,6 +5,10 @@ from .schemas import Schemas
 from urllib.parse import urlsplit
 
 def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
+    """Merge an additional property into en existing schema.
+
+    Note: this is in a best effort basis.
+    """
     # handle boolean schema
     if isinstance(schema, bool):
         return { prop: value } if schema else False
