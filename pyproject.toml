@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["jsutils"]
+
+[project]
+name = "JsonSchemaUtils"
+authors = [ { name = "Fabien Coelho" }, { name = "Claire Yannou-Medrala" } ]
+description = "JSON Schema Utils"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "CC0 1.0" }
+classifiers = [ "Topic :: Software Development" ]
+version = "1.0"
+
+[project.optional-dependencies]
+dev = [ "pytest" ]
+
+[project.scripts]
+jsu-inline = "jsutils:jsu_inline"
+
+[project.urls]
+repository = "https://github.com/zx88/json-schema-utils"

@@ -1,2 +1,3 @@
-# json-schema-utils
-JSON Schema Utils
+# JSON Schema Utils
+
+Random utilities to manipulate JSON Schema.
