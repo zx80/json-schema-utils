@@ -18,3 +18,7 @@ jsu-inline tests/obj.json
 jsu-inline tests/rec.json
 jsu-inline -m "file:// ./tests" tests/inc.json
 ```
+
+## TODO
+
+Testing.
