@@ -1,0 +1,4 @@
+{
+  "$id": "file:///inc",
+  "$ref": "/number#/$defs/NUMBER"
+}

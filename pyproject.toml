@@ -7,13 +7,13 @@ include = ["jsutils"]
 
 [project]
 name = "JsonSchemaUtils"
+version = "0.1"
 authors = [ { name = "Fabien Coelho" }, { name = "Claire Yannou-Medrala" } ]
 description = "JSON Schema Utils"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "CC0 1.0" }
 classifiers = [ "Topic :: Software Development" ]
-version = "1.0"
 
 [project.optional-dependencies]
 dev = [ "pytest" ]
@@ -22,4 +22,4 @@ dev = [ "pytest" ]
 jsu-inline = "jsutils:jsu_inline"
 
 [project.urls]
-repository = "https://github.com/zx88/json-schema-utils"
+repository = "https://github.com/zx80/json-schema-utils"

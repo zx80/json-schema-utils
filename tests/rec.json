@@ -1,0 +1,8 @@
+{
+  "$defs": {
+    "A": { "$ref": "#/$defs/B" },
+    "B": { "$ref": "#/$defs/C" },
+    "C": { "type": "null" }
+  },
+  "$ref": "#/$defs/A"
+}
