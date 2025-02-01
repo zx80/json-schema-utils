@@ -22,3 +22,4 @@ jsu-inline -m "file:// ./tests" tests/inc.json
 ## TODO
 
 Testing.
+CI.
