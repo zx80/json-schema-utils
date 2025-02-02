@@ -7,7 +7,7 @@ clean:
 	$(RM) -r jsutils/__pycache__
 
 .PHONY: clean.dev
-clean.dev:
+clean.dev: clean
 	$(RM) -rf venv *.egg-info
 
 .PHONY: dev
