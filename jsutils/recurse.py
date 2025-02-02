@@ -11,14 +11,15 @@ def recurseSchema(schema: JsonSchema, url: str, change: callable) -> JsonSchema:
     assert isinstance(schema, dict)
 
     # list of schemas
-    for prop in ("allOf", "oneOf", "anyOf"):
+    for prop in ("allOf", "oneOf", "anyOf", "prefixItems"):
         if prop in schema:
             subs = schema[prop]
             assert isinstance(subs, list)
             schema[prop] = [ recurseSchema(s, url, change) for s in subs ]
 
-    # values are schemas
-    for prop in ("properties", "$defs"):
+    # object properties' values are schemas
+    for prop in ("properties", "$defs", "definitions", "dependentSchemas",
+                 "patternProperties"):
         if prop in schema:
             props = schema[prop]
             assert isinstance(props, dict)
@@ -26,7 +27,9 @@ def recurseSchema(schema: JsonSchema, url: str, change: callable) -> JsonSchema:
                 props[p] = recurseSchema(s, url, change)
 
     # direct schemas
-    for prop in ("additionalProperties", "unevaluatedProperties", "items"):
+    for prop in ("additionalProperties", "unevaluatedProperties", "items",
+                  "not", "if", "then", "else", "contains", "propertyNames",
+                  "unevaluatedItems"):
         if prop in schema:
             schema[prop] = recurseSchema(schema[prop], url, change)
 
