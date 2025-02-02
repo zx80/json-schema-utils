@@ -1,0 +1,14 @@
+{
+  "allOf": [
+    {
+      "pattern": "A$"
+    },
+    {
+      "pattern": "B",
+      "type": "string"
+    },
+    {
+      "pattern": "^A"
+    }
+  ]
+}
