@@ -1,8 +1,50 @@
+from typing import Callable
 import os.path
 from urllib.parse import urlsplit
 import json
 from .utils import JsonSchema, JSUError, log
 from .recurse import recurseSchema
+
+ProcessFun = Callable[[JsonSchema, str], JsonSchema]
+
+
+def _full_url(url: str, ref: str) -> str:
+    """Build full normalized URL from a reference.
+
+    :param url: the url of the schema.
+    :param ref: the reference (relative) url.
+    """
+    if "#" in ref:
+        lurl, lpath = ref.split("#", 1)
+    else:
+        lurl, lpath = ref, ""
+    # build the full url
+    if lurl == "":
+        return url + "#" + lpath
+    elif lurl.startswith("/"):
+        u = urlsplit(url)
+        return u.scheme + "://" + u.netloc + lurl + "#" + lpath
+    else:
+        return lurl + "#" + lpath
+
+
+def _fullURL(schema: JsonSchema, url: str) -> JsonSchema:
+    """Replace relative references with absolute references.
+
+    :param schema: schema to consider.
+    :param url: the url of the schema.
+    """
+
+    # we need full references to avoid ambiguities on inline!
+    def fullref(schema: JsonSchema) -> JsonSchema:
+        if isinstance(schema, dict) and "$ref" in schema:
+            ref = schema["$ref"]
+            nref = _full_url(url, ref)
+            log.debug(f"updating {ref} in {url}: {nref}")
+            schema["$ref"] = nref
+        return schema
+
+    return recurseSchema(schema, url, rwt=fullref)
 
 
 class Schemas:
@@ -13,6 +55,11 @@ class Schemas:
         self._urlmap: dict[str, str] = {}
         # cache of schema references
         self._schemas: dict[str, JsonSchema] = {}
+        # additional pre-processing on store
+        self._process: list[ProcessFun] = [_fullURL]
+
+    def addProcess(self, process: ProcessFun):
+        self._process.append(process)
 
     def addMap(self, url: str, target: str):
         """Add local mapping for URLs."""
@@ -22,25 +69,23 @@ class Schemas:
         """Store schema associated to URL."""
         log.info(f"adding schema {url}")
 
-        assert isinstance(schema, dict)
-        if "$id" in schema:
-            assert url == schema["$id"]
-            # del schema["$id"]  # FIXME?
-        elif "id" in schema:
-            assert url == schema["id"]
-            # del schema["id"]  # FIXME?
+        if isinstance(schema, dict):
+            if "$id" in schema:
+                assert url == schema["$id"]
+                # del schema["$id"]  # FIXME?
+            elif "id" in schema:
+                assert url == schema["id"]
+                # del schema["id"]  # FIXME?
 
-        # we need full references to avoid ambiguities!
-        def fullref(s):
-            if isinstance(s, dict) and "$ref" in s:
-                ref = s["$ref"]
-                nref = self._full_url(url, ref)
-                log.debug(f"updating {ref} in {url}: {nref}")
-                s["$ref"] = nref
-            return s
+        # intermediate to avoid an infinite recursion
+        self._schemas[url] = schema
 
-        schema = recurseSchema(schema, url, fullref)
+        # process schema through filters
+        for process in self._process:
+            schema = process(schema, url)
 
+        # store final processed version
+        # log.debug(f"final {url}: {schema}")
         self._schemas[url] = schema
 
     def _load(self, url: str):
@@ -84,34 +129,15 @@ class Schemas:
             else:
                 assert isinstance(schema, dict) and p in schema
                 schema = schema[p]
+
         return schema
-
-    def _full_url(self, url: str, ref: str) -> str:
-        """Build full normalized URL from a reference.
-
-        :param url: the url of the schema.
-        :param ref: the reference (relative) url.
-        """
-        if "#" in ref:
-            lurl, lpath = ref.split("#", 1)
-        else:
-            lurl, lpath = ref, ""
-        # build the full url
-        if lurl == "":
-            return url + "#" + lpath
-        elif lurl.startswith("/"):
-            u = urlsplit(url)
-            return u.scheme + "://" + u.netloc + lurl + "#" + lpath
-        else:
-            return lurl + "#" + lpath
 
     def schema(self, url: str, ref: str) -> JsonSchema:
         """Resolve schema reference."""
         assert isinstance(ref, str) and len(ref) > 0
-        fref = self._full_url(url, ref)
+        fref = _full_url(url, ref)
         assert "#" in fref
         curl, path = fref.split("#", 1)
         if curl not in self._schemas:
             self._load(curl)
-        ref_schema = self._resolve(self._schemas[curl], path)
-        return ref_schema
+        return self._resolve(self._schemas[curl], path)

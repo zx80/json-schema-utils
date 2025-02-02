@@ -17,6 +17,8 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
         return { prop: value } if schema else False
     assert isinstance(schema, dict)  # pyright helper
 
+    # log.debug(f"merging {prop} in {schema}")
+
     # then object
     if prop in ("$defs"):  # ignore
         pass
@@ -99,6 +101,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     else:
         raise JSUError(f"merging of prop {prop} is not supported (yet)")
 
+    # log.debug(f"result: {schema}")
     return schema
 
 
@@ -130,6 +133,9 @@ def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
         # best effort
         for p, v in refschema.items():
             schema = mergeProperty(schema, p, v)
+
+        # log.debug(f"merged: {schema}")
+
     except JSUError as e:
         # backup merge with allOf
         log.warning(f"merge error: {e}")
@@ -160,19 +166,20 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
     """Recursively inline $ref in schema, which is modified."""
 
     def replaceRef(schema: JsonSchema) -> JsonSchema:
+
         while isinstance(schema, dict) and "$ref" in schema:
             ref = schema["$ref"]
             sub = schemas.schema(url, ref)
             del schema["$ref"]
             if isinstance(sub, dict):
-                # FIXME misplaced and inefficient
-                sub = inlineRefs(sub, _url(ref), schemas)
                 schema = mergeSchemas(schema, sub)
             else:
                 assert isinstance(sub, bool)
                 if not sub:
                     schema = False
                 # else True is coldly ignored
+
+        # log.debug(f"replaceRef out: {schema}")
         return schema
 
-    return recurseSchema(schema, url, replaceRef)
+    return recurseSchema(schema, url, rwt=replaceRef)

@@ -1,6 +1,7 @@
 import json
 import argparse
 import logging
+import copy
 
 logging.basicConfig()
 
@@ -11,8 +12,6 @@ from jsutils.inline import inlineRefs
 
 def jsu_inline():
     """Command entry point."""
-    schemas = Schemas()
-    # schemas.addMap(".", ".")
 
     ap = argparse.ArgumentParser()
     ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
@@ -22,6 +21,9 @@ def jsu_inline():
 
     if args.debug:
         log.setLevel(logging.DEBUG)
+
+    schemas = Schemas()
+    schemas.addProcess(lambda s, u: inlineRefs(s, u, schemas))
 
     if args.map:
         for m in args.map:
@@ -36,7 +38,9 @@ def jsu_inline():
         elif isinstance(schema, dict):
             url = schema.get("$id", fn)
             schemas.store(url, schema)
-            inlined = inlineRefs(schema, url, schemas)
+
+            # cleanup definitions
+            inlined = copy.deepcopy(schemas.schema(url, "#"))
             if isinstance(inlined, dict) and "$defs" in inlined:
                 del inlined["$defs"]
         else:
