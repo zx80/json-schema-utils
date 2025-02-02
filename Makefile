@@ -16,7 +16,7 @@ dev: venv
 venv:
 	python -m venv venv
 	source venv/bin/activate
-	pip install -e .
+	pip install -e .[dev]
 
 .PHONY: check
 check: check.inline check.ruff check.flake8
