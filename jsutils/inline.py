@@ -10,7 +10,7 @@ from .recurse import recurseSchema
 def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     """Merge an additional property into en existing schema.
 
-    Note: this is in a best effort basis.
+    Note: this is in a best effort basis, on failure a backup plan is required.
     """
     # handle boolean schema
     if isinstance(schema, bool):
@@ -80,10 +80,14 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
         # best effort
         if prop not in schema:
             schema[prop] = value
-    # FIXME: else?
-    elif prop in ("type", "$ref", "pattern", "additionalProperties",
-                  "minLength", "maxLength", "minimum", "maximum", "minItems",
-                  "maxItems"):
+    # FIXME: what about "else"?
+    # TODO extend list of supported validations?
+    elif prop in ("type", "$ref", "pattern",
+                  "additionalProperties", "additionalItems",
+                  "minLength", "maxLength", "minProperties", "maxProperties",
+                  "minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum",
+                  "minItems", "maxItems", "minContains", "maxContains", "multipleOf",
+                  "uniqueItems"):
         # allow identical values only (for now)
         if prop in schema:
             if schema[prop] == value:
@@ -100,12 +104,13 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
 
 # properties keept at the root while merging
 _KEEP_PROPS = {
-    "$schema", "$id", "$comment", "title",
+    "$schema", "$id", "$comment", "title", "description", "examples",
     # containers
-    "$defs", "definitions",
-    "oneOf", "anyOf", "allOf",
+    "$defs", "oneOf", "anyOf", "allOf",
     # special cases
-    "unevaluatedProperties", "unevaluatedItems"
+    "unevaluatedProperties", "unevaluatedItems",
+    # older version compatibility?
+    "definitions",
 }
 
 
@@ -146,6 +151,7 @@ def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
 
 
 def _url(ref):
+    """Extract base URL from full reference."""
     u = urlsplit(ref)
     return u.scheme + "://" + u.netloc
 
@@ -159,7 +165,7 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
             sub = schemas.schema(url, ref)
             del schema["$ref"]
             if isinstance(sub, dict):
-                # FIXME misplaced
+                # FIXME misplaced and inefficient
                 sub = inlineRefs(sub, _url(ref), schemas)
                 schema = mergeSchemas(schema, sub)
             else:
