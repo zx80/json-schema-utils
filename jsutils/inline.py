@@ -22,7 +22,11 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             for v in schema[prop]:
                 if v in value:
                     vals.append(v)
-            schema[prop] = vals
+            if len(vals) == 0:
+                log.warning("incompatible enum makes schema unsatisfiable")
+                schema = False
+            else:
+                schema[prop] = vals
         else:
             schema[prop] = value
     elif prop == "const":
