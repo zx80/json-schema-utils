@@ -24,4 +24,6 @@ jsu-simpler tests/*.schema.json
 
 ## TODO
 
-Testing. CI.
+- Testing. CI.
+- Move stats script here?
+- Check script?
