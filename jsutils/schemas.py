@@ -37,7 +37,7 @@ def _fullURL(schema: JsonSchema, url: str) -> JsonSchema:
     """
 
     # we need full references to avoid ambiguities on inline!
-    def fullref(schema: JsonSchema) -> JsonSchema:
+    def fullref(schema: JsonSchema, _path: list[str]) -> JsonSchema:
         if isinstance(schema, dict) and "$ref" in schema:
             ref = schema["$ref"]
             nref = _full_url(url, ref)

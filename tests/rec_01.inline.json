@@ -3,11 +3,16 @@
   "$defs": {
     "X": {
       "items": {
-        "items": {},
+        "items": {
+          "$ref": "rec_01.schema.json#./$defs/X"
+        },
         "type": "array"
       },
       "type": "array"
     }
   },
-  "$ref": "inc_01.schema.json#./$defs/X"
+  "items": {
+    "$ref": "rec_01.schema.json#./$defs/X"
+  },
+  "type": "array"
 }

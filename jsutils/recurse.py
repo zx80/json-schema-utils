@@ -1,28 +1,25 @@
 from typing import Callable
-from .utils import JsonSchema
+from .utils import JsonSchema, log
 
-FilterFun = Callable[[JsonSchema], bool]
-RewriteFun = Callable[[JsonSchema], JsonSchema]
+FilterFun = Callable[[JsonSchema, list[str]], bool]
+RewriteFun = Callable[[JsonSchema, list[str]], JsonSchema]
 
 
-def recurseSchema(
+def _recurseSchema(
         schema: JsonSchema,
         url: str,
-        flt: FilterFun = lambda _: True,
-        rwt: RewriteFun = lambda s: s) -> JsonSchema:
-    """Generic recursion on a JSON Schema.
+        path: list[str],
+        flt: FilterFun,
+        rwt: RewriteFun) -> JsonSchema:
 
-    :param schema: schema to consider.
-    :param url: url of schema.
-    :param flt: filter (top-down) function, whether to keep recursing.
-    :param rwt: rewrite (bottom-up) function.
-    """
+    log.debug(f"recuring at {path}")
 
-    if not flt(schema):
+    # skip recursion
+    if not flt(schema, path):
         return schema
 
     if isinstance(schema, bool):
-        return rwt(schema)
+        return rwt(schema, path)
     assert isinstance(schema, dict)
 
     # list of schemas
@@ -30,24 +27,61 @@ def recurseSchema(
         if prop in schema:
             subs = schema[prop]
             assert isinstance(subs, list)
-            schema[prop] = [ recurseSchema(s, url, flt, rwt) for s in subs ]
+            schema[prop] = [ _recurseSchema(s, url, path + [prop, str(i)], flt, rwt) for i, s in enumerate(subs) ]
 
     # direct schemas
     for prop in ("additionalProperties", "unevaluatedProperties", "items",
                  "not", "if", "then", "else", "contains", "propertyNames",
                  "unevaluatedItems"):
         if prop in schema:
-            schema[prop] = recurseSchema(schema[prop], url, flt, rwt)
+            schema[prop] = _recurseSchema(schema[prop], url, path + [prop], flt, rwt)
 
-    # object properties' values are schemas
-    # NOTE keep $defs last!
-    for prop in ("properties", "dependentSchemas", "patternProperties",
-                 "$defs", "definitions"):
-        if prop in schema:
-            props = schema[prop]
-            assert isinstance(props, dict)
-            for p, s in props.items():
-                props[p] = recurseSchema(s, url, flt, rwt)
+    # handle values as schemas
+    def recValue(schema, *propnames):
+        for prop in propnames:
+            if prop in schema:
+                props = schema[prop]
+                assert isinstance(props, dict)
+                for p, s in props.items():
+                    props[p] = _recurseSchema(s, url, path + [prop, p], flt, rwt)
+
+    recValue(schema, "properties", "dependentSchemas", "patternProperties")
 
     # apply rwt
-    return rwt(schema)
+    schema = rwt(schema, path)
+    assert isinstance(schema, (bool, dict))
+
+    # keep last?!
+    if isinstance(schema, dict):
+        recValue(schema, "$defs", "definitions")
+
+    return schema
+
+
+def recurseSchema(schema: JsonSchema, url: str,
+                  flt: FilterFun = lambda s, p: True,
+                  rwt: RewriteFun = lambda s, p: s) -> JsonSchema:
+    """Generic recursion on a JSON Schema.
+
+    :param schema: schema to consider.
+    :param url: url of schema.
+    :param flt: filter (top-down) function, whether to keep recursing.
+    :param rwt: rewrite (bottom-up) function.
+    """
+    return _recurseSchema(schema, url, [], flt, rwt)
+
+
+def hasDirectRef(schema, url):
+    """Tell whether schema has a $ref."""
+
+    some_ref: bool = False
+
+    def fltHasRef(schema: JsonSchema, path: list[str]) -> bool:
+        nonlocal some_ref
+        if not "$defs" in path and isinstance(schema, dict) and "$ref" in schema:
+            some_ref = True
+        return not some_ref
+
+    recurseSchema(schema, url, flt=fltHasRef)
+
+    return some_ref

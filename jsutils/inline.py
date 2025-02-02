@@ -165,21 +165,21 @@ def _url(ref):
 def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
     """Recursively inline $ref in schema, which is modified."""
 
-    # reset substitution on each call
-    replaced: set[str] = set()
+    def rwtRef(schema: JsonSchema, path: list[str]) -> JsonSchema:
 
-    def replaceRef(schema: JsonSchema, ctx=replaced) -> JsonSchema:
+        # recursion avoidance (FIXME insufficient)
+        spath = "/".join(path)
+        skips = {url + "#" + spath, url + "#/" + spath, url + "#./" + spath}
 
         while isinstance(schema, dict) and "$ref" in schema:
-
-            # FIXME infinite recursion is avoided but unconvincing
             ref = schema["$ref"]
-            log.debug(f"ref = {ref}")
-            if ref in ctx:
-                break
-            else:
-                ctx.add(ref)
 
+            # (direct) recursion detection
+            if ref in skips:
+                log.info(f"skipping recursive ref: {ref}")
+                break
+
+            # actual substitution
             sub = schemas.schema(url, ref)
             del schema["$ref"]
             if isinstance(sub, dict):
@@ -192,4 +192,4 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
 
         return schema
 
-    return recurseSchema(schema, url, rwt=replaceRef)
+    return recurseSchema(schema, url, rwt=rwtRef)

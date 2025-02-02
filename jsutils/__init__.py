@@ -8,6 +8,7 @@ logging.basicConfig()
 from jsutils.schemas import Schemas
 from jsutils.utils import log, JSUError
 from jsutils.inline import inlineRefs
+from jsutils.recurse import hasDirectRef
 
 
 def jsu_inline():
@@ -41,7 +42,7 @@ def jsu_inline():
 
             # cleanup definitions
             inlined = copy.deepcopy(schemas.schema(url, "#"))
-            if isinstance(inlined, dict) and "$defs" in inlined and "$ref" not in inlined:
+            if isinstance(inlined, dict) and "$defs" in inlined and not hasDirectRef(inlined, url):
                 del inlined["$defs"]
         else:
             raise JSUError(f"invalid JSON Schema: {fn}")
