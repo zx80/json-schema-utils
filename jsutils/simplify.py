@@ -7,10 +7,10 @@ from .recurse import recurseSchema
 TYPED_PROPS: dict[str, set[str]] = {
     "string": {"minLength", "maxLength", "pattern"},
     "number": {"minimum", "exclusiveMinimum", "maximum", "exclusiveMaximum", "multipleOf"},
-    "object": {"additionalProperties", "unevaluatedProperties", "patternProperties", "required",
-               "properties", "minProperties", "maxProperties"},
+    "object": {"additionalProperties", "unevaluatedProperties", "propertyNames", "required",
+               "properties", "minProperties", "maxProperties", "patternProperties"},
     "array": {"items", "minItems", "maxItems", "prefixItems", "contains", "minContains",
-              "maxContains"},
+              "maxContains", "unevaluatedItems", "additionalItems"},
     "boolean": set(),
     "null": set()
 }
@@ -21,7 +21,17 @@ def incompatibleProps(st: str):
     [ props := props.union(p) for t, p in TYPED_PROPS.items() if t != st ]
     return props
 
-# TODO string-specific formats?
+
+STRING_FORMATS: set[str] = {
+    "date", "date-time", "time", "duration",
+    "email", "idn-email",
+    "hostname", "idn-hostname", "ipv4", "ipv6",
+    "uri", "uri-reference", "uri-template",
+    "iri", "iri-reference",
+    "uuid",
+    "json-pointer", "relative-json-pointer",
+    "regex",
+}
 
 
 def getEnum(ls: list[JsonSchema]) -> list[Any]|None:
@@ -60,29 +70,35 @@ def simplifySchema(schema: JsonSchema, url: str):
                     if p in schema:
                         log.info(f"unused property {p} for {stype} at {lpath}")
                         del schema[p]
+            if stype != "string" and "format" in schema and schema["format"] in STRING_FORMATS:
+                log.info(f"unused string format on {stype}: {schema['format']}")
+                del schema["format"]
 
-        # TODO switch oneOf const/enum to enum
-        if "oneOf" in schema:
-            # TODO remove duplicates
-            lv = getEnum(schema["oneOf"])
-            if lv is not None:
-                del schema["oneOf"]
-                log.info("oneof to enum/const/false at {lpath}")
-                if len(lv) == 0:
-                    # FIXME check
-                    return False
-                else:  # at least one
-                    if "enum" in schema:
-                        lev = schema["enum"]
-                        del schema["enum"]
-                        # intersect in initial order
-                        nlv = []
-                        for v in lev:
-                            if v in lv:
-                                nlv.append(v)
-                        schema["enum"] = nlv
-                    else:
-                        schema["enum"] = lv
+        # switch oneOf/anyOf const/enum to enum
+        for prop in ("oneOf", "anyOf"):
+            if prop in schema:
+                lv = getEnum(schema[prop])
+                # TODO remove duplicates on oneOf
+                if lv is not None:
+                    del schema[prop]
+                    log.info(f"{prop} to enum/const/false at {lpath}")
+                    if len(lv) == 0:
+                        # FIXME check
+                        return False
+                    else:  # at least one
+                        if "enum" in schema:
+                            lev = schema["enum"]
+                            del schema["enum"]
+                            # intersect in initial order
+                            nlv = []
+                            for v in lev:
+                                if v in lv:
+                                    nlv.append(v)
+                            schema["enum"] = nlv
+                        else:
+                            schema["enum"] = lv
+
+        # TODO anyOf/oneOf/allOf of length 1
 
         if "const" in schema and "enum" in schema:
             log.info(f"const/enum at {lpath}")
