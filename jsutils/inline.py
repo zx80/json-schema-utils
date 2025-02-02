@@ -1,9 +1,11 @@
 from typing import Any
+import copy
+from urllib.parse import urlsplit
 import json
+
 from .utils import JsonSchema, JSUError, log
 from .schemas import Schemas
 from .recurse import recurseSchema
-from urllib.parse import urlsplit
 
 def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     """Merge an additional property into en existing schema.
@@ -76,22 +78,58 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
         # best effort
         if prop not in schema:
             schema[prop] = value
-    elif prop in ("type", "$ref", "pattern", "additionalProperties", "minLength", "maxLength", "minimum", "maximum"):
-        # allow identical values only
+    # FIXME: else?
+    elif prop in ("type", "$ref", "pattern", "additionalProperties",
+                  "minLength", "maxLength", "minimum", "maximum", "minItems", "maxItems"):
+        # allow identical values only (for now)
         if prop in schema:
-            assert schema[prop] == value
+            if schema[prop] == value:
+                pass
+            else:
+                raise JSUError(f"cannot merge prop {prop} distinct values")
         else:
             schema[prop] = value
     else:
         raise JSUError(f"merging of prop {prop} is not supported (yet)")
+
     return schema
 
+# properties keept at the root while merging
+_KEEP_PROPS = {"$schema", "$id", "$comment", "title", "$defs", "definitions", "oneOf", "anyOf", "allOf"}
+
 def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
+    """Merge two schemas."""
+
     if isinstance(refschema, bool):
         return schema if refschema else False
-    assert isinstance(refschema, dict)
-    for p, v in refschema.items():
-        schema = mergeProperty(schema, p, v)
+    elif isinstance(schema, bool):
+        return refschema if schema else False
+    assert isinstance(schema, dict) and isinstance(refschema, dict)
+
+    saved = schema
+    schema = copy.deepcopy(schema)
+
+    try:
+        # best effort
+        for p, v in refschema.items():
+            schema = mergeProperty(schema, p, v)
+    except JSUError as e:
+        # backup merge with allOf
+        log.warning(f"merge error: {e}")
+        log.info("merging schemas with allOf")
+        schema = saved
+        separate = {}
+        for p in list(schema.keys()):
+            if p not in _KEEP_PROPS:
+                separate[p] = schema[p]
+                del schema[p]
+        if "allOf" not in schema:
+            schema["allOf"] = []
+        if len(separate) > 0:
+            schema["allOf"].append(separate)
+        if len(refschema) > 0:
+            schema["allOf"].append(refschema)
+
     return schema
 
 def _url(ref):

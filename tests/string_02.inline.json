@@ -1,0 +1,14 @@
+{
+  "$comment": "should result in a allOf",
+  "$id": "file:///string_02",
+  "allOf": [
+    {
+      "pattern": "A$",
+      "type": "string"
+    },
+    {
+      "pattern": "^A"
+    }
+  ],
+  "title": "incompatible patterns"
+}
