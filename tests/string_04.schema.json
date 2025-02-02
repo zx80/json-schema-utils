@@ -1,0 +1,6 @@
+{
+  "type": "string",
+  "minimum": 1,
+  "required": [ "foo" ],
+  "minItems": 1
+}

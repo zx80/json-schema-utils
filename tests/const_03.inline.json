@@ -1,0 +1,7 @@
+{
+  "const": "hello",
+  "enum": [
+    "hello",
+    "world!"
+  ]
+}
