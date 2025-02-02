@@ -15,6 +15,8 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     # handle boolean schema
     if isinstance(schema, bool):
         return { prop: value } if schema else False
+    assert isinstance(schema, dict)  # pyright helper
+
     # then object
     if prop in ("$defs"):  # ignore
         pass

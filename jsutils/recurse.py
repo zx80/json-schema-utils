@@ -1,12 +1,14 @@
+from typing import Callable
 from .utils import JsonSchema
 
+RewriteFun = Callable[[JsonSchema], JsonSchema]
 
-def recurseSchema(schema: JsonSchema, url: str, change: callable) -> JsonSchema:
+
+def recurseSchema(schema: JsonSchema, url: str, change: RewriteFun) -> JsonSchema:
     """Recurse on a schema."""
 
     if isinstance(schema, bool):
-        return schema
-
+        return change(schema)
     assert isinstance(schema, dict)
 
     # list of schemas
