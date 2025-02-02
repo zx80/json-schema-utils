@@ -1,0 +1,36 @@
+{
+  "$defs": {
+    "X": {
+      "properties": {
+        "y": {
+          "properties": {
+            "x": {
+              "$ref": "rec_02.schema.json#/$defs/X"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Y": {
+      "properties": {
+        "x": {
+          "properties": {
+            "y": {
+              "$ref": "rec_02.schema.json#/$defs/Y"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "properties": {
+    "y": {
+      "$ref": "rec_02.schema.json#/$defs/Y"
+    }
+  },
+  "type": "object"
+}
