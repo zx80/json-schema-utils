@@ -27,7 +27,8 @@ def _recurseSchema(
         if prop in schema:
             subs = schema[prop]
             assert isinstance(subs, list)
-            schema[prop] = [ _recurseSchema(s, url, path + [prop, str(i)], flt, rwt) for i, s in enumerate(subs) ]
+            schema[prop] = [ _recurseSchema(s, url, path + [prop, str(i)], flt, rwt)
+                             for i, s in enumerate(subs) ]
 
     # direct schemas
     for prop in ("additionalProperties", "unevaluatedProperties", "items",
@@ -78,7 +79,7 @@ def hasDirectRef(schema, url):
 
     def fltHasRef(schema: JsonSchema, path: list[str]) -> bool:
         nonlocal some_ref
-        if not "$defs" in path and isinstance(schema, dict) and "$ref" in schema:
+        if "$defs" not in path and isinstance(schema, dict) and "$ref" in schema:
             some_ref = True
         return not some_ref
 
