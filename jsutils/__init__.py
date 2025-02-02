@@ -43,5 +43,4 @@ def jsu_inline():
         else:
             raise JSUError(f"invalid JSON Schema: {fn}")
 
-        json.dump(inlined, sys.stdout, indent=2, sort_keys=True)
-        sys.stdout.write("\n")
+        print(json.dumps(inlined, indent=2, sort_keys=True, ensure_ascii=False))

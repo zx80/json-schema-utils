@@ -1,4 +1,5 @@
 {
+  "$comment": "Avec des caractères utf8…",
   "allOf": [
     {
       "pattern": "^[A-Z][a-z]*$",

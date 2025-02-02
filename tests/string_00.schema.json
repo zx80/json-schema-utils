@@ -1,4 +1,5 @@
 {
+  "$comment": "Avec des caractères utf8…",
   "$defs": {
     "CAP": {
       "type": "string",
