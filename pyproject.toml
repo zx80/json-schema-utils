@@ -21,6 +21,7 @@ dev = [ "ruff", "flake8", "pyright" ]
 
 [project.scripts]
 jsu-inline = "jsutils:jsu_inline"
+jsu-simpler = "jsutils:jsu_simpler"
 
 [project.urls]
 repository = "https://github.com/zx80/json-schema-utils"

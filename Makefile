@@ -19,7 +19,7 @@ venv:
 	pip install -e .[dev]
 
 .PHONY: check
-check: check.inline check.ruff check.flake8 check.pyright
+check: check.inline check.simpler check.ruff check.flake8 check.pyright
 
 IGNORE  = E201,E202,E227,E402
 
@@ -42,3 +42,8 @@ check.pyright: venv
 check.inline: venv
 	source venv/bin/activate
 	$(MAKE) -C tests inline
+
+.PHONY: check.simpler
+check.simpler: venv
+	source venv/bin/activate
+	$(MAKE) -C tests simpler

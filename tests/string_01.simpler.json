@@ -1,0 +1,12 @@
+{
+  "$defs": {
+    "CAP": {
+      "pattern": "^[A-Z][a-z]*$",
+      "type": "string"
+    }
+  },
+  "$ref": "#/$defs/CAP",
+  "maxLength": 8,
+  "minLength": 1,
+  "type": "string"
+}

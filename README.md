@@ -16,6 +16,12 @@ Replace references `$ref` by their definitions.
 jsu-inline -m "file:// ./tests" tests/*.schema.json
 ```
 
+## Simplify Schema
+
+```sh
+jsu-simpler tests/*.schema.json
+```
+
 ## TODO
 
 Testing. CI.

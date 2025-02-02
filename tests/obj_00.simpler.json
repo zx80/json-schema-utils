@@ -1,0 +1,28 @@
+{
+  "$defs": {
+    "X": {
+      "properties": {
+        "c": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "c"
+      ],
+      "type": "object"
+    }
+  },
+  "$ref": "#/$defs/X",
+  "properties": {
+    "a": {
+      "type": "string"
+    },
+    "b": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "a"
+  ],
+  "type": "object"
+}

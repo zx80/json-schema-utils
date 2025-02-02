@@ -1,0 +1,12 @@
+{
+  "$defs": {
+    "A": {
+      "enum": [
+        "hello",
+        "world!"
+      ]
+    }
+  },
+  "$ref": "#./$defs/A",
+  "const": "hello"
+}

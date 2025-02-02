@@ -1,0 +1,15 @@
+{
+  "$defs": {
+    "A": {
+      "pattern": "^A"
+    }
+  },
+  "$ref": "#/$defs/A",
+  "allOf": [
+    {
+      "pattern": "A$"
+    }
+  ],
+  "pattern": "B",
+  "type": "string"
+}

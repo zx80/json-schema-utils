@@ -1,0 +1,13 @@
+{
+  "$comment": "should result in a allOf",
+  "$defs": {
+    "PAT": {
+      "pattern": "^A"
+    }
+  },
+  "$id": "file:///string_02",
+  "$ref": "#./$defs/PAT",
+  "pattern": "A$",
+  "title": "incompatible patterns",
+  "type": "string"
+}

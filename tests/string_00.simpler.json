@@ -1,0 +1,22 @@
+{
+  "$comment": "Avec des caractères utf8…",
+  "$defs": {
+    "CAP": {
+      "pattern": "^[A-Z][a-z]*$",
+      "type": "string"
+    },
+    "SHORT": {
+      "maxLength": 8,
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/$defs/CAP"
+    },
+    {
+      "$ref": "#/$defs/SHORT"
+    }
+  ]
+}
