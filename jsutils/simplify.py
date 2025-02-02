@@ -10,8 +10,8 @@ TYPED_PROPS: dict[str, set[str]] = {
         "properties", "minProperties", "maxProperties"},
     "array": {"items", "minItems", "maxItems", "prefixItems", "contains", "minContains",
         "maxContains"},
-    "boolean": {},
-    "null": {}
+    "boolean": set(),
+    "null": set()
 }
 
 def incompatibleProps(st: str):
