@@ -13,13 +13,9 @@ pip install git+https://github.com/zx80/json-schema-utils.git
 Replace references `$ref` by their definitions.
 
 ```sh
-jsu-inline tests/number.json
-jsu-inline tests/obj.json
-jsu-inline tests/rec.json
-jsu-inline -m "file:// ./tests" tests/inc.json
+jsu-inline -m "file:// ./tests" tests/*.schema.json
 ```
 
 ## TODO
 
-Testing.
-CI.
+Testing. CI.
