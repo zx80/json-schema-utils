@@ -1,4 +1,4 @@
-from .utils import JsonSchema
+from .utils import JsonSchema, log
 from .recurse import recurseSchema
 
 # type-specific properties
@@ -27,11 +27,14 @@ def simplifySchema(schema: JsonSchema, url: str):
 
     def rwtSimpler(schema: JsonSchema, path: list[str]) -> JsonSchema:
 
+        lpath = "/".join(path) if path else "."
+
         if isinstance(schema, bool):
             return schema
         assert isinstance(schema, dict)
 
         if "const" in schema and "enum" in schema:
+            log.info(f"const/enum at {lpath}")
             if schema["const"] in schema["enum"]:
                 del schema["enum"]
             else:
@@ -44,7 +47,9 @@ def simplifySchema(schema: JsonSchema, url: str):
             # remove type-specific properties
             if stype in TYPED_PROPS:
                 for p in incompatibleProps(stype):
-                    schema.pop(p, None)
+                    if p in schema:
+                        log.info(f"unused property {p} for {stype} at {lpath}")
+                        del schema[p]
 
         # TODO switch oneOf const to enum
 

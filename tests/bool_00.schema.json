@@ -1,0 +1,7 @@
+{
+  "type": "boolean",
+  "pattern": "^[A-Z]",
+  "maxItems": 10,
+  "minProperties": 1,
+  "multipleOf": 2
+}

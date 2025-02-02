@@ -23,6 +23,8 @@ def jsu_inline():
 
     if args.debug:
         log.setLevel(logging.DEBUG)
+    else:
+        log.setLevel(logging.INFO)
 
     schemas = Schemas()
     schemas.addProcess(lambda s, u: inlineRefs(s, u, schemas))
@@ -60,6 +62,8 @@ def jsu_simpler():
 
     if args.debug:
         log.setLevel(logging.DEBUG)
+    else:
+        log.setLevel(logging.INFO)
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
