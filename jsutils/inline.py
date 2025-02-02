@@ -95,7 +95,14 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     return schema
 
 # properties keept at the root while merging
-_KEEP_PROPS = {"$schema", "$id", "$comment", "title", "$defs", "definitions", "oneOf", "anyOf", "allOf"}
+_KEEP_PROPS = {
+    "$schema", "$id", "$comment", "title",
+    # containers
+    "$defs", "definitions",
+    "oneOf", "anyOf", "allOf",
+    # special cases
+    "unevaluatedProperties", "unevaluatedItems"
+}
 
 def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
     """Merge two schemas."""
