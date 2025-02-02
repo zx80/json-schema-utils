@@ -5,7 +5,7 @@ RewriteFun = Callable[[JsonSchema], JsonSchema]
 
 
 def recurseSchema(schema: JsonSchema, url: str, change: RewriteFun) -> JsonSchema:
-    """Recurse on a schema."""
+    """Generic recursion on a schema."""
 
     if isinstance(schema, bool):
         return change(schema)

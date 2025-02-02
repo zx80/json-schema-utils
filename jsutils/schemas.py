@@ -44,11 +44,12 @@ class Schemas:
         self._schemas[url] = schema
 
     def _load(self, url: str):
-        """Load schema if needed."""
+        """Load schema from URL if needed."""
         log.info(f"loading schema: {url}")
 
         assert "#" not in url
 
+        # rewrite url for local search
         path = url
         for u, t in self._urlmap.items():
             if path.startswith(u):
