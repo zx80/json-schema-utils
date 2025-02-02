@@ -2,6 +2,7 @@ from typing import Callable
 import os.path
 from urllib.parse import urlsplit
 import json
+import requests
 from .utils import JsonSchema, JSUError, log
 from .recurse import recurseSchema
 
@@ -55,7 +56,7 @@ class Schemas:
         self._urlmap: dict[str, str] = {}
         # cache of schema references
         self._schemas: dict[str, JsonSchema] = {}
-        # additional pre-processing on store
+        # additional processing on store
         self._process: list[ProcessFun] = [_fullURL]
 
     def addProcess(self, process: ProcessFun):
@@ -77,15 +78,14 @@ class Schemas:
                 assert url == schema["id"]
                 # del schema["id"]  # FIXME?
 
-        # intermediate to avoid an infinite recursion
+        # NOTE intermediate to avoid an infinite recursion
         self._schemas[url] = schema
 
-        # process schema through filters
+        # process schema through all filters
         for process in self._process:
             schema = process(schema, url)
 
         # store final processed version
-        # log.debug(f"final {url}: {schema}")
         self._schemas[url] = schema
 
     def _load(self, url: str):
@@ -102,13 +102,17 @@ class Schemas:
                 break
 
         # FIXME what about actual http download?
-        schema = None
-        for suffix in ("", ".json", ".schema.json"):
-            fn = f"{path}{suffix}"
-            if os.path.isfile(fn):
-                log.debug(f"loading file: {fn}")
-                schema = json.load(open(fn))
-                break
+        schema: JsonSchema|None
+        if path.startswith("http://") or path.startswith("https://"):
+            schema = requests.get(path).json  # type: ignore
+        else:
+            schema = None
+            for suffix in ("", ".json", ".schema.json"):
+                fn = f"{path}{suffix}"
+                if os.path.isfile(fn):
+                    log.debug(f"loading file: {fn}")
+                    schema = json.load(open(fn))
+                    break
 
         if schema is None:
             raise JSUError(f"schema {url} not found")
@@ -121,7 +125,7 @@ class Schemas:
         :param schema: schema to consider.
         :param path: path to consider.
 
-        FIXME this does not handle URL escaping.
+        FIXME this does not handle URL escaping?
         """
         for p in lpath.split("/"):
             if p in (".", ""):
@@ -133,7 +137,11 @@ class Schemas:
         return schema
 
     def schema(self, url: str, ref: str) -> JsonSchema:
-        """Resolve schema reference."""
+        """Resolve schema reference.
+
+        :param url: url of schema.
+        :param ref: reference to resolve in url.
+        """
         assert isinstance(ref, str) and len(ref) > 0
         fref = _full_url(url, ref)
         assert "#" in fref
