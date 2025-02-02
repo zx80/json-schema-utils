@@ -2,7 +2,7 @@ import os.path
 from urllib.parse import urlsplit
 import json
 from .utils import JsonSchema, JSUError, log
-from .recurse import recurse
+from .recurse import recurseSchema
 
 class Schemas:
     """Hold a set of identified schemas and sub-schemas."""
@@ -29,7 +29,7 @@ class Schemas:
             assert url == schema["id"]
             # del schema["id"]  # FIXME?
 
-        # we need full references!
+        # we need full references to avoid ambiguities!
         def fullref(s):
             if isinstance(s, dict) and "$ref" in s:
                 ref = s["$ref"]
@@ -37,29 +37,35 @@ class Schemas:
                 log.debug(f"updating {ref} in {url}: {nref}")
                 s["$ref"] = nref
             return s
-        schema = recurse(schema, url, fullref)
+
+        schema = recurseSchema(schema, url, fullref)
 
         self._schemas[url] = schema
 
     def _load(self, url: str):
         """Load schema if needed."""
         log.info(f"loading schema: {url}")
+
         assert "#" not in url
+
         path = url
         for u, t in self._urlmap.items():
             if path.startswith(u):
                 path = t + path[len(u):]
                 break
+
+        # FIXME what about actual http download?
         schema = None
-        # FIXME what about actual download?
         for suffix in ("", ".json", ".schema.json"):
             fn = f"{path}{suffix}"
             if os.path.isfile(fn):
                 log.debug(f"loading file: {fn}")
                 schema = json.load(open(fn))
                 break
+
         if schema is None:
             raise JSUError(f"schema {url} not found")
+
         self.store(url, schema)
 
     def _resolve(self, schema: JsonSchema, lpath: str) -> JsonSchema:

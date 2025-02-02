@@ -2,6 +2,7 @@ from typing import Any
 import json
 from .utils import JsonSchema, JSUError, log
 from .schemas import Schemas
+from .recurse import recurseSchema
 from urllib.parse import urlsplit
 
 def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
@@ -99,40 +100,21 @@ def _url(ref):
 
 def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
     """Recursively inline $ref in schema, which is modified."""
-    # TODO keep track of JSON path
-    if isinstance(schema, bool):
+
+    def replaceRef(schema: JsonSchema) -> JsonSchema:
+        while isinstance(schema, dict) and "$ref" in schema:
+            ref = schema["$ref"]
+            sub = schemas.schema(url, ref)
+            del schema["$ref"]
+            if isinstance(sub, dict):
+                # FIXME misplaced
+                sub = inlineRefs(sub, _url(ref), schemas)
+                schema = mergeSchemas(schema, sub)
+            else:
+                assert isinstance(sub, bool)
+                if not sub:
+                    schema = False
+                # else True is coldly ignored
         return schema
-    assert isinstance(schema, dict)
-    # RECURSE depending on schema properties
-    # list of schemas
-    for prop in ("allOf", "oneOf", "anyOf"):
-        if prop in schema:
-            subs = schema[prop]
-            assert isinstance(subs, list)
-            schema[prop] = [ inlineRefs(s, url, schemas) for s in subs ]
-    # values are schemas
-    for prop in ("properties", "$defs"):
-        if prop in schema:
-            props = schema[prop]
-            assert isinstance(props, dict)
-            for p, s in props.items():
-                props[p] = inlineRefs(s, url, schemas)
-    # direct schemas
-    for prop in ("additionalProperties", "unevaluatedProperties", "items"):
-        if prop in schema:
-            schema[prop] = inlineRefs(schema[prop], url, schemas)
-    # SUBSTITUTE a ref
-    while isinstance(schema, dict) and "$ref" in schema:
-        ref = schema["$ref"]
-        sub = schemas.schema(url, ref)
-        del schema["$ref"]
-        if isinstance(sub, dict):
-            # FIXME misplaced
-            sub = inlineRefs(sub, _url(ref), schemas)
-            schema = mergeSchemas(schema, sub)
-        else:
-            assert isinstance(sub, bool)
-            if not sub:
-                schema = False
-            # else True is coldly ignored
-    return schema
+
+    return recurseSchema(schema, url, replaceRef)
