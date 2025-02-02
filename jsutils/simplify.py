@@ -7,12 +7,13 @@ TYPED_PROPS: dict[str, set[str]] = {
     "string": {"minLength", "maxLength", "pattern"},
     "number": {"minimum", "exclusiveMinimum", "maximum", "exclusiveMaximum", "multipleOf"},
     "object": {"additionalProperties", "unevaluatedProperties", "patternProperties", "required",
-        "properties", "minProperties", "maxProperties"},
+               "properties", "minProperties", "maxProperties"},
     "array": {"items", "minItems", "maxItems", "prefixItems", "contains", "minContains",
-        "maxContains"},
+              "maxContains"},
     "boolean": set(),
     "null": set()
 }
+
 
 def incompatibleProps(st: str):
     props = set()
@@ -20,6 +21,7 @@ def incompatibleProps(st: str):
     return props
 
 # TODO string-specific formats?
+
 
 def simplifySchema(schema: JsonSchema, url: str):
 
@@ -43,7 +45,7 @@ def simplifySchema(schema: JsonSchema, url: str):
             if stype in TYPED_PROPS:
                 for p in incompatibleProps(stype):
                     schema.pop(p, None)
-            
+
         # TODO switch oneOf const to enum
 
         return schema
