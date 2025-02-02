@@ -28,7 +28,7 @@ check.ruff: venv
 	ruff check --ignore=$(IGNORE) jsutils
 
 .PHONY: check.flake8
-check.flake8:
+check.flake8: venv
 	flake8 --ignore=$(IGNORE) --max-line-length=100 jsutils
 
 .PHONY: check.inline
