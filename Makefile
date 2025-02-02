@@ -25,12 +25,15 @@ IGNORE  = E201,E202,E227,E402
 
 .PHONY: check.ruff
 check.ruff: venv
+	source venv/bin/activate
 	ruff check --ignore=$(IGNORE) jsutils
 
 .PHONY: check.flake8
 check.flake8: venv
+	source venv/bin/activate
 	flake8 --ignore=$(IGNORE) --max-line-length=100 jsutils
 
 .PHONY: check.inline
 check.inline: venv
+	source venv/bin/activate
 	$(MAKE) -C tests inline
