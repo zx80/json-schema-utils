@@ -30,10 +30,16 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
                 if v in value:
                     vals.append(v)
             if len(vals) == 0:
-                log.warning("incompatible enum makes schema unsatisfiable")
+                log.warning("incompatible enum/enum makes schema unsatisfiable")
                 schema = False
             else:
                 schema[prop] = vals
+        elif "const" in schema:
+            if schema["const"] in value:
+                pass
+            else:
+                log.warning("incompatible enum/const makes schema unsatisfiable")
+                schema = False
         else:
             schema[prop] = value
     elif prop == "const":
@@ -41,13 +47,14 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             if schema[prop] == value:
                 pass
             else:
-                log.warning("incompatible const makes schema unsatisfiable")
+                log.warning("incompatible const/const makes schema unsatisfiable")
                 schema = False
         elif "enum" in schema:
             schema[prop] = value
             if value in schema["enum"]:
                 del schema["enum"]
             else:
+                log.warning("incompatible const/enum makes schema unsatisfiable")
                 schema = False
         else:
             schema[prop] = value
