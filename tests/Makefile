@@ -10,4 +10,4 @@ inline:
 	$(MAKE) $(F.inline)
 
 %.inline.json: %.schema.json
-	jsu-inline -m "file:// ." $< > $@
+	jsu-inline -m "file:// ." -m ":// ." $< > $@

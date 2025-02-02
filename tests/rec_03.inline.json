@@ -1,0 +1,39 @@
+{
+  "$defs": {
+    "A": {
+      "properties": {
+        "b": {
+          "properties": {
+            "a": {
+              "properties": {
+                "b": {
+                  "$ref": ":///rec_04#./$defs/B"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "/rec_03",
+  "properties": {
+    "b": {
+      "properties": {
+        "a": {
+          "properties": {
+            "b": {
+              "$ref": ":///rec_04#./$defs/B"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

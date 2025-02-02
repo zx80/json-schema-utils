@@ -71,12 +71,11 @@ class Schemas:
         log.info(f"adding schema {url}")
 
         if isinstance(schema, dict):
-            if "$id" in schema:
-                assert url == schema["$id"]
-                # del schema["$id"]  # FIXME?
-            elif "id" in schema:
-                assert url == schema["id"]
-                # del schema["id"]  # FIXME?
+            for prop in ("$id", "id"):
+                if prop in schema:
+                    if url != schema[prop]:
+                        log.warning(f"{prop}={schema[prop]} / {url}")
+                    # del schema["$id"]  # FIXME?
 
         # NOTE intermediate to avoid an infinite recursion
         self._schemas[url] = schema

@@ -1,0 +1,12 @@
+{
+  "$id": "/rec_03",
+  "$defs": {
+    "A": {
+      "type": "object",
+      "properties": {
+        "b": { "$ref": "/rec_04#./$defs/B" }
+      }
+    }
+  },
+  "$ref": "#./$defs/A"
+}
