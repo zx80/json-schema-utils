@@ -6,8 +6,9 @@ import logging
 logging.basicConfig()
 
 from jsutils.schemas import Schemas
-from jsutils.utils import log
+from jsutils.utils import log, JSUError
 from jsutils.inline import inlineRefs
+
 
 def jsu_inline():
     """Command entry point."""
@@ -40,7 +41,7 @@ def jsu_inline():
             if isinstance(inlined, dict) and "$defs" in inlined:
                 del inlined["$defs"]
         else:
-            raise utils.JSUError(f"invalid JSON Schema: {fn}")
+            raise JSUError(f"invalid JSON Schema: {fn}")
 
         json.dump(inlined, sys.stdout, indent=2, sort_keys=True)
         sys.stdout.write("\n")

@@ -16,7 +16,7 @@ license = { text = "CC0 1.0" }
 classifiers = [ "Topic :: Software Development" ]
 
 [project.optional-dependencies]
-dev = [ "pytest" ]
+dev = [ "ruff", "flake8" ]
 
 [project.scripts]
 jsu-inline = "jsutils:jsu_inline"

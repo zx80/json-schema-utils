@@ -1,11 +1,11 @@
 from typing import Any
 import copy
 from urllib.parse import urlsplit
-import json
 
 from .utils import JsonSchema, JSUError, log
 from .schemas import Schemas
 from .recurse import recurseSchema
+
 
 def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     """Merge an additional property into en existing schema.
@@ -61,7 +61,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             assert isinstance(value, dict) and isinstance(props, dict)
             for p, s in value.items():
                 if p in props:
-                    if props[p] == s or s == True:
+                    if props[p] == s or s is True:
                         pass
                     else:
                         props[p] = { "allOf": [ props[p], s ] }
@@ -80,7 +80,8 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             schema[prop] = value
     # FIXME: else?
     elif prop in ("type", "$ref", "pattern", "additionalProperties",
-                  "minLength", "maxLength", "minimum", "maximum", "minItems", "maxItems"):
+                  "minLength", "maxLength", "minimum", "maximum", "minItems",
+                  "maxItems"):
         # allow identical values only (for now)
         if prop in schema:
             if schema[prop] == value:
@@ -94,6 +95,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
 
     return schema
 
+
 # properties keept at the root while merging
 _KEEP_PROPS = {
     "$schema", "$id", "$comment", "title",
@@ -103,6 +105,7 @@ _KEEP_PROPS = {
     # special cases
     "unevaluatedProperties", "unevaluatedItems"
 }
+
 
 def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
     """Merge two schemas."""
@@ -139,9 +142,11 @@ def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
 
     return schema
 
+
 def _url(ref):
     u = urlsplit(ref)
     return u.scheme + "://" + u.netloc
+
 
 def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
     """Recursively inline $ref in schema, which is modified."""

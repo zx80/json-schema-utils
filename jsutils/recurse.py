@@ -1,6 +1,5 @@
-from typing import Any
-import json
-from .utils import JsonSchema, JSUError
+from .utils import JsonSchema
+
 
 def recurseSchema(schema: JsonSchema, url: str, change: callable) -> JsonSchema:
     """Recurse on a schema."""
@@ -28,8 +27,8 @@ def recurseSchema(schema: JsonSchema, url: str, change: callable) -> JsonSchema:
 
     # direct schemas
     for prop in ("additionalProperties", "unevaluatedProperties", "items",
-                  "not", "if", "then", "else", "contains", "propertyNames",
-                  "unevaluatedItems"):
+                 "not", "if", "then", "else", "contains", "propertyNames",
+                 "unevaluatedItems"):
         if prop in schema:
             schema[prop] = recurseSchema(schema[prop], url, change)
 

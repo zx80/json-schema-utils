@@ -6,5 +6,6 @@ log = logging.getLogger("JSU")
 # simplistic typing
 JsonSchema = dict[str, Any]|None
 
+
 class JSUError(BaseException):
     pass

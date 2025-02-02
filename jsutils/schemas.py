@@ -4,6 +4,7 @@ import json
 from .utils import JsonSchema, JSUError, log
 from .recurse import recurseSchema
 
+
 class Schemas:
     """Hold a set of identified schemas and sub-schemas."""
 
