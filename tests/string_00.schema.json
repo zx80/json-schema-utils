@@ -1,0 +1,17 @@
+{
+  "$defs": {
+    "CAP": {
+      "type": "string",
+      "pattern": "^[A-Z][a-z]*$"
+    },
+    "SHORT": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8
+    }
+  },
+  "allOf": [
+    { "$ref": "#/$defs/CAP" },
+    { "$ref": "#/$defs/SHORT" }
+  ]
+}
