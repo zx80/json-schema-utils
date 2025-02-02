@@ -85,7 +85,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     # FIXME: what about "else"?
     # TODO extend list of supported validations?
     elif prop in ("type", "$ref", "pattern",
-                  "additionalProperties", "additionalItems",
+                  "additionalProperties", "additionalItems", "items",
                   "minLength", "maxLength", "minProperties", "maxProperties",
                   "minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum",
                   "minItems", "maxItems", "minContains", "maxContains", "multipleOf",
@@ -165,10 +165,21 @@ def _url(ref):
 def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
     """Recursively inline $ref in schema, which is modified."""
 
-    def replaceRef(schema: JsonSchema) -> JsonSchema:
+    # reset substitution on each call
+    replaced: set[str] = set()
+
+    def replaceRef(schema: JsonSchema, ctx=replaced) -> JsonSchema:
 
         while isinstance(schema, dict) and "$ref" in schema:
+
+            # FIXME infinite recursion is avoided but unconvincing
             ref = schema["$ref"]
+            log.debug(f"ref = {ref}")
+            if ref in ctx:
+                break
+            else:
+                ctx.add(ref)
+
             sub = schemas.schema(url, ref)
             del schema["$ref"]
             if isinstance(sub, dict):
@@ -179,7 +190,6 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
                     schema = False
                 # else True is coldly ignored
 
-        # log.debug(f"replaceRef out: {schema}")
         return schema
 
     return recurseSchema(schema, url, rwt=replaceRef)

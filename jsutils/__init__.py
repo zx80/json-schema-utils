@@ -41,7 +41,7 @@ def jsu_inline():
 
             # cleanup definitions
             inlined = copy.deepcopy(schemas.schema(url, "#"))
-            if isinstance(inlined, dict) and "$defs" in inlined:
+            if isinstance(inlined, dict) and "$defs" in inlined and "$ref" not in inlined:
                 del inlined["$defs"]
         else:
             raise JSUError(f"invalid JSON Schema: {fn}")

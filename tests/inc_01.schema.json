@@ -1,0 +1,10 @@
+{
+  "$comment": "FIXME infinite recursion must be avoided",
+  "$defs": {
+    "X": {
+      "type": "array",
+      "items": { "$ref": "#./$defs/X" }
+    }
+  },
+  "$ref": "#./$defs/X"
+}

@@ -32,21 +32,22 @@ def recurseSchema(
             assert isinstance(subs, list)
             schema[prop] = [ recurseSchema(s, url, flt, rwt) for s in subs ]
 
-    # object properties' values are schemas
-    for prop in ("properties", "$defs", "definitions", "dependentSchemas",
-                 "patternProperties"):
-        if prop in schema:
-            props = schema[prop]
-            assert isinstance(props, dict)
-            for p, s in props.items():
-                props[p] = recurseSchema(s, url, flt, rwt)
-
     # direct schemas
     for prop in ("additionalProperties", "unevaluatedProperties", "items",
                  "not", "if", "then", "else", "contains", "propertyNames",
                  "unevaluatedItems"):
         if prop in schema:
             schema[prop] = recurseSchema(schema[prop], url, flt, rwt)
+
+    # object properties' values are schemas
+    # NOTE keep $defs last!
+    for prop in ("properties", "dependentSchemas", "patternProperties",
+                 "$defs", "definitions"):
+        if prop in schema:
+            props = schema[prop]
+            assert isinstance(props, dict)
+            for p, s in props.items():
+                props[p] = recurseSchema(s, url, flt, rwt)
 
     # apply rwt
     return rwt(schema)
