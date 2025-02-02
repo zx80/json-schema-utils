@@ -1,6 +1,6 @@
 from typing import Any
 import json
-from .utils import JsonSchema, JSUError
+from .utils import JsonSchema, JSUError, log
 from .schemas import Schemas
 from urllib.parse import urlsplit
 
@@ -30,6 +30,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             if schema[prop] == value:
                 pass
             else:
+                log.warning("incompatible const makes schema unsatisfiable")
                 schema = False
         elif "enum" in schema:
             schema[prop] = value
@@ -94,6 +95,7 @@ def _url(ref):
 
 def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
     """Recursively inline $ref in schema, which is modified."""
+    # TODO keep track of JSON path
     if isinstance(schema, bool):
         return schema
     assert isinstance(schema, dict)

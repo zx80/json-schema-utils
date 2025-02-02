@@ -36,7 +36,7 @@ def jsu_inline():
         url = schema.get("$id", args.schema)
         schemas.store(url, schema)
         inlined = inlineRefs(schema, url, schemas)
-        if "$defs" in inlined:
+        if isinstance(inlined, dict) and "$defs" in inlined:
             del inlined["$defs"]
     else:
         raise utils.JSUError("invalid JSON Schema")
