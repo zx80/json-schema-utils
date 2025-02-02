@@ -5,7 +5,7 @@
       "properties": {
         "c": { "type": "boolean" }
       },
-      "required": [ "c" ] 
+      "required": [ "c" ]
     }
   },
   "type": "object",
