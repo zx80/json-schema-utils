@@ -14,6 +14,8 @@ def simplifySchema(schema: JsonSchema, url: str):
                 del schema["enum"]
             else:
                 schema = False
+        # TODO remove ignored stuff depending on type
+        # TODO switch oneOf const to enum
 
         return schema
 
