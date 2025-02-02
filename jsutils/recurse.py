@@ -1,8 +1,4 @@
-from typing import Callable
-from .utils import JsonSchema, log
-
-FilterFun = Callable[[JsonSchema, list[str]], bool]
-RewriteFun = Callable[[JsonSchema, list[str]], JsonSchema]
+from .utils import JsonSchema, log, FilterFun, RewriteFun
 
 
 def _recurseSchema(
