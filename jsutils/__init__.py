@@ -17,7 +17,7 @@ def jsu_inline():
     ap = argparse.ArgumentParser()
     ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
     ap.add_argument("--map", "-m", action="append", help="url local mapping")
-    ap.add_argument("schema", type=str, help="schema to inline")
+    ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
     if args.debug:
@@ -28,18 +28,19 @@ def jsu_inline():
             url, target = m.split(" ", 1)
             schemas.addMap(url, target)
 
-    log.debug(f"considering file: {args.schema}")
-    schema = json.load(open(args.schema))
-    if isinstance(schema, bool):
-        inlined = schema
-    elif isinstance(schema, dict):
-        url = schema.get("$id", args.schema)
-        schemas.store(url, schema)
-        inlined = inlineRefs(schema, url, schemas)
-        if isinstance(inlined, dict) and "$defs" in inlined:
-            del inlined["$defs"]
-    else:
-        raise utils.JSUError("invalid JSON Schema")
+    for fn in args.schemas:
+        log.debug(f"considering file: {fn}")
+        schema = json.load(open(fn))
+        if isinstance(schema, bool):
+            inlined = schema
+        elif isinstance(schema, dict):
+            url = schema.get("$id", fn)
+            schemas.store(url, schema)
+            inlined = inlineRefs(schema, url, schemas)
+            if isinstance(inlined, dict) and "$defs" in inlined:
+                del inlined["$defs"]
+        else:
+            raise utils.JSUError(f"invalid JSON Schema: {fn}")
 
-    json.dump(inlined, sys.stdout, indent=2, sort_keys=True)
-    sys.stdout.write("\n")
+        json.dump(inlined, sys.stdout, indent=2, sort_keys=True)
+        sys.stdout.write("\n")
