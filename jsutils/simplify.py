@@ -22,6 +22,7 @@ def incompatibleProps(st: str):
     return props
 
 
+# string-specific predefined formats
 STRING_FORMATS: set[str] = {
     "date", "date-time", "time", "duration",
     "email", "idn-email",
@@ -34,7 +35,17 @@ STRING_FORMATS: set[str] = {
 }
 
 
-def getEnum(ls: list[JsonSchema]) -> list[Any]|None:
+def counts(lv: list[Any]) -> dict[Any, int]:
+    cnt = {}
+    for v in lv:
+        if v in cnt:
+            cnt[v] += 1
+        else:
+            cnt[v] = 1
+    return cnt
+
+def getEnum(ls: list[JsonSchema], is_one: bool) -> list[Any]|None:
+    """Attempt to extract a list of constants."""
     assert isinstance(ls, list)
     lv = []
     for s in ls:
@@ -42,15 +53,23 @@ def getEnum(ls: list[JsonSchema]) -> list[Any]|None:
             if "const" in s:
                 lv.append(s["const"])
             elif "enum" in s:
-                lv.extend(s["enum"])
+                lv.extend(dict.fromkeys(s["enum"]))
             else:
                 return None
         else:
             return None
+    cnt = counts(lv)
+    if is_one:
+        # fully remove duplicates
+        lv = list(filter(lambda i: cnt[i] == 1, lv))
+    else:
+        # only remove duplicates
+        lv = list(dict.fromkeys(lv))
     return lv
 
 
 def simplifySchema(schema: JsonSchema, url: str):
+    """Simplify a JSON Schema with various rules."""
 
     def rwtSimpler(schema: JsonSchema, path: list[str]) -> JsonSchema:
 
@@ -74,11 +93,10 @@ def simplifySchema(schema: JsonSchema, url: str):
                 log.info(f"unused string format on {stype}: {schema['format']}")
                 del schema["format"]
 
-        # switch oneOf/anyOf const/enum to enum
+        # switch oneOf/anyOf const/enum to enum/const
         for prop in ("oneOf", "anyOf"):
             if prop in schema:
-                lv = getEnum(schema[prop])
-                # TODO remove duplicates on oneOf
+                lv = getEnum(schema[prop], prop == "oneOf")
                 if lv is not None:
                     del schema[prop]
                     log.info(f"{prop} to enum/const/false at {lpath}")
