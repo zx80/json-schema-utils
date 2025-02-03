@@ -21,7 +21,7 @@ def jsu_inline():
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
-    log.setLevel(logging.DEBUG if args.DEBUG else logging.INFO)
+    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
 
     schemas = Schemas()
     schemas.addProcess(lambda s, u: inlineRefs(s, u, schemas))
@@ -57,7 +57,7 @@ def jsu_simpler():
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
-    log.setLevel(logging.DEBUG if args.DEBUG else logging.INFO)
+    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
