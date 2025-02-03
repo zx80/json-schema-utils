@@ -38,12 +38,10 @@ STRING_FORMATS: set[str] = {
 
 
 def counts(lv: list[Any]) -> dict[Any, int]:
+    """Count values in list. Probably exists elsewhere."""
     cnt = {}
     for v in lv:
-        if v in cnt:
-            cnt[v] += 1
-        else:
-            cnt[v] = 1
+        cnt[v] = (cnt[v] + 1) if v in cnt else 1
     return cnt
 
 def getEnum(ls: list[JsonSchema], is_one: bool) -> list[Any]|None:
@@ -121,7 +119,7 @@ def simplifySchema(schema: JsonSchema, url: str):
 
         # anyOf/oneOf/allOf of length 1
         for prop in ("anyOf", "oneOf", "allOf"):
-            if prop in schema and len(schema[prop]) == 1:
+            if isinstance(schema, dict) and prop in schema and len(schema[prop]) == 1:
                 try:
                     nschema = copy.deepcopy(schema)
                     sub = schema[prop][0]
@@ -129,9 +127,14 @@ def simplifySchema(schema: JsonSchema, url: str):
                         nschema = mergeProperty(nschema, p, v)
                     # success!
                     schema = nschema
-                    del schema[prop]
+                    if isinstance(schema, dict):
+                        del schema[prop]
                 except JSUError:
                     log.warning(f"{prop} of one merge failed")
+
+        if isinstance(schema, bool):
+            return schema
+        assert isinstance(schema, dict)
 
         # const/enum
         if "const" in schema and "enum" in schema:
