@@ -1,0 +1,17 @@
+{
+  "allOf": [
+    {
+      "minLength": 1
+    }
+  ],
+  "anyOf": [
+    {
+      "pattern": "^[A-Z]"
+    }
+  ],
+  "oneOf": [
+    {
+      "type": "string"
+    }
+  ]
+}

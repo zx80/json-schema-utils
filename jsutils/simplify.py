@@ -1,6 +1,8 @@
 from typing import Any
-from .utils import JsonSchema, log
+import copy
+from .utils import JsonSchema, log, JSUError
 from .recurse import recurseSchema
+from .inline import mergeProperty
 
 # type-specific properties
 # TODO complete
@@ -79,6 +81,7 @@ def simplifySchema(schema: JsonSchema, url: str):
             return schema
         assert isinstance(schema, dict)
 
+        # type/props…
         if "type" in schema and isinstance(schema["type"], str):
             stype = schema["type"]
             if stype == "integer":
@@ -116,8 +119,21 @@ def simplifySchema(schema: JsonSchema, url: str):
                         else:
                             schema["enum"] = lv
 
-        # TODO anyOf/oneOf/allOf of length 1
+        # anyOf/oneOf/allOf of length 1
+        for prop in ("anyOf", "oneOf", "allOf"):
+            if prop in schema and len(schema[prop]) == 1:
+                try:
+                    nschema = copy.deepcopy(schema)
+                    sub = schema[prop][0]
+                    for p, v in sub.items():
+                        nschema = mergeProperty(nschema, p, v)
+                    # success!
+                    schema = nschema
+                    del schema[prop]
+                except JSUError:
+                    log.warning(f"{prop} of one merge failed")
 
+        # const/enum
         if "const" in schema and "enum" in schema:
             log.info(f"const/enum at {lpath}")
             if schema["const"] in schema["enum"]:

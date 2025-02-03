@@ -1,0 +1,5 @@
+{
+  "minLength": 1,
+  "pattern": "^[A-Z]",
+  "type": "string"
+}
