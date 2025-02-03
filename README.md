@@ -22,6 +22,14 @@ jsu-inline -m "file:// ./tests" tests/*.schema.json
 jsu-simpler tests/*.schema.json
 ```
 
+## Check Schema Values
+
+Check a JSON values match a given schema.
+
+```sh
+jsu-check tests/foo.schema.json tests/foo.*.value.json
+```
+
 ## TODO
 
 - Testing. CI.
