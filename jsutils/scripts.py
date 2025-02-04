@@ -15,6 +15,10 @@ from .simplify import simplifySchema
 from .stats import json_schema_stats, json_metrics, normalize_ods
 
 
+def json_dumps(j: Any):
+    return json.dumps(j, indent=2, sort_keys=True, ensure_ascii=False)
+
+
 def jsu_inline():
     """Inline command entry point."""
 
@@ -50,7 +54,7 @@ def jsu_inline():
         else:
             raise JSUError(f"invalid JSON Schema: {fn}")
 
-        print(json.dumps(inlined, indent=2, sort_keys=True, ensure_ascii=False))
+        print(json_dumps(inlined))
 
 
 def jsu_simpler():
@@ -68,7 +72,7 @@ def jsu_simpler():
         if isinstance(schema, dict):
             schema = simplifySchema(schema, schema.get("$id", "."))
 
-        print(json.dumps(schema, indent=2, sort_keys=True, ensure_ascii=False))
+        print(json_dumps(schema))
 
 
 def jsu_check():
@@ -95,7 +99,7 @@ def jsu_check():
             log.info(f"{fn}: ok")
         else:
             log.error(f"{fn}: KO")
-            log.error(json.dumps(res.output('basic'), indent=2))
+            log.error(json_dumps(res.output('basic')))
 
 
 def shash(s: str):
@@ -105,8 +109,11 @@ def shash(s: str):
 def jsu_stats():
 
     ap = argparse.ArgumentParser()
+    ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
     ap.add_argument("schemas", nargs="*", help="JSON Schema to analyze")
     args = ap.parse_args()
+
+    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
 
     for fn in args.schemas:
         log.info(f"considering: {fn}")
@@ -114,7 +121,6 @@ def jsu_stats():
             try:
                 # raw data and its hash
                 data = f.read()
-                # rhash = shash(data)
                 jdata = json.loads(data)
 
                 # JSON Schema specific stats
@@ -126,13 +132,13 @@ def jsu_stats():
 
                 # normalized version with its hash
                 normalize_ods(fn, jdata)  # OpenDataSoft generated schemas
-                normed = json.dumps(jdata, sort_keys=True, indent=None)
+                normed = json_dumps(jdata)
                 small["<normed-hash>"] = shash(normed)
 
-                # print(json.dumps(small, sort_keys=True, indent=2))
                 small["<input-file>"] = fn
+                small["<file-hash>"] = shash(data)
 
-                print(json.dumps(small, sort_keys=True, indent=2))
+                print(json_dumps(small))
 
             except Exception as e:
                 log.error(f"{fn}: {e}", exc_info=True)
