@@ -1,0 +1,33 @@
+{
+  "*-integer-number/alone": 2,
+  "*-integer-number/combi": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<input-file>": "enum_03.schema.json",
+  "<json-metrics>": {
+    "array": 2,
+    "bool": 0,
+    "float": 0,
+    "int": 3,
+    "items": 4,
+    "null": 0,
+    "object": 3,
+    "props": 3,
+    "string": 3
+  },
+  "<normed-hash>": "07ebe7df41d34ad8783e",
+  "<schema-prop>": true,
+  "<versions>": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "const": 1,
+  "enum": 1,
+  "oneOf": 1,
+  "oneOf-count": 2
+}

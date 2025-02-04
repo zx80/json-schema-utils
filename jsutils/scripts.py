@@ -2,6 +2,7 @@ import json
 import argparse
 import logging
 import copy
+import hashlib
 
 logging.basicConfig()
 
@@ -10,6 +11,7 @@ from .utils import log, JSUError
 from .recurse import hasDirectRef
 from .inline import inlineRefs
 from .simplify import simplifySchema
+from .stats import json_schema_stats, json_metrics, normalize_ods
 
 
 def jsu_inline():
@@ -93,3 +95,43 @@ def jsu_check():
         else:
             log.error(f"{fn}: KO")
             log.error(json.dumps(res.output('basic'), indent=2))
+
+
+def shash(s: str):
+    return hashlib.sha3_256(s.encode()).hexdigest()[:20]
+
+
+def jsu_stats():
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("schemas", nargs="*", help="JSON Schema to analyze")
+    args = ap.parse_args()
+
+    for fn in args.schemas:
+        log.info(f"considering: {fn}")
+        with open(fn) as f:
+            try:
+                # raw data and its hash
+                data = f.read()
+                # rhash = shash(data)
+                jdata = json.loads(data)
+
+                # JSON Schema specific stats
+                stats = json_schema_stats(jdata)
+                small = { k: v for k, v in stats.items() if v or isinstance(v, bool) }
+
+                # basic JSON structural stats
+                small["<json-metrics>"] = json_metrics(jdata)
+
+                # normalized version with its hash
+                normalize_ods(fn, jdata)  # OpenDataSoft generated schemas
+                normed = json.dumps(jdata, sort_keys=True, indent=None)
+                small["<normed-hash>"] = shash(normed)
+
+                # print(json.dumps(small, sort_keys=True, indent=2))
+                small["<input-file>"] = fn
+
+                print(json.dumps(small, sort_keys=True, indent=2))
+
+            except Exception as e:
+                log.error(f"{fn}: {e}", exc_info=True)

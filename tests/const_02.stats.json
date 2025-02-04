@@ -1,0 +1,36 @@
+{
+  "$defs": 1,
+  "$defs-count": 1,
+  "$ref": 1,
+  "*-string/alone": 2,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<input-file>": "const_02.schema.json",
+  "<json-metrics>": {
+    "array": 1,
+    "bool": 0,
+    "float": 0,
+    "int": 0,
+    "items": 2,
+    "null": 0,
+    "object": 3,
+    "props": 5,
+    "string": 9
+  },
+  "<normed-hash>": "131bb33e6073de788c0a",
+  "<schema-prop>": true,
+  "<unused-defs>": [
+    "#/$defs/A"
+  ],
+  "<versions>": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "const": 1,
+  "enum": 1
+}

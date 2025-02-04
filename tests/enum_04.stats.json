@@ -1,0 +1,40 @@
+{
+  "*-string/alone": 2,
+  "*-string/combi": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<errors>": [
+    [
+      "non unique array",
+      "enum 2",
+      "$.oneOf[1].enum"
+    ]
+  ],
+  "<explicit-schema>": false,
+  "<input-file>": "enum_04.schema.json",
+  "<json-metrics>": {
+    "array": 2,
+    "bool": 0,
+    "float": 0,
+    "int": 0,
+    "items": 4,
+    "null": 0,
+    "object": 3,
+    "props": 3,
+    "string": 6
+  },
+  "<normed-hash>": "7460c5e75cd5427102b8",
+  "<schema-prop>": true,
+  "<versions>": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "const": 1,
+  "enum": 1,
+  "oneOf": 1,
+  "oneOf-count": 2
+}

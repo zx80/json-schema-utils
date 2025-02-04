@@ -1,0 +1,41 @@
+{
+  "$defs": 1,
+  "$defs-count": 1,
+  "$ref": 1,
+  "*-string/string": 2,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<input-file>": "string_01.schema.json",
+  "<json-metrics>": {
+    "array": 0,
+    "bool": 0,
+    "float": 0,
+    "int": 2,
+    "items": 0,
+    "null": 0,
+    "object": 3,
+    "props": 8,
+    "string": 12
+  },
+  "<normed-hash>": "5d24e28fddb96223169d",
+  "<schema-prop>": true,
+  "<versions>": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "maxLength": 1,
+  "minLength": 1,
+  "pattern": 1,
+  "type": 2,
+  "type=string": 2
+}

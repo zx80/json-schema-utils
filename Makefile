@@ -31,7 +31,7 @@ check.ruff: venv
 .PHONY: check.flake8
 check.flake8: venv
 	source venv/bin/activate
-	flake8 --ignore=$(IGNORE) --max-line-length=100 jsutils
+	flake8 --ignore=$(IGNORE),W504 --max-line-length=100 jsutils
 
 .PHONY: check.pyright
 check.pyright: venv
@@ -47,3 +47,8 @@ check.inline: venv
 check.simpler: venv
 	source venv/bin/activate
 	$(MAKE) -C tests simpler
+
+.PHONY: check.stats
+check.stats: venv
+	source venv/bin/activate
+	$(MAKE) -C tests stats

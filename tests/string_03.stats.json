@@ -1,0 +1,41 @@
+{
+  "$defs": 1,
+  "$defs-count": 1,
+  "$ref": 1,
+  "*-array-boolean-integer-null-number-object-string/string": 1,
+  "*-string/combi-string": 1,
+  "*-string/string": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<input-file>": "string_03.schema.json",
+  "<json-metrics>": {
+    "array": 1,
+    "bool": 0,
+    "float": 0,
+    "int": 0,
+    "items": 1,
+    "null": 0,
+    "object": 4,
+    "props": 8,
+    "string": 13
+  },
+  "<normed-hash>": "e58ca0811f18cd1914e9",
+  "<schema-prop>": true,
+  "<versions>": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "allOf": 1,
+  "allOf-count": 1,
+  "allOf-one": 1,
+  "pattern": 3,
+  "type": 1,
+  "type=string": 1
+}

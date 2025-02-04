@@ -1,0 +1,40 @@
+{
+  "$defs": 1,
+  "$defs-count": 1,
+  "$ref": 1,
+  "*-integer-number/number": 2,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<input-file>": "number_01.schema.json",
+  "<json-metrics>": {
+    "array": 0,
+    "bool": 0,
+    "float": 0,
+    "int": 2,
+    "items": 0,
+    "null": 0,
+    "object": 3,
+    "props": 6,
+    "string": 8
+  },
+  "<normed-hash>": "759c30f9785fee56ce0b",
+  "<schema-prop>": false,
+  "<versions>": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "maximum": 1,
+  "minimum": 1,
+  "type": 1,
+  "type=number": 1
+}

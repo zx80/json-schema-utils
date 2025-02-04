@@ -1,0 +1,58 @@
+{
+  "*-boolean/array-number-object-string": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<errors>": [
+    [
+      "bad mix",
+      "array: ['boolean'] ['maxItems']",
+      "$"
+    ],
+    [
+      "bad mix",
+      "number: ['boolean'] ['multipleOf']",
+      "$"
+    ],
+    [
+      "bad mix",
+      "object: ['boolean'] ['minProperties']",
+      "$"
+    ],
+    [
+      "bad mix",
+      "string: ['boolean'] ['pattern']",
+      "$"
+    ]
+  ],
+  "<explicit-schema>": false,
+  "<input-file>": "bool_00.schema.json",
+  "<json-metrics>": {
+    "array": 0,
+    "bool": 0,
+    "float": 0,
+    "int": 3,
+    "items": 0,
+    "null": 0,
+    "object": 1,
+    "props": 5,
+    "string": 7
+  },
+  "<normed-hash>": "5522179e25c4a8c58e1d",
+  "<schema-prop>": true,
+  "<versions>": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "maxItems": 1,
+  "minProperties": 1,
+  "multipleOf": 1,
+  "pattern": 1,
+  "type": 1,
+  "type=boolean": 1
+}

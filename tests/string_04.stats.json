@@ -1,0 +1,58 @@
+{
+  "$schema": 1,
+  "$schema=https://json-schema.org/draft/2020-12/schema": 1,
+  "*-string/array-meta-number-object": 1,
+  "<$schema>": "https://json-schema.org/draft/2020-12/schema",
+  "<bad-root>": false,
+  "<errors>": [
+    [
+      "bad mix",
+      "array: ['string'] ['minItems', 'required']",
+      "$"
+    ],
+    [
+      "bad mix",
+      "number: ['string'] ['minimum', 'required']",
+      "$"
+    ],
+    [
+      "bad mix",
+      "object: ['string'] ['required']",
+      "$"
+    ]
+  ],
+  "<explicit-schema>": true,
+  "<input-file>": "string_04.schema.json",
+  "<json-metrics>": {
+    "array": 1,
+    "bool": 0,
+    "float": 0,
+    "int": 2,
+    "items": 1,
+    "null": 0,
+    "object": 1,
+    "props": 5,
+    "string": 8
+  },
+  "<normed-hash>": "88508c7ea3739fdbd32d",
+  "<schema-prop>": true,
+  "<version-path>": "$",
+  "<version>": 9,
+  "<versions>": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "minItems": 1,
+  "minimum": 1,
+  "required": 1,
+  "required-count": 1,
+  "required-list": 1,
+  "type": 1,
+  "type=string": 1
+}

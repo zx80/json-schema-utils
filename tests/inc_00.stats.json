@@ -1,0 +1,30 @@
+{
+  "$id": 1,
+  "$ref": 1,
+  "*-array-boolean-integer-null-number-object-string/meta": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<input-file>": "inc_00.schema.json",
+  "<json-metrics>": {
+    "array": 0,
+    "bool": 0,
+    "float": 0,
+    "int": 0,
+    "items": 0,
+    "null": 0,
+    "object": 1,
+    "props": 2,
+    "string": 4
+  },
+  "<normed-hash>": "fdf3672af6db5c7978d7",
+  "<schema-prop>": false,
+  "<versions>": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ]
+}

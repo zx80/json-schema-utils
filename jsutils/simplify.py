@@ -44,6 +44,7 @@ def counts(lv: list[Any]) -> dict[Any, int]:
         cnt[v] = (cnt[v] + 1) if v in cnt else 1
     return cnt
 
+
 def getEnum(ls: list[JsonSchema], is_one: bool) -> list[Any]|None:
     """Attempt to extract a list of constants."""
     assert isinstance(ls, list)

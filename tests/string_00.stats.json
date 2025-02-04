@@ -1,0 +1,39 @@
+{
+  "$comment": 1,
+  "$defs": 1,
+  "$defs-count": 2,
+  "$ref": 2,
+  "*-string/combi-meta-string": 1,
+  "*-string/string": 4,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<input-file>": "string_00.schema.json",
+  "<json-metrics>": {
+    "array": 1,
+    "bool": 0,
+    "float": 0,
+    "int": 2,
+    "items": 2,
+    "null": 0,
+    "object": 6,
+    "props": 12,
+    "string": 18
+  },
+  "<normed-hash>": "12039554e8da43df5dc5",
+  "<schema-prop>": true,
+  "<versions>": [
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "allOf": 1,
+  "allOf-count": 2,
+  "maxLength": 1,
+  "minLength": 1,
+  "pattern": 1,
+  "type": 2,
+  "type=string": 2
+}

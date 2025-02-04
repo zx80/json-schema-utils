@@ -30,8 +30,16 @@ Check a JSON values match a given schema.
 jsu-check tests/foo.schema.json tests/foo.*.value.json
 ```
 
+## JSON Schema Stats and Issues
+
+Generate a report about JSON schemas, including possible bugs.
+
+```sh
+jsu-check tests/*.schema.json
+```
+
+This scripts is extracted from [JSON Schema Stats](https://github.com/clairey-zx81/json-schema-stats).
+
 ## TODO
 
 - Testing. CI.
-- Move stats script here?
-- Check script?

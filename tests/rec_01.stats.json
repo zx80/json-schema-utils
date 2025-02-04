@@ -1,0 +1,46 @@
+{
+  "$comment": 1,
+  "$defs": 1,
+  "$defs-count": 1,
+  "$ref": 2,
+  "*-array-boolean-integer-null-number-object-string/": 1,
+  "*-array-boolean-integer-null-number-object-string/meta": 1,
+  "*-array/array": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<errors>": [
+    [
+      "suspicious empty type",
+      "*",
+      "$.\"$defs\".X.items"
+    ]
+  ],
+  "<explicit-schema>": false,
+  "<input-file>": "rec_01.schema.json",
+  "<json-metrics>": {
+    "array": 0,
+    "bool": 0,
+    "float": 0,
+    "int": 0,
+    "items": 0,
+    "null": 0,
+    "object": 4,
+    "props": 7,
+    "string": 11
+  },
+  "<normed-hash>": "624c64c08f377270ab9d",
+  "<schema-prop>": false,
+  "<unused-defs>": [
+    "#/$defs/X"
+  ],
+  "<versions>": [
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "items": 1,
+  "type": 1,
+  "type=array": 1
+}

@@ -1,0 +1,30 @@
+{
+  "*-string/alone": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<input-file>": "const_03.schema.json",
+  "<json-metrics>": {
+    "array": 1,
+    "bool": 0,
+    "float": 0,
+    "int": 0,
+    "items": 2,
+    "null": 0,
+    "object": 1,
+    "props": 2,
+    "string": 5
+  },
+  "<normed-hash>": "de9cb204938922921617",
+  "<schema-prop>": true,
+  "<versions>": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "const": 1,
+  "enum": 1
+}

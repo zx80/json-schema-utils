@@ -1,0 +1,37 @@
+{
+  "$defs": 1,
+  "$defs-count": 1,
+  "$ref": 1,
+  "*-integer-number/alone": 2,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<input-file>": "enum_01.schema.json",
+  "<json-metrics>": {
+    "array": 2,
+    "bool": 0,
+    "float": 0,
+    "int": 10,
+    "items": 10,
+    "null": 0,
+    "object": 3,
+    "props": 5,
+    "string": 6
+  },
+  "<normed-hash>": "3581b529a25421273d2e",
+  "<schema-prop>": true,
+  "<versions>": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "enum": 2
+}

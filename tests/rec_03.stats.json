@@ -1,0 +1,48 @@
+{
+  "$defs": 1,
+  "$defs-count": 1,
+  "$id": 1,
+  "$ref": 2,
+  "*-array-boolean-integer-null-number-object-string/": 1,
+  "*-array-boolean-integer-null-number-object-string/meta": 1,
+  "*-object/object": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<errors>": [
+    [
+      "suspicious empty type",
+      "*",
+      "$.\"$defs\".A.properties.b"
+    ]
+  ],
+  "<explicit-schema>": false,
+  "<input-file>": "rec_03.schema.json",
+  "<json-metrics>": {
+    "array": 0,
+    "bool": 0,
+    "float": 0,
+    "int": 0,
+    "items": 0,
+    "null": 0,
+    "object": 5,
+    "props": 8,
+    "string": 12
+  },
+  "<normed-hash>": "9bdcba92a592821c490f",
+  "<schema-prop>": false,
+  "<unused-defs>": [
+    "#/$defs/A"
+  ],
+  "<versions>": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "properties": 1,
+  "properties-count": 1,
+  "type": 1,
+  "type=object": 1
+}
