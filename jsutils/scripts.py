@@ -1,3 +1,4 @@
+from typing import Any
 import json
 import argparse
 import logging
@@ -118,7 +119,7 @@ def jsu_stats():
 
                 # JSON Schema specific stats
                 stats = json_schema_stats(jdata)
-                small = { k: v for k, v in stats.items() if v or isinstance(v, bool) }
+                small: dict[str, Any] = { k: v for k, v in stats.items() if v or isinstance(v, bool) }
 
                 # basic JSON structural stats
                 small["<json-metrics>"] = json_metrics(jdata)

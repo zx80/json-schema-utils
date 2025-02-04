@@ -1,7 +1,8 @@
+from typing import Any
 import re
 from urllib.parse import unquote as url_unquote
 
-from .utils import log
+from .utils import JsonSchema, log
 
 #
 # FROM JSON MODE
@@ -19,7 +20,7 @@ def is_regex(s: str) -> bool:
             good_anyway = re.search(r"\\[Pp]\{", s) or re.search(r"\\c[a-zA-Z]", s)
             if not good_anyway:
                 log.warning(f"invalid /{s}/: {e}")
-            return good_anyway
+            return good_anyway is not None
     else:
         return False
 
@@ -121,7 +122,7 @@ PER_TYPE = {
     "combi": [ "allOf", "anyOf", "oneOf", "if", "then", "else", "not" ],
 }
 
-PROP_TO_TYPE = {}
+PROP_TO_TYPE: dict[str, str] = {}
 for t, props in PER_TYPE.items():
     for prop in props:
         PROP_TO_TYPE[prop] = t
@@ -439,7 +440,7 @@ def guess_version(col: dict):
 JSON_SCHEMA_TYPES = [ "null", "boolean", "integer", "number", "string", "array", "object" ]
 
 
-def typeof(v: any) -> str:
+def typeof(v: Any) -> str:
     return ("null" if v is None else
             "boolean" if isinstance(v, bool) else
             "integer" if isinstance(v, int) else
@@ -504,8 +505,8 @@ GET_TYPES_CACHE: dict[str, set[str]] = {}
 
 
 def getTypes(
-    jdata: bool|dict[str, any],  # JSON Schema
-    defs: dict[str, any],        # current definitions
+    jdata: JsonSchema,  # JSON Schema
+    defs: dict[str, Any],        # current definitions
     recs: list[str],             # paths to detect recursion
     path: str,                   # current path
     context: set[str]            # external context for adjacent keywords
@@ -638,8 +639,8 @@ GET_HINTS_CACHE: dict[str, set[str]] = {}
 
 
 def getHints(
-    jdata: bool|dict[str, any],  # JSON data
-    defs: dict[str, any],        # current definitions
+    jdata: JsonSchema,  # JSON data
+    defs: dict[str, Any],        # current definitions
     recs: list[str],             # paths to detect recursion
     path: str                    # current path
 ) -> set[str]:
@@ -681,7 +682,6 @@ def getHints(
 
         if not isinstance(ref, str):
             log.warning(f"ignoring bad $ref value type: {typeof(ref)}")
-            return
 
         refu = url_unquote(ref)
         if refu in recs:
@@ -742,7 +742,7 @@ class Defs:
     def __init__(self):
         # is it an official definition?
         self._isdef = re.compile(r"/(\$defs|definitions)/\w+$").search
-        self._defs: dict[str, any] = {}
+        self._defs: dict[str, Any] = {}
         self._uses: dict[str, int] = {}
 
     def __setitem__(self, p: str, v):
@@ -783,10 +783,10 @@ def _collect_all_defs_rec(data, defs, path: str = "#"):
 
 
 def _json_schema_stats_rec(
-    jdata: bool|dict,                    # schema
+    jdata: JsonSchema,                   # schema
     path: str,                           # path to ~
-    collection: dict[str, int],          # collected data
-    defs: dict[str, any] = {},           # definitions
+    collection: dict[str, Any],          # collected data
+    defs: dict[str, Any] = {},           # definitions
     type_context: set[str] = ALL_TYPES,  # type restrictions at this point
     is_defs: bool = False,               # is this just a definition
     is_logic: bool = False               # are we inside a if/then/else/not?
@@ -1194,8 +1194,8 @@ def json_schema_stats(jdata):
     _collect_all_defs_rec(jdata, defs)
 
     # then proceed to analyze the schema
-    collection = { k: 0 for k in SCHEMA_KEYS }
-    _json_schema_stats_rec(jdata, "$", collection, defs)
+    collection: dict[str, Any] = { k: 0 for k in SCHEMA_KEYS }
+    _json_schema_stats_rec(jdata, "$", collection, defs)  # type: ignore
 
     # unused definitions
     collection["<unused-defs>"] = list(sorted(defs.unusedDefs()))
