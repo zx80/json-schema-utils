@@ -5,6 +5,8 @@ Random utilities to manipulate JSON Schema.
 ## Installation
 
 ```sh
+python -m venv venv
+source venv/bin/activate
 pip install git+https://github.com/zx80/json-schema-utils.git
 ```
 
@@ -35,7 +37,7 @@ jsu-check tests/foo.schema.json tests/foo.*.value.json
 Generate a report about JSON schemas, including possible bugs.
 
 ```sh
-jsu-check tests/*.schema.json
+jsu-stats tests/*.schema.json
 ```
 
 This scripts is extracted from [JSON Schema Stats](https://github.com/clairey-zx81/json-schema-stats).
