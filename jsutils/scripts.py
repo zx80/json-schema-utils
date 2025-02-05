@@ -21,12 +21,19 @@ def ap_common(ap, with_json=True):
         ap.add_argument("--indent", "-i", type=int, default=2, help="json indentation")
         ap.add_argument("--sort-keys", "-s", default=True, action="store_true", help="json sort keys")
         ap.add_argument("--no-sort-keys", dest="sort_keys", action="store_false", help="json sort keys")
-        ap.add_argument("--ascii", "-a", type=bool, default=False, help="json ensure ascii")
+        ap.add_argument("--ascii", type=bool, default=False, help="json ensure ascii")
         ap.add_argument("--no-ascii", dest="ascii", action="store_false", help="no json ensure ascii")
 
 
 def json_dumps(j: Any, args):
     return json.dumps(j, indent=args.indent, sort_keys=args.sort_keys, ensure_ascii=args.ascii)
+
+
+def rm_suffix(s, *suffixes):
+    for suffix in suffixes:
+        if s.endswith(suffix):
+            return s[:-len(suffix)]
+    return s
 
 
 def jsu_inline():
@@ -35,6 +42,7 @@ def jsu_inline():
     ap = argparse.ArgumentParser()
     ap_common(ap)
     ap.add_argument("--map", "-m", action="append", help="url local mapping")
+    ap.add_argument("--auto", "-a", action="store_true", help="automatic url mapping")
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
@@ -55,6 +63,16 @@ def jsu_inline():
             inlined = schema
         elif isinstance(schema, dict):
             url = schema.get("$id", fn)
+            if args.auto and url != fn:
+                # https://schema.gouv.fr/stuff ./stuff(.schema.json)
+                u = rm_suffix(url, ".schema.json", ".json")
+                f = rm_suffix(fn, ".schema.json", ".json")
+                while u and f and u[-1] == f[-1]:
+                    u, f = u[:-1], f[:-1]
+                if u and f:
+                    log.info(f"map: {u} -> {f}")
+                    schemas.addMap(u, f)
+
             schemas.store(url, schema)
 
             # cleanup definitions

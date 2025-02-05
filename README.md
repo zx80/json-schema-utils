@@ -15,7 +15,10 @@ pip install git+https://github.com/zx80/json-schema-utils.git
 Replace references `$ref` by their definitions.
 
 ```sh
+# no $id
 jsu-inline -m "file:// ./tests" tests/*.schema.json
+# with $id
+jsu-inline -a tests/foo.schema.json
 ```
 
 ## Simplify Schema
