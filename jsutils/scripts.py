@@ -1,9 +1,9 @@
 from typing import Any
-import json
-import argparse
-import logging
 import copy
+import json
 import hashlib
+import logging
+import argparse
 
 logging.basicConfig()
 
@@ -15,15 +15,25 @@ from .simplify import simplifySchema
 from .stats import json_schema_stats, json_metrics, normalize_ods
 
 
-def json_dumps(j: Any):
-    return json.dumps(j, indent=2, sort_keys=True, ensure_ascii=False)
+def ap_common(ap, with_json=True):
+    ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
+    if with_json:
+        ap.add_argument("--indent", "-i", type=int, default=2, help="json indentation")
+        ap.add_argument("--sort-keys", "-s", default=True, action="store_true", help="json sort keys")
+        ap.add_argument("--no-sort-keys", dest="sort_keys", action="store_false", help="json sort keys")
+        ap.add_argument("--ascii", "-a", type=bool, default=False, help="json ensure ascii")
+        ap.add_argument("--no-ascii", dest="ascii", action="store_false", help="no json ensure ascii")
+
+
+def json_dumps(j: Any, args):
+    return json.dumps(j, indent=args.indent, sort_keys=args.sort_keys, ensure_ascii=args.ascii)
 
 
 def jsu_inline():
     """Inline command entry point."""
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
+    ap_common(ap)
     ap.add_argument("--map", "-m", action="append", help="url local mapping")
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
@@ -54,13 +64,13 @@ def jsu_inline():
         else:
             raise JSUError(f"invalid JSON Schema: {fn}")
 
-        print(json_dumps(inlined))
+        print(json_dumps(inlined, args))
 
 
 def jsu_simpler():
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
+    ap_common(ap)
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
@@ -72,14 +82,14 @@ def jsu_simpler():
         if isinstance(schema, dict):
             schema = simplifySchema(schema, schema.get("$id", "."))
 
-        print(json_dumps(schema))
+        print(json_dumps(schema, args))
 
 
 def jsu_check():
     import jschon
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
+    ap_common(ap)
     ap.add_argument("--version", "-v", default="2020-12", help="JSON Schema version")
     ap.add_argument("schema", type=str, help="JSON Schema")
     ap.add_argument("values", nargs="*", help="values to match against schema")
@@ -99,7 +109,7 @@ def jsu_check():
             log.info(f"{fn}: ok")
         else:
             log.error(f"{fn}: KO")
-            log.error(json_dumps(res.output('basic')))
+            log.error(json_dumps(res.output('basic'), args))
 
 
 def shash(s: str):
@@ -109,7 +119,7 @@ def shash(s: str):
 def jsu_stats():
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
+    ap_common(ap)
     ap.add_argument("schemas", nargs="*", help="JSON Schema to analyze")
     args = ap.parse_args()
 
@@ -132,13 +142,13 @@ def jsu_stats():
 
                 # normalized version with its hash
                 normalize_ods(fn, jdata)  # OpenDataSoft generated schemas
-                normed = json_dumps(jdata)
+                normed = json.dumps(jdata, sort_keys=True, indent=None, ensure_ascii=True)
                 small["<normed-hash>"] = shash(normed)
 
                 small["<input-file>"] = fn
                 small["<file-hash>"] = shash(data)
 
-                print(json_dumps(small))
+                print(json_dumps(small, args))
 
             except Exception as e:
                 log.error(f"{fn}: {e}", exc_info=True)
