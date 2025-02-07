@@ -68,13 +68,16 @@ def getEnum(ls: list[JsonSchema], is_one: bool) -> list[Any]|None:
         lv = list(dict.fromkeys(lv))
     return lv
 
+
 def _typeCompat(t: str, v: Any) -> bool:
+    """Check JSON type / value compatibility."""
     return ((t == "null" and v is None) or
             (t == "bool" and isinstance(v, bool)) or
             (t == "number" and isinstance(v, (int, float))) or
             (t == "string" and isinstance(v, str)) or
             (t == "array" and isinstance(v, (list, tuple))) or
             (t == "object" and isinstance(v, dict)))
+
 
 def simplifySchema(schema: JsonSchema, url: str):
     """Simplify a JSON Schema with various rules."""
@@ -158,7 +161,8 @@ def simplifySchema(schema: JsonSchema, url: str):
                 assert isinstance(vals, list)
                 nvals = list(filter(lambda v: _typeCompat(stype, v), vals))
                 if len(vals) != len(nvals):
-                    log.info(f"removing {len(vals)-len(nvals)} incompatible values from enum at {lpath}")
+                    log.info(f"removing {len(vals) - len(nvals)} incompatible values "
+                             f"from enum at {lpath}")
                     schema["enum"] = nvals
 
         # const/enum

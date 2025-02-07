@@ -19,10 +19,13 @@ def ap_common(ap, with_json=True):
     ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
     if with_json:
         ap.add_argument("--indent", "-i", type=int, default=2, help="json indentation")
-        ap.add_argument("--sort-keys", "-s", default=True, action="store_true", help="json sort keys")
-        ap.add_argument("--no-sort-keys", dest="sort_keys", action="store_false", help="json sort keys")
+        ap.add_argument("--sort-keys", "-s", default=True,
+                        action="store_true", help="json sort keys")
+        ap.add_argument("--no-sort-keys", dest="sort_keys",
+                        action="store_false", help="json sort keys")
         ap.add_argument("--ascii", type=bool, default=False, help="json ensure ascii")
-        ap.add_argument("--no-ascii", dest="ascii", action="store_false", help="no json ensure ascii")
+        ap.add_argument("--no-ascii", dest="ascii",
+                        action="store_false", help="no json ensure ascii")
 
 
 def json_dumps(j: Any, args):
@@ -153,7 +156,9 @@ def jsu_stats():
 
                 # JSON Schema specific stats
                 stats = json_schema_stats(jdata)
-                small: dict[str, Any] = { k: v for k, v in stats.items() if v or isinstance(v, bool) }
+                small: dict[str, Any] = {
+                    k: v for k, v in stats.items() if v or isinstance(v, bool)
+                }
 
                 # basic JSON structural stats
                 small["<json-metrics>"] = json_metrics(jdata)
