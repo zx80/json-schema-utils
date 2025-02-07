@@ -164,6 +164,7 @@ def simplifySchema(schema: JsonSchema, url: str):
                     log.info(f"removing {len(vals) - len(nvals)} incompatible values "
                              f"from enum at {lpath}")
                     schema["enum"] = nvals
+                del schema["type"]
 
         # const/enum
         if "const" in schema and "enum" in schema:
