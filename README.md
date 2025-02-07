@@ -54,3 +54,4 @@ jsu-pretty tests/*.schema.json
 ## TODO
 
 - Testing. CI.
+- stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
