@@ -68,6 +68,13 @@ def getEnum(ls: list[JsonSchema], is_one: bool) -> list[Any]|None:
         lv = list(dict.fromkeys(lv))
     return lv
 
+def _typeCompat(t: str, v: Any) -> bool:
+    return ((t == "null" and v is None) or
+            (t == "bool" and isinstance(v, bool)) or
+            (t == "number" and isinstance(v, (int, float))) or
+            (t == "string" and isinstance(v, str)) or
+            (t == "array" and isinstance(v, (list, tuple))) or
+            (t == "object" and isinstance(v, dict)))
 
 def simplifySchema(schema: JsonSchema, url: str):
     """Simplify a JSON Schema with various rules."""
@@ -80,20 +87,24 @@ def simplifySchema(schema: JsonSchema, url: str):
             return schema
         assert isinstance(schema, dict)
 
-        # type/props…
-        if "type" in schema and isinstance(schema["type"], str):
-            stype = schema["type"]
-            if stype == "integer":
-                stype = "number"
-            # remove type-specific properties
-            if stype in TYPED_PROPS:
-                for p in incompatibleProps(stype):
-                    if p in schema:
-                        log.info(f"unused property {p} for {stype} at {lpath}")
-                        del schema[p]
-            if stype != "string" and "format" in schema and schema["format"] in STRING_FORMATS:
-                log.info(f"unused string format on {stype}: {schema['format']}")
-                del schema["format"]
+        # anyOf/oneOf/allOf of length 1
+        for prop in ("anyOf", "oneOf", "allOf"):
+            if isinstance(schema, dict) and prop in schema and len(schema[prop]) == 1:
+                try:
+                    nschema = copy.deepcopy(schema)
+                    sub = schema[prop][0]
+                    for p, v in sub.items():
+                        nschema = mergeProperty(nschema, p, v)
+                    # success!
+                    schema = nschema
+                    if isinstance(schema, dict):
+                        del schema[prop]
+                except JSUError:
+                    log.warning(f"{prop} of one merge failed")
+
+        if isinstance(schema, bool):
+            return schema
+        assert isinstance(schema, dict)
 
         # switch oneOf/anyOf const/enum to enum/const
         for prop in ("oneOf", "anyOf"):
@@ -118,24 +129,37 @@ def simplifySchema(schema: JsonSchema, url: str):
                         else:
                             schema["enum"] = lv
 
-        # anyOf/oneOf/allOf of length 1
-        for prop in ("anyOf", "oneOf", "allOf"):
-            if isinstance(schema, dict) and prop in schema and len(schema[prop]) == 1:
-                try:
-                    nschema = copy.deepcopy(schema)
-                    sub = schema[prop][0]
-                    for p, v in sub.items():
-                        nschema = mergeProperty(nschema, p, v)
-                    # success!
-                    schema = nschema
-                    if isinstance(schema, dict):
-                        del schema[prop]
-                except JSUError:
-                    log.warning(f"{prop} of one merge failed")
-
-        if isinstance(schema, bool):
-            return schema
-        assert isinstance(schema, dict)
+        # type/props…
+        if "type" in schema and isinstance(schema["type"], str):
+            stype = schema["type"]
+            if stype == "integer":
+                stype = "number"
+            # remove type-specific properties
+            if stype in TYPED_PROPS:
+                for p in incompatibleProps(stype):
+                    if p in schema:
+                        log.info(f"unused property {p} for {stype} at {lpath}")
+                        del schema[p]
+            if stype != "string" and "format" in schema and schema["format"] in STRING_FORMATS:
+                log.info(f"unused string format on {stype}: {schema['format']}")
+                del schema["format"]
+            # type/const
+            if "const" in schema:
+                cst = schema["const"]
+                if _typeCompat(stype, cst):
+                    log.info(f"removing redundant type with const at {lpath}")
+                    del schema["type"]
+                else:
+                    log.info(f"incompatible type {stype} for {cst} at {lpath}")
+                    return False
+            # type/enum
+            if "enum" in schema:
+                vals = schema["enum"]
+                assert isinstance(vals, list)
+                nvals = list(filter(lambda v: _typeCompat(stype, v), vals))
+                if len(vals) != len(nvals):
+                    log.info(f"removing {len(vals)-len(nvals)} incompatible values from enum at {lpath}")
+                    schema["enum"] = nvals
 
         # const/enum
         if "const" in schema and "enum" in schema:
@@ -144,10 +168,15 @@ def simplifySchema(schema: JsonSchema, url: str):
                 del schema["enum"]
             else:
                 return False
-        elif "enum" in schema and len(schema["enum"]) == 1:
-            log.info(f"enum of one at {lpath}")
-            schema["const"] = schema["enum"][0]
-            del schema["enum"]
+        elif "enum" in schema:
+            nenum = len(schema["enum"])
+            if nenum == 0:
+                log.info(f"empty enum at {lpath}")
+                return False
+            elif nenum == 1:
+                log.info(f"enum of one at {lpath}")
+                schema["const"] = schema["enum"][0]
+                del schema["enum"]
 
         return schema
 
