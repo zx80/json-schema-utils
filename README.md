@@ -45,6 +45,12 @@ jsu-stats tests/*.schema.json
 
 This scripts is extracted from [JSON Schema Stats](https://github.com/clairey-zx81/json-schema-stats).
 
+## JSON Prettyprinter
+
+```sh
+jsu-pretty tests/*.schema.json
+```
+
 ## TODO
 
 - Testing. CI.

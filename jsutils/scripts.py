@@ -175,3 +175,18 @@ def jsu_stats():
 
             except Exception as e:
                 log.error(f"{fn}: {e}", exc_info=True)
+
+
+def jsu_pretty():
+
+    ap = argparse.ArgumentParser()
+    ap_common(ap)
+    ap.add_argument("schemas", nargs="*", help="schemas to inline")
+    args = ap.parse_args()
+
+    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
+
+    for fn in args.schemas:
+        log.debug(f"considering file: {fn}")
+        schema = json.load(open(fn))
+        print(json_dumps(schema, args))
