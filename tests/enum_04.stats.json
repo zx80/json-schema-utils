@@ -11,6 +11,7 @@
     ]
   ],
   "<explicit-schema>": false,
+  "<file-hash>": "73d5a7542a2f00fc784b",
   "<input-file>": "enum_04.schema.json",
   "<json-metrics>": {
     "array": 2,

@@ -1,0 +1,18 @@
+{
+  "oneOf": [
+    {
+      "const": "foo"
+    },
+    {
+      "enum": [
+        "bla",
+        "bla"
+      ]
+    },
+    {
+      "enum": [
+        "foo"
+      ]
+    }
+  ]
+}

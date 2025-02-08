@@ -1,0 +1,10 @@
+{
+  "$defs": {
+    "NUMBER": {
+      "maximum": 9,
+      "minimum": 0,
+      "type": "number"
+    }
+  },
+  "$ref": "#/$defs/NUMBER"
+}

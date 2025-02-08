@@ -5,6 +5,7 @@
   "<$schema>": "<unknown_explicit_schema>",
   "<bad-root>": false,
   "<explicit-schema>": false,
+  "<file-hash>": "edb9382b3724c180d238",
   "<input-file>": "oneOf_00.schema.json",
   "<json-metrics>": {
     "array": 3,

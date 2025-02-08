@@ -22,6 +22,7 @@
     ]
   ],
   "<explicit-schema>": true,
+  "<file-hash>": "558e4656ec7be0e3a19d",
   "<input-file>": "string_04.schema.json",
   "<json-metrics>": {
     "array": 1,

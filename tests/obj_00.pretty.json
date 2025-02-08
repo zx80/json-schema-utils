@@ -1,0 +1,29 @@
+{
+  "$defs": {
+    "X": {
+      "properties": {
+        "c": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "c"
+      ],
+      "type": "object"
+    }
+  },
+  "$ref": "#/$defs/X",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "a": {
+      "type": "string"
+    },
+    "b": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "a"
+  ],
+  "type": "object"
+}

@@ -1,16 +1,20 @@
 SHELL   = /bin/bash
 .ONESHELL:
 
-
 F.json      = $(wildcard *.schema.json)
 F.inline    = $(F.json:%.schema.json=%.inline.json)
 F.simpler   = $(F.json:%.schema.json=%.simpler.json)
 F.stats     = $(F.json:%.schema.json=%.stats.json)
 F.pretty    = $(F.json:%.schema.json=%.pretty.json)
 
+F.all       = $(F.inline) $(F.simpler) $(F.stats) $(F.pretty)
+
 .PHONY: clean
 clean:
-	$(RM) $(F.pretty)
+	$(RM) $(F.all)
+
+.PHONY: all
+all: $(F.all)
 
 .PHONY: inline
 inline:

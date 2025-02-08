@@ -12,6 +12,7 @@
   "<$schema>": "https://json-schema.org/draft/2020-12/schema",
   "<bad-root>": false,
   "<explicit-schema>": true,
+  "<file-hash>": "e19cb9299b49927eb6a3",
   "<input-file>": "obj_00.schema.json",
   "<json-metrics>": {
     "array": 2,

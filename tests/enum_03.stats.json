@@ -4,6 +4,7 @@
   "<$schema>": "<unknown_explicit_schema>",
   "<bad-root>": false,
   "<explicit-schema>": false,
+  "<file-hash>": "4ea51d8a8376d9bf7a1a",
   "<input-file>": "enum_03.schema.json",
   "<json-metrics>": {
     "array": 2,

@@ -1,0 +1,8 @@
+{
+  "enum": [
+    1,
+    "deux",
+    "TROIS"
+  ],
+  "type": "string"
+}

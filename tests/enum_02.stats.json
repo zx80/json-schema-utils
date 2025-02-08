@@ -3,6 +3,7 @@
   "<$schema>": "<unknown_explicit_schema>",
   "<bad-root>": false,
   "<explicit-schema>": false,
+  "<file-hash>": "e33cf7f2b024fef21c56",
   "<input-file>": "enum_02.schema.json",
   "<json-metrics>": {
     "array": 1,

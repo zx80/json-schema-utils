@@ -9,6 +9,7 @@
   "<$schema>": "<unknown_explicit_schema>",
   "<bad-root>": false,
   "<explicit-schema>": false,
+  "<file-hash>": "46bdbfc849d7b39d1167",
   "<input-file>": "string_02.schema.json",
   "<json-metrics>": {
     "array": 0,

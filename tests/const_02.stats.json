@@ -6,6 +6,7 @@
   "<$schema>": "<unknown_explicit_schema>",
   "<bad-root>": false,
   "<explicit-schema>": false,
+  "<file-hash>": "e14c106dbbc0261169ad",
   "<input-file>": "const_02.schema.json",
   "<json-metrics>": {
     "array": 1,

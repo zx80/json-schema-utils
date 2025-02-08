@@ -25,6 +25,7 @@
     ]
   ],
   "<explicit-schema>": false,
+  "<file-hash>": "85f60c7d9c9c9c0ef360",
   "<input-file>": "bool_00.schema.json",
   "<json-metrics>": {
     "array": 0,

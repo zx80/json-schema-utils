@@ -1,0 +1,9 @@
+{
+  "$defs": {
+    "TRUE": {
+      "const": true
+    }
+  },
+  "$ref": "#/$defs/TRUE",
+  "const": false
+}

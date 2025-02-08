@@ -3,6 +3,7 @@
   "<$schema>": "<unknown_explicit_schema>",
   "<bad-root>": false,
   "<explicit-schema>": false,
+  "<file-hash>": "82dd99ca6ca61b8df5b6",
   "<input-file>": "const_03.schema.json",
   "<json-metrics>": {
     "array": 1,

@@ -16,6 +16,7 @@
     ]
   ],
   "<explicit-schema>": false,
+  "<file-hash>": "f92d25248ffb86750dcd",
   "<input-file>": "rec_01.schema.json",
   "<json-metrics>": {
     "array": 0,
