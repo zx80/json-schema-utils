@@ -2,6 +2,5 @@
   "enum": [
     "deux",
     "TROIS"
-  ],
-  "type": "string"
+  ]
 }
