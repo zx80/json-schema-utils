@@ -55,3 +55,4 @@ jsu-pretty tests/*.schema.json
 
 - Testing. CI.
 - stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
+- update `json-schema-stats` repos to use `jsu-stats`?
