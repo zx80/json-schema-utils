@@ -43,7 +43,8 @@ Generate a report about JSON schemas, including possible bugs.
 jsu-stats tests/*.schema.json
 ```
 
-This scripts is extracted from [JSON Schema Stats](https://github.com/clairey-zx81/json-schema-stats).
+This script is extracted from [JSON Schema Stats](https://github.com/clairey-zx81/json-schema-stats)
+which has been update to depend on this module.
 
 ## JSON Prettyprinter
 
@@ -55,4 +56,3 @@ jsu-pretty tests/*.schema.json
 
 - Testing. CI.
 - stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
-- update `json-schema-stats` repos to use `jsu-stats`?
