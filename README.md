@@ -56,3 +56,6 @@ jsu-pretty tests/*.schema.json
 
 - Testing. CI.
 - stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
+- propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)
+  to reduce errors/warnings.
+- `if` on non `required` properties.
