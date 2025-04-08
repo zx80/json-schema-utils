@@ -12,7 +12,7 @@ authors = [ { name = "Fabien Coelho" }, { name = "Claire Yannou-Medrala" } ]
 description = "JSON Schema Utils"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "CC0 1.0" }
+license = "CC0-1.0"
 classifiers = [ "Topic :: Software Development" ]
 dependencies = [ "requests", "jschon" ]
 
