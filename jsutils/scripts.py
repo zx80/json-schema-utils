@@ -120,7 +120,10 @@ def jsu_check():
     log.setLevel(logging.DEBUG if args.debug else logging.INFO)
 
     with open(args.schema) as f:
-        schema = jschon.JSONSchema(json.load(f))
+        jschema = json.load(f)
+        if isinstance(jschema, dict) and "$schema" not in jschema:
+            jschema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema = jschon.JSONSchema(jschema)
 
     for fn in args.values:
         with open(fn) as f:
@@ -189,4 +192,25 @@ def jsu_pretty():
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
         schema = json.load(open(fn))
-        print(json_dumps(schema, args))
+        print(json_dumps(schema, sort_keys=args.sort_keys, indent=args.indent))
+
+def jsu_model():
+
+    from .convert import schema2model
+
+    ap = argparse.ArgumentParser()
+    ap_common(ap)
+    ap.add_argument("schemas", nargs="*", help="schemas to inline")
+    args = ap.parse_args()
+
+    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
+
+    for fn in args.schemas:
+        log.debug(f"considering file: {fn}")
+        schema = json.load(open(fn))
+        try:
+            model = schema2model(schema)
+        except Exception as e:
+            log.error(e, exc_info=args.debug)
+            model = {"ERROR": str(e)}
+        print(json.dumps(model, sort_keys=args.sort_keys, indent=args.indent))

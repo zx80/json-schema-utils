@@ -52,6 +52,12 @@ which has been update to depend on this module.
 jsu-pretty tests/*.schema.json
 ```
 
+## JSON Schema to JSON Model Conversion
+
+```sh
+jsu-model test/foo.schema.json
+```
+
 ## TODO
 
 - Testing. CI.
