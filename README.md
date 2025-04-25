@@ -54,6 +54,14 @@ jsu-pretty tests/*.schema.json
 
 ## JSON Schema to JSON Model Conversion
 
+Convert a subset of JSON Schema to JSON Model.
+The subset should comply with some restrictions described in Section 6 of
+[An Analysis of Defects in Public JSON Schemas](https://minesparis-psl.hal.science/hal-04415517/file/A-794-DepotHAL.pdf)
+by Claire Yannou-Medrala and Fabien Coelho:
+
+- `const`, `enum`, `$ref`, `type`, `allOf`, `anyOf`, `oneOf` are exclusive.
+- some keywords such as `multiplyOf`, `contains`, `if`, `then`, `else` are not supported.
+
 ```sh
 jsu-model test/foo.schema.json
 ```
