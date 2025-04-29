@@ -1,1 +1,9 @@
-{"|": ["red", "amber", "green", null, 42]}
+{
+  "|": [
+    "red",
+    "amber",
+    "green",
+    null,
+    42
+  ]
+}

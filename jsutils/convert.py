@@ -441,7 +441,7 @@ def schema2model(schema, path: str = ""):
                 unique = schema["uniqueItems"]
                 assert isinstance(unique, bool), path
                 if unique:
-                    constraints["distinct"] = True
+                    constraints["!"] = True
             if "prefixItems" in schema:
                 assert only(schema, "type", "prefixItems", "items", "minItems", "maxItems",
                             "uniqueItems", *IGNORE), path
@@ -478,7 +478,8 @@ def schema2model(schema, path: str = ""):
                 # NO contains/items mixing yet
                 assert only(schema, "type", "contains", "minContains", "maxContains",
                             "uniqueItems", *IGNORE), path
-                model = {"@": ["$ANY"], "in": schema2model(schema["contains"], path + "/contains")}
+                # NOTE contains is not really supported in jm v2, rather as an extension
+                model = {"@": ["$ANY"], ".in": schema2model(schema["contains"], path + "/contains")}
                 if "minContains" in schema:
                     mini = schema["minContains"]
                     assert type(mini) is int, path

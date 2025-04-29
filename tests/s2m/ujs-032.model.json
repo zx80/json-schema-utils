@@ -1,1 +1,6 @@
-{"@": ["$ANY"], "distinct": true}
+{
+  "!": true,
+  "@": [
+    "$ANY"
+  ]
+}
