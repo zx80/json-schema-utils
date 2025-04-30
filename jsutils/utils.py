@@ -1,5 +1,6 @@
 from typing import Callable
 import logging
+import sys
 
 log = logging.getLogger("JSU")
 
