@@ -40,6 +40,7 @@ def _fullURL(schema: JsonSchema, url: str) -> JsonSchema:
     def fullref(schema: JsonSchema, _path: list[str]) -> JsonSchema:
         if isinstance(schema, dict) and "$ref" in schema:
             ref = schema["$ref"]
+            assert isinstance(ref, str)
             nref = _full_url(url, ref)
             log.debug(f"updating {ref} in {url}: {nref}")
             schema["$ref"] = nref
@@ -131,7 +132,7 @@ class Schemas:
                 pass
             else:
                 assert isinstance(schema, dict) and p in schema
-                schema = schema[p]
+                schema = schema[p]  # type: ignore
 
         return schema
 

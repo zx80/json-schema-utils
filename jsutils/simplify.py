@@ -54,6 +54,7 @@ def getEnum(ls: list[JsonSchema], is_one: bool) -> list[Any]|None:
             if "const" in s:
                 lv.append(s["const"])
             elif "enum" in s:
+                assert isinstance(s["enum"], list)
                 lv.extend(dict.fromkeys(s["enum"]))
             else:
                 return None
@@ -92,11 +93,12 @@ def simplifySchema(schema: JsonSchema, url: str):
 
         # anyOf/oneOf/allOf of length 1
         for prop in ("anyOf", "oneOf", "allOf"):
-            if isinstance(schema, dict) and prop in schema and len(schema[prop]) == 1:
+            if (isinstance(schema, dict) and prop in schema and
+                len(schema[prop]) == 1):  # type: ignore
                 try:
                     nschema = copy.deepcopy(schema)
-                    sub = schema[prop][0]
-                    for p, v in sub.items():
+                    sub = schema[prop][0]  # pyright: ignore
+                    for p, v in sub.items():  # pyright: ignore
                         nschema = mergeProperty(nschema, p, v)
                     # success!
                     schema = nschema
@@ -112,7 +114,9 @@ def simplifySchema(schema: JsonSchema, url: str):
         # switch oneOf/anyOf const/enum to enum/const
         for prop in ("oneOf", "anyOf"):
             if prop in schema:
-                lv = getEnum(schema[prop], prop == "oneOf")
+                val = schema[prop]
+                assert isinstance(val, list)
+                lv = getEnum(val, prop == "oneOf")  # pyright: ignore
                 if lv is not None:
                     del schema[prop]
                     log.info(f"{prop} to enum/const/false at {lpath}")
@@ -123,6 +127,7 @@ def simplifySchema(schema: JsonSchema, url: str):
                         if "enum" in schema:
                             lev = schema["enum"]
                             del schema["enum"]
+                            assert isinstance(lev, list)
                             # intersect in initial order
                             nlv = []
                             for v in lev:
@@ -169,11 +174,13 @@ def simplifySchema(schema: JsonSchema, url: str):
         # const/enum
         if "const" in schema and "enum" in schema:
             log.info(f"const/enum at {lpath}")
+            assert isinstance(schema["enum"], list)
             if schema["const"] in schema["enum"]:
                 del schema["enum"]
             else:
                 return False
         elif "enum" in schema:
+            assert isinstance(schema["enum"], list)
             nenum = len(schema["enum"])
             if nenum == 0:
                 log.info(f"empty enum at {lpath}")

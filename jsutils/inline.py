@@ -26,7 +26,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
         if prop in schema:
             # intersect in order
             vals = []
-            for v in schema[prop]:
+            for v in schema[prop]:  # pyright: ignore
                 if v in value:
                     vals.append(v)
             if len(vals) == 0:
@@ -59,11 +59,12 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
         else:
             schema[prop] = value
     elif prop == "required":
+        assert isinstance(value, list)
         if prop in schema:
             # append in order and without duplicates
             for p in value:
                 if p not in schema["required"]:
-                    schema["required"].append(p)
+                    schema["required"].append(p)  # pyright: ignore
         else:
             schema["required"] = value
     elif prop == "properties":
@@ -81,8 +82,9 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
         else:
             schema[prop] = value
     elif prop in ("allOf", "anyOf", "oneOf"):
+        assert isinstance(value, list)
         if prop in schema:
-            schema[prop].extend(value)
+            schema[prop].extend(value)  # pyright: ignore
         else:
             schema[prop] = value
     elif prop in ("title", "$comment"):
@@ -156,9 +158,9 @@ def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
         if "allOf" not in schema:
             schema["allOf"] = []
         if len(separate) > 0:
-            schema["allOf"].append(separate)
+            schema["allOf"].append(separate)  # pyright: ignore
         if len(refschema) > 0:
-            schema["allOf"].append(refschema)
+            schema["allOf"].append(refschema)  # pyright: ignore
 
     return schema
 
@@ -180,6 +182,7 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
 
         while isinstance(schema, dict) and "$ref" in schema:
             ref = schema["$ref"]
+            assert isinstance(ref, str)
 
             # (direct) recursion detection
             if ref in skips:

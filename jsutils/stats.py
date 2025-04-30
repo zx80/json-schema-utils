@@ -602,7 +602,7 @@ def getTypes(
         atypes = set(ALL_TYPES)
         if isinstance(alls, (tuple, list)):
             for i, a in enumerate(alls):
-                atypes.intersection_update(getTypes(a, defs, recs,
+                atypes.intersection_update(getTypes(a, defs, recs,  # pyright: ignore
                                                     f"{path}.allOf[{i}]", possible_types))
         else:
             log.warning(f"unexpected allOf type: {typeof(alls)}")
@@ -615,7 +615,8 @@ def getTypes(
             atypes = set()
             if isinstance(anys, (tuple, list)):
                 for i, a in enumerate(anys):
-                    atypes.update(getTypes(a, defs, recs, f"{path}.{prop}[{i}]", possible_types))
+                    atypes.update(getTypes(a, defs, recs,  # pyright: ignore
+                                           f"{path}.{prop}[{i}]", possible_types))
             else:
                 log.warning(f"unexpected {prop} type: {typeof(anys)}")
             possible_types.intersection_update(atypes)
@@ -680,16 +681,16 @@ def getHints(
     if "$ref" in jdata:
         ref = jdata["$ref"]
 
-        if not isinstance(ref, str):
-            log.warning(f"ignoring bad $ref value type: {typeof(ref)}")
-
-        refu = url_unquote(ref)
-        if refu in recs:
-            log.warning(f"preventing recursion for hints on {ref}")
-        elif refu in defs:
-            hints.update(getHints(defs[refu], defs, recs + [refu], refu))
+        if isinstance(ref, str):
+            refu = url_unquote(ref)
+            if refu in recs:
+                log.warning(f"preventing recursion for hints on {ref}")
+            elif refu in defs:
+                hints.update(getHints(defs[refu], defs, recs + [refu], refu))
+            else:
+                log.warning(f"ignoring $ref hints: {ref}")
         else:
-            log.warning(f"ignoring $ref hints: {ref}")
+            log.warning(f"ignoring bad $ref value type: {typeof(ref)}")
 
     # combinators
     if "allOf" in jdata:
@@ -697,7 +698,7 @@ def getHints(
         if isinstance(schemas, (tuple, list)):
             shints = set()
             for i, s in enumerate(schemas):
-                shints.update(getHints(s, defs, recs, f"{path}.allOf[{i}]"))
+                shints.update(getHints(s, defs, recs, f"{path}.allOf[{i}]"))  # pyright: ignore
             hints.update(shints)
         else:
             log.warning(f"ignoring bad allOf value type: {typeof(schemas)}")
@@ -708,7 +709,8 @@ def getHints(
             if isinstance(schemas, (tuple, list)):
                 shints = set(ALL_TYPES)
                 for i, s in enumerate(schemas):
-                    shints.intersection_update(getHints(s, defs, recs, f"{path}.{prop}[{i}]"))
+                    shints.intersection_update(
+                        getHints(s, defs, recs, f"{path}.{prop}[{i}]"))  # pyright: ignore
                 hints.update(shints)
             else:
                 log.warning(f"ignoring bad {prop} value type: {typeof(schemas)}")
@@ -1004,7 +1006,7 @@ def _json_schema_stats_rec(
             is_a_defs = prop in ("$defs", "definitions")
             if isinstance(val, dict):
                 for k, v in val.items():
-                    _json_schema_stats_rec(v, ap(lpath, k), collection,
+                    _json_schema_stats_rec(v, ap(lpath, k), collection,  # pyright: ignore
                                            defs, is_defs=is_a_defs, is_logic=is_logic)
                 collection[f"{prop}-count"] += len(val)
             else:
@@ -1016,7 +1018,7 @@ def _json_schema_stats_rec(
                     collectErr(collection, "empty schema array", prop, lpath)
                 context = types if prop in ("allOf", "anyOf", "oneOf") else ALL_TYPES
                 for i, v in enumerate(val):
-                    _json_schema_stats_rec(v, f"{lpath}[{i}]", collection,
+                    _json_schema_stats_rec(v, f"{lpath}[{i}]", collection,  # pyright: ignore
                                            defs, context, is_logic=is_logic)
             else:
                 log.warning(f"ignoring {prop} non-array value")
@@ -1136,8 +1138,11 @@ def _json_schema_stats_rec(
         # NOTE filter out constructs which may bring hidden properties
         if "properties" in jdata and not set(jdata.keys()).intersection({"oneOf", "anyOf", "$ref"}):
             required = jdata["required"]
+            assert isinstance(required, list)  # pyright hint
             properties = jdata["properties"]
+            assert isinstance(properties, dict)  # pyright hint
             for p in required:
+                assert isinstance(p, str)  # pyright hint
                 if p not in properties:
                     collectErr(collection, "unknown required property", p, path)
         # else: maybe properties are in a reference…
