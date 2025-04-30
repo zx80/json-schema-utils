@@ -21,7 +21,7 @@ venv:
 .PHONY: check
 check: check.inline check.simpler check.ruff check.flake8 check.pyright
 
-IGNORE  = E201,E202,E227,E402
+IGNORE  = E201,E202,E227,E302,E402
 
 .PHONY: check.ruff
 check.ruff: venv

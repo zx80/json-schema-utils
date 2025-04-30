@@ -1185,7 +1185,7 @@ def _json_schema_stats_rec(
 def json_schema_stats(jdata):
     """Return stats about a JSON data structure."""
 
-    global GET_TYPES_CACHE, GET_HINTS_CACHE
+    # global GET_TYPES_CACHE, GET_HINTS_CACHE
     GET_TYPES_CACHE.clear()
     GET_HINTS_CACHE.clear()
 

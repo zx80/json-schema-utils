@@ -55,7 +55,7 @@ def numberConstraints(schema):
         mo = schema["multipleOf"]
         assert type(mo) in (int, float)
         constraints[".mo"] = mo  # extension
-        # assert False, "keyword multipleOf is not supported" 
+        # assert False, "keyword multipleOf is not supported"
     if "minimum" in schema:
         mini = schema["minimum"]
         assert type(mini) in (int, float)
@@ -206,7 +206,7 @@ def format2model(fmt: str):
 def schema2model(schema, path: str = ""):
     """Convert a JSON schema to a JSON model."""
 
-    global CURRENT_SCHEMA, IDS, EXPLICIT_TYPE
+    global CURRENT_SCHEMA
 
     # 4.3.2 Boolean JSON Schemas
     if isinstance(schema, bool):
@@ -577,7 +577,8 @@ def schema2model(schema, path: str = ""):
             if prop in schema:
                 log.warning(f"ignoring doubtful {prop} from enum")
                 del schema[prop]
-        assert only(schema, "enum", *IGNORE), f"keyword enum intermixed with other keywords at {path}"
+        assert only(schema, "enum", *IGNORE), \
+            f"keyword enum intermixed with other keywords at {path}"
         ve = schema["enum"]
         assert isinstance(ve, list), path
         if len(ve) == 1:
@@ -587,18 +588,21 @@ def schema2model(schema, path: str = ""):
         # vérifier les valeurs?
         return buildModel(model, {}, defs, sharp)
     elif "const" in schema:
-        assert only(schema, "const", *IGNORE), f"keyword const intermixed with other keywords at {path}"
+        assert only(schema, "const", *IGNORE), \
+            f"keyword const intermixed with other keywords at {path}"
         const = schema["const"]
         # what is the type of the constant? assume a string for NOW, could be anything?
         return buildModel(toconst(const), {}, defs, sharp)
     elif "oneOf" in schema:
-        assert only(schema, "oneOf", *IGNORE), f"keyword oneOf intermixed with other keywords at {path}"
+        assert only(schema, "oneOf", *IGNORE), \
+            f"keyword oneOf intermixed with other keywords at {path}"
         choices = schema["oneOf"]
         assert isinstance(choices, (list, tuple)), path
         model = {"^": [schema2model(s, path + f"/oneOf[{i}]") for i, s in enumerate(choices)]}
         return buildModel(model, {}, defs, sharp)
     elif "anyOf" in schema:
-        assert only(schema, "anyOf", *IGNORE), f"keyword anyOf intermixed with other keywords at {path}"
+        assert only(schema, "anyOf", *IGNORE), \
+            f"keyword anyOf intermixed with other keywords at {path}"
         choices = schema["anyOf"]
         assert isinstance(choices, (list, tuple)), path
         model = {"|": [schema2model(s, path + f"/anyOf[{i}]") for i, s in enumerate(choices)]}
@@ -607,7 +611,8 @@ def schema2model(schema, path: str = ""):
         # NOTE types should be compatible to avoid an empty match
         assert only(schema, "allOf", *IGNORE), path
         choices = schema["allOf"]
-        assert isinstance(choices, (list, tuple)), f"keyword allOf intermixed with other keywords at {path}"
+        assert isinstance(choices, (list, tuple)), \
+            f"keyword allOf intermixed with other keywords at {path}"
         model = {"&": [schema2model(s, path + f"/allOf[{i}]") for i, s in enumerate(choices)]}
         return buildModel(model, {}, defs, sharp)
     elif "not" in schema:
