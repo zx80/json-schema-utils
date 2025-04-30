@@ -1,3 +1,4 @@
+import sys
 from typing import Any
 import copy
 import json
@@ -124,7 +125,14 @@ def jsu_check():
         jschema = json.load(f)
         if isinstance(jschema, dict) and "$schema" not in jschema:
             jschema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
-        schema = jschon.JSONSchema(jschema)
+        try:
+            schema = jschon.JSONSchema(jschema)
+        except BaseException as e:
+            schema = {"ERROR": str(e)}
+            print(json_dumps(schema, args))
+            if args.debug:
+                log.error(e, exc_info=args.debug)
+            sys.exit(2)
 
     for fn in args.values:
         with open(fn) as f:
@@ -196,7 +204,7 @@ def jsu_pretty():
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
         schema = json.load(open(fn))
-        print(json_dumps(schema, sort_keys=args.sort_keys, indent=args.indent))
+        print(json_dumps(schema, args))
 
 def jsu_model():
 
