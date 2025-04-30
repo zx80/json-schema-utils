@@ -112,6 +112,7 @@ def jsu_check():
     ap = argparse.ArgumentParser()
     ap_common(ap)
     ap.add_argument("--version", "-v", default="2020-12", help="JSON Schema version")
+    ap.add_argument("--quiet", "-q", action="store_true", help="quiet mode, no explanations")
     ap.add_argument("schema", type=str, help="JSON Schema")
     ap.add_argument("values", nargs="*", help="values to match against schema")
     args = ap.parse_args()
@@ -130,10 +131,13 @@ def jsu_check():
             data = json.load(f)
         res = schema.evaluate(jschon.JSON(data))
         if res.passed:
-            log.info(f"{fn}: ok")
+            print(f"{fn}: PASS")
+            # log.info(f"{fn}: ok")
         else:
-            log.error(f"{fn}: KO")
-            log.error(json_dumps(res.output('basic'), args))
+            print(f"{fn}: FAIL")
+            # log.error(f"{fn}: KO")
+            if not args.quiet:
+                log.error(json_dumps(res.output('basic'), args))
 
 
 def shash(s: str):
