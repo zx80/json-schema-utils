@@ -7,6 +7,7 @@ from .inline import mergeProperty
 # type-specific properties
 # TODO complete
 TYPED_PROPS: dict[str, set[str]] = {
+    # format: not in theory, quite often in practice
     "string": {"minLength", "maxLength", "pattern"},
     "number": {"minimum", "exclusiveMinimum", "maximum", "exclusiveMaximum", "multipleOf"},
     "object": {"additionalProperties", "unevaluatedProperties", "propertyNames", "required",
@@ -25,6 +26,7 @@ def incompatibleProps(st: str):
 
 
 # string-specific predefined formats
+# NOTE some extensions use other formats, eg for "int32" for numbers
 STRING_FORMATS: set[str] = {
     "date", "date-time", "time", "duration",
     "email", "idn-email",
@@ -104,7 +106,8 @@ def simplifySchema(schema: JsonSchema, url: str):
                     schema = nschema
                     if isinstance(schema, dict):
                         del schema[prop]
-                except JSUError:
+                except JSUError as e:
+                    log.debug(e)
                     log.warning(f"{prop} of one merge failed")
 
         if isinstance(schema, bool):
@@ -137,10 +140,24 @@ def simplifySchema(schema: JsonSchema, url: str):
                         else:
                             schema["enum"] = lv
 
+        # short type list
+        if "type" in schema and isinstance(schema["type"], list):
+            types = schema["type"]
+            if len(types) == 0:
+                return False
+            elif len(types) == 1:
+                schema["type"] = types[0]
         # type/props…
         if "type" in schema and isinstance(schema["type"], str):
             stype = schema["type"]
+            if stype == "number":
+                if "multipleOf" in schema and schema["multipleOf"] == 1:
+                    schema["type"] = "integer"
+                    del schema["multipleOf"]
             if stype == "integer":
+                if "multipleOf" in schema and schema["multipleOf"] == 1:
+                    del schema["multipleOf"]
+                # use this for later type-related checks
                 stype = "number"
             # remove type-specific properties
             if stype in TYPED_PROPS:

@@ -1,0 +1,45 @@
+{
+  "*-integer-number/number-string": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<errors>": [
+    [
+      "bad mix",
+      "string: ['integer', 'number'] []",
+      "$"
+    ]
+  ],
+  "<explicit-schema>": false,
+  "<file-hash>": "236b69fa5b73f01f150c",
+  "<input-file>": "tlist_01.schema.json",
+  "<json-metrics>": {
+    "array": 1,
+    "bool": 0,
+    "float": 1,
+    "int": 0,
+    "items": 1,
+    "null": 0,
+    "object": 1,
+    "props": 3,
+    "string": 5
+  },
+  "<normed-hash>": "d6da7195183fc7e18881",
+  "<schema-prop>": true,
+  "<versions>": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "format": 1,
+  "format=uri": 1,
+  "multipleOf": 1,
+  "type": 1,
+  "type-list": 1,
+  "type-list-one": 1,
+  "type=number": 1
+}

@@ -1,0 +1,5 @@
+{
+  "type": ["integer"],
+  "multipleOf": 1,
+  "format": "date"
+}

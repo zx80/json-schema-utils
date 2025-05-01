@@ -1,0 +1,53 @@
+{
+  "*-/number-string": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<errors>": [
+    [
+      "bad mix",
+      "number: [] ['multipleOf']",
+      "$"
+    ],
+    [
+      "bad mix",
+      "string: [] ['maxLength']",
+      "$"
+    ],
+    [
+      "type error",
+      "no possible type",
+      "$"
+    ]
+  ],
+  "<explicit-schema>": false,
+  "<file-hash>": "3b1afd23d8c9339061a1",
+  "<input-file>": "tlist_02.schema.json",
+  "<json-metrics>": {
+    "array": 1,
+    "bool": 0,
+    "float": 1,
+    "int": 1,
+    "items": 0,
+    "null": 0,
+    "object": 1,
+    "props": 3,
+    "string": 3
+  },
+  "<normed-hash>": "53ed857202ad7d8ae889",
+  "<schema-prop>": true,
+  "<versions>": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "maxLength": 1,
+  "multipleOf": 1,
+  "type": 1,
+  "type-list": 1,
+  "type-list-empty": 1
+}

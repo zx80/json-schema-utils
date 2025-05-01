@@ -1,0 +1,7 @@
+{
+  "format": "uri",
+  "multipleOf": 1.0,
+  "type": [
+    "number"
+  ]
+}
