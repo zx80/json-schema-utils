@@ -46,6 +46,8 @@ jsu-stats tests/*.schema.json
 This script is extracted from [JSON Schema Stats](https://github.com/clairey-zx81/json-schema-stats)
 which has been update to depend on this module.
 
+TODO be less agressive on issues inside `if`.
+
 ## JSON Prettyprinter
 
 ```sh
@@ -60,7 +62,7 @@ The subset should comply with some restrictions described in Section 6 of
 by Claire Yannou-Medrala and Fabien Coelho:
 
 - `const`, `enum`, `$ref`, `type`, `allOf`, `anyOf`, `oneOf` are exclusive.
-- some keywords such as `multiplyOf`, `contains`, `if`, `then`, `else` are not supported.
+- some keywords such as `multipleOf`, `contains`, `if`, `then`, `else` are not supported.
 
 ```sh
 jsu-model test/foo.schema.json
