@@ -136,16 +136,20 @@ def jsu_check():
 
     for fn in args.values:
         with open(fn) as f:
-            data = json.load(f)
-        res = schema.evaluate(jschon.JSON(data))
-        if res.passed:
-            print(f"{fn}: PASS")
-            # log.info(f"{fn}: ok")
-        else:
-            print(f"{fn}: FAIL")
-            # log.error(f"{fn}: KO")
-            if not args.quiet:
-                log.error(json_dumps(res.output('basic'), args))
+            try:
+                data = json.load(f)
+                res = schema.evaluate(jschon.JSON(data))
+                if res.passed:
+                    print(f"{fn}: PASS")
+                    # log.info(f"{fn}: ok")
+                else:
+                    print(f"{fn}: FAIL")
+                    # log.error(f"{fn}: KO")
+                    if not args.quiet:
+                        log.error(json_dumps(res.output('basic'), args))
+            except Exception as e:
+                log.debug(e, exc_info=True)
+                print(f"{fn}: ERROR")
 
 
 def shash(s: str):
