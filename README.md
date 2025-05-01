@@ -46,8 +46,6 @@ jsu-stats tests/*.schema.json
 This script is extracted from [JSON Schema Stats](https://github.com/clairey-zx81/json-schema-stats)
 which has been update to depend on this module.
 
-TODO be less agressive on issues inside `if`.
-
 ## JSON Prettyprinter
 
 ```sh
