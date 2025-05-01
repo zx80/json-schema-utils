@@ -19,7 +19,11 @@ venv:
 	pip install -e .[dev]
 
 .PHONY: check
-check: check.inline check.simpler check.ruff check.flake8 check.pyright
+check: check.inline check.simpler check.ruff check.flake8 check.pyright check.tests
+
+.PHONY: check.tests
+check.tests:
+	$(MAKE) -C tests check
 
 IGNORE  = E201,E202,E227,E302,E402
 

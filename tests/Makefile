@@ -1,20 +1,35 @@
 SHELL   = /bin/bash
 .ONESHELL:
 
-F.json      = $(wildcard *.schema.json)
-F.inline    = $(F.json:%.schema.json=%.inline.json)
-F.simpler   = $(F.json:%.schema.json=%.simpler.json)
-F.stats     = $(F.json:%.schema.json=%.stats.json)
-F.pretty    = $(F.json:%.schema.json=%.pretty.json)
+F.schema      = $(wildcard *.schema.json)
 
-F.all       = $(F.inline) $(F.simpler) $(F.stats) $(F.pretty)
+# derived
+F.inline    = $(F.schema:%.schema.json=%.inline.json)
+F.simpler   = $(F.schema:%.schema.json=%.simpler.json)
+F.stats     = $(F.schema:%.schema.json=%.stats.json)
+F.pretty    = $(F.schema:%.schema.json=%.pretty.json)
+
+# all
+F.gen       = $(F.inline) $(F.simpler) $(F.stats) $(F.pretty)
+
+.PHONY: check
+check: check.local check.sub
+
+.PHONY: check.local
+check.local:
+	$(MAKE) clean
+	$(MAKE) gen
+
+.PHONY: check.sub
+check.sub:
+	$(MAKE) -C s2m check
 
 .PHONY: clean
 clean:
-	$(RM) $(F.all)
+	$(RM) $(F.gen)
 
-.PHONY: all
-all: $(F.all)
+.PHONY: gen
+gen: $(F.gen)
 
 .PHONY: inline
 inline:

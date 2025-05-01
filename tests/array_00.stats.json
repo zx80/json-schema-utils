@@ -1,0 +1,39 @@
+{
+  "*-array/array": 1,
+  "*-integer-number/": 1,
+  "*-string/": 1,
+  "*-string/alone": 2,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<file-hash>": "d1cc0ca9ebe4d3f5a37f",
+  "<input-file>": "array_00.schema.json",
+  "<json-metrics>": {
+    "array": 3,
+    "bool": 1,
+    "float": 0,
+    "int": 1,
+    "items": 11,
+    "null": 0,
+    "object": 5,
+    "props": 8,
+    "string": 18
+  },
+  "<normed-hash>": "4f0aad1fdae03d11ee57",
+  "<schema-prop>": true,
+  "<versions>": [
+    9,
+    10,
+    11
+  ],
+  "enum": 2,
+  "false": 1,
+  "items": 1,
+  "minItems": 1,
+  "prefixItems": 1,
+  "prefixItems-count": 4,
+  "type": 3,
+  "type=array": 1,
+  "type=number": 1,
+  "type=string": 1
+}
