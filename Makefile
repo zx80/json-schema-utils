@@ -22,7 +22,8 @@ venv:
 check: check.inline check.simpler check.ruff check.flake8 check.pyright check.tests
 
 .PHONY: check.tests
-check.tests:
+check.tests: dev
+	source venv/bin/activate
 	$(MAKE) -C tests check
 
 IGNORE  = E201,E202,E227,E302,E402
