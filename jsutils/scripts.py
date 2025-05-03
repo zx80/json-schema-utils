@@ -24,9 +24,9 @@ def ap_common(ap, with_json=True):
                         action="store_true", help="json sort keys")
         ap.add_argument("--no-sort-keys", dest="sort_keys",
                         action="store_false", help="json sort keys")
-        ap.add_argument("--ascii", type=bool, default=False, help="json ensure ascii")
-        ap.add_argument("--no-ascii", dest="ascii",
-                        action="store_false", help="no json ensure ascii")
+        ap.add_argument("--ascii", action="store_true", default=False, help="json ensure ascii")
+        ap.add_argument("--no-ascii", dest="ascii", action="store_false",
+                        help="no json ensure ascii")
 
 
 def json_dumps(j: Any, args):
