@@ -19,7 +19,10 @@ venv:
 	pip install -e .[dev]
 
 .PHONY: check
-check: check.inline check.simpler check.ruff check.flake8 check.pyright check.tests
+check: check.inline check.simpler check.src check.tests
+
+.PHONY: check.src
+check.src: check.ruff check.flake8 check.pyright
 
 .PHONY: check.tests
 check.tests: dev

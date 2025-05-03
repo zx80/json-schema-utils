@@ -122,16 +122,16 @@ def jsu_check():
     jschon.create_catalog(args.version)
 
     with open(args.schema) as f:
-        jschema = json.load(f)
-        if isinstance(jschema, dict) and "$schema" not in jschema:
-            jschema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
         try:
+            jschema = json.load(f)
+            if isinstance(jschema, dict) and "$schema" not in jschema:
+                jschema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
             schema = jschon.JSONSchema(jschema)
         except BaseException as e:
             schema = {"ERROR": str(e)}
-            print(json_dumps(schema, args))
             if args.debug:
                 log.error(e, exc_info=args.debug)
+            print(json_dumps(schema, args), file=sys.stderr)
             sys.exit(2)
 
     for fn in args.values:
