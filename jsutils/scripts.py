@@ -18,11 +18,12 @@ from .stats import json_schema_stats, json_metrics, normalize_ods
 
 def ap_common(ap, with_json=True):
     ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
+    ap.add_argument("--quiet", "-q", action="store_true", help="quiet mode")
     if with_json:
         ap.add_argument("--indent", "-i", type=int, default=2, help="json indentation")
         ap.add_argument("--sort-keys", "-s", default=True,
                         action="store_true", help="json sort keys")
-        ap.add_argument("--no-sort-keys", dest="sort_keys",
+        ap.add_argument("--no-sort-keys", "-ns", dest="sort_keys",
                         action="store_false", help="json sort keys")
         ap.add_argument("--ascii", action="store_true", default=False, help="json ensure ascii")
         ap.add_argument("--no-ascii", dest="ascii", action="store_false",
@@ -50,7 +51,7 @@ def jsu_inline():
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
-    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
+    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     schemas = Schemas()
     schemas.addProcess(lambda s, u: inlineRefs(s, u, schemas))
@@ -96,7 +97,7 @@ def jsu_simpler():
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
-    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
+    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
@@ -113,13 +114,12 @@ def jsu_check():
     ap = argparse.ArgumentParser()
     ap_common(ap)
     ap.add_argument("--version", "-v", default="2020-12", help="JSON Schema version")
-    ap.add_argument("--quiet", "-q", action="store_true", help="quiet mode, no explanations")
     ap.add_argument("schema", type=str, help="JSON Schema")
     ap.add_argument("values", nargs="*", help="values to match against schema")
     args = ap.parse_args()
 
+    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
     jschon.create_catalog(args.version)
-    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
 
     with open(args.schema) as f:
         jschema = json.load(f)
@@ -163,7 +163,7 @@ def jsu_stats():
     ap.add_argument("schemas", nargs="*", help="JSON Schema to analyze")
     args = ap.parse_args()
 
-    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
+    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     for fn in args.schemas:
         log.info(f"considering: {fn}")
@@ -203,7 +203,7 @@ def jsu_pretty():
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
-    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
+    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
@@ -219,7 +219,7 @@ def jsu_model():
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
-    log.setLevel(logging.DEBUG if args.debug else logging.INFO)
+    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
