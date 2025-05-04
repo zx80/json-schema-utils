@@ -93,6 +93,8 @@ def simplifySchema(schema: JsonSchema, url: str):
             return schema
         assert isinstance(schema, dict)
 
+        # TODO anyOf/oneOf/allOf of length 0?
+
         # anyOf/oneOf/allOf of length 1
         for prop in ("anyOf", "oneOf", "allOf"):
             if (isinstance(schema, dict) and prop in schema and
@@ -113,6 +115,8 @@ def simplifySchema(schema: JsonSchema, url: str):
         if isinstance(schema, bool):
             return schema
         assert isinstance(schema, dict)
+
+        # TODO detect inconsistent allOf?
 
         # switch oneOf/anyOf const/enum to enum/const
         for prop in ("oneOf", "anyOf"):

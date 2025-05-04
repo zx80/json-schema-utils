@@ -1,8 +1,10 @@
 # JSON Schema Utils
 
-Random utilities to manipulate JSON Schema.
+Random utilities to analyze and manipulate JSON Schema.
 
 ## Installation
+
+Install latest version with `pip` directly from github:
 
 ```sh
 python -m venv venv
@@ -23,13 +25,22 @@ jsu-inline -a tests/foo.schema.json
 
 ## Simplify Schema
 
+Apply various schema simplifications:
+
+- remove type-incompatible keywords and formats.
+- try to move up list-of-one schema `*Of`.
+- simplify type lists.
+- change list-of-one `enum` to `const`.
+- detect some cases of infeasible schemas.
+
 ```sh
 jsu-simpler tests/*.schema.json
 ```
 
 ## Check Schema Values
 
-Check a JSON values match a given schema.
+Check a JSON values match a given schema using
+[jschon](https://github.com/marksparkza/jschon).
 
 ```sh
 jsu-check tests/foo.schema.json tests/foo.*.value.json
@@ -48,8 +59,10 @@ which has been update to depend on this module.
 
 ## JSON Prettyprinter
 
+You could also use `jq` for this purpose.
+
 ```sh
-jsu-pretty tests/*.schema.json
+jsu-pretty --indent 2 --sort-keys tests/*.schema.json
 ```
 
 ## JSON Schema to JSON Model Conversion
