@@ -1,0 +1,14 @@
+{
+  "$comment": "missing required on if?",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "age": { "type": "integer" }
+  },
+  "if": {
+    "properties": { "age": true }
+  },
+  "then": {
+    "required": [ "name" ]
+  }
+}

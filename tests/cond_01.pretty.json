@@ -1,0 +1,17 @@
+{
+  "$comment": "missing then/else",
+  "if": {
+    "required": [
+      "age"
+    ]
+  },
+  "properties": {
+    "age": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

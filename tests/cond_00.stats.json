@@ -1,0 +1,51 @@
+{
+  "$comment": 1,
+  "*-array-boolean-integer-null-number-object-string/object": 2,
+  "*-integer-number/": 1,
+  "*-object/combi-meta-object": 1,
+  "*-string/": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<errors>": [
+    [
+      "cond error",
+      "ignored un-required if props: age",
+      "$.if"
+    ]
+  ],
+  "<explicit-schema>": false,
+  "<file-hash>": "9a73de0396690b9b4383",
+  "<input-file>": "cond_00.schema.json",
+  "<json-metrics>": {
+    "array": 1,
+    "bool": 1,
+    "float": 0,
+    "int": 0,
+    "items": 1,
+    "null": 0,
+    "object": 7,
+    "props": 12,
+    "string": 17
+  },
+  "<normed-hash>": "c531a92d6b1a22bcefaa",
+  "<schema-prop>": true,
+  "<versions>": [
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "if": 1,
+  "properties": 2,
+  "properties-count": 3,
+  "required": 1,
+  "required-count": 1,
+  "required-list": 1,
+  "then": 1,
+  "true": 1,
+  "type": 3,
+  "type=integer": 1,
+  "type=object": 1,
+  "type=string": 1
+}

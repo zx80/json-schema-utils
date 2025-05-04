@@ -850,10 +850,35 @@ def _json_schema_stats_rec(
     if not types:
         collectErr(collection, "type error", "no possible type", path)
 
+    # condition analysis
+    # not?
+    if "if" in jdata:
+        lpath = path + ".if"
+        if "then" not in jdata and "else" not in jdata:
+            collectErr(collection, "cond error", "if no then/else", lpath)
+        ifs = jdata["if"]
+        if isinstance(ifs, dict):
+            ifprops, reqprops = set(), set()
+            if "properties" in ifs:
+                ifprops.update(ifs["properties"].keys())
+            if "required" in ifs and isinstance(ifs["required"], list):
+                reqprops.update(ifs["required"])
+            if "required" in jdata and isinstance(jdata["required"], list):
+                reqprops.update(jdata["required"])
+            unreqprops = ifprops - reqprops
+            if unreqprops:
+                collectErr(collection, "cond error",
+                           f"ignored un-required if props: {" ".join(sorted(unreqprops))}", lpath)
+    elif "then" in jdata or "else" in jdata:
+        collectErr(collection, "cond error", "then/else no if", path)
+
     # scan all properties
     for prop, val in jdata.items():
 
         lpath = ap(path, prop)
+
+        # TODO be less aggressive when recurring in if/then/else, depends on the outside object
+        # TODO check not/if/then/else keywords consistency with outside type
 
         # count (expected) prop occurences
         if prop in collection:

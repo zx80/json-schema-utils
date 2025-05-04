@@ -1,0 +1,27 @@
+{
+  "$comment": "seems ok",
+  "if": {
+    "required": [
+      "age"
+    ]
+  },
+  "properties": {
+    "age": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "then": {
+    "properties": {
+      "age": {
+        "minimum": 0
+      }
+    },
+    "required": [
+      "name"
+    ]
+  },
+  "type": "object"
+}
