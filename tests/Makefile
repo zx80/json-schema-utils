@@ -8,9 +8,10 @@ F.inline    = $(F.schema:%.schema.json=%.inline.json)
 F.simpler   = $(F.schema:%.schema.json=%.simpler.json)
 F.stats     = $(F.schema:%.schema.json=%.stats.json)
 F.pretty    = $(F.schema:%.schema.json=%.pretty.json)
+F.check     = person.check1.out person.check2.out
 
 # all
-F.gen       = $(F.inline) $(F.simpler) $(F.stats) $(F.pretty)
+F.gen       = $(F.inline) $(F.simpler) $(F.stats) $(F.pretty) $(F.check)
 
 .PHONY: check
 check: check.local check.sub
@@ -62,3 +63,10 @@ pretty:
 
 %.pretty.json: %.schema.json
 	jsu-pretty $< > $@
+
+# schema validation
+%.check1.out: %.schema.json
+	jsu-check --engine jsonschema --quiet $< $*.*.{true,false}.json | sort > $@
+
+%.check2.out: %.schema.json
+	jsu-check --engine jschon --quiet $< $*.*.{true,false}.json | sort > $@

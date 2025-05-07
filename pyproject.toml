@@ -14,7 +14,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "CC0-1.0"
 classifiers = [ "Topic :: Software Development" ]
-dependencies = [ "requests", "jschon" ]
+dependencies = [ "requests", "jschon", "jsonschema[format]" ]
 
 [project.optional-dependencies]
 dev = [ "ruff", "flake8", "pyright" ]

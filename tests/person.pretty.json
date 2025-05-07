@@ -1,0 +1,25 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "age": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "friends": {
+      "items": {
+        "pattern": ".",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "name": {
+      "pattern": ".",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "age"
+  ],
+  "type": "object"
+}

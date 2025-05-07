@@ -39,8 +39,9 @@ jsu-simpler tests/*.schema.json
 
 ## Check Schema Values
 
-Check a JSON values match a given schema using
-[jschon](https://github.com/marksparkza/jschon).
+Check a JSON values match a given schema using either
+[jsonschema](https://github.com/python-jsonschema/jsonschema) or
+[jschon](https://github.com/marksparkza/jschon) implementations.
 
 ```sh
 jsu-check tests/foo.schema.json tests/foo.*.value.json

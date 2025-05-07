@@ -109,24 +109,23 @@ def jsu_simpler():
 
 
 def jsu_check():
-    import jschon
 
     ap = argparse.ArgumentParser()
     ap_common(ap)
     ap.add_argument("--version", "-v", default="2020-12", help="JSON Schema version")
+    ap.add_argument("--engine", "-e", choices=["jsonschema", "jschon"], default="jsonschema",
+                    help="select JSON Schema implementation")
     ap.add_argument("schema", type=str, help="JSON Schema")
     ap.add_argument("values", nargs="*", help="values to match against schema")
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
-    jschon.create_catalog(args.version)
 
     with open(args.schema) as f:
         try:
             jschema = json.load(f)
             if isinstance(jschema, dict) and "$schema" not in jschema:
                 jschema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
-            schema = jschon.JSONSchema(jschema)
         except BaseException as e:
             schema = {"ERROR": str(e)}
             if args.debug:
@@ -134,19 +133,36 @@ def jsu_check():
             print(json_dumps(schema, args), file=sys.stderr)
             sys.exit(2)
 
+    if args.engine == "jschon":
+        import jschon
+        jschon.create_catalog(args.version)
+        schema = jschon.JSONSchema(jschema)
+        check = lambda data: schema.evaluate(jschon.JSON(data))
+        is_valid = lambda r: r.passed
+        explain = lambda r: r.output("basic")
+    else:
+        import jsonschema
+        schema = jsonschema.Draft202012Validator(jschema,
+            format_checker = jsonschema.FormatChecker())
+        def check(data):
+            errors = list(e.message for e in schema.iter_errors(data))
+            return { "passed": len(errors) == 0, "errors": errors }
+        is_valid = lambda r: r["passed"]
+        explain = lambda r: r["errors"]
+
     for fn in args.values:
         with open(fn) as f:
             try:
                 data = json.load(f)
-                res = schema.evaluate(jschon.JSON(data))
-                if res.passed:
+                res = check(data)
+                if is_valid(res):
                     print(f"{fn}: PASS")
                     # log.info(f"{fn}: ok")
                 else:
                     print(f"{fn}: FAIL")
                     # log.error(f"{fn}: KO")
                     if not args.quiet:
-                        log.error(json_dumps(res.output('basic'), args))
+                        log.error(json_dumps(explain(res), args))
             except Exception as e:
                 log.debug(e, exc_info=True)
                 print(f"{fn}: ERROR")
