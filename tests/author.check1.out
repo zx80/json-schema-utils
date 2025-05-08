@@ -1,0 +1,10 @@
+author.0.true.json: PASS
+author.1.true.json: PASS
+author.2.true.json: PASS
+author.3.false.json: FAIL
+ERROR:JSU:[
+  "'' does not match '.'",
+  "3.1415927 is not of type 'string'",
+  "'2025-02-29' is not a 'date'",
+  "Additional properties are not allowed ('#' was unexpected)"
+]

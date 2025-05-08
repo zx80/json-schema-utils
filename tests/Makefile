@@ -8,7 +8,7 @@ F.inline    = $(F.schema:%.schema.json=%.inline.json)
 F.simpler   = $(F.schema:%.schema.json=%.simpler.json)
 F.stats     = $(F.schema:%.schema.json=%.stats.json)
 F.pretty    = $(F.schema:%.schema.json=%.pretty.json)
-F.check     = person.check1.out person.check2.out
+F.check     = person.check1.out person.check2.out author.check1.out author.check2.out
 
 # all
 F.gen       = $(F.inline) $(F.simpler) $(F.stats) $(F.pretty) $(F.check)
@@ -66,7 +66,15 @@ pretty:
 
 # schema validation
 %.check1.out: %.schema.json
-	jsu-check --engine jsonschema --quiet $< $*.*.{true,false}.json | sort > $@
+	set -o pipefail
+	shopt -s nullglob
+	jsu-check --engine jsonschema $< $*.*.{true,false}.json 2> $@.err | sort > $@
+	cat $@.err >> $@
+	$(RM) $@.err
 
 %.check2.out: %.schema.json
-	jsu-check --engine jschon --quiet $< $*.*.{true,false}.json | sort > $@
+	set -o pipefail
+	shopt -s nullglob
+	jsu-check --engine jschon $< $*.*.{true,false}.json 2> $@.err | sort > $@
+	cat $@.err >> $@
+	$(RM) $@.err

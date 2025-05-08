@@ -5,3 +5,16 @@ person.3.false.json: FAIL
 person.4.false.json: FAIL
 person.5.false.json: FAIL
 person.6.false.json: FAIL
+ERROR:JSU:[
+  "'name' is a required property",
+  "'age' is a required property"
+]
+ERROR:JSU:[
+  "'' does not match '.'"
+]
+ERROR:JSU:[
+  "-17 is less than the minimum of 0"
+]
+ERROR:JSU:[
+  "Additional properties are not allowed ('no-such-property' was unexpected)"
+]

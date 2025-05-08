@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "nom": {
+      "type": "string",
+      "pattern": "."
+    },
+    "org": {
+      "type": "string",
+      "pattern": "."
+    },
+    "ne": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "nom",
+    "ne"
+  ],
+  "additionalProperties": false
+}
