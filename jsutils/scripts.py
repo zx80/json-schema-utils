@@ -165,7 +165,7 @@ def jsu_check():
                         log.error(json_dumps(explain(res), args))
             except Exception as e:
                 log.debug(e, exc_info=True)
-                print(f"{fn}: ERROR")
+                print(f"{fn}: ERROR ({e})")
 
 
 def shash(s: str):
