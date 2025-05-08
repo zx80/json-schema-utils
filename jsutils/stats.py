@@ -165,6 +165,14 @@ SCHEMA_KEYS_OBJECT_VALUES_SCHEMAS = [
     "dependentSchemas", "properties", "patternProperties",
 ]
 
+# schema keywords
+SCHEMA_KEYS: set[str] = (
+    set(SCHEMA_KEYS_SIMPLE) |
+    set(SCHEMA_KEYS_VALUE_SCHEMA) |
+    set(SCHEMA_KEYS_ARRAY_OF_SCHEMAS) |
+    set(SCHEMA_KEYS_OBJECT_VALUES_SCHEMAS)
+)
+
 # typical typos…
 SCHEMA_KEYS_TYPOS = [
     "typeof", "min", "max", "comment", "_comment", "comments", "minSize", "maxSize", "example",

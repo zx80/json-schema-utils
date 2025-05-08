@@ -110,45 +110,73 @@ def jsu_simpler():
 
 def jsu_check():
 
+    from .stats import SCHEMA_KEYS
+
     ap = argparse.ArgumentParser()
     ap_common(ap)
     ap.add_argument("--version", "-v", default="2020-12", help="JSON Schema version")
     ap.add_argument("--engine", "-e", choices=["jsonschema", "jschon"], default="jsonschema",
                     help="select JSON Schema implementation")
+    ap.add_argument("--force", action="store_true", help="accept any JSON as a schema")
     ap.add_argument("schema", type=str, help="JSON Schema")
     ap.add_argument("values", nargs="*", help="values to match against schema")
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
-    with open(args.schema) as f:
-        try:
+    try:
+        with open(args.schema) as f:
             jschema = json.load(f)
-            if isinstance(jschema, dict) and "$schema" not in jschema:
-                jschema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
-        except BaseException as e:
-            schema = {"ERROR": str(e)}
-            if args.debug:
-                log.error(e, exc_info=args.debug)
-            print(json_dumps(schema, args), file=sys.stderr)
-            sys.exit(2)
+    except FileNotFoundError as e:
+        if args.debug:
+            log.error(e, exc_info=args.debug)
+        print(f"{args.schema}: FILE ERROR ({e})")
+        sys.exit(1)
+    except BaseException as e:
+        if args.debug:
+            log.error(e, exc_info=args.debug)
+        print(f"{args.schema}: JSON ERROR ({e})")
+        sys.exit(2)
 
-    if args.engine == "jschon":
-        import jschon
-        jschon.create_catalog(args.version)
-        schema = jschon.JSONSchema(jschema)
-        check = lambda data: schema.evaluate(jschon.JSON(data))
-        is_valid = lambda r: r.passed
-        explain = lambda r: r.output("basic")
-    else:
-        import jsonschema
-        schema = jsonschema.Draft202012Validator(jschema,
-            format_checker = jsonschema.FormatChecker())
-        def check(data):
-            errors = list(e.message for e in schema.iter_errors(data))
-            return { "passed": len(errors) == 0, "errors": errors }
-        is_valid = lambda r: r["passed"]
-        explain = lambda r: r["errors"]
+    # sanity check…
+    if not isinstance(jschema, (bool, dict)):
+        print(f"{args.schema}: SCHEMA TYPE ERROR")
+        sys.exit(3)
+    if isinstance(jschema, dict) and not (SCHEMA_KEYS & jschema.keys()):
+        if args.force:
+            log.warning(f"{args.schema}: json probably not a schema")
+            # go on, per spec…
+        else:
+            log.error(f"{args.schema}: json probably not a schema, use --force to proceed anyway")
+            print(f"{args.schema}: SCHEMA ERROR - not a schema, use --force to proceed anyway")
+            sys.exit(4)
+
+    # be nice
+    if isinstance(jschema, dict) and "$schema" not in jschema:
+        jschema["$schema"] = f"https://json-schema.org/draft/{args.version}/schema"
+
+    try:  # set check, is_valid and explain functions
+        if args.engine == "jschon":
+            import jschon
+            jschon.create_catalog(args.version)
+            schema = jschon.JSONSchema(jschema)
+            check = lambda data: schema.evaluate(jschon.JSON(data))
+            is_valid = lambda r: r.passed
+            explain = lambda r: r.output("basic")
+        else:
+            import jsonschema
+            schema = jsonschema.Draft202012Validator(jschema,
+                format_checker = jsonschema.FormatChecker())
+            def check(data):
+                errors = list(e.message for e in schema.iter_errors(data))
+                return { "passed": len(errors) == 0, "errors": errors }
+            is_valid = lambda r: r["passed"]
+            explain = lambda r: r["errors"]
+    except Exception as e:
+        if args.debug:
+            log.error(e, exc_info=not args.quiet)
+        print(f"{args.schema}: SCHEMA ERROR ({e})")
+        sys.exit(5)
 
     for fn in args.values:
         with open(fn) as f:
