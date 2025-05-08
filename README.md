@@ -27,8 +27,8 @@ jsu-inline -a tests/foo.schema.json
 
 Apply various schema simplifications:
 
-- remove type-incompatible keywords and formats.
-- try to move up list-of-one schema `*Of`.
+- remove type-incompatible keywords and formats, with warnings.
+- try to move up list-of-one-schema `*Of`.
 - simplify type lists.
 - change list-of-one `enum` to `const`.
 - detect some cases of infeasible schemas.
@@ -56,15 +56,15 @@ jsu-stats tests/*.schema.json
 ```
 
 This script is extracted from [JSON Schema Stats](https://github.com/clairey-zx81/json-schema-stats)
-which has been update to depend on this module.
+which has been updated to depend on this module.
 
 ## JSON Prettyprinter
-
-You could also use `jq` for this purpose.
 
 ```sh
 jsu-pretty --indent 2 --sort-keys tests/*.schema.json
 ```
+
+You could also use `jq .` for this purpose.
 
 ## JSON Schema to JSON Model Conversion
 
@@ -85,5 +85,4 @@ jsu-model test/foo.schema.json
 - Testing. CI.
 - stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)
-  to reduce errors/warnings.
-- `if` on non `required` properties.
+  to reduce false positive errors/warnings.
