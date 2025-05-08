@@ -76,5 +76,5 @@ pretty:
 	set -o pipefail
 	shopt -s nullglob
 	jsu-check --engine jschon $< $*.*.{true,false}.json 2> $@.err | sort > $@
-	cat $@.err >> $@
+	sed -e 's/uuid:[-0-9a-f]*#/uuid:<uuid>#/' $@.err >> $@
 	$(RM) $@.err
