@@ -12,7 +12,7 @@ source venv/bin/activate
 pip install git+https://github.com/zx80/json-schema-utils.git
 ```
 
-## Inline References
+## Inline Schema References
 
 Replace references `$ref` by their definitions.
 
@@ -32,13 +32,13 @@ Apply various schema simplifications:
 - simplify type lists.
 - change list-of-one `enum` to `const`.
 - detect some cases of infeasible schemas.
-- remove uneffective keywords in corner case.
+- remove uneffective keywords in corner cases.
 
 ```sh
 jsu-simpler tests/*.schema.json
 ```
 
-## Check Schema Values
+## Check JSON Values against a Schema
 
 Check a JSON values match a given schema using either
 [jsonschema](https://github.com/python-jsonschema/jsonschema) or
