@@ -32,6 +32,7 @@ Apply various schema simplifications:
 - simplify type lists.
 - change list-of-one `enum` to `const`.
 - detect some cases of infeasible schemas.
+- remove uneffective keywords in corner case.
 
 ```sh
 jsu-simpler tests/*.schema.json

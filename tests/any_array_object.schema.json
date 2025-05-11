@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "any_array": {
+      "title": "Any Array",
+      "description": "an array of anything…",
+      "type": "array",
+      "items": true
+    },
+    "any_object": {
+      "title": "Any Object",
+      "description": "an object of anything…",
+      "type": "object",
+      "unevaluatedProperties": true
+    }
+  }
+}

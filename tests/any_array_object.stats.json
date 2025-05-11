@@ -1,0 +1,39 @@
+{
+  "*-array/array-meta": 1,
+  "*-object/meta-object": 1,
+  "*-object/object": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-root>": false,
+  "<explicit-schema>": false,
+  "<file-hash>": "5f90ea82cf48e7edd36c",
+  "<input-file>": "any_array_object.schema.json",
+  "<json-metrics>": {
+    "array": 0,
+    "bool": 2,
+    "float": 0,
+    "int": 0,
+    "items": 0,
+    "null": 0,
+    "object": 4,
+    "props": 12,
+    "string": 19
+  },
+  "<normed-hash>": "a60840401717378ef329",
+  "<schema-prop>": true,
+  "<versions>": [
+    8,
+    9,
+    10,
+    11
+  ],
+  "description": 2,
+  "items": 1,
+  "properties": 1,
+  "properties-count": 2,
+  "title": 2,
+  "true": 2,
+  "type": 3,
+  "type=array": 1,
+  "type=object": 2,
+  "unevaluatedProperties": 1
+}

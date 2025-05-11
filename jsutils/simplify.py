@@ -81,13 +81,32 @@ def _typeCompat(t: str, v: Any) -> bool:
             (t == "array" and isinstance(v, (list, tuple))) or
             (t == "object" and isinstance(v, dict)))
 
+_IGNORABLE = (
+    # core
+    "$schema", "$id", "$comment", "$vocabulary", "$anchor", "$dynamicAnchor",
+    # metadata
+    "description", "title", "readOnly", "writeOnly", "default", "examples", "deprecated",
+)
+
+def _ignored(schema: JsonSchema) -> JsonSchema:
+    """Remove preperties dans do not need to be considered."""
+    if isinstance(schema, bool):
+        return schema
+    schema = copy.deepcopy(schema)
+    for keyword in _IGNORABLE:
+        if keyword in schema:
+            del schema[keyword]
+    return schema
+
+def same(s1: JsonSchema, s2: JsonSchema) -> bool:
+    return _ignored(s1) == _ignored(s2)
 
 def simplifySchema(schema: JsonSchema, url: str):
     """Simplify a JSON Schema with various rules."""
 
     def rwtSimpler(schema: JsonSchema, path: list[str]) -> JsonSchema:
 
-        lpath = "/".join(path) if path else "."
+        lpath = ".".join(path) if path else "."
 
         if isinstance(schema, bool):
             return schema
@@ -191,6 +210,28 @@ def simplifySchema(schema: JsonSchema, url: str):
                              f"from enum at {lpath}")
                     schema["enum"] = nvals
                 del schema["type"]
+            # simplify any array
+            if stype == "array":
+                simpler = _ignored(schema)
+                if len(simpler) == 2 and "type" in schema:
+                    # lone keyword
+                    for kw in ("items", "additionalItems", "unevaluatedItems"):
+                        if kw in schema:
+                            subschema = _ignored(schema[kw])
+                            if subschema in (True, {}):
+                                log.info(f"removing useless {kw} keyword at {lpath}")
+                                del schema[kw]
+            # simplify any object
+            if stype == "object":
+                simpler = _ignored(schema)
+                if len(simpler) == 2 and "type" in schema:
+                    # lone keyword
+                    for kw in ("additionalProperties", "unevaluatedProperties"):
+                        if kw in schema:
+                            subschema = _ignored(schema[kw])
+                            if subschema in (True, subschema):
+                                log.info(f"removing useless {kw} keyword at {lpath}")
+                                del schema[kw]
 
         # const/enum
         if "const" in schema and "enum" in schema:

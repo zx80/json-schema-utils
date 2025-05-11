@@ -1,0 +1,15 @@
+{
+  "properties": {
+    "any_array": {
+      "description": "an array of anything…",
+      "title": "Any Array",
+      "type": "array"
+    },
+    "any_object": {
+      "description": "an object of anything…",
+      "title": "Any Object",
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
