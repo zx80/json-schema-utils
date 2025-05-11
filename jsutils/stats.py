@@ -360,6 +360,12 @@ SCHEMA_VERSION_GUESS = {
     "$dynamicRef": [9],
     "$dynamicAnchor": [9],
     "propertyDependencies": [10],  # new online draft
+    # OpenAPI 3.1.0 extension
+    "discriminator": [100],
+    # "propertyName": [100],
+    # "mapping": [100],
+    "externalDocs": [100],
+    "xml": [100],
 }
 
 FORMAT_ALL_VERSIONS = [ "date-time", "uri", "email", "ipv6" ]
