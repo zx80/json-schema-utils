@@ -165,14 +165,6 @@ SCHEMA_KEYS_OBJECT_VALUES_SCHEMAS = [
     "dependentSchemas", "properties", "patternProperties",
 ]
 
-# schema keywords
-SCHEMA_KEYS: set[str] = (
-    set(SCHEMA_KEYS_SIMPLE) |
-    set(SCHEMA_KEYS_VALUE_SCHEMA) |
-    set(SCHEMA_KEYS_ARRAY_OF_SCHEMAS) |
-    set(SCHEMA_KEYS_OBJECT_VALUES_SCHEMAS)
-)
-
 # typical typos…
 SCHEMA_KEYS_TYPOS = [
     "typeof", "min", "max", "comment", "_comment", "comments", "minSize", "maxSize", "example",
@@ -262,8 +254,17 @@ SETS = [
     "<errors>", "<bad-properties-nesting-where>", "<openapi>", "<extensions>",
 ]
 
+
+# schema keywords
+SCHEMA_KEYS: set[str] = (
+    set(SCHEMA_KEYS_SIMPLE) |
+    set(SCHEMA_KEYS_VALUE_SCHEMA) |
+    set(SCHEMA_KEYS_ARRAY_OF_SCHEMAS) |
+    set(SCHEMA_KEYS_OBJECT_VALUES_SCHEMAS)
+)
+
 # all expected schema keys to initialize
-SCHEMA_KEYS = (
+SCHEMA_KEYS_INIT = list(
     SCHEMA_KEYS_SIMPLE +
     SCHEMA_KEYS_VALUE_SCHEMA +
     SCHEMA_KEYS_ARRAY_OF_SCHEMAS +
@@ -867,7 +868,7 @@ def _json_schema_stats_rec(
         ifs = jdata["if"]
         if isinstance(ifs, dict):
             ifprops, reqprops = set(), set()
-            if "properties" in ifs:
+            if "properties" in ifs and isinstance(ifs["properties"], dict):
                 ifprops.update(ifs["properties"].keys())
             if "required" in ifs and isinstance(ifs["required"], list):
                 reqprops.update(ifs["required"])
@@ -1232,7 +1233,7 @@ def json_schema_stats(jdata):
     _collect_all_defs_rec(jdata, defs)
 
     # then proceed to analyze the schema
-    collection: dict[str, Any] = { k: 0 for k in SCHEMA_KEYS }
+    collection: dict[str, Any] = { k: 0 for k in SCHEMA_KEYS_INIT }
     _json_schema_stats_rec(jdata, "$", collection, defs)  # type: ignore
 
     # unused definitions

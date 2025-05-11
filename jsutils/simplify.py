@@ -81,6 +81,7 @@ def _typeCompat(t: str, v: Any) -> bool:
             (t == "array" and isinstance(v, (list, tuple))) or
             (t == "object" and isinstance(v, dict)))
 
+
 _IGNORABLE = (
     # core
     "$schema", "$id", "$comment", "$vocabulary", "$anchor", "$dynamicAnchor",
@@ -117,7 +118,7 @@ def simplifySchema(schema: JsonSchema, url: str):
         # anyOf/oneOf/allOf of length 1
         for prop in ("anyOf", "oneOf", "allOf"):
             if (isinstance(schema, dict) and prop in schema and
-                len(schema[prop]) == 1):  # type: ignore
+                    len(schema[prop]) == 1):  # type: ignore
                 try:
                     nschema = copy.deepcopy(schema)
                     sub = schema[prop][0]  # pyright: ignore
@@ -213,22 +214,24 @@ def simplifySchema(schema: JsonSchema, url: str):
             # simplify any array
             if stype == "array":
                 simpler = _ignored(schema)
+                assert isinstance(simpler, dict)  # pyright hint
                 if len(simpler) == 2 and "type" in schema:
                     # lone keyword
                     for kw in ("items", "additionalItems", "unevaluatedItems"):
                         if kw in schema:
-                            subschema = _ignored(schema[kw])
+                            subschema = _ignored(schema[kw])  # pyright: ignore
                             if subschema in (True, {}):
                                 log.info(f"removing useless {kw} keyword at {lpath}")
                                 del schema[kw]
             # simplify any object
             if stype == "object":
                 simpler = _ignored(schema)
+                assert isinstance(simpler, dict)  # pyright hint
                 if len(simpler) == 2 and "type" in schema:
                     # lone keyword
                     for kw in ("additionalProperties", "unevaluatedProperties"):
                         if kw in schema:
-                            subschema = _ignored(schema[kw])
+                            subschema = _ignored(schema[kw])  # pyright: ignore
                             if subschema in (True, subschema):
                                 log.info(f"removing useless {kw} keyword at {lpath}")
                                 del schema[kw]

@@ -160,18 +160,19 @@ def jsu_check():
             import jschon
             jschon.create_catalog(args.version)
             schema = jschon.JSONSchema(jschema)
-            check = lambda data: schema.evaluate(jschon.JSON(data))
-            is_valid = lambda r: r.passed
-            explain = lambda r: r.output("basic")
+
+            def check(data):
+                res = schema.evaluate(jschon.JSON(data))
+                return { "passed": res.passed, "errors": res.output("basic") }
         else:
             import jsonschema
-            schema = jsonschema.Draft202012Validator(jschema,
-                format_checker = jsonschema.FormatChecker())
+            schema = jsonschema.Draft202012Validator(
+                jschema, format_checker=jsonschema.FormatChecker())
+
             def check(data):
                 errors = list(e.message for e in schema.iter_errors(data))
                 return { "passed": len(errors) == 0, "errors": errors }
-            is_valid = lambda r: r["passed"]
-            explain = lambda r: r["errors"]
+
     except Exception as e:
         if args.debug:
             log.error(e, exc_info=not args.quiet)
@@ -183,14 +184,12 @@ def jsu_check():
             try:
                 data = json.load(f)
                 res = check(data)
-                if is_valid(res):
+                if res["passed"]:
                     print(f"{fn}: PASS")
-                    # log.info(f"{fn}: ok")
                 else:
                     print(f"{fn}: FAIL")
-                    # log.error(f"{fn}: KO")
                     if not args.quiet:
-                        log.error(json_dumps(explain(res), args))
+                        log.error(json_dumps(res["errors"], args))
             except Exception as e:
                 log.debug(e, exc_info=True)
                 print(f"{fn}: ERROR ({e})")

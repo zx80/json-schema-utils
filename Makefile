@@ -29,7 +29,7 @@ check.tests: dev
 	source venv/bin/activate
 	$(MAKE) -C tests check
 
-IGNORE  = E201,E202,E227,E302,E402
+IGNORE  = E201,E202,E227,E302,E402,E731
 
 .PHONY: check.ruff
 check.ruff: venv
