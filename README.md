@@ -87,3 +87,4 @@ jsu-model test/foo.schema.json
 - stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)
   to reduce false positive errors/warnings.
+- simplify: deduplicate constants in enum?
