@@ -155,7 +155,7 @@ def jsu_check():
     if isinstance(jschema, dict) and "$schema" not in jschema:
         jschema["$schema"] = f"https://json-schema.org/draft/{args.version}/schema"
 
-    try:  # set check, is_valid and explain functions
+    try:
         if args.engine == "jschon":
             import jschon
             jschon.create_catalog(args.version)
