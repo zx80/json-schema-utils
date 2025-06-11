@@ -118,6 +118,7 @@ def jsu_check():
     ap.add_argument("--engine", "-e", choices=["jsonschema", "jschon"], default="jsonschema",
                     help="select JSON Schema implementation")
     ap.add_argument("--force", action="store_true", help="accept any JSON as a schema")
+    ap.add_argument("--test", "-t", action="store_true", help="test vector mode")
     ap.add_argument("schema", type=str, help="JSON Schema")
     ap.add_argument("values", nargs="*", help="values to match against schema")
     args = ap.parse_args()
@@ -179,18 +180,45 @@ def jsu_check():
         print(f"{args.schema}: SCHEMA ERROR ({e})")
         sys.exit(5)
 
+    def check_data(name: str, data, expect: bool|None) -> bool:
+        res = check(data)
+        okay = res["passed"]
+        success = expect is None or okay == expect
+        if success:
+            print(f"{name}: {'PASS' if okay else 'FAIL'}")
+        else:  # res != expect
+            print(f"{name}: ERROR unexpected {'PASS' if okay else 'FAIL'}")
+        if not okay and not args.quiet:
+            log.error(json_dumps(res["errors"], args))
+        return success
+
+    nerrors = 0
     for fn in args.values:
         with open(fn) as f:
             try:
                 data = json.load(f)
-                res = check(data)
-                if res["passed"]:
-                    print(f"{fn}: PASS")
+                if args.test:
+                    ntests = 0
+                    assert isinstance(data, list)
+                    for item in data:
+                        if isinstance(item, str):  # comment
+                            continue
+                        assert len(item) in (2, 3)
+                        name = f"{fn}[{ntests}]"
+                        ntests += 1
+                        if len(item) == 2:
+                            expect, data = item
+                            case = ""
+                        else:
+                            expect, case, data = item
+                        assert isinstance(expect, bool) and isinstance(case, str)
+                        if not check_data(name, data, expect):
+                            nerrors += 1
                 else:
-                    print(f"{fn}: FAIL")
-                    if not args.quiet:
-                        log.error(json_dumps(res["errors"], args))
+                    if not check_data(fn, data, None):
+                        nerrors += 1
             except Exception as e:
+                nerrors += 1
                 log.debug(e, exc_info=True)
                 print(f"{fn}: ERROR ({e})")
 
