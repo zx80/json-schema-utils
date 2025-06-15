@@ -1,5 +1,8 @@
 from typing import Any
+import re
 import logging
+
+type JsonPath = list[str|int]
 
 log = logging.getLogger("convert")
 # log.setLevel(logging.DEBUG)
@@ -48,6 +51,19 @@ def esc(s):
         return s
 
 
+def sesc(s):
+    if not isinstance(s, str):
+        return str(s)
+    elif re.search(r"^\w+$", s):
+        return s
+    else:
+        return '"' + s.replace('"', r'\"').replace("\n", r'\n') + '"'
+
+
+def jpath(path: JsonPath):
+    return "." + ".".join(sesc(s) for s in path)
+
+
 def numberConstraints(schema):
     assert "type" in schema and schema["type"] in ("integer", "number")
     constraints = {}
@@ -84,7 +100,8 @@ def buildModel(model, constraints: dict, defs: dict, sharp: dict):
         else:
             m = {"@": model}
         if sharp:
-            m["#"] = sharp
+            m["#"] = sharp["description"] if "description" in sharp else \
+                     "JSON Model generated from a JSON Schema with json-schema-utils"
         if defs:
             m["$"] = defs
         return m
@@ -104,7 +121,7 @@ def new_def():
 
 META_KEYS = [
     "title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly", "id",
-    "$schema", "$id",
+    "$schema", "$id", "$comment",
     # OLD?
     "context", "notes",
 ]
@@ -203,7 +220,7 @@ def format2model(fmt: str):
         return f"$UNKNOWN:{fmt}"
 
 
-def schema2model(schema, path: str = ""):
+def schema2model(schema, path: JsonPath = []):
     """Convert a JSON schema to a JSON model."""
 
     global CURRENT_SCHEMA
@@ -212,12 +229,14 @@ def schema2model(schema, path: str = ""):
     if isinstance(schema, bool):
         return "$ANY" if schema else "$NONE"
 
-    assert isinstance(schema, dict), path
+    spath: str = jpath(path)
+
+    assert isinstance(schema, dict), f"is an object at [{spath}]"
 
     if "$schema" in schema:
         sname = schema["$schema"]
         if CURRENT_SCHEMA is not None:
-            log.error(f"nested $schema: {sname}")
+            log.error(f"nested $schema: {sname} at [{spath}]")
         CURRENT_SCHEMA = sname
 
     # handle metadata
@@ -235,17 +254,17 @@ def schema2model(schema, path: str = ""):
         _defs = schema[dname]
         assert isinstance(_defs, dict)
         for name, val in _defs.items():
-            log.warning(f"registering {dname}/{name}")
+            log.warning(f"registering {dname}/{name} at [{spath}]")
             # keep json schema for handling $ref #
             IDS[dname][name] = val
             # provide a local converted version as well?
             # this may not be enough in some cases
-            defs[name] = schema2model(val, path + f"/{dname}/{name}")
+            defs[name] = schema2model(val, path + [dname, name])
 
     # FIXME cleanup OpenAPI extentions "x-*", nullable
     for prop in list(schema.keys()):
         if prop.startswith("x-"):
-            log.warning(f"deleting {prop} on {path}")
+            log.warning(f"deleting {prop} at [{spath}]")
             del schema[prop]
         if "nullable" in schema:
             nullable = schema["nullable"]
@@ -253,7 +272,7 @@ def schema2model(schema, path: str = ""):
             if nullable:
                 if "type" in schema and isinstance(schema["type"], str):
                     schema["type"] = [schema["type"], "null"]
-                log.warning("ignoring nullable directive")
+                log.warning(f"ignoring nullable directive at [{spath}]")
             del schema["nullable"]
 
     # FIX missing type in some cases
@@ -265,7 +284,7 @@ def schema2model(schema, path: str = ""):
 
     # FIXME adhoc handling for table-schema.json and ADEME
     if "type" in schema and schema["type"] == "object" and ("anyOf" in schema or "oneOf" in schema):
-        log.warning(f"distributing object on anyOf/oneOf on {path}")
+        log.warning(f"distributing object on anyOf/oneOf at [{spath}]")
         # special case for Ademe
         if "anyOf" in schema:
             assert "oneOf" not in schema
@@ -310,7 +329,7 @@ def schema2model(schema, path: str = ""):
 
     # handle a schema
     if "$ref" in schema:
-        assert only(schema, "$ref", *IGNORE), f"$ref intermixed with other keywords at {path}"
+        assert only(schema, "$ref", *IGNORE), f"$ref intermixed with other keywords at [{spath}]"
         ref = schema["$ref"]
         assert isinstance(ref, str) and len(ref) > 0
         if ref.startswith("#/$defs/") and only(schema, "$ref", *IGNORE):
@@ -320,9 +339,9 @@ def schema2model(schema, path: str = ""):
             names = ref[2:].split("/")
             val = IDS
             for name in names:
-                assert name in val, f"following path in {ref}: missing {name} ({IDS})"
+                assert name in val, f"following path in {ref}: missing {name} ({IDS}) at [{spath}]"
                 val = val[name]
-            model = schema2model(val, path + "/$ref")
+            model = schema2model(val, path + ["$ref"])
             return buildModel(model, {}, defs, sharp)
         else:
             assert False, f"$ref handling not implemented: {ref}"
@@ -331,23 +350,23 @@ def schema2model(schema, path: str = ""):
         if isinstance(ts, (list, tuple)):
             # ooops
             schemas = split_schema(schema)
-            return buildModel({"|": [schema2model(v, path + "/typeS") for v in schemas.values()]},
+            return buildModel({"|": [schema2model(v, path + ["typeS"]) for v in schemas.values()]},
                               {}, defs, sharp)
         elif ts == "string" and "const" in schema:
-            assert only(schema, "type", "const", *IGNORE), path
+            assert only(schema, "type", "const", *IGNORE), f"string const at [{spath}]"
             const = schema["const"]
             return buildModel(f"_{const}", {}, defs, sharp)
         elif ts == "string":
             assert only(schema, "enum", "type", "format", "pattern", "minLength", "maxLength",
                         "contentMediaType", "contentEncoding",
-                        *IGNORE), path
+                        *IGNORE), f"string at [{spath}]"
             model = "$STRING" if EXPLICIT_TYPE else ""
             if "format" in schema:
                 fmt = schema["format"]
                 if fmt is not None:
                     model = format2model(fmt)
                 else:
-                    log.warning("ignoring null format")
+                    log.warning(f"ignoring null format at [{spath}]")
             constraints = {}
             if "enum" in schema:
                 ve = schema["enum"]
@@ -360,16 +379,16 @@ def schema2model(schema, path: str = ""):
                     model = {"|": [esc(v) for v in ve]}
             if "pattern" in schema:
                 pattern = schema["pattern"]
-                assert isinstance(pattern, str), path
-                assert model in ("", "$STRING"), path
+                assert isinstance(pattern, str), f"string pattern at [{spath}]"
+                assert model in ("", "$STRING"), f"string pattern for string at [{spath}]"
                 model = f"/{pattern}/"
             if "minLength" in schema:
                 minlen = schema["minLength"]
-                assert isinstance(minlen, int), path
+                assert isinstance(minlen, int), f"int min length at [{spath}]"
                 constraints[">="] = minlen
             if "maxLength" in schema:
                 maxlen = schema["maxLength"]
-                assert isinstance(maxlen, int), path
+                assert isinstance(maxlen, int), f"int max length at [{spath}]"
                 constraints["<="] = maxlen
             # if "contentMediaType" in schema:
             #     val = schema["contentMediaType"]
@@ -382,39 +401,41 @@ def schema2model(schema, path: str = ""):
             return buildModel(model, constraints, defs, sharp)
         elif ts == "number":
             assert only(schema, "type", "format", "multipleOf", "minimum", "maximum",
-                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE), path
+                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE), \
+                        f"number properties at [{spath}]"
             model = "$NUMBER" if EXPLICIT_TYPE else 0.0
             if "format" in schema:
                 fmt = schema["format"]
-                assert fmt in ("double", "float"), f"bad format {fmt} on {path}"
+                assert fmt in ("double", "float"), f"bad format {fmt} at [{spath}]"
                 if fmt == "double":
                     model = "$DOUBLE"
                 elif fmt == "float":
                     model = "$FLOAT"
                 else:
-                    assert False, f"unexpected number format {fmt} on {path}"
+                    assert False, f"unexpected number format {fmt} at [{spath}]"
             constraints = numberConstraints(schema)
             return buildModel(model, constraints, defs, sharp)
         elif ts == "integer":
             assert only(schema, "type", "format", "multipleOf", "minimum", "maximum",
-                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE), path
+                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE), \
+                        f"integer properties at [{spath}]"
             model = "$INTEGER" if EXPLICIT_TYPE else 0
             # OpenAPI
             if "format" in schema:
                 fmt = schema["format"]
-                log.warning(f"ignoring format {fmt}")
-                assert fmt in ("int32", "int64"), f"bad format {fmt} on {path}"
+                log.warning(f"ignoring format {fmt} at [{spath}]")
+                assert fmt in ("int32", "int64"), f"bad format {fmt} at [{spath}]"
                 if fmt == "int32":
                     model = "$I32"
                 elif fmt == "int64":
                     model = "$I64"
                 else:
-                    assert False, f"unexpected integer format: {fmt} on {path}"
+                    assert False, f"unexpected integer format: {fmt} at [{spath}]"
             constraints = numberConstraints(schema)
             return buildModel(model, constraints, defs, sharp)
         elif ts == "boolean":
-            log.warning("'required' ignored for boolean")
-            assert only(schema, "type", "required", *IGNORE), path
+            log.warning(f"'required' ignored for boolean at [{spath}]")
+            assert only(schema, "type", "required", *IGNORE), f"boolean properties at [{spath}]"
             model = "$BOOL" if EXPLICIT_TYPE else True
             return buildModel(model, {}, defs, sharp)
         elif ts == "null":
@@ -424,38 +445,39 @@ def schema2model(schema, path: str = ""):
         elif ts == "array":
             assert only(schema, "type", "prefixItems", "items",
                         "contains", "minContains", "maxContains",
-                        "minItems", "maxItems", "uniqueItems", *IGNORE), path
+                        "minItems", "maxItems", "uniqueItems", *IGNORE), \
+                        f"array properties at [{spath}]"
             constraints = {}
             if "minItems" in schema:
                 mini = schema["minItems"]
-                assert type(mini) is int, path
+                assert type(mini) is int, f"int min items at [{spath}]"
                 constraints[">="] = mini
             if "maxItems" in schema:
                 maxi = schema["maxItems"]
-                assert type(maxi) is int, path
+                assert type(maxi) is int, f"int max items at [{spath}]"
                 constraints["<="] = maxi
             if "uniqueItems" in schema:
                 unique = schema["uniqueItems"]
-                assert isinstance(unique, bool), path
+                assert isinstance(unique, bool), f"boolean unique at [{spath}]"
                 if unique:
                     constraints["!"] = True
             if "prefixItems" in schema:
                 assert only(schema, "type", "prefixItems", "items", "minItems", "maxItems",
-                            "uniqueItems", *IGNORE), path
+                            "uniqueItems", *IGNORE), f"array props with prefixItems at [{spath}]"
                 # tuple
                 vpi = schema["prefixItems"]
-                assert isinstance(vpi, list), path
-                model = [schema2model(i, path + "/prefixItems") for i in vpi]
+                assert isinstance(vpi, list), f"list prefixItems at [{spath}]"
+                model = [schema2model(i, path + ["prefixItems"]) for i in vpi]
                 if "items" in schema:
                     # cas prefixItems + items
                     if isinstance(schema["items"], bool):
-                        assert not constraints, f"not implemented yet {path}"
+                        assert not constraints, f"not implemented yet at [{spath}]"
                         if not schema["items"]:
                             return buildModel(model, {">=": 0, "<=": len(model)}, defs, sharp)
                         else:
-                            assert False, f"not implemented yet {path}"
+                            assert False, f"not implemented yet at [{spath}]"
                     # items is a type
-                    model.append(schema2model(schema["items"], path + "/items"))
+                    model.append(schema2model(schema["items"], path + ["items"]))
                     if not constraints:
                         constraints[">="] = len(model) - 1
                     return buildModel(model, constraints, defs, sharp)
@@ -466,63 +488,63 @@ def schema2model(schema, path: str = ""):
                     return buildModel(model, constraints, defs, sharp)
             elif "items" in schema:
                 assert only(schema, "type", "items", "minItems", "maxItems", "uniqueItems",
-                            *IGNORE), path
+                            *IGNORE), f"array props with items at [{spath}]"
                 sitems = schema["items"]
-                assert isinstance(sitems, (dict, bool)), path
-                model = [schema2model(schema["items"], path + "/items!")]
+                assert isinstance(sitems, (dict, bool)), f"valid schema at [{spath}]"
+                model = [schema2model(schema["items"], path + ["items"])]
                 return buildModel(model, constraints, defs, sharp)
             elif "contains" in schema:
                 # NO contains/items mixing yet
                 assert only(schema, "type", "contains", "minContains", "maxContains",
-                            "uniqueItems", *IGNORE), path
+                            "uniqueItems", *IGNORE), f"array props for containts[{spath}]"
                 # NOTE contains is not really supported in jm v2, rather as an extension
-                model = {"@": ["$ANY"], ".in": schema2model(schema["contains"], path + "/contains")}
+                model = {"@": ["$ANY"], ".in": schema2model(schema["contains"], path + ["contains"])}
                 if "minContains" in schema:
                     mini = schema["minContains"]
-                    assert type(mini) is int, path
+                    assert type(mini) is int, f"int min contains at [{spath}]"
                     model[">="] = mini
                 if "maxContains" in schema:
                     maxi = schema["maxContains"]
-                    assert type(maxi) is int, path
+                    assert type(maxi) is int, f"int max contains at [{spath}]"
                     model["<="] = maxi
                 return buildModel(model, constraints, defs, sharp)
             else:
                 return buildModel(["$ANY"], constraints, defs, sharp)
         elif ts == "object":
             if "discriminator" in schema:  # OpenAPI
-                log.warning(f"ignoring discriminator on {path}")
+                log.warning(f"ignoring discriminator at [{spath}]")
                 del schema["discriminator"]
             # handle meta data
             assert only(schema, "type", "properties", "additionalProperties", "required",
                         "minProperties", "maxProperties", "patternProperties", "propertyNames",
-                        *IGNORE), path
+                        *IGNORE), f"object properties at [{spath}]"
             constraints = {}
             model = {}
             if "minProperties" in schema:
                 mini = schema["minProperties"]
-                assert type(mini) is int, path
+                assert type(mini) is int, f"int min props at [{spath}]"
                 constraints[">="] = mini
             if "maxProperties" in schema:
                 maxi = schema["maxProperties"]
-                assert type(maxi) is int, path
+                assert type(maxi) is int, f"int max props at [{spath}]"
                 constraints["<="] = maxi
             if "patternProperties" in schema:
                 pats = schema["patternProperties"]
-                assert isinstance(pats, dict), path
+                assert isinstance(pats, dict), f"dict pattern props at [{spath}]"
                 for pp in sorted(pats.keys()):
                     name = new_def()
                     defs[name] = {"@": f"/{pp}/"}
-                    model[f"${name}"] = schema2model(pats[pp], path + f"/patternProperties[{pp}]")
+                    model[f"${name}"] = schema2model(pats[pp], path + ["patternProperties", pp])
             if "propertyNames" in schema:
                 # does not seem very useful?
                 pnames = schema["propertyNames"]
-                assert only(pnames, "pattern", "type", *IGNORE), path
+                assert only(pnames, "pattern", "type", *IGNORE), f"props for prop names at [{spath}]"
                 # if given a type, it must be string
                 if "type" in pnames:
-                    assert pnames["type"] == "string", path
+                    assert pnames["type"] == "string", f"prop name is string at [{spath}]"
                 if "pattern" in pnames:
                     pat = pnames["pattern"]
-                    assert isinstance(pat, str), path
+                    assert isinstance(pat, str), f"pattern is string at [{spath}]"
                     name = new_def()
                     defs[name] = pat if pat[0] == "^" else f"^.*{pat}"
                     model[f"${name}"] = "$ANY"
@@ -530,12 +552,12 @@ def schema2model(schema, path: str = ""):
             if "properties" in schema:
                 props = schema["properties"]
                 required = schema.get("required", [])
-                assert isinstance(props, dict), path
+                assert isinstance(props, dict), f"dict properties [{spath}]"
                 for k, v in props.items():
                     if k in required:
-                        model[f"_{k}"] = schema2model(v, path + f"/properties[_{k}]")
+                        model[f"_{k}"] = schema2model(v, path + ["properties", f"_{k}"])
                     else:
-                        model[f"?{k}"] = schema2model(v, path + f"/properties[?{k}]")
+                        model[f"?{k}"] = schema2model(v, path + ["properties", f"?{k}"])
                 if "additionalProperties" in schema:
                     ap = schema["additionalProperties"]
                     if isinstance(ap, bool):
@@ -543,26 +565,27 @@ def schema2model(schema, path: str = ""):
                             model[""] = "$ANY"
                         # else nothing else is allowed
                     elif isinstance(ap, dict):
-                        model[""] = schema2model(ap, path + "/additionalProperties")
+                        model[""] = schema2model(ap, path + ["additionalProperties"])
                     else:
-                        assert False, f"not implemented yet, {path}"
+                        assert False, f"not implemented yet at [{spath}]"
                 else:
                     model[""] = "$ANY"
             elif "additionalProperties" in schema:
                 # "additionalProperties" without "properties"
-                assert only(schema, "type", "additionalProperties", *IGNORE), path
+                assert only(schema, "type", "additionalProperties", *IGNORE), \
+                            f"add prop props at [{spath}]"
                 ap = schema["additionalProperties"]
                 if isinstance(ap, bool):
                     if ap:
                         model[""] = "$ANY"
                     # else nothing else is allowed
                 elif isinstance(ap, dict):
-                    model[""] = schema2model(ap, path + "/additionalProperties")
+                    model[""] = schema2model(ap, path + ["additionalProperties"])
                 else:
-                    assert False, f"not implemented yet, {path}"
+                    assert False, f"not implemented yet at [{spath}]"
             else:
                 assert only(schema, "type", "maxProperties", "minProperties", "patternProperties",
-                            "propertyNames", *IGNORE), path
+                            "propertyNames", *IGNORE), f"object props at [{spath}]"
                 if "propertyNames" in schema:
                     pass
                 else:
@@ -570,17 +593,17 @@ def schema2model(schema, path: str = ""):
             # handle constraints
             return buildModel(model, constraints, defs, sharp)
         else:
-            assert False, f"unexpected type: {ts} {path}"
+            assert False, f"unexpected type: {ts} at [{spath}]"
     elif "enum" in schema:
         # FIXME currently assume only a list of string
         for prop in ("maxLength", "minLength"):
             if prop in schema:
-                log.warning(f"ignoring doubtful {prop} from enum")
+                log.warning(f"ignoring doubtful {prop} from enum at [{spath}]")
                 del schema[prop]
         assert only(schema, "enum", *IGNORE), \
-            f"keyword enum intermixed with other keywords at {path}"
+            f"keyword enum intermixed with other keywords at [{spath}]"
         ve = schema["enum"]
-        assert isinstance(ve, list), path
+        assert isinstance(ve, list), f"enum list at [{spath}]"
         if len(ve) == 1:
             model = esc(ve[0])
         else:
@@ -589,42 +612,43 @@ def schema2model(schema, path: str = ""):
         return buildModel(model, {}, defs, sharp)
     elif "const" in schema:
         assert only(schema, "const", *IGNORE), \
-            f"keyword const intermixed with other keywords at {path}"
+            f"keyword const intermixed with other keywords at [{spath}]"
         const = schema["const"]
         # what is the type of the constant? assume a string for NOW, could be anything?
         return buildModel(toconst(const), {}, defs, sharp)
     elif "oneOf" in schema:
         assert only(schema, "oneOf", *IGNORE), \
-            f"keyword oneOf intermixed with other keywords at {path}"
+            f"keyword oneOf intermixed with other keywords at [{spath}]"
         choices = schema["oneOf"]
         assert isinstance(choices, (list, tuple)), path
-        model = {"^": [schema2model(s, path + f"/oneOf[{i}]") for i, s in enumerate(choices)]}
+        model = {"^": [schema2model(s, path + ["oneOf", i]) for i, s in enumerate(choices)]}
         return buildModel(model, {}, defs, sharp)
     elif "anyOf" in schema:
         assert only(schema, "anyOf", *IGNORE), \
-            f"keyword anyOf intermixed with other keywords at {path}"
+            f"keyword anyOf intermixed with other keywords at [{spath}]"
         choices = schema["anyOf"]
         assert isinstance(choices, (list, tuple)), path
-        model = {"|": [schema2model(s, path + f"/anyOf[{i}]") for i, s in enumerate(choices)]}
+        model = {"|": [schema2model(s, path + ["anyOf", i]) for i, s in enumerate(choices)]}
         return buildModel(model, {}, defs, sharp)
     elif "allOf" in schema:
         # NOTE types should be compatible to avoid an empty match
         assert only(schema, "allOf", *IGNORE), path
         choices = schema["allOf"]
         assert isinstance(choices, (list, tuple)), \
-            f"keyword allOf intermixed with other keywords at {path}"
-        model = {"&": [schema2model(s, path + f"/allOf[{i}]") for i, s in enumerate(choices)]}
+            f"keyword allOf intermixed with other keywords at [{spath}]"
+        model = {"&": [schema2model(s, path + ["allOf", i]) for i, s in enumerate(choices)]}
         return buildModel(model, {}, defs, sharp)
     elif "not" in schema:
         # NOTE other option:
-        assert only(schema, "not", *IGNORE), f"keyword not intermixed with other keywords at {path}"
+        assert only(schema, "not", *IGNORE), \
+                    f"keyword not intermixed with other keywords at [{spath}]"
         val = schema["not"]
         assert isinstance(val, dict), path
         if len(val) == 0:
             # { "not": {} }
-            model = "$none"
+            model = "$NONE"
         else:
-            model = {"^": ["$ANY", schema2model(val, path + "/not")]}
+            model = {"^": ["$ANY", schema2model(val, path + ["not"])]}
         return buildModel(model, {}, defs, sharp)
     else:
         # empty schema

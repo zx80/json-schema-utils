@@ -1,15 +1,4 @@
 {
-  "#": {
-    "default": "Default value",
-    "deprecated": true,
-    "description": "This is a schema that matches anything.",
-    "examples": [
-      "Anything",
-      4035
-    ],
-    "readOnly": true,
-    "title": "Match anything",
-    "writeOnly": false
-  },
+  "#": "This is a schema that matches anything.",
   "@": "$ANY"
 }
