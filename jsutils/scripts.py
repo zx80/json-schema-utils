@@ -292,10 +292,13 @@ def jsu_model():
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
+    if not args.schemas:
+        args.schemas = ["-"]
+
     for fn in args.schemas:
-        log.debug(f"considering file: {fn}")
-        schema = json.load(open(fn))
+        log.debug(f"considering: {fn}")
         try:
+            schema = json.load(open(fn) if fn != "-" else sys.stdin)
             model = schema2model(schema)
         except Exception as e:
             log.error(e, exc_info=args.debug)
