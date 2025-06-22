@@ -1,0 +1,4 @@
+{
+  "type": [ "string", "number" ],
+  "enum": [ 42.0, "hello" ]
+}

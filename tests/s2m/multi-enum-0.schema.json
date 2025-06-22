@@ -1,0 +1,4 @@
+{
+  "type": ["boolean", "string"],
+  "enum": [ true, false, "hello", "world"]
+}

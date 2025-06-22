@@ -8,7 +8,9 @@ log = logging.getLogger("convert")
 # log.setLevel(logging.DEBUG)
 
 #
-# SCHEMA TO MODEL CONVERSION
+# BEST EFFORT SCHEMA TO MODEL CONVERSION
+#
+# TODO add support for "items": [] (draft-07)
 #
 
 def toconst(val):
@@ -155,15 +157,43 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
         if prop in META_KEYS or prop == "type":
             pass
         elif prop == "format":
-            fmt = schema["format"]
+            assert isinstance(val, str), "format is a string"
             if "string" in schemas:
-                schemas["string"]["format"] = fmt
+                schemas["string"]["format"] = val
             elif "number" in schemas:
-                schemas["number"]["format"] = fmt
+                schemas["number"]["format"] = val
             elif "integer" in schemas:
-                schemas["integer"]["format"] = fmt
+                schemas["integer"]["format"] = val
             else:
                 assert False, f"cannot map format to {types}"
+        elif prop == "enum":
+            # DEAD CODE… enum does not need any check and is already before?
+            assert isinstance(val, list), "enum is a list"
+            for _, sh in schemas:
+                sh["enum"] = []
+            for v in val:
+                if v is None and "null" in schemas:
+                    # just drop the enum
+                    del schemas["null"]["enum"]
+                elif isinstance(v, bool) and "boolean" in schemas:
+                    schemas["boolean"]["enum"].append(v)
+                elif isinstance(v, int):
+                    if "integer" in schemas:
+                        schemas["integer"]["enum"].append(v)
+                    if "number" in schemas:
+                        schemas["number"]["enum"].append(float(v))
+                elif isinstance(v, float):
+                    if "number" in schemas:
+                        schemas["number"]["enum"].append(v)
+                    if "integer" in schemas and v - int(v) == 0.0:
+                        schemas["integer"]["enum"].append(int(v))
+                elif isinstance(v, str) and "string" in schemas:
+                    schemas["string"]["enum"].append(v)
+                elif isinstance(v, list) and "array" in schemas:
+                    schemas["array"]["enum"].append(v)
+                elif isinstance(v, dict) and "object" in schemas:
+                    schemas["object"]["enum"].append(v)
+                # else just ignore incompatible value…
         elif prop in SPLIT:
             assert SPLIT[prop] in types
             schemas[SPLIT[prop]][prop] = val
