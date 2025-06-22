@@ -126,6 +126,8 @@ META_KEYS = [
     "$schema", "$id", "$comment",
     # OLD?
     "context", "notes",
+    # extensions
+    "markdownDescription", "deprecationMessage", "scope",
 ]
 
 IGNORE = META_KEYS + ["$defs", "definitions"]
@@ -365,6 +367,8 @@ def schema2model(schema, path: JsonPath = []):
         if ref.startswith("#/$defs/") and only(schema, "$ref", *IGNORE):
             # keep a reference if simple
             return buildModel("$" + ref[8:], {}, defs, sharp)
+        elif ref.startswith("#/definitions/") and only(schema, "$ref", *IGNORE):
+            return buildModel("$" + ref[14:], {}, defs, sharp)
         elif ref.startswith("#/"):
             names = ref[2:].split("/")
             val = IDS
@@ -520,9 +524,13 @@ def schema2model(schema, path: JsonPath = []):
                 assert only(schema, "type", "items", "minItems", "maxItems", "uniqueItems",
                             *IGNORE), f"array props with items at [{spath}]"
                 sitems = schema["items"]
-                assert isinstance(sitems, (dict, bool)), f"valid schema at [{spath}]"
-                model = [schema2model(schema["items"], path + ["items"])]
-                return buildModel(model, constraints, defs, sharp)
+                if isinstance(sitems, list):
+                    # OLD prefixItems…
+                    model = [schema2model(i, path + ["prefixItems"]) for i in sitems]
+                else:
+                    assert isinstance(sitems, (dict, bool)), f"valid schema at [{spath}]"
+                    model = [schema2model(schema["items"], path + ["items"])]
+                    return buildModel(model, constraints, defs, sharp)
             elif "contains" in schema:
                 # NO contains/items mixing yet
                 assert only(schema, "type", "contains", "minContains", "maxContains",
