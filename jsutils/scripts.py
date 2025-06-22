@@ -287,6 +287,8 @@ def jsu_model():
 
     ap = argparse.ArgumentParser()
     ap_common(ap)
+    ap.add_argument("--strict", action="store_true", default=True, help="reject doubtful schemas")
+    ap.add_argument("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
@@ -299,7 +301,7 @@ def jsu_model():
         log.debug(f"considering: {fn}")
         try:
             schema = json.load(open(fn) if fn != "-" else sys.stdin)
-            model = schema2model(schema)
+            model = schema2model(schema, strict=args.strict)
         except Exception as e:
             log.error(e, exc_info=args.debug)
             model = {"ERROR": str(e)}

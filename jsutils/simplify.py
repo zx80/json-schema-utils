@@ -1,3 +1,5 @@
+# TODO
+# oneOf [ { "enum": [] }, { "const": } ]
 from typing import Any
 import copy
 from .utils import JsonSchema, log, JSUError
