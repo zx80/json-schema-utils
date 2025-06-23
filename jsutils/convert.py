@@ -263,7 +263,7 @@ def doubt(ok: bool, msg: str, strict: bool):
 
 
 def schema2model(schema, path: JsonPath = [], strict: bool = True):
-    """Convert a JSON schema to a JSON model."""
+    """Convert a JSON schema to a JSON model assuming a 2020-12 semantics."""
 
     global CURRENT_SCHEMA
 
