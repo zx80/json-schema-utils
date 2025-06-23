@@ -16,7 +16,7 @@ def _recurseSchema(
 
     if isinstance(schema, bool):
         return rwt(schema, path)
-    assert isinstance(schema, dict)
+    assert isinstance(schema, dict), f"schema must be a dict: {type(schema).__name__}"
 
     # list of schemas
     for prop in ("allOf", "oneOf", "anyOf", "prefixItems"):
@@ -31,8 +31,13 @@ def _recurseSchema(
                  "not", "if", "then", "else", "contains", "propertyNames",
                  "unevaluatedItems"):
         if prop in schema:
-            schema[prop] = _recurseSchema(schema[prop],  # type: ignore
-                                          url, path + [prop], flt, rwt)
+            # handle old items ~ prefixItems
+            if prop == "items" and isinstance(schema["items"], list):
+                schema[prop] = [ _recurseSchema(s, url, path + [prop, str(i)], flt, rwt)
+                    for i, s in enumerate(schema[prop]) ]
+            else:  # standard case
+                schema[prop] = _recurseSchema(schema[prop],  # type: ignore
+                                              url, path + [prop], flt, rwt)
 
     # handle values as schemas
     def recValue(schema, *propnames):
