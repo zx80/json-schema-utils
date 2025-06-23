@@ -94,14 +94,17 @@ def jsu_simpler():
 
     ap = argparse.ArgumentParser()
     ap_common(ap)
-    ap.add_argument("schemas", nargs="*", help="schemas to inline")
+    ap.add_argument("schemas", nargs="*", help="schemas to simplify")
     args = ap.parse_args()
+
+    if not args.schemas:
+        args.schemas = ["-"]
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
-        schema = json.load(open(fn))
+        schema = json.load(sys.stdin if fn == "-" else open(fn))
         if isinstance(schema, dict):
             schema = simplifySchema(schema, schema.get("$id", "."))
 
