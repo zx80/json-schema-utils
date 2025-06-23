@@ -11,6 +11,8 @@ log = logging.getLogger("convert")
 # BEST EFFORT SCHEMA TO MODEL CONVERSION
 #
 # TODO add $ref to object + properties? (merge ref pass)
+# TODO internal math $ref without defs (eg clang-format)
+# TODO combined propertyNames + additionalProperties
 #
 
 def toconst(val):
@@ -485,10 +487,26 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
             doubt(only(schema, "type", *IGNORE), f"null with props at [{spath}]", strict)
             return buildModel(model, {}, defs, sharp)
         elif ts == "array":
+
+            # fix common misplacements
+            if not strict and "items" in schema and isinstance(schema["items"], dict):
+                subschema = schema["items"]
+                for kw in ("uniqueItems", "minItems", "maxItems"):
+                    # possible move misplaced uniqueItems
+                    if kw not in schema and kw in subschema and "type" in subschema and \
+                            isinstance(subschema["type"], str) and subschema["type"] != "array":
+                        log.warning(f"moving misplaced {kw} at [{spath}.items]")
+                        schema[kw] = subschema[kw]
+                        del subschema[kw]
+            # TODO minLength -> minItems
+
+            # sanity check
             doubt(only(schema, "type", "prefixItems", "items",
                        "contains", "minContains", "maxContains",
                        "minItems", "maxItems", "uniqueItems", *IGNORE),
                        f"array properties at [{spath}]", strict)
+
+            # build model
             constraints = {}
             if "minItems" in schema:
                 mini = schema["minItems"]
@@ -510,7 +528,10 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                 # tuple
                 vpi = schema["prefixItems"]
                 assert isinstance(vpi, list), f"list prefixItems at [{spath}]"
-                model = [schema2model(i, path + ["prefixItems"], strict) for i in vpi]
+                model = [
+                    schema2model(s, path + ["prefixItems", i], strict)
+                        for i, s in enumerate(vpi)
+                ]
                 if "items" in schema:
                     # cas prefixItems + items
                     if isinstance(schema["items"], bool):
@@ -534,8 +555,11 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                            *IGNORE), f"array props with items at [{spath}]", strict)
                 sitems = schema["items"]
                 if isinstance(sitems, list):
-                    # OLD prefixItems…
-                    model = [schema2model(i, path + ["prefixItems"], strict) for i in sitems]
+                    # OLD JSON Schema prefixItems…
+                    model = [
+                        schema2model(s, path + ["items", i], strict)
+                            for i, s in enumerate(sitems)
+                    ]
                 else:
                     assert isinstance(sitems, (dict, bool)), f"valid schema at [{spath}]"
                     model = [schema2model(schema["items"], path + ["items"], strict)]
@@ -558,13 +582,27 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
             else:
                 return buildModel(["$ANY"], constraints, defs, sharp)
         elif ts == "object":
-            if "discriminator" in schema:  # OpenAPI
+
+            # ignore OpenAPI extension
+            if "discriminator" in schema:
                 log.warning(f"ignoring discriminator at [{spath}]")
                 del schema["discriminator"]
-            # handle meta data
+
+            # fix additionalProperties misplacement
+            if not strict and "properties" in schema and isinstance(schema["properties"], dict) \
+                    and "additionalProperties" not in schema \
+                    and "additionalProperties" in schema["properties"] \
+                    and "properties" not in schema["properties"]:
+                log.warning(f"moving misplaced additionalProperties at [{spath}.properties]")
+                schema["additionalProperties"] = schema["properties"]["additionalProperties"]
+                del schema["properties"]["additionalProperties"]
+
+            # sanity check
             doubt(only(schema, "type", "properties", "additionalProperties", "required",
                        "minProperties", "maxProperties", "patternProperties", "propertyNames",
                        *IGNORE), f"object properties at [{spath}]", strict)
+
+            # build model
             constraints = {}
             model = {}
             if "minProperties" in schema:
