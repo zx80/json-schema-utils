@@ -477,7 +477,8 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
             constraints = numberConstraints(schema)
             return buildModel(model, constraints, defs, sharp)
         elif ts == "boolean":
-            log.warning(f"'required' ignored for boolean at [{spath}]")
+            if "required" in schema:
+                log.warning(f"'required' ignored for boolean at [{spath}]")
             doubt(only(schema, "type", "required", *IGNORE),
                   f"boolean properties at [{spath}]", strict)
             model = "$BOOL" if EXPLICIT_TYPE else True
