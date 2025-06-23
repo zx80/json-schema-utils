@@ -1,0 +1,55 @@
+{
+  "*-array/array": 1,
+  "*-object/object": 1,
+  "*-string/array": 1,
+  "<$schema>": "<unknown_explicit_schema>",
+  "<bad-properties-nesting-where>": [
+    "$: ['additionalProperties']"
+  ],
+  "<bad-properties-nesting>": 1,
+  "<bad-root>": false,
+  "<errors>": [
+    [
+      "bad mix",
+      "array: ['string'] ['uniqueItems']",
+      "$.properties.alist.items"
+    ]
+  ],
+  "<explicit-schema>": false,
+  "<file-hash>": "e6193c85903fab5793e8",
+  "<input-file>": "tofix.schema.json",
+  "<json-metrics>": {
+    "array": 0,
+    "bool": 2,
+    "float": 0,
+    "int": 0,
+    "items": 0,
+    "null": 0,
+    "object": 4,
+    "props": 8,
+    "string": 11
+  },
+  "<normed-hash>": "50d85f89a0e98b8cd6d6",
+  "<schema-prop>": true,
+  "<versions>": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "false": 1,
+  "items": 1,
+  "properties": 1,
+  "properties-count": 2,
+  "type": 3,
+  "type=array": 1,
+  "type=object": 1,
+  "type=string": 1,
+  "uniqueItems": 1
+}

@@ -53,6 +53,9 @@ def jsu_inline():
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
+    if not args.schemas:
+        args.schemas = ["-"]
+
     schemas = Schemas()
     schemas.addProcess(lambda s, u: inlineRefs(s, u, schemas))
 
@@ -63,7 +66,7 @@ def jsu_inline():
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
-        schema = json.load(open(fn))
+        schema = json.load(open(fn) if fn != "-" else sys.stdin)
         if isinstance(schema, bool):
             inlined = schema
         elif isinstance(schema, dict):
@@ -104,7 +107,7 @@ def jsu_simpler():
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
-        schema = json.load(sys.stdin if fn == "-" else open(fn))
+        schema = json.load(open(fn) if fn != "-" else sys.stdin)
         if isinstance(schema, dict):
             schema = simplifySchema(schema, schema.get("$id", "."))
 
@@ -129,7 +132,7 @@ def jsu_check():
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     try:
-        with open(args.schema) as f:
+        with open(args.schema) if args.schema != "-" else sys.stdin as f:
             jschema = json.load(f)
     except FileNotFoundError as e:
         if args.debug:
@@ -197,7 +200,7 @@ def jsu_check():
 
     nerrors = 0
     for fn in args.values:
-        with open(fn) as f:
+        with open(fn) if fn != "-" else sys.stdin as f:
             try:
                 data = json.load(f)
                 if args.test:
@@ -239,9 +242,12 @@ def jsu_stats():
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
+    if not args.schemas:
+        args.schemas = ["-"]
+
     for fn in args.schemas:
         log.info(f"considering: {fn}")
-        with open(fn) as f:
+        with open(fn) if fn != "-" else sys.stdin as f:
             try:
                 # raw data and its hash
                 data = f.read()
@@ -279,9 +285,12 @@ def jsu_pretty():
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
+    if not args.schemas:
+        args.schemas = ["-"]
+
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
-        schema = json.load(open(fn))
+        schema = json.load(open(fn) if fn != "-" else sys.stdin)
         print(json_dumps(schema, args))
 
 def jsu_model():

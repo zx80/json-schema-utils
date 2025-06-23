@@ -34,7 +34,7 @@ def _recurseSchema(
             # handle old items ~ prefixItems
             if prop == "items" and isinstance(schema["items"], list):
                 schema[prop] = [ _recurseSchema(s, url, path + [prop, str(i)], flt, rwt)
-                    for i, s in enumerate(schema[prop]) ]
+                    for i, s in enumerate(schema[prop]) ]  # type: ignore
             else:  # standard case
                 schema[prop] = _recurseSchema(schema[prop],  # type: ignore
                                               url, path + [prop], flt, rwt)

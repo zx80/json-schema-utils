@@ -108,7 +108,7 @@ def simplifySchema(schema: JsonSchema, url: str):
     """Simplify a JSON Schema with various rules."""
 
     # schema version for $ref pruning
-    if "$schema" in schema and isinstance(schema["$schema"], str):
+    if isinstance(schema, dict) and "$schema" in schema and isinstance(schema["$schema"], str):
         ds = schema["$schema"]
         version = \
             9 if "2020-12" in ds else \
@@ -135,7 +135,7 @@ def simplifySchema(schema: JsonSchema, url: str):
         if "$ref" in schema and version <= 7:
             # https://json-schema.org/draft-07/draft-handrews-json-schema-01#rfc.section.8.3
             if len(schema) > 1:
-                log.warning(f"dropping all props adjacent to $ref on old schemas")
+                log.warning(f"dropping all props adjacent to $ref on old schemas at {path}")
             return { "$ref": schema["$ref"] }
 
         # anyOf/oneOf/allOf of length 1

@@ -1,0 +1,13 @@
+{
+  "properties": {
+    "additionalProperties": false,
+    "alist": {
+      "items": {
+        "type": "string",
+        "uniqueItems": true
+      },
+      "type": "array"
+    }
+  },
+  "type": "object"
+}
