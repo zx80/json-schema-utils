@@ -446,7 +446,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
             doubt(only(schema, "type", "format", "multipleOf", "minimum", "maximum",
                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE),
                         f"number properties at [{spath}]", strict)
-            model = "$NUMBER" if EXPLICIT_TYPE else 0.0
+            model = "$NUMBER" if EXPLICIT_TYPE else -1.0
             if "format" in schema:
                 fmt = schema["format"]
                 assert fmt in ("double", "float"), f"bad format {fmt} at [{spath}]"
@@ -462,7 +462,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
             doubt(only(schema, "type", "format", "multipleOf", "minimum", "maximum",
                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE),
                         f"integer properties at [{spath}]", strict)
-            model = "$INTEGER" if EXPLICIT_TYPE else 0
+            model = "$INTEGER" if EXPLICIT_TYPE else -1
             # OpenAPI
             if "format" in schema:
                 fmt = schema["format"]
