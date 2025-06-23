@@ -234,7 +234,7 @@ def simplifySchema(schema: JsonSchema, url: str):
                     for kw in ("additionalProperties", "unevaluatedProperties"):
                         if kw in schema:
                             subschema = _ignored(schema[kw])  # pyright: ignore
-                            if subschema in (True, subschema):
+                            if subschema in (True, {}):
                                 log.info(f"removing useless {kw} keyword at {lpath}")
                                 del schema[kw]
 
