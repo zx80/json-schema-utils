@@ -6,6 +6,7 @@ from .utils import JsonSchema, JSUError, log
 from .schemas import Schemas
 from .recurse import recurseSchema
 
+# TODO fix recursion handling
 
 def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     """Merge an additional property into en existing schema.
