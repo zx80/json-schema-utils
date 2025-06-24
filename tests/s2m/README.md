@@ -4,7 +4,7 @@
 - [x] aws-cdk.schema.json (jsu-model)
 - [x] babelrc.schema.json (jsu-model)
 - [x] clang-format.schema.json (jsu-simpler | jsu-inline | jsu-model --loose) (`contains`)
-- [ ] cmake-resets.schema.json (TODO `allOf` of `$ref` to merge)
+- [x] cmake-resets.schema.json (jsu-simpler | jsu-model)
 - [x] code-climate.schema.json (jsu-simpler | jsu-model)
 - [x] cql2.schema.json (jsu-simpler | jsu-model --loose)
 - [x] cspell.schema.json (jsu-model; jsu-simpler | jsu-model)
