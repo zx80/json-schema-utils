@@ -658,7 +658,11 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
             if "propertyNames" in schema:
                 # does not seem very useful?
                 pnames = schema["propertyNames"]
-                assert only(pnames, "pattern", "type", *IGNORE), f"props for prop names at [{spath}]"
+                if "additionalProperties" in schema:
+                    addprops = schema["additionalProperties"]
+                else:
+                    addprops = "$ANY"
+                assert only(pnames, "pattern", "type", "format", *IGNORE), f"props for prop names at [{spath}]"
                 # if given a type, it must be string
                 if "type" in pnames:
                     assert pnames["type"] == "string", f"prop name is string at [{spath}]"
@@ -667,7 +671,10 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                     assert isinstance(pat, str), f"pattern is string at [{spath}]"
                     name = new_def()
                     defs[name] = pat if pat[0] == "^" else f"^.*{pat}"
-                    model[f"${name}"] = "$ANY"
+                    model[f"${name}"] = addprops
+                if "format" in pnames:
+                    fmt = pnames["format"]
+                    model[format2model(fmt)] = addprops
                 # else nothing?!
             if "properties" in schema:
                 props = schema["properties"]

@@ -32,7 +32,7 @@
 - [x] stale.schema.json (jsu-simpler | jsu-model)
 - [x] stylecop.schema.json (jsu-model --loose)
 - [x] tmuxinator.schema.json (jsu-model)
-- [ ] ui5-manifest.schema.json (jsu-simpler | ... TODO check inline)
+- [x] ui5-manifest.schema.json (jsu-simpler | jsu-model --loose)
 - [ ] ui5.schema.json (39 if, 3000 lines: TODO by $id? autoremove?)
 - [x] unreal-engine-uproject.schema.json (jsu-model)
 - [x] vercel.schema.json (jsu-simpler | jsu-inline | jsu-model --loose)

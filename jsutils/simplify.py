@@ -1,5 +1,6 @@
 # TODO
 # oneOf [ { "enum": [] }, { "const": } ]
+# import urllib
 from typing import Any
 import copy
 from .utils import JsonSchema, log, JSUError, only, has
@@ -82,7 +83,6 @@ def _typeCompat(t: str, v: Any) -> bool:
             (t == "string" and isinstance(v, str)) or
             (t == "array" and isinstance(v, (list, tuple))) or
             (t == "object" and isinstance(v, dict)))
-
 
 _IGNORABLE = (
     # core
@@ -326,3 +326,120 @@ def simplifySchema(schema: JsonSchema, url: str):
         return schema
 
     return recurseSchema(schema, url, rwt=rwtSimpler)
+
+#
+# move definitions at the root and resolve ids
+#
+
+def defId(schema) -> tuple[str|None, str|None]:
+    """return name of definitions and id properties."""
+    if not isinstance(schema, dict):
+        return (None, None)
+    defn = "$defs" if "$defs" in schema else \
+           "definitions" if "definitions" in schema else \
+           None
+    idn = "$id" if "$id" in schema else \
+          "id" if "id" in schema else \
+          None
+    return (defn, idn)
+
+SUBCOUNT: int = 0
+
+def scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
+                 moved: dict[str, str], ids: dict[str, str], path: list[str|int] = []):
+    """Move definitions/$defs to root schema based on id/$id with disambiguation"""
+
+    defn, idn = defId(schema)
+
+    if defn is None:
+        return
+
+    todo = []
+
+    # if we have an id, we move definitions to defs and rewrite refs
+    if idn and defn and path:
+        sid = schema[idn]
+        assert isinstance(sid, str)
+
+        del schema[idn]
+        if "id" in schema:
+            del schema["id"]
+
+        global SUBCOUNT
+
+        # keep track of changes
+        schema["$comment"] = f"{idn} {SUBCOUNT}: {sid}"
+
+        prefix = f"_subs_{SUBCOUNT}_"
+        SUBCOUNT += 1
+
+        # to remap long references later
+        assert sid not in moved
+        moved[sid + "#/" + defn + "/"] = rootdef + "/" + prefix
+        ids[sid] = "#/" + "/".join(path)
+
+        def fltRef(schema, lpath):
+            if isinstance(schema, dict):
+                if "$id" in schema or "id" in schema:
+                    todo.append((schema, path))
+                    return False
+                return True
+            return False
+
+        def rwtRef(schema, lpath):
+            if isinstance(schema, dict) and "$ref" in schema:
+                dest = schema["$ref"]
+                assert isinstance(dest, str)
+                if dest.startswith(rootdef):
+                    schema["$ref"] = "#/$defs/" + prefix + dest[len(rootdef)+1:]
+                if dest in ("#", "#/"):
+                    schema["$ref"] = "#/" + "/".join(path)
+            return schema
+
+        for name, sschem in schema[defn].items():
+            pname = prefix + name
+            assert pname not in defs
+            defs[pname] = recurseSchema(sschem, "", flt=fltRef, rwt=rwtRef)
+
+        del schema[defn]
+
+        recurseSchema(schema, "", flt=fltRef, rwt=rwtRef)
+
+    if not path:
+        for name, s in schema[defn].items():
+            todo.append((s, path + [ defn, name ]))
+
+    # recurse
+    while todo:
+        s, p = todo.pop()
+        scopeSubDefs(s, defs, rootdef, moved, ids, p)
+
+def scopeDefs(schema: JsonSchema):
+    defn, idn = defId(schema)
+
+    if defn is None:
+        return
+
+    # do internal renamings
+    rootdef, moved, ids = f"#/{defn}", {}, {}
+
+    scopeSubDefs(schema, schema[defn], rootdef, moved, ids, [])
+
+    # log.info(f"ids={ids}")
+
+    # do full url renamings
+    def rwtGref(schema, path):
+        if isinstance(schema, dict) and "$ref" in schema:
+            dest = schema["$ref"]
+            if dest and dest[0] != "#":
+                # inefficient
+                for old, new in moved.items():
+                    if dest.startswith(old):
+                        # log.warning(f"dest={dest} old={old} new={new}")
+                        schema["$ref"] = new + dest[len(old):]
+                    if dest in ids:
+                        log.warning(f"rewriting raw url: {dest} as {ids[dest]}")
+                        schema["$ref"] = ids[dest]
+        return schema
+
+    recurseSchema(schema, "", rwt=rwtGref)

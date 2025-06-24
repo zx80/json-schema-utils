@@ -12,7 +12,7 @@ from .schemas import Schemas
 from .utils import log, JSUError
 from .recurse import hasDirectRef
 from .inline import inlineRefs
-from .simplify import simplifySchema
+from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
 
 
@@ -109,6 +109,7 @@ def jsu_simpler():
         log.debug(f"considering file: {fn}")
         schema = json.load(open(fn) if fn != "-" else sys.stdin)
         if isinstance(schema, dict):
+            scopeDefs(schema)
             schema = simplifySchema(schema, schema.get("$id", "."))
 
         print(json_dumps(schema, args))
