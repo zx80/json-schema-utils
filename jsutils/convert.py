@@ -730,8 +730,8 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
             if prop in schema:
                 log.warning(f"ignoring doubtful {prop} from enum at [{spath}]")
                 del schema[prop]
-        assert only(schema, "enum", *IGNORE), \
-            f"keyword enum intermixed with other keywords at [{spath}]"
+        doubt(only(schema, "enum", *IGNORE),
+              f"keyword enum intermixed with other keywords at [{spath}]", strict)
         ve = schema["enum"]
         assert isinstance(ve, list), f"enum list at [{spath}]"
         if len(ve) == 1:
