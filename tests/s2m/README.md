@@ -27,7 +27,7 @@
 - [x] omnisharp.schema.json (jsu-model)
 - [x] openapi.schema.json (by $id)
 - [x] pre-commit-hooks.schema.json (jsu-model)
-- [ ] pulumi.schema.json (TODO remove if with empty then)
+- [x] pulumi.schema.json (jsu-simpler | jsu-model)
 - [x] semantic-release.schema.json (jsu-model)
 - [ ] stale.schema.json (jsu-simpler | ... TODO check inline)
 - [x] stylecop.schema.json (jsu-model --loose)

@@ -1,6 +1,7 @@
 from typing import Any
 import re
 import logging
+from .utils import only, has
 
 type JsonPath = list[str|int]
 
@@ -28,24 +29,6 @@ def toconst(val):
             return "_" + val
         case _:
             raise Exception(f"unexpected value for a constant: {val}")
-
-def only(schema, *props):
-    """Tell whether schema only contains these props."""
-    assert isinstance(schema, dict)
-    ok = set(schema.keys()).issubset(set(props))
-    if not ok:
-        ttype = schema.get("type", "<>")
-        log.debug(f"BAD SCHEMA {ttype}: {list(schema.keys())} {props}")
-    return ok
-
-
-def has(schema, *props):
-    """Tell whether schema has any of these props."""
-    assert isinstance(schema, dict)
-    for p in schema.keys():
-        if p not in props:
-            return False
-    return True
 
 
 def esc(s):

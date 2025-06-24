@@ -2,7 +2,7 @@
 # oneOf [ { "enum": [] }, { "const": } ]
 from typing import Any
 import copy
-from .utils import JsonSchema, log, JSUError
+from .utils import JsonSchema, log, JSUError, only, has
 from .recurse import recurseSchema
 from .inline import mergeProperty
 
@@ -189,6 +189,15 @@ def simplifySchema(schema: JsonSchema, url: str):
                             schema["enum"] = nlv
                         else:
                             schema["enum"] = lv
+
+        # if/then/else
+        for kw in ("then", "else"):
+            if kw in schema and only(schema[kw], *_IGNORABLE):
+                log.info(f"removing empty {kw} at {path}")
+                del schema[kw]
+        if "if" in schema and not ("then" in schema or "else" in schema):
+            log.info(f"removing lone if at {path}")
+            del schema["if"]
 
         # short type list
         if "type" in schema and isinstance(schema["type"], list):
