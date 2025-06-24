@@ -12,11 +12,6 @@ log = logging.getLogger("convert")
 #
 # BEST EFFORT SCHEMA TO MODEL CONVERSION
 #
-# TODO add $ref to object + properties? (merge ref pass)
-# TODO internal math $ref without defs (eg clang-format)
-# TODO combined propertyNames + additionalProperties
-# TODO remove dynamicAnchor/Ref in some cases (cql2)
-#
 
 def toconst(val):
     match val:

@@ -29,7 +29,7 @@
 - [x] pre-commit-hooks.schema.json (jsu-model)
 - [x] pulumi.schema.json (jsu-simpler | jsu-model)
 - [x] semantic-release.schema.json (jsu-model)
-- [ ] stale.schema.json (jsu-simpler | ... TODO check inline)
+- [x] stale.schema.json (jsu-simpler | jsu-model)
 - [x] stylecop.schema.json (jsu-model --loose)
 - [x] tmuxinator.schema.json (jsu-model)
 - [ ] ui5-manifest.schema.json (jsu-simpler | ... TODO check inline)
