@@ -89,6 +89,8 @@ _IGNORABLE = (
     "$schema", "$id", "$comment", "$vocabulary", "$anchor", "$dynamicAnchor",
     # metadata
     "description", "title", "readOnly", "writeOnly", "default", "examples", "deprecated",
+    # namespace
+    "definitions", "$defs",
 )
 
 def _ignored(schema: JsonSchema) -> JsonSchema:
@@ -131,13 +133,14 @@ def simplifySchema(schema: JsonSchema, url: str):
             return schema
         assert isinstance(schema, dict)
 
-        # TODO anyOf/oneOf/allOf of length 0?
         if "$ref" in schema and version <= 7:
             # https://json-schema.org/draft-07/draft-handrews-json-schema-01#rfc.section.8.3
-            if len(schema) > 1:
+            keep = { p: v for p, v in schema.items() if p in _IGNORABLE or p == "$ref" }
+            if len(keep) != len(schema):
                 log.warning(f"dropping all props adjacent to $ref on old schemas at {path}")
-            return { "$ref": schema["$ref"] }
+            return keep
 
+        # TODO anyOf/oneOf/allOf of length 0?
         # anyOf/oneOf/allOf of length 1
         for prop in ("anyOf", "oneOf", "allOf"):
             if (isinstance(schema, dict) and prop in schema and

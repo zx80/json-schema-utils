@@ -296,7 +296,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
         _defs = schema[dname]
         assert isinstance(_defs, dict)
         for name, val in _defs.items():
-            log.warning(f"registering {dname}/{name} at [{spath}]")
+            log.info(f"registering {dname}/{name} at [{spath}]")
             # keep json schema for handling $ref #
             IDS[dname][name] = val
             # provide a local converted version as well?
@@ -459,6 +459,12 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                     assert False, f"unexpected number format {fmt} at [{spath}]"
             constraints = numberConstraints(schema)
             return buildModel(model, constraints, defs, sharp)
+        elif ts == "integer" and "const" in schema:
+            ival = schema["const"]
+            if isinstance(ival, (int, float)) and ival == int(ival):
+                model = "={int(ival)}"
+            else:
+                model = "$NONE"
         elif ts == "integer":
             doubt(only(schema, "type", "format", "multipleOf", "minimum", "maximum",
                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE),
