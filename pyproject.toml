@@ -7,7 +7,7 @@ include = ["jsutils"]
 
 [project]
 name = "JsonSchemaUtils"
-version = "0.2"
+version = "0.8"
 authors = [ { name = "Fabien Coelho" }, { name = "Claire Yannou-Medrala" } ]
 description = "JSON Schema Utils"
 readme = "README.md"

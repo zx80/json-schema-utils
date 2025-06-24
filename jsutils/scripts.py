@@ -5,6 +5,7 @@ import json
 import hashlib
 import logging
 import argparse
+from importlib.metadata import version as pkg_version
 
 logging.basicConfig()
 
@@ -15,8 +16,10 @@ from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
 
+__version__ = pkg_version("JsonSchemaUtils")
 
 def ap_common(ap, with_json=True):
+    ap.add_argument("--version", action="store_true", help="show version")
     ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
     ap.add_argument("--quiet", "-q", action="store_true", help="quiet mode")
     if with_json:
@@ -121,7 +124,7 @@ def jsu_check():
 
     ap = argparse.ArgumentParser()
     ap_common(ap)
-    ap.add_argument("--version", "-v", default="2020-12", help="JSON Schema version")
+    ap.add_argument("--draft", "-D", default="2020-12", help="JSON Schema draft")
     ap.add_argument("--engine", "-e", choices=["jsonschema", "jschon"], default="jsonschema",
                     help="select JSON Schema implementation")
     ap.add_argument("--force", action="store_true", help="accept any JSON as a schema")
@@ -306,6 +309,10 @@ def jsu_model():
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+
+    if args.version:
+        print(__version__)
+        sys.exit(0)
 
     if not args.schemas:
         args.schemas = ["-"]
