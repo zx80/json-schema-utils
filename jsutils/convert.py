@@ -586,7 +586,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                 sitems = schema["items"]
                 if isinstance(sitems, list):
                     # OLD JSON Schema prefixItems…
-                    model = [
+                    return [
                         schema2model(s, path + ["items", i], strict)
                             for i, s in enumerate(sitems)
                     ]
