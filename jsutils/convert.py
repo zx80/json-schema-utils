@@ -725,7 +725,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
         else:
             assert False, f"unexpected type: {ts} at [{spath}]"
     elif "enum" in schema:
-        # FIXME currently assume only a list of string
+        # FIXME check type value compatibility with other keywords, eg type?!
         for prop in ("maxLength", "minLength"):
             if prop in schema:
                 log.warning(f"ignoring doubtful {prop} from enum at [{spath}]")
@@ -735,9 +735,9 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
         ve = schema["enum"]
         assert isinstance(ve, list), f"enum list at [{spath}]"
         if len(ve) == 1:
-            model = esc(ve[0])
+            model = toconst(ve[0])
         else:
-            model = {"|": [esc(v) for v in ve]}
+            model = {"|": [toconst(v) for v in ve]}
         # vérifier les valeurs?
         return buildModel(model, {}, defs, sharp)
     elif "const" in schema:
