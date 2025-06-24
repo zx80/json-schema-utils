@@ -28,6 +28,14 @@ def toconst(val):
             return "=" + str(val)
         case str():
             return "_" + val
+        case list():
+            # constant list…
+            return {
+                "@": [ toconst(v) for v in val ],
+                "=": len(val)
+            }
+        case dict():
+            return { f"_{p}": toconst(v) for p, v in val.items() }
         case _:
             raise Exception(f"unexpected value for a constant: {val}")
 
@@ -125,7 +133,8 @@ TYPE_SPLIT = {
     "string": ["minLength", "maxLength", "pattern"],
     "array": ["minItems", "maxItems", "uniqueItems", "items", "prefixItems", "contains",
               "minContains", "maxContains"],
-    "object": ["properties", "required", "additionalProperties", "minProperties", "maxProperties"],
+    "object": ["properties", "required", "additionalProperties", "minProperties", "maxProperties",
+                "patternProperties", "propertyNames"],
 }
 
 SPLIT = {}
@@ -770,17 +779,18 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
             ao = allOfLayer(schema, "allOf")
             return schema2model(ao, path + ["allOf"], strict)
     elif "not" in schema:
-        # NOTE other option:
-        assert only(schema, "not", *IGNORE), \
-                    f"keyword not intermixed with other keywords at [{spath}]"
         val = schema["not"]
-        assert isinstance(val, dict), path
-        if len(val) == 0:
-            # { "not": {} }
-            model = "$NONE"
-        else:
-            model = {"^": ["$ANY", schema2model(val, path + ["not"], strict)]}
-        return buildModel(model, {}, defs, sharp)
+        assert isinstance(val, dict), "not object at [{spath}]"
+        if only(schema, "not", *IGNORE):
+            if len(val) == 0:
+                model = "$NONE"
+            else:
+                model = {"^": ["$ANY", schema2model(val, path + ["not"], strict)]}
+            return buildModel(model, {}, defs, sharp)
+        else:  # add a allOf layer
+            log.warning(f"keyword not intermixed with other keywords at [{spath}]")
+            ao = allOfLayer(schema, "not")
+            return schema2model(ao, path + ["not"], strict)
     else:
         # empty schema
         return buildModel("$ANY", {}, defs, sharp)

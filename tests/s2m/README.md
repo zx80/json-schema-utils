@@ -20,7 +20,7 @@
 - [x] jasmine.schema.json (jsu-model)
 - [x] jsconfig.schema.json (jsu-model)
 - [x] jshintrc.schema.json (jsu-model)
-- [ ] krakend.schema.json (TODO anyOf mix)
+- [x] krakend.schema.json (jsu-simpler | jsu-model)
 - [x] lazygit.schema.json (by $id: complex if)
 - [x] lerna.schema.json (jsu-model)
 - [x] nest-cli.schema.json (jsu-model)
