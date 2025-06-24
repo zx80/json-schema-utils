@@ -6,7 +6,7 @@
 - [x] clang-format.schema.json (jsu-simpler | jsu-inline | jsu-model --loose) (`contains`)
 - [ ] cmake-resets.schema.json (TODO `allOf` of `$ref` to merge)
 - [x] code-climate.schema.json (jsu-simpler | jsu-model)
-- [ ] cql2.schema.json (TODO dynamicAnchor removal)
+- [x] cql2.schema.json (jsu-simpler | jsu-model --loose)
 - [x] cspell.schema.json (jsu-model; jsu-simpler | jsu-model)
 - [x] cypress.schema.json (jsu-model; jsu-simpler | jsu-model)
 - [x] deno.schema.json (jsu-model)

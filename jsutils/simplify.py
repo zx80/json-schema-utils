@@ -109,7 +109,8 @@ def same(s1: JsonSchema, s2: JsonSchema) -> bool:
 def simplifySchema(schema: JsonSchema, url: str):
     """Simplify a JSON Schema with various rules."""
 
-    # schema version for $ref pruning
+    # schema version for $ref aggressive pruning
+    version: int
     if isinstance(schema, dict) and "$schema" in schema and isinstance(schema["$schema"], str):
         ds = schema["$schema"]
         version = \
@@ -125,6 +126,14 @@ def simplifySchema(schema: JsonSchema, url: str):
     else:
         version = 9  # 2020-12
 
+    # TODO more generic dynamicAnchor removal
+    # TODO anchor removal?
+    # FIXME check that there is only one dynamicAnchor of this name?!
+    dynroot: str|None = None
+    if isinstance(schema, dict) and "$dynamicAnchor" in schema:
+        dynroot = schema["$dynamicAnchor"]
+        del schema["$dynamicAnchor"]
+
     def rwtSimpler(schema: JsonSchema, path: list[str]) -> JsonSchema:
 
         lpath = ".".join(path) if path else "."
@@ -133,12 +142,25 @@ def simplifySchema(schema: JsonSchema, url: str):
             return schema
         assert isinstance(schema, dict)
 
+        # references
         if "$ref" in schema and version <= 7:
             # https://json-schema.org/draft-07/draft-handrews-json-schema-01#rfc.section.8.3
             keep = { p: v for p, v in schema.items() if p in _IGNORABLE or p == "$ref" }
             if len(keep) != len(schema):
                 log.warning(f"dropping all props adjacent to $ref on old schemas at {path}")
             return keep
+
+        if isinstance(dynroot, str):
+            if path and "$dynamicAnchor" in schema and schema["$dynamicAnchor"] == dynroot:
+                log.error(f"Ooops: multiple root dynamic anchor: {dynroot}")
+                raise Exception("FIXME!")
+
+            if "$dynamicRef" in schema:
+                dref = schema["$dynamicRef"]
+                if dref == "#" + dynroot:
+                    log.info(f"replacing root $dynamicAnchor with simple $ref at {path}")
+                    del schema["$dynamicRef"]
+                    schema["$ref"] = "#/"
 
         # TODO anyOf/oneOf/allOf of length 0?
         # anyOf/oneOf/allOf of length 1
