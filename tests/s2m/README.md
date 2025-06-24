@@ -12,7 +12,7 @@
 - [x] deno.schema.json (jsu-model)
 - [x] dependabot.schema.json (jsu-model --loose)
 - [x] draft-04.schema.json (by $id)
-- [ ] fabric-mod.schema.json (TODO propertyNames and additionalProperty mix)
+- [x] fabric-mod.schema.json (json-simpler | json-model)
 - [x] geojson.schema.json (jsu-model; by $id?)
 - [x] gitpod-configuration.schema.json (jsu-model)
 - [x] helm-chart-lock.schema.json (jsu-model)

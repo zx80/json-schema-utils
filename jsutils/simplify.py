@@ -293,6 +293,17 @@ def simplifySchema(schema: JsonSchema, url: str):
                                 log.info(f"removing useless {kw} keyword at {lpath}")
                                 del schema[kw]
 
+                # simplify propertyNames + additionalProperties to patternProperties
+                if "propertyNames" in schema and "additionalProperties" in schema and \
+                        "properties" not in schema and "patternProperties" not in schema:
+                    pn = schema["propertyNames"]
+                    ap = schema["additionalProperties"]
+                    if only(pn, "pattern", "type", *_IGNORABLE):
+                        log.info(f"switching propertyNames and additionalProperties to patternProperties at {lpath}")
+                        del schema["propertyNames"]
+                        del schema["additionalProperties"]
+                        schema["patternProperties"] = { pn["pattern"]: ap }
+
         # const/enum
         if "const" in schema and "enum" in schema:
             log.info(f"const/enum at {lpath}")
