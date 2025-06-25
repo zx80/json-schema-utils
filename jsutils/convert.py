@@ -652,9 +652,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                 pats = schema["patternProperties"]
                 assert isinstance(pats, dict), f"dict pattern props at [{spath}]"
                 for pp in sorted(pats.keys()):
-                    name = new_def()
-                    defs[name] = {"@": f"/{pp}/"}
-                    model[f"${name}"] = schema2model(pats[pp], path + ["patternProperties", pp], strict)
+                    model[f"/{pp}/"] = schema2model(pats[pp], path + ["patternProperties", pp], strict)
             if "propertyNames" in schema:
                 # does not seem very useful?
                 pnames = schema["propertyNames"]
