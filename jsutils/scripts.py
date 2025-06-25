@@ -297,12 +297,46 @@ def jsu_pretty():
         schema = json.load(open(fn) if fn != "-" else sys.stdin)
         print(json_dumps(schema, args))
 
+GH = "https://raw.githubusercontent.com"
+SS = "https://json.schemastore.org"
+# JM = f"{GH}/clairey-zx81/json-model/main/models"
+JM = f"https://json-model.org/models"
+
+# Schema $id/id to Model URL
+ID2MODEL: dict[str, str] = {
+    f"{GH}/ansible/ansible-lint/main/src/ansiblelint/schemas/meta.json":
+        f"{JM}/ansiblelint-meta.model.json",
+    f"http://json-schema.org/draft-04/schema#":
+        f"{JM}/json-schema-draft-04.model.json",
+    f"http://json-schema.org/draft-04/schema":
+        f"{JM}/json-schema-draft-04.model.json",
+    f"http://json-schema.org/draft-06/schema#":
+        f"{JM}/json-schema-draft-06.model.json",
+    f"http://json-schema.org/draft-06/schema":
+        f"{JM}/json-schema-draft-06.model.json",
+    f"http://json-schema.org/draft-07/schema#":
+        f"{JM}/json-schema-draft-07.model.json",  # fuzzy?
+    f"http://json-schema.org/draft-07/schema":
+        f"{JM}/json-schema-draft-07.model.json",
+    f"https://json-schema.org/draft/2019-09/schema":
+        f"{JM}/json-schema-draft-2019-09.model.json",
+    f"https://json-schema.org/draft/2020-12/schema":
+        f"{JM}/json-schema-draft-2020-12.model.json",  # fuzzy?
+    f"https://geojson.org/schema/GeoJSON.json":
+        f"{JM}/geo.model.json",
+    f"{SS}/lazygit.json":
+        f"{JM}/lazygit.model.json",
+    f"https://spec.openapis.org/oas/3.1/schema/2022-10-07":
+        f"{JM}/openapi-311.model.json",
+}
+
 def jsu_model():
 
     from .convert import schema2model
 
     ap = argparse.ArgumentParser()
     ap_common(ap)
+    ap.add_argument("--id", action="store_true", default=False, help="enable $id lookup")
     ap.add_argument("--strict", action="store_true", default=True, help="reject doubtful schemas")
     ap.add_argument("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
@@ -321,7 +355,16 @@ def jsu_model():
         log.debug(f"considering: {fn}")
         try:
             schema = json.load(open(fn) if fn != "-" else sys.stdin)
-            model = schema2model(schema, strict=args.strict)
+            model = None
+            if args.id and isinstance(schema, dict):
+                sid = (schema["$id"] if "$id" in schema else
+                       schema["id"] if "id" in schema else
+                       None)
+                if sid in ID2MODEL:
+                    log.info(f"using predefined model for {sid}")
+                    model = f"${ID2MODEL[sid]}"
+            if model is None:
+                model = schema2model(schema, strict=args.strict)
         except Exception as e:
             log.error(e, exc_info=args.debug)
             model = {"ERROR": str(e)}
