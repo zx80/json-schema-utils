@@ -199,12 +199,14 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
 # identifiers
 CURRENT_SCHEMA: str|None = None
 IDS: dict[str, dict[str, Any]] = {}
+SCHEMA = None
 EXPLICIT_TYPE: bool = False
 
 
 def reset():
     global CURRENT_SCHEMA, IDS
     CURRENT_SCHEMA = None
+    SCHEMA = None
     IDS = {}
 
 
@@ -265,7 +267,7 @@ def allOfLayer(schema: dict, operator: str):
 def schema2model(schema, path: JsonPath = [], strict: bool = True):
     """Convert a JSON schema to a JSON model assuming a 2020-12 semantics."""
 
-    global CURRENT_SCHEMA
+    global CURRENT_SCHEMA, SCHEMA
 
     # 4.3.2 Boolean JSON Schemas
     if isinstance(schema, bool):
@@ -280,6 +282,9 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
         if CURRENT_SCHEMA is not None:
             log.error(f"nested $schema: {sname} at [{spath}]")
         CURRENT_SCHEMA = sname
+
+    if SCHEMA is None:
+        SCHEMA = schema
 
     # handle metadata
     sharp = {}
@@ -387,10 +392,17 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                 return "$#"
             elif ref.startswith("#/"):
                 names = ref[2:].split("/")
-                val = IDS
-                for name in names:
-                    assert name in val, f"following path in {ref}: missing {name} ({IDS}) at [{spath}]"
-                    val = val[name]
+                # standard /$def/foo
+                if names and names[0] in ("$defs", "definitions"):
+                    val = IDS
+                    for name in names:
+                        assert name in val, f"following path in {ref}: missing {name} ({IDS}) at [{spath}]"
+                        val = val[name]
+                else:  # arbitrary path
+                    val = SCHEMA
+                    for name in names:
+                        assert name in val, f"following path in {ref}: missing {name} at [{spath}]"
+                        val = val[name]
                 model = schema2model(val, path + ["$ref"], strict)
                 return buildModel(model, {}, defs, sharp)
             else:
