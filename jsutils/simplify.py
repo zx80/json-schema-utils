@@ -160,7 +160,7 @@ def simplifySchema(schema: JsonSchema, url: str):
                 if dref == "#" + dynroot:
                     log.info(f"replacing root $dynamicAnchor with simple $ref at {path}")
                     del schema["$dynamicRef"]
-                    schema["$ref"] = "#/"
+                    schema["$ref"] = "#"
 
         # TODO anyOf/oneOf/allOf of length 0?
         # anyOf/oneOf/allOf of length 1

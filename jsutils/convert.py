@@ -352,8 +352,8 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
             s["type"] = "object"
         if "required" in schema:
             required = schema["required"]
-            del schema["required"]
-            for s in lof:
+        del schema["required"]
+        for s in lof:
                 if "required" in s:
                     s["required"].append(required)
                 else:
@@ -378,7 +378,56 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
         log.warning("removing type from constructed schema?")
         del schema["type"]
 
-    # handle a schema
+    # structures
+    if "oneOf" in schema:
+        choices = schema["oneOf"]
+        assert isinstance(choices, list), f"oneOf list at [{spath}]"
+        if only(schema, "oneOf", *IGNORE):
+            model = {"^": [schema2model(s, path + ["oneOf", i], strict)
+                        for i, s in enumerate(choices)]}
+            return buildModel(model, {}, defs, sharp)
+        else:  # try building an "allOf" layer
+            log.warning(f"keyword oneOf intermixed with other keywords at [{spath}]")
+            ao = allOfLayer(schema, "oneOf")
+            return schema2model(ao, path + ["oneOf"], strict)
+    elif "anyOf" in schema:
+        choices = schema["anyOf"]
+        assert isinstance(choices, (list, tuple)), f"anyOf list at [{spath}]"
+        if only(schema, "anyOf", *IGNORE):
+            model = {"|": [schema2model(s, path + ["anyOf", i], strict)
+                        for i, s in enumerate(choices)]}
+            return buildModel(model, {}, defs, sharp)
+        else:
+            log.warning(f"keyword anyOf intermixed with other keywords at [{spath}]")
+            ao = allOfLayer(schema, "anyOf")
+            return schema2model(ao, path + ["anyOf"], strict)
+    elif "allOf" in schema:
+        # NOTE types should be compatible to avoid an empty match
+        choices = schema["allOf"]
+        assert isinstance(choices, (list, tuple)), f"allOf list at [{spath}]"
+        if only(schema, "allOf", *IGNORE):
+            model = {"&": [schema2model(s, path + ["allOf", i], strict)
+                        for i, s in enumerate(choices)]}
+            return buildModel(model, {}, defs, sharp)
+        else:  # build another allOf layer
+            log.warning(f"keyword allOf intermixed with other keywords at [{spath}]")
+            ao = allOfLayer(schema, "allOf")
+            return schema2model(ao, path + ["allOf"], strict)
+    elif "not" in schema:
+        val = schema["not"]
+        assert isinstance(val, dict), "not object at [{spath}]"
+        if only(schema, "not", *IGNORE):
+            if len(val) == 0:
+                model = "$NONE"
+            else:
+                model = {"^": ["$ANY", schema2model(val, path + ["not"], strict)]}
+            return buildModel(model, {}, defs, sharp)
+        else:  # add a allOf layer
+            log.warning(f"keyword not intermixed with other keywords at [{spath}]")
+            ao = allOfLayer(schema, "not")
+            return schema2model(ao, path + ["not"], strict)
+
+    # handle simpler schemas
     if "$ref" in schema:
         if only(schema, "$ref", *IGNORE):
             ref = schema["$ref"]
@@ -388,7 +437,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                 return buildModel("$" + ref[8:], {}, defs, sharp)
             elif ref.startswith("#/definitions/") and only(schema, "$ref", *IGNORE):
                 return buildModel("$" + ref[14:], {}, defs, sharp)
-            elif ref == "#/":
+            elif ref in ("#/", "#"):
                 return "$#"
             elif ref.startswith("#/"):
                 names = ref[2:].split("/")
@@ -756,53 +805,6 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
         const = schema["const"]
         # what is the type of the constant? assume a string for NOW, could be anything?
         return buildModel(toconst(const), {}, defs, sharp)
-    elif "oneOf" in schema:
-        choices = schema["oneOf"]
-        assert isinstance(choices, list), f"oneOf list at [{spath}]"
-        if only(schema, "oneOf", *IGNORE):
-            model = {"^": [schema2model(s, path + ["oneOf", i], strict)
-                        for i, s in enumerate(choices)]}
-            return buildModel(model, {}, defs, sharp)
-        else:  # try building an "allOf" layer
-            log.warning(f"keyword oneOf intermixed with other keywords at [{spath}]")
-            ao = allOfLayer(schema, "oneOf")
-            return schema2model(ao, path + ["oneOf"], strict)
-    elif "anyOf" in schema:
-        choices = schema["anyOf"]
-        assert isinstance(choices, (list, tuple)), f"anyOf list at [{spath}]"
-        if only(schema, "anyOf", *IGNORE):
-            model = {"|": [schema2model(s, path + ["anyOf", i], strict)
-                        for i, s in enumerate(choices)]}
-            return buildModel(model, {}, defs, sharp)
-        else:
-            log.warning(f"keyword anyOf intermixed with other keywords at [{spath}]")
-            ao = allOfLayer(schema, "anyOf")
-            return schema2model(ao, path + ["anyOf"], strict)
-    elif "allOf" in schema:
-        # NOTE types should be compatible to avoid an empty match
-        choices = schema["allOf"]
-        assert isinstance(choices, (list, tuple)), f"allOf list at [{spath}]"
-        if only(schema, "allOf", *IGNORE):
-            model = {"&": [schema2model(s, path + ["allOf", i], strict)
-                        for i, s in enumerate(choices)]}
-            return buildModel(model, {}, defs, sharp)
-        else:  # build another allOf layer
-            log.warning(f"keyword allOf intermixed with other keywords at [{spath}]")
-            ao = allOfLayer(schema, "allOf")
-            return schema2model(ao, path + ["allOf"], strict)
-    elif "not" in schema:
-        val = schema["not"]
-        assert isinstance(val, dict), "not object at [{spath}]"
-        if only(schema, "not", *IGNORE):
-            if len(val) == 0:
-                model = "$NONE"
-            else:
-                model = {"^": ["$ANY", schema2model(val, path + ["not"], strict)]}
-            return buildModel(model, {}, defs, sharp)
-        else:  # add a allOf layer
-            log.warning(f"keyword not intermixed with other keywords at [{spath}]")
-            ao = allOfLayer(schema, "not")
-            return schema2model(ao, path + ["not"], strict)
     else:
         # empty schema
         return buildModel("$ANY", {}, defs, sharp)
