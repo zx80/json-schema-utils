@@ -351,6 +351,8 @@ def jsu_model():
     if not args.schemas:
         args.schemas = ["-"]
 
+    errors = 0
+
     for fn in args.schemas:
         log.debug(f"considering: {fn}")
         try:
@@ -367,5 +369,8 @@ def jsu_model():
                 model = schema2model(schema, strict=args.strict)
         except Exception as e:
             log.error(e, exc_info=args.debug)
+            errors += 1
             model = {"ERROR": str(e)}
         print(json.dumps(model, sort_keys=args.sort_keys, indent=args.indent))
+
+    sys.exit(1 if errors else 0)
