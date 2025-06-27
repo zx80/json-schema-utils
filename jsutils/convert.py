@@ -284,7 +284,8 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
         CURRENT_SCHEMA = sname
 
     if SCHEMA is None:
-        SCHEMA = schema
+        # COPY because schema may be changed… (hmmm…)
+        SCHEMA = copy.deepcopy(schema)
 
     # handle metadata
     sharp = {}
@@ -326,12 +327,56 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
 
     # FIX missing type in some cases
     if "type" not in schema:
-        if "properties" in schema:
+        if "properties" in schema or "required" in schema or "additionalProperties" in schema:
             schema["type"] = "object"
         elif "pattern" in schema or "maxLength" in schema or "minLength" in schema:
             schema["type"] = "string"
         elif "items" in schema or "minItems" in schema or "maxItems" in schema:
             schema["type"] = "array"
+
+    # translate if/then/else to and/xor/not
+    if "then" in schema or "else" in schema:
+        if "if" not in schema:
+            # no if => then/else are ignored (10.2.2)
+            log.warning(f"ignoring then/else without if at [{spath}]")
+            if "else" in schema:
+                del schema["else"]
+            if "then" in schema:
+                del schema["then"]
+        else:  # if in schema
+            sif = schema["if"]
+            if isinstance(sif, dict) and "type" in sif and isinstance(sif["type"], str):
+                type_sif = sif["type"]
+            else:
+                type_sif = None
+            if "then" in schema:
+                sthen = schema["then"]
+                del schema["then"]
+                if type_sif and isinstance(sthen, dict) and "type" not in sthen:
+                    sthen["type"] = type_sif
+            else:
+                sthen = True
+            if "else" in schema:
+                selse = schema["else"]
+                del schema["else"]
+                if type_sif and isinstance(selse, dict) and "type" not in selse:
+                    selse["type"] = type_sif
+            else:
+                selse = True
+            # W, if: X, then: Y, else: Z => (W and ((X and Y) x?or (not X and Z))
+            schema = {
+                "allOf": [
+                    schema,
+                    {
+                        "anyOf": [
+                            { "allOf": [ sif, sthen ] },
+                            { "allOf": [ { "not": copy.deepcopy(sif) }, selse ] }
+                        ]
+                    }
+                ]
+            }
+    elif "if" in schema:
+        log.warning(f"ignoring lone if at [{spath}]")
 
     # FIXME adhoc handling for table-schema.json and ADEME
     if "type" in schema and schema["type"] == "object" and ("anyOf" in schema or "oneOf" in schema):
@@ -659,7 +704,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                 # NO contains/items mixing yet
                 assert only(schema, "type", "contains", "minContains", "maxContains",
                             "uniqueItems", *IGNORE), f"array props for containts[{spath}]"
-                # NOTE contains is not really supported in jm v2, rather as an extension
+                # NOTE contains is not really supported in jm v2, or rather as an extension
                 model = {"@": ["$ANY"], ".in": schema2model(schema["contains"], path + ["contains"], strict)}
                 if "minContains" in schema:
                     mini = schema["minContains"]
@@ -709,11 +754,13 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                     maxi = schema["maxProperties"]
                     assert type(maxi) is int, f"int max props at [{spath}]"
                     constraints["<="] = maxi
+
             if "patternProperties" in schema:
                 pats = schema["patternProperties"]
                 assert isinstance(pats, dict), f"dict pattern props at [{spath}]"
                 for pp in sorted(pats.keys()):
                     model[f"/{pp}/"] = schema2model(pats[pp], path + ["patternProperties", pp], strict)
+
             if "propertyNames" in schema:
                 # does not seem very useful?
                 pnames = schema["propertyNames"]
@@ -721,7 +768,8 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                     addprops = schema["additionalProperties"]
                 else:
                     addprops = "$ANY"
-                assert only(pnames, "pattern", "type", "format", *IGNORE), f"props for prop names at [{spath}]"
+                assert only(pnames, "pattern", "type", "format", *IGNORE), \
+                    f"props for prop names at [{spath}]"
                 # if given a type, it must be string
                 if "type" in pnames:
                     assert pnames["type"] == "string", f"prop name is string at [{spath}]"
@@ -735,6 +783,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                     fmt = pnames["format"]
                     model[format2model(fmt)] = addprops
                 # else nothing?!
+
             if "properties" in schema:
                 props = schema["properties"]
                 required = schema.get("required", [])
@@ -756,9 +805,10 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                         assert False, f"not implemented yet at [{spath}]"
                 else:
                     model[""] = "$ANY"
+
             elif "additionalProperties" in schema:
                 # "additionalProperties" without "properties" or "patternProperties"
-                doubt(only(schema, "type", "additionalProperties",
+                doubt(only(schema, "type", "additionalProperties", "maxProperties", "minProperties",
                            "properties", "patternProperties", *IGNORE),
                            f"add prop props at [{spath}]", strict)
                 if "properties" not in schema and "additionalProperties" not in schema and strict:
@@ -772,9 +822,20 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                     model[""] = schema2model(ap, path + ["additionalProperties"], strict)
                 else:
                     assert False, f"not implemented yet at [{spath}]"
+
+            elif "required" in schema:
+                # required without properties or additionalProperties
+                doubt(only(schema, "type", "required", "maxProperties", "minProperties",
+                           *IGNORE), f"object props at [{spath}]", strict)
+                required = schema["required"]
+                assert isinstance(required, list) and all(isinstance(s, str) for s in required)
+                model[""] = "$ANY"
+                model.update({ f"_{k}": "$ANY" for k in required })
+                # what about other props?
+
             else:
-                assert only(schema, "type", "maxProperties", "minProperties", "patternProperties",
-                            "propertyNames", *IGNORE), f"object props at [{spath}]"
+                doubt(only(schema, "type", "maxProperties", "minProperties", "patternProperties",
+                           "propertyNames", *IGNORE), f"object props at [{spath}]", strict)
                 if "propertyNames" in schema:
                     pass
                 else:

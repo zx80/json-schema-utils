@@ -1,0 +1,6 @@
+{
+  "type": "object",
+  "if": { "required": [ "a" ] },
+  "then": { "properties": { "b": true }, "required": ["b"] },
+  "else": { "properties": { "c": true }, "required": ["c"] }
+}
