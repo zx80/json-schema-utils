@@ -123,7 +123,7 @@ META_KEYS = [
 IGNORE = META_KEYS + ["$defs", "definitions"]
 
 # keywords specific to a type
-TYPE_SPLIT = {
+SPLITS = {
     "number": ["minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf"],
     "string": ["minLength", "maxLength", "pattern"],
     "array": ["minItems", "maxItems", "uniqueItems", "items", "prefixItems", "contains",
@@ -133,8 +133,8 @@ TYPE_SPLIT = {
 }
 
 SPLIT = {}
-for k in TYPE_SPLIT.keys():
-    for n in TYPE_SPLIT[k]:
+for k in SPLITS.keys():
+    for n in SPLITS[k]:
         SPLIT[n] = k
 # log.warning(f"SPLIT = {SPLIT}")
 
@@ -345,6 +345,13 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                 del schema["then"]
         else:  # if in schema
             sif = schema["if"]
+            del schema["if"]
+            # possibly add type to help convertion
+            if isinstance(sif, dict) and "type" not in sif:
+                for t in SPLITS.keys():
+                    if only(sif, *SPLITS[t], *IGNORE):
+                        sif["type"] = t
+                        break
             if isinstance(sif, dict) and "type" in sif and isinstance(sif["type"], str):
                 type_sif = sif["type"]
             else:
@@ -717,6 +724,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True):
                 return buildModel(model, constraints, defs, sharp)
             else:
                 return buildModel(["$ANY"], constraints, defs, sharp)
+
         elif ts == "object":
 
             # ignore OpenAPI extension
