@@ -213,10 +213,11 @@ def simplifySchema(schema: JsonSchema, url: str):
                             schema["enum"] = lv
 
         # if/then/else
-        for kw in ("then", "else"):
-            if kw in schema and only(schema[kw], *_IGNORABLE):
-                log.info(f"removing empty {kw} at {path}")
-                del schema[kw]
+        if "if" not in schema:
+            for kw in ("then", "else"):
+                if kw in schema:
+                    log.info(f"removing {kw} without if")
+                    del schema[kw]
         if "if" in schema and not ("then" in schema or "else" in schema):
             log.info(f"removing lone if at {path}")
             del schema["if"]
@@ -345,6 +346,9 @@ def defId(schema) -> tuple[str|None, str|None]:
 
 SUBCOUNT: int = 0
 
+# TODO handle definitions anywhere
+# TODO handle arbitrary path references
+
 def scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
                  moved: dict[str, str], ids: dict[str, str], path: list[str|int] = []):
     """Move definitions/$defs to root schema based on id/$id with disambiguation"""
@@ -362,7 +366,7 @@ def scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
         assert isinstance(sid, str)
 
         del schema[idn]
-        if "id" in schema:
+        if "id" in schema:  # both $id and id…
             del schema["id"]
 
         global SUBCOUNT
