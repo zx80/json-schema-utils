@@ -106,16 +106,6 @@ def buildModel(model, constraints: dict, defs: dict, sharp: dict, is_root = Fals
         return model
 
 
-_definitions = 0
-
-
-def new_def():
-    """Generate a new definition name."""
-    global _definitions
-    _definitions += 1
-    return f"_{_definitions}"
-
-
 META_KEYS = [
     "title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly", "id",
     "$schema", "$id", "$comment",
@@ -814,9 +804,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
                 if "pattern" in pnames:
                     pat = pnames["pattern"]
                     assert isinstance(pat, str), f"pattern is string at [{spath}]"
-                    name = new_def()
-                    defs[name] = pat if pat[0] == "^" else f"^.*{pat}"
-                    model[f"${name}"] = addprops
+                    model[f"/{pat}/"] = addprops
                 if "format" in pnames:
                     fmt = pnames["format"]
                     model[format2model(fmt)] = addprops
