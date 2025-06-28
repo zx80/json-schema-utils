@@ -307,15 +307,15 @@ ID2MODEL: dict[str, tuple[str, str]] = {
     # JSON Schema drafts
     f"http://json-schema.org/draft-04/schema": (
         f"{JM}/json-schema-draft-04.model.json",
-        f"{JM}/json-schema-draft-04.model-fuzzy.json",
+        f"{JM}/json-schema-draft-04-fuzzy.model.json",
     ),
     f"http://json-schema.org/draft-06/schema": (
         f"{JM}/json-schema-draft-06.model.json",
-        f"{JM}/json-schema-draft-06.model-fuzzy.json",
+        f"{JM}/json-schema-draft-06-fuzzy.model.json",
     ),
     f"http://json-schema.org/draft-07/schema": (
         f"{JM}/json-schema-draft-07.model.json",
-        f"{JM}/json-schema-draft-07.model-fuzzy.json",
+        f"{JM}/json-schema-draft-07-fuzzy.model.json",
     ),
     f"https://json-schema.org/draft/2019-09/schema": (
         f"{JM}/json-schema-draft-2019-09.model.json",
