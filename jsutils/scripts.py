@@ -303,32 +303,51 @@ SS = "https://json.schemastore.org"
 JM = f"https://json-model.org/models"
 
 # Schema $id/id to Model URL
-ID2MODEL: dict[str, str] = {
-    f"{GH}/ansible/ansible-lint/main/src/ansiblelint/schemas/meta.json":
-        f"{JM}/ansiblelint-meta.model.json",
-    f"http://json-schema.org/draft-04/schema#":
+ID2MODEL: dict[str, tuple[str, str]] = {
+    # JSON Schema drafts
+    f"http://json-schema.org/draft-04/schema": (
         f"{JM}/json-schema-draft-04.model.json",
-    f"http://json-schema.org/draft-04/schema":
-        f"{JM}/json-schema-draft-04.model.json",
-    f"http://json-schema.org/draft-06/schema#":
+        f"{JM}/json-schema-draft-04.model-fuzzy.json",
+    ),
+    f"http://json-schema.org/draft-06/schema": (
         f"{JM}/json-schema-draft-06.model.json",
-    f"http://json-schema.org/draft-06/schema":
-        f"{JM}/json-schema-draft-06.model.json",
-    f"http://json-schema.org/draft-07/schema#":
-        f"{JM}/json-schema-draft-07.model.json",  # fuzzy?
-    f"http://json-schema.org/draft-07/schema":
+        f"{JM}/json-schema-draft-06.model-fuzzy.json",
+    ),
+    f"http://json-schema.org/draft-07/schema": (
         f"{JM}/json-schema-draft-07.model.json",
-    f"https://json-schema.org/draft/2019-09/schema":
+        f"{JM}/json-schema-draft-07.model-fuzzy.json",
+    ),
+    f"https://json-schema.org/draft/2019-09/schema": (
         f"{JM}/json-schema-draft-2019-09.model.json",
-    f"https://json-schema.org/draft/2020-12/schema":
-        f"{JM}/json-schema-draft-2020-12.model.json",  # fuzzy?
-    f"https://geojson.org/schema/GeoJSON.json":
+        f"{JM}/json-schema-draft-2019-09-fuzzy.model.json",
+    ),
+    f"https://json-schema.org/draft/2020-12/schema": (
+        f"{JM}/json-schema-draft-2020-12.model.json",
+        f"{JM}/json-schema-draft-2020-12-fuzzy.model.json",
+    ),
+    # Miscellaneous models
+    f"{GH}/ansible/ansible-lint/main/src/ansiblelint/schemas/meta.json": (
+        f"{JM}/ansiblelint-meta.model.json",
+        f"{JM}/ansiblelint-meta.model.json",
+    ),
+    f"https://geojson.org/schema/GeoJSON.json": (
         f"{JM}/geo.model.json",
-    f"{SS}/lazygit.json":
+        f"{JM}/geo.model.json",
+    ),
+    f"{SS}/lazygit.json": (
         f"{JM}/lazygit.model.json",
-    f"https://spec.openapis.org/oas/3.1/schema/2022-10-07":
+        f"{JM}/lazygit.model.json",
+    ),
+    f"https://spec.openapis.org/oas/3.1/schema/2022-10-07": (
         f"{JM}/openapi-311.model.json",
+        f"{JM}/openapi-311.model.json",  # TODO fuzzy
+    )
 }
+
+# add ~# versions
+for k in list(ID2MODEL.keys()):
+    if k.endswith("/schema"):
+        ID2MODEL[k + "#"] = ID2MODEL[k]
 
 def jsu_model():
 
@@ -364,7 +383,7 @@ def jsu_model():
                        None)
                 if sid in ID2MODEL:
                     log.info(f"using predefined model for {sid}")
-                    model = f"${ID2MODEL[sid]}"
+                    model = f"${ID2MODEL[sid][0 if args.strict else 1]}"
             if model is None:
                 model = schema2model(schema, strict=args.strict)
         except Exception as e:
