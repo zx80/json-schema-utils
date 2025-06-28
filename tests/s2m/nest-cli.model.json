@@ -1,0 +1,406 @@
+{
+  "": "$ANY",
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "$": {
+    "AssetsOptions": {
+      "#": "For finer control, the element can be object.",
+      "|": [
+        "",
+        {
+          "?exclude": {
+            "#": "Glob-like file specifications for the assets to be excluded from the include list.",
+            "@": ""
+          },
+          "?include": {
+            "#": "Glob-like file specifications for the assets to be distributed.",
+            "@": ""
+          },
+          "?outDir": {
+            "#": "A string specifying the path (relative to the root folder) where the assets should be distributed. Defaults to the same output directory configured for compiler output.",
+            "@": ""
+          },
+          "?watchAssets": {
+            "#": "If true, run in watch mode watching specified assets. Setting watchAssets in a top-level compilerOptions property overrides any watchAssets settings within the assets property.",
+            "@": true
+          }
+        }
+      ]
+    },
+    "CompilerOptions": {
+      "#": "A map with keys specifying compiler options and values specifying the option setting. See https://docs.nestjs.com/cli/monorepo#global-compiler-options for details",
+      "?assets": {
+        "#": "Enables automatically distributing non-TypeScript assets whenever a compilation step begins (asset distribution does not happen on incremental compiles in --watch mode). Accept glob-like string and object. See https://docs.nestjs.com/cli/monorepo#assets for details.",
+        "@": [
+          "$AssetsOptions"
+        ]
+      },
+      "?builder": {
+        "|": [
+          {
+            "#": "Builder to be used (tsc, webpack, swc). For details on how to configure `SWC` see https://docs.nestjs.com/recipes/swc#getting-started",
+            "|": [
+              "_tsc",
+              "_webpack",
+              "_swc"
+            ]
+          },
+          {
+            "": "$ANY",
+            "?options": {
+              "": "$ANY",
+              "?copyFiles": {
+                "#": "Whether to copy files or not.",
+                "@": true
+              },
+              "?extensions": {
+                "#": "Array of file extensions to be considered.",
+                "@": [
+                  ""
+                ]
+              },
+              "?filenames": {
+                "#": "Array of filenames to be included.",
+                "@": [
+                  ""
+                ]
+              },
+              "?includeDotfiles": {
+                "#": "Whether to include dotfiles or not.",
+                "@": true
+              },
+              "?outDir": {
+                "#": "The directory to output files.",
+                "@": ""
+              },
+              "?quiet": {
+                "#": "Whether to suppress logs or not.",
+                "@": true
+              },
+              "?sync": {
+                "#": "Whether to synchronize files or not.",
+                "@": true
+              },
+              "?watch": {
+                "#": "Whether to watch files for changes or not.",
+                "@": true
+              }
+            },
+            "?type": {
+              "#": "Builder to be used (tsc, webpack, swc). For details on how to configure `SWC` see https://docs.nestjs.com/recipes/swc#getting-started",
+              "|": [
+                "_tsc",
+                "_webpack",
+                "_swc"
+              ]
+            }
+          }
+        ]
+      },
+      "?deleteOutDir": {
+        "#": "If true, whenever the compiler is invoked, it will first remove the compilation output directory (as configured in tsconfig.json, where the default is ./dist).",
+        "@": true
+      },
+      "?manualRestart": {
+        "#": "If true, enables the shortcut `rs` to manually restart the server.",
+        "@": true
+      },
+      "?plugins": {
+        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+        "@": [
+          "$PluginItems"
+        ]
+      },
+      "?tsConfigPath": {
+        "#": "(monorepo only) Points at the file containing the tsconfig.json settings that will be used when nest build or nest start is called without a project option (e.g., when the default project is built or started). 'nest build' will not work as expected without this file.",
+        "@": ""
+      },
+      "?typeCheck": {
+        "#": "If true, enable type checking (when SWC is used). See https://docs.nestjs.com/recipes/swc#type-checking for details.",
+        "@": true
+      },
+      "?watchAssets": {
+        "#": "If true, run in watch-mode, watching all non-TypeScript assets. Setting watchAssets in a top-level compilerOptions property overrides any watchAssets settings within the assets property.",
+        "@": true
+      },
+      "?webpack": {
+        "#": "If true, use webpack compiler (deprecated option, use `builder` instead). If false or not present, use tsc. In monorepo mode, the default is true (use webpack), in standard mode, the default is false (use tsc). See https://docs.nestjs.com/cli/monorepo#cli-properties for details.",
+        "@": true
+      },
+      "?webpackConfigPath": {
+        "#": "Points at a webpack options file. If not specified, Nest looks for the file webpack.config.js.",
+        "@": ""
+      }
+    },
+    "GenerateBaseDirOptions": {
+      "#": "Base directory",
+      "@": ""
+    },
+    "GenerateFlatOptions": {
+      "#": "If true, all generate commands will generate a flat structure",
+      "@": true
+    },
+    "GenerateOptions": {
+      "#": "A map with keys specifying global generate options and values specifying the option setting. See https://docs.nestjs.com/cli/monorepo#global-generate-options for details",
+      "?baseDir": "$GenerateBaseDirOptions",
+      "?flat": "$GenerateFlatOptions",
+      "?spec": "$GenerateSpecOptions"
+    },
+    "GenerateSpecOptions": {
+      "#": "If the value is boolean, a value of true enables spec generation by default and a value of false disables it. A flag passed on the CLI command line overrides this setting, as does a project-specific generateOptions setting (more below). If the value is an object, each key represents a schematic name, and the boolean value determines whether the default spec generation is enabled / disabled for that specific schematic. See https://docs.nestjs.com/cli/monorepo#global-generate-options for details.",
+      "|": [
+        true,
+        {
+          "?app": {
+            "#": "Alias for sub-app",
+            "@": true
+          },
+          "?application": {
+            "#": "Generate spec file for application schematics or not.",
+            "@": true
+          },
+          "?cl": {
+            "#": "Alias for class",
+            "@": true
+          },
+          "?class": {
+            "#": "Disable spec file generation for class schematics.",
+            "@": true
+          },
+          "?co": {
+            "#": "Alias for controller",
+            "@": true
+          },
+          "?config": {
+            "#": "Alias for configuration",
+            "@": true
+          },
+          "?configuration": {
+            "#": "Generate spec file for configuration schematics or not.",
+            "@": true
+          },
+          "?controller": {
+            "#": "Generate spec file for controller schematics or not.",
+            "@": true
+          },
+          "?d": {
+            "#": "Alias for decorator",
+            "@": true
+          },
+          "?decorator": {
+            "#": "Generate spec file for decorator schematics or not.",
+            "@": true
+          },
+          "?f": {
+            "#": "Alias for filter",
+            "@": true
+          },
+          "?filter": {
+            "#": "Generate spec file for filter schematics or not.",
+            "@": true
+          },
+          "?ga": {
+            "#": "Alias for gateway",
+            "@": true
+          },
+          "?gateway": {
+            "#": "Generate spec file for gateway schematics or not.",
+            "@": true
+          },
+          "?gu": {
+            "#": "Alias for guard",
+            "@": true
+          },
+          "?guard": {
+            "#": "Generate spec file for guard schematics or not.",
+            "@": true
+          },
+          "?in": {
+            "#": "Alias for interceptor",
+            "@": true
+          },
+          "?interceptor": {
+            "#": "Generate spec file for interceptor schematics or not.",
+            "@": true
+          },
+          "?interface": {
+            "#": "Generate spec file for interface schematics or not.",
+            "@": true
+          },
+          "?lib": {
+            "#": "Alias for library",
+            "@": true
+          },
+          "?library": {
+            "#": "Generate spec file for library schematics or not.",
+            "@": true
+          },
+          "?mi": {
+            "#": "Alias for middleware",
+            "@": true
+          },
+          "?middleware": {
+            "#": "Generate spec file for middleware schematics or not.",
+            "@": true
+          },
+          "?mo": {
+            "#": "Alias for module",
+            "@": true
+          },
+          "?module": {
+            "#": "Generate spec file for module schematics or not.",
+            "@": true
+          },
+          "?pi": {
+            "#": "Alias for pipe",
+            "@": true
+          },
+          "?pipe": {
+            "#": "Generate spec file for pipe schematics or not.",
+            "@": true
+          },
+          "?pr": {
+            "#": "Alias for provider",
+            "@": true
+          },
+          "?provider": {
+            "#": "Generate spec file for provider schematics or not.",
+            "@": true
+          },
+          "?r": {
+            "#": "Alias for resolver",
+            "@": true
+          },
+          "?res": {
+            "#": "Alias for resource",
+            "@": true
+          },
+          "?resolver": {
+            "#": "Generate spec file for resolver schematics or not.",
+            "@": true
+          },
+          "?resource": {
+            "#": "Generate spec file for resource schematics or not.",
+            "@": true
+          },
+          "?s": {
+            "#": "Alias for resolver",
+            "@": true
+          },
+          "?service": {
+            "#": "Generate spec file for service schematics or not.",
+            "@": true
+          },
+          "?sub-app": {
+            "#": "Generate spec file for sub-app schematics or not.",
+            "@": true
+          }
+        }
+      ]
+    },
+    "GraphQLPluginOptions": {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?typeFileNameSuffix": {
+        "#": "(GraphQL Only) GraphQL types files suffix. Default value: ['.input.ts', '.args.ts', '.entity.ts', '.model.ts']. See https://docs.nestjs.com/graphql/cli-plugin#using-the-cli-plugin for details.",
+        "@": [
+          "$ANY"
+        ]
+      }
+    },
+    "PluginItems": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "|": [
+        "",
+        {
+          "": "$ANY",
+          "?name": {
+            "#": "The npm package name of the cli plugin, eg @nestjs/swagger.",
+            "@": ""
+          },
+          "?options": {
+            "|": [
+              "$PluginOptions",
+              "$GraphQLPluginOptions",
+              "$SwaggerPluginOptions"
+            ]
+          }
+        }
+      ]
+    },
+    "PluginOptions": {
+      "": "$ANY",
+      "?introspectComments": {
+        "#": "If set to true, plugin will generate descriptions and example values for properties based on comments.",
+        "@": true
+      }
+    },
+    "ProjectConfiguration": {
+      "?compilerOptions": "$CompilerOptions",
+      "?entryFile": "",
+      "?generateOptions": "$GenerateOptions",
+      "?root": "",
+      "?sourceRoot": "",
+      "?type": ""
+    },
+    "SwaggerPluginOptions": {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?classValidatorShim": {
+        "#": "(Swagger Only) If set to true, the module will reuse class-validator validation decorators (e.g. @Max(10) will add max: 10 to schema definition). See https://docs.nestjs.com/openapi/cli-plugin#using-the-cli-plugin for details",
+        "@": true
+      },
+      "?controllerFileNameSuffix": {
+        "#": "(Swagger Only) Controller files suffix. See https://docs.nestjs.com/openapi/cli-plugin#using-the-cli-plugin for details",
+        "@": ""
+      },
+      "?controllerKeyOfComment": {
+        "#": "(Swagger Only) The property key to set the comment text to on ApiOperation. See https://docs.nestjs.com/openapi/cli-plugin#using-the-cli-plugin for details",
+        "@": ""
+      },
+      "?dtoFileNameSuffix": {
+        "#": "(Swagger Only) DTO (Data Transfer Object) files suffix. Default value: ['.dto.ts', '.entity.ts']. See https://docs.nestjs.com/openapi/cli-plugin#using-the-cli-plugin for details",
+        "@": [
+          ""
+        ]
+      },
+      "?dtoKeyOfComment": {
+        "#": "(Swagger Only) The property key to set the comment text to on ApiProperty. See https://docs.nestjs.com/openapi/cli-plugin#using-the-cli-plugin for details",
+        "@": ""
+      }
+    }
+  },
+  "?collection": {
+    "#": "Points at the collection of schematics used to generate components. you generally should not change this value.",
+    "@": ""
+  },
+  "?compilerOptions": "$CompilerOptions",
+  "?defaultLibraryPrefix": {
+    "#": "Default import prefix for newly generated libraries.",
+    "@": ""
+  },
+  "?entryFile": {
+    "#": "The entry file where 'nest start' work with. Default to 'main'.",
+    "@": ""
+  },
+  "?generateOptions": "$GenerateOptions",
+  "?language": {
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "@": ""
+  },
+  "?monorepo": {
+    "#": "(monorepo only) For a monorepo mode structure, this value is always true.",
+    "@": true
+  },
+  "?projects": {
+    "": "$ProjectConfiguration",
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+  },
+  "?root": {
+    "#": "(monorepo only) Points at the project root of the default project.",
+    "@": ""
+  },
+  "?sourceRoot": {
+    "#": "Points at the root of the source code for the single project in standard mode structures, or the default project in monorepo mode structures.",
+    "@": ""
+  }
+}

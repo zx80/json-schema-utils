@@ -1,0 +1,13 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "?imports": {
+    "": "",
+    "#": "The Imports field"
+  },
+  "?scopes": {
+    "": {
+      "": ""
+    },
+    "#": "The Scopes field"
+  }
+}

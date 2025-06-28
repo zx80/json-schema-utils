@@ -1,0 +1,22 @@
+{
+  "": "$ANY",
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "?app": {
+    ">=": 1,
+    "@": ""
+  },
+  "?build": "",
+  "?context": {
+    "": "$ANY"
+  },
+  "?versionReporting": true,
+  "?watch": {
+    "": "$ANY",
+    "?exclude": [
+      ""
+    ],
+    "?include": [
+      ""
+    ]
+  }
+}

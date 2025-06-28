@@ -1,0 +1,311 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "$": {
+    "cypressConfig": {
+      "": "$ANY",
+      "?animationDistanceThreshold": {
+        "#": "The distance in pixels an element must exceed over time to be considered animating",
+        "@": -1.0
+      },
+      "?baseUrl": {
+        "#": "Url used as prefix for cy.visit() or cy.request() command\u2019s url. Example http://localhost:3030 or https://test.my-domain.com",
+        "@": ""
+      },
+      "?blockHosts": {
+        "#": "A String or Array of hosts that you wish to block traffic for. Please read the notes for examples on using this https://on.cypress.io/configuration#blockHosts",
+        "|": [
+          "",
+          [
+            ""
+          ]
+        ]
+      },
+      "?chromeWebSecurity": {
+        "#": "Whether Chrome Web Security for same-origin policy and insecure mixed content is enabled. Read more about this at https://on.cypress.io/web-security",
+        "@": true
+      },
+      "?clientCertificates": {
+        "#": "Defines client certificates to use when sending requests to the specified URLs",
+        "@": [
+          {
+            "": "$ANY",
+            "?ca": {
+              "#": "Path(s) to CA file(s) to validate certs against, relative to project root",
+              "@": [
+                ""
+              ]
+            },
+            "_certs": [
+              {
+                "|": [
+                  {
+                    "": "$ANY",
+                    "#": "PEM file specific properties",
+                    "?passphrase": {
+                      "#": "(Optional) File path to a UTF-8 text file containing the passphrase for the key, relative to project root",
+                      "@": ""
+                    },
+                    "_cert": {
+                      "#": "Path to the certificate, relative to project root",
+                      "@": ""
+                    },
+                    "_key": {
+                      "#": "Path to the private key, relative to project root",
+                      "@": ""
+                    }
+                  },
+                  {
+                    "": "$ANY",
+                    "#": "PFX file specific properties",
+                    "?passphrase": {
+                      "#": "(Optional) File path to a UTF-8 text file containing the passphrase for the container, relative to project root",
+                      "@": ""
+                    },
+                    "_pfx": {
+                      "#": "Path to the certificate container, relative to project root",
+                      "@": ""
+                    }
+                  }
+                ]
+              }
+            ],
+            "_url": {
+              "#": "Requests for URLs matching this minimatch pattern will use the supplied client certificate",
+              "@": ""
+            }
+          }
+        ]
+      },
+      "?componentFolder": {
+        "#": "Path to folder containing component test files (Pass false to disable)",
+        "|": [
+          "",
+          true
+        ]
+      },
+      "?defaultCommandTimeout": {
+        "#": "Time, in milliseconds, to wait until most DOM based commands are considered timed out",
+        "@": -1.0
+      },
+      "?downloadsFolder": {
+        "#": "Path to folder where files downloaded during a test are saved",
+        "@": ""
+      },
+      "?env": {
+        "": "$ANY",
+        "#": "Any values to be set as environment variables. See https://on.cypress.io/environment-variables"
+      },
+      "?execTimeout": {
+        "#": "Time, in milliseconds, to wait for a system command to finish executing during a cy.exec() command",
+        "@": -1.0
+      },
+      "?experimentalFetchPolyfill": {
+        "#": "Polyfills `window.fetch` to enable Network spying and stubbing",
+        "@": true
+      },
+      "?experimentalInteractiveRunEvents": {
+        "#": "Allows listening to the `before:run`, `after:run`, `before:spec`, and `after:spec` events in the plugins file during interactive mode.",
+        "@": true
+      },
+      "?experimentalSessionSupport": {
+        "#": "Enable experimental session support. See https://on.cypress.io/session",
+        "@": true
+      },
+      "?experimentalSourceRewriting": {
+        "#": "Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm.",
+        "@": true
+      },
+      "?experimentalStudio": {
+        "#": "Generate and save commands directly to your test suite by interacting with your app as an end user would.",
+        "@": true
+      },
+      "?fileServerFolder": {
+        "#": "Path to folder where application files will attempt to be served from",
+        "@": ""
+      },
+      "?fixturesFolder": {
+        "#": "Path to folder containing fixture files (Pass false to disable)",
+        "|": [
+          "",
+          true
+        ]
+      },
+      "?ignoreTestFiles": {
+        "#": "A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses minimatch with the options: {dot: true, matchBase: true}. We suggest using http://globtester.com to test what files would match.",
+        "|": [
+          "",
+          [
+            ""
+          ]
+        ]
+      },
+      "?includeShadowDom": {
+        "#": "Enables including elements within the shadow DOM when using querying commands (e.g. cy.get(), cy.find()). Can be set globally in cypress.json, per-suite or per-test in the test configuration object, or programmatically with Cypress.config()",
+        "@": true
+      },
+      "?integrationFolder": {
+        "#": "Path to folder containing integration test files",
+        "@": ""
+      },
+      "?modifyObstructiveCode": {
+        "#": "Whether Cypress will search for and replace obstructive JS code found in .js or .html files that prevent Cypress from working. Please read the notes for more information on this setting. https://on.cypress.io/configuration#modifyObstructiveCode",
+        "@": true
+      },
+      "?nodeVersion": {
+        "#": "DEPRECATED: If set to 'bundled', Cypress will use the Node version bundled with Cypress. Otherwise, Cypress will use the Node version that was used to launch the Cypress. This Node version is used when executing your plugins file and building spec files.",
+        "|": [
+          "_system",
+          "_bundled"
+        ]
+      },
+      "?numTestsKeptInMemory": {
+        "#": "The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.",
+        "@": -1.0
+      },
+      "?pageLoadTimeout": {
+        "#": "Time, in milliseconds, to wait for page transition events or cy.visit(), cy.go(), cy.reload() commands to fire their page load events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.",
+        "@": -1.0
+      },
+      "?pluginsFile": {
+        "#": "Path to plugins file. (Pass false to disable)",
+        "|": [
+          "",
+          true
+        ]
+      },
+      "?port": {
+        "#": "Port used to host Cypress. Normally this is a randomly generated port",
+        "@": -1.0
+      },
+      "?projectId": {
+        "#": "A 6 character string use to identify this project in the Cypress Dashboard. See https://on.cypress.io/dashboard-service#Identification",
+        "@": ""
+      },
+      "?reporter": {
+        "#": "The reporter used when running headlessly or in CI. See https://on.cypress.io/reporters",
+        "@": ""
+      },
+      "?reporterOptions": {
+        "": "$ANY",
+        "#": "The reporter options used. Supported options depend on the reporter. See https://on.cypress.io/reporters#Reporter-Options"
+      },
+      "?requestTimeout": {
+        "#": "Time, in milliseconds, to wait for an XHR request to go out in a cy.wait() command",
+        "@": -1.0
+      },
+      "?responseTimeout": {
+        "#": "Time, in milliseconds, to wait until a response in a cy.request(), cy.wait(), cy.fixture(), cy.getCookie(), cy.getCookies(), cy.setCookie(), cy.clearCookie(), cy.clearCookies(), and cy.screenshot() commands",
+        "@": -1.0
+      },
+      "?retries": {
+        "#": "The number of times to retry a failing. Can be configured to apply only in runMode or openMode",
+        "|": [
+          {
+            "": "$ANY"
+          },
+          -1.0,
+          null
+        ]
+      },
+      "?screenshotOnRunFailure": {
+        "#": "Whether Cypress will take a screenshot when a test fails during cypress run",
+        "@": true
+      },
+      "?screenshotsFolder": {
+        "#": "Path to folder where screenshots will be saved from cy.screenshot() command or after a test fails during cypress run",
+        "@": ""
+      },
+      "?scrollBehavior": {
+        "#": "Viewport position to which an element should be scrolled prior to action commands. Setting `false` disables scrolling.",
+        "|": [
+          "=false",
+          "_center",
+          "_top",
+          "_bottom",
+          "_nearest"
+        ]
+      },
+      "?slowTestThreshold": {
+        "#": "Slow test threshold in milliseconds. Only affects the visual output of some reporters. For example, the spec reporter will display the test time in yellow if over the threshold. See https://on.cypress.io/configuration#Timeouts",
+        "@": -1.0
+      },
+      "?supportFile": {
+        "#": "Path to file to load before test files load. This file is compiled and bundled. (Pass false to disable)",
+        "|": [
+          "",
+          true
+        ]
+      },
+      "?taskTimeout": {
+        "#": "Time, in milliseconds, to wait for a task to finish executing during a cy.task() command",
+        "@": -1.0
+      },
+      "?testFiles": {
+        "#": "A String or Array of string glob patterns of the test files to load. See https://on.cypress.io/configuration#Global",
+        "|": [
+          "",
+          [
+            "$ANY"
+          ]
+        ]
+      },
+      "?trashAssetsBeforeRuns": {
+        "#": "Whether Cypress will trash assets within the screenshotsFolder and videosFolder before tests run with cypress run",
+        "@": true
+      },
+      "?userAgent": {
+        "#": "Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See User-Agent MDN Documentation for example user agent values here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent",
+        "@": ""
+      },
+      "?video": {
+        "#": "Whether Cypress will capture a video of the tests run with cypress run",
+        "@": true
+      },
+      "?videoCompression": {
+        "#": "The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be false to disable compression or a value between 0 and 51, where a lower value results in better quality (at the expense of a higher file size).",
+        "|": [
+          -1.0,
+          true
+        ]
+      },
+      "?videoUploadOnPasses": {
+        "#": "Whether Cypress will process, compress, and upload videos to the Dashboard even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you\u2019d like to only upload the spec file\u2019s video when there are failing tests.",
+        "@": true
+      },
+      "?videosFolder": {
+        "#": "Path to folder where videos will be saved during cypress run",
+        "@": ""
+      },
+      "?viewportHeight": {
+        "#": "Default height in pixels for the application under tests\u2019 viewport (Override with cy.viewport() command)",
+        "@": -1.0
+      },
+      "?viewportWidth": {
+        "#": "Default width in pixels for the application under tests\u2019 viewport. (Override with cy.viewport() command)",
+        "@": -1.0
+      },
+      "?waitForAnimations": {
+        "#": "Whether to wait for elements to finish animating before executing commands",
+        "@": true
+      },
+      "?watchForFileChanges": {
+        "#": "Whether Cypress will watch and restart tests on test file changes",
+        "@": true
+      }
+    }
+  },
+  "&": [
+    "$cypressConfig",
+    {
+      "": "$ANY",
+      "?component": {
+        "#": "Any component runner specific overrides",
+        "@": "$cypressConfig"
+      },
+      "?e2e": {
+        "#": "Any e2e runner specific overrides",
+        "@": "$cypressConfig"
+      }
+    }
+  ]
+}

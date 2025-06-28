@@ -1,0 +1,30 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "_dependencies": {
+    "#": "In Helm, one chart may depend on any number of other charts. These dependencies can be dynamically linked using the dependencies field in Chart.yaml or brought in to the charts/ directory and managed manually.\nThe charts required by the current chart are defined as a list in the dependencies field.",
+    "@": [
+      {
+        "_name": {
+          "#": "The name of the chart",
+          "@": ""
+        },
+        "_repository": {
+          "#": "The repository URL or alias",
+          "@": "$URI"
+        },
+        "_version": {
+          "#": "The version of the chart",
+          "@": ""
+        }
+      }
+    ]
+  },
+  "_digest": {
+    "#": "Digest is a hash of the dependencies in Chart.yaml.",
+    "@": ""
+  },
+  "_generated": {
+    "#": "Generated is the date the lock file was last generated.",
+    "@": "$DATETIME"
+  }
+}

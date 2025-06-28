@@ -1,0 +1,898 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "?$schema": {
+    "#": "Ignored. Can be set to get completions, validations and documentation in some editors.",
+    "@": ""
+  },
+  "?alias": {
+    "#": "Aliases that will get assigned when the deployment is `READY` and the target is `production`. The client needs to make a `GET` request to its API to ensure the assignment",
+    "^": [
+      {
+        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+        "@": ""
+      },
+      {
+        "<=": 50,
+        "@": [
+          {
+            "<=": 253,
+            "@": ""
+          }
+        ]
+      }
+    ]
+  },
+  "?build": {
+    "#": "An object containing another object with information to be passed to the Build Process",
+    "?env": {
+      "#": "An object containing the deployment's environment variable names and values to be passed to Builds. Secrets can be referenced by prefixing the value with `@`",
+      "<=": 100,
+      ">=": 0,
+      "@": {
+        "/.+/": {
+          "<=": 65536,
+          ">=": 0,
+          "@": ""
+        }
+      }
+    }
+  },
+  "?buildCommand": {
+    "#": "The build command for this project. When `null` is used this value will be automatically detected",
+    "|": [
+      {
+        "<=": 256,
+        "@": ""
+      },
+      null
+    ]
+  },
+  "?builds": {
+    "#": "A list of build descriptions whose src references valid source files.",
+    "<=": 128,
+    ">=": 0,
+    "@": [
+      {
+        "?config": {
+          "": "$ANY",
+          "#": "Optionally, an object including arbitrary metadata to be passed to the Builder"
+        },
+        "?src": {
+          "#": "A glob expression or pathname. If more than one file is resolved, one build will be created per matched file. It can include `*` and `**`",
+          "<=": 4096,
+          ">=": 1,
+          "@": ""
+        },
+        "_use": {
+          "#": "An npm module to be installed by the build process. It can include a semver compatible version (e.g.: `@org/proj@1`)",
+          "<=": 256,
+          ">=": 3,
+          "@": ""
+        }
+      }
+    ]
+  },
+  "?cleanUrls": {
+    "#": "When set to `true`, all HTML files and Serverless Functions will have their extension removed. When visiting a path that ends with the extension, a 308 response will redirect the client to the extensionless path.",
+    "@": true
+  },
+  "?crons": {
+    "#": "An array of cron jobs that should be created for production Deployments.",
+    "<=": 20,
+    "@": [
+      {
+        "": "$ANY",
+        "_path": {
+          "<=": 512,
+          "@": "/^/.*/"
+        },
+        "_schedule": {
+          "<=": 256,
+          ">=": 9,
+          "@": ""
+        }
+      }
+    ]
+  },
+  "?devCommand": {
+    "#": "The dev command for this project. When `null` is used this value will be automatically detected",
+    "|": [
+      {
+        "<=": 256,
+        "@": ""
+      },
+      null
+    ]
+  },
+  "?env": {
+    "#": "An object containing the deployment's environment variable names and values. Secrets can be referenced by prefixing the value with `@`",
+    "<=": 100,
+    ">=": 0,
+    "@": {
+      "/.+/": {
+        "<=": 65536,
+        ">=": 0,
+        "@": ""
+      }
+    }
+  },
+  "?framework": {
+    "#": "The framework that is being used for this project. When `null` is used no framework is selected",
+    "|": [
+      "_blitzjs",
+      "_nextjs",
+      "_gatsby",
+      "_remix",
+      "_astro",
+      "_hexo",
+      "_eleventy",
+      "_docusaurus-2",
+      "_docusaurus",
+      "_preact",
+      "_solidstart",
+      "_dojo",
+      "_ember",
+      "_vue",
+      "_scully",
+      "_ionic-angular",
+      "_angular",
+      "_polymer",
+      "_svelte",
+      "_sveltekit",
+      "_sveltekit-1",
+      "_ionic-react",
+      "_create-react-app",
+      "_gridsome",
+      "_umijs",
+      "_sapper",
+      "_saber",
+      "_stencil",
+      "_nuxtjs",
+      "_redwoodjs",
+      "_hugo",
+      "_jekyll",
+      "_brunch",
+      "_middleman",
+      "_zola",
+      "_hydrogen",
+      "_vite",
+      "_vitepress",
+      "_vuepress",
+      "_parcel",
+      "_sanity",
+      "_storybook",
+      null
+    ]
+  },
+  "?functions": {
+    "#": "An object describing custom options for your Serverless Functions. Each key must be glob pattern that matches the paths of the Serverless Functions you would like to customize (like `api/*.js` or `api/test.js`).",
+    "<=": 50,
+    ">=": 1,
+    "@": {
+      "/^.{1,256}$/": {
+        "?excludeFiles": {
+          "#": "A glob pattern to match files that should be excluded from your Serverless Function. If you\u2019re using a Community Runtime, the behavior might vary.",
+          "<=": 256,
+          "@": ""
+        },
+        "?includeFiles": {
+          "#": "A glob pattern to match files that should be included in your Serverless Function. If you\u2019re using a Community Runtime, the behavior might vary.",
+          "<=": 256,
+          "@": ""
+        },
+        "?maxDuration": {
+          "#": "An integer defining how long your Serverless Function should be allowed to run on every request in seconds (between 1 and the maximum limit of your plan).",
+          "<=": 900,
+          ">=": 1,
+          "@": -1.0
+        },
+        "?memory": {
+          "#": "An integer defining the memory your Serverless Function should be provided with (between 128 and 3008).",
+          "<=": 3008,
+          ">=": 128,
+          "@": -1.0
+        },
+        "?runtime": {
+          "#": "The npm package name of a Runtime, including its version",
+          "<=": 256,
+          "@": ""
+        }
+      }
+    }
+  },
+  "?git": {
+    "": "$ANY",
+    "?deploymentEnabled": {
+      "#": "Specifies the branches that will not trigger an auto-deployment when committing to them. Any non specified branch is `true` by default.",
+      "^": [
+        true,
+        {
+          "": true
+        }
+      ]
+    }
+  },
+  "?github": {
+    "": "$ANY",
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "?autoAlias": {
+      "#": "When set to `false`, Vercel for GitHub will not deploy the given project regardless of the GitHub app being installed.",
+      "@": true
+    },
+    "?autoJobCancelation": {
+      "#": "When set to `false`, Vercel for GitHub will always build pushes in sequence without cancelling a build for the most recent commit.",
+      "@": true
+    },
+    "?enabled": {
+      "#": "When set to false, Vercel for GitHub will not apply the alias upon merge.",
+      "@": true
+    },
+    "?silent": {
+      "#": "When set to `true`, Vercel for GitHub will stop commenting on pull requests and commits.",
+      "@": true
+    }
+  },
+  "?headers": {
+    "#": "A list of header definitions.",
+    "<=": 1024,
+    "@": [
+      {
+        "?has": {
+          "#": "An array of requirements that are needed to match",
+          "<=": 16,
+          "@": [
+            {
+              "|": [
+                {
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "@": "_host"
+                  },
+                  "_value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  }
+                },
+                {
+                  "?value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_key": {
+                    "#": "The name of the element contained in the particular type",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "|": [
+                      "_header",
+                      "_cookie",
+                      "_query"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "?missing": {
+          "#": "An array of requirements that are needed to match",
+          "<=": 16,
+          "@": [
+            {
+              "|": [
+                {
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "@": "_host"
+                  },
+                  "_value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  }
+                },
+                {
+                  "?value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_key": {
+                    "#": "The name of the element contained in the particular type",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "|": [
+                      "_header",
+                      "_cookie",
+                      "_query"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "_headers": {
+          "#": "An array of key/value pairs representing each response header.",
+          "<=": 1024,
+          "@": [
+            {
+              "_key": {
+                "<=": 4096,
+                "@": ""
+              },
+              "_value": {
+                "<=": 4096,
+                "@": ""
+              }
+            }
+          ]
+        },
+        "_source": {
+          "#": "A pattern that matches each incoming pathname (excluding querystring)",
+          "<=": 4096,
+          "@": ""
+        }
+      }
+    ]
+  },
+  "?ignoreCommand": {
+    "|": [
+      {
+        "<=": 256,
+        "@": ""
+      },
+      null
+    ]
+  },
+  "?images": {
+    "?contentDispositionType": {
+      "|": [
+        "_inline",
+        "_attachment"
+      ]
+    },
+    "?contentSecurityPolicy": {
+      "<=": 256,
+      ">=": 1,
+      "@": ""
+    },
+    "?dangerouslyAllowSVG": true,
+    "?domains": {
+      "<=": 50,
+      ">=": 0,
+      "@": [
+        {
+          "<=": 256,
+          ">=": 1,
+          "@": ""
+        }
+      ]
+    },
+    "?formats": {
+      "<=": 4,
+      ">=": 1,
+      "@": [
+        {
+          "|": [
+            "_image/avif",
+            "_image/webp",
+            "_image/jpeg",
+            "_image/png"
+          ]
+        }
+      ]
+    },
+    "?minimumCacheTTL": {
+      "<=": 315360000,
+      ">=": 1,
+      "@": -1
+    },
+    "?remotePatterns": {
+      "<=": 50,
+      ">=": 0,
+      "@": [
+        {
+          "?pathname": {
+            "<=": 256,
+            ">=": 1,
+            "@": ""
+          },
+          "?port": {
+            "<=": 5,
+            ">=": 1,
+            "@": ""
+          },
+          "?protocol": {
+            "|": [
+              "_http",
+              "_https"
+            ]
+          },
+          "_hostname": {
+            "<=": 256,
+            ">=": 1,
+            "@": ""
+          }
+        }
+      ]
+    },
+    "_sizes": {
+      "<=": 50,
+      ">=": 1,
+      "@": [
+        -1.0
+      ]
+    }
+  },
+  "?installCommand": {
+    "#": "The install command for this project. When `null` is used this value will be automatically detected",
+    "|": [
+      {
+        "<=": 256,
+        "@": ""
+      },
+      null
+    ]
+  },
+  "?name": {
+    "#": "A name for the deployment",
+    "@": ""
+  },
+  "?outputDirectory": {
+    "#": "The output directory of the project. When `null` is used this value will be automatically detected",
+    "|": [
+      {
+        "<=": 256,
+        "@": ""
+      },
+      null
+    ]
+  },
+  "?public": {
+    "#": "Whether a deployment's source and logs are available publicly",
+    "@": true
+  },
+  "?redirects": {
+    "#": "A list of redirect definitions.",
+    "<=": 1024,
+    "@": [
+      {
+        "?has": {
+          "#": "An array of requirements that are needed to match",
+          "<=": 16,
+          "@": [
+            {
+              "|": [
+                {
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "@": "_host"
+                  },
+                  "_value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  }
+                },
+                {
+                  "?value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_key": {
+                    "#": "The name of the element contained in the particular type",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "|": [
+                      "_header",
+                      "_cookie",
+                      "_query"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "?missing": {
+          "#": "An array of requirements that are needed to match",
+          "<=": 16,
+          "@": [
+            {
+              "|": [
+                {
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "@": "_host"
+                  },
+                  "_value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  }
+                },
+                {
+                  "?value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_key": {
+                    "#": "The name of the element contained in the particular type",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "|": [
+                      "_header",
+                      "_cookie",
+                      "_query"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "?permanent": {
+          "#": "A boolean to toggle between permanent and temporary redirect. When `true`, the status code is `308`. When `false` the status code is `307`.",
+          "@": true
+        },
+        "?statusCode": {
+          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+          "<=": 999,
+          ">=": 100,
+          "@": -1
+        },
+        "_destination": {
+          "#": "A location destination defined as an absolute pathname or external URL.",
+          "<=": 4096,
+          "@": ""
+        },
+        "_source": {
+          "#": "A pattern that matches each incoming pathname (excluding querystring).",
+          "<=": 4096,
+          "@": ""
+        }
+      }
+    ]
+  },
+  "?regions": {
+    "#": "An array of the regions the deployment's Serverless Functions should be deployed to",
+    "<=": 1000,
+    ">=": 1,
+    "@": [
+      {
+        "<=": 256,
+        "@": ""
+      }
+    ]
+  },
+  "?rewrites": {
+    "#": "A list of rewrite definitions.",
+    "<=": 1024,
+    "@": [
+      {
+        "?has": {
+          "#": "An array of requirements that are needed to match",
+          "<=": 16,
+          "@": [
+            {
+              "|": [
+                {
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "@": "_host"
+                  },
+                  "_value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  }
+                },
+                {
+                  "?value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_key": {
+                    "#": "The name of the element contained in the particular type",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "|": [
+                      "_header",
+                      "_cookie",
+                      "_query"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "?missing": {
+          "#": "An array of requirements that are needed to match",
+          "<=": 16,
+          "@": [
+            {
+              "|": [
+                {
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "@": "_host"
+                  },
+                  "_value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  }
+                },
+                {
+                  "?value": {
+                    "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_key": {
+                    "#": "The name of the element contained in the particular type",
+                    "<=": 4096,
+                    "@": ""
+                  },
+                  "_type": {
+                    "#": "The type of request element to check",
+                    "|": [
+                      "_header",
+                      "_cookie",
+                      "_query"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "_destination": {
+          "#": "An absolute pathname to an existing resource or an external URL.",
+          "<=": 4096,
+          "@": ""
+        },
+        "_source": {
+          "#": "A pattern that matches each incoming pathname (excluding querystring).",
+          "<=": 4096,
+          "@": ""
+        }
+      }
+    ]
+  },
+  "?routes": {
+    "#": "A list of routes objects used to rewrite paths to point towards other internal or external paths",
+    "<=": 1024,
+    "@": [
+      {
+        "|": [
+          {
+            "?caseSensitive": true,
+            "?check": true,
+            "?continue": true,
+            "?dest": {
+              "<=": 4096,
+              "@": ""
+            },
+            "?has": {
+              "#": "An array of requirements that are needed to match",
+              "<=": 16,
+              "@": [
+                {
+                  "|": [
+                    {
+                      "_type": {
+                        "#": "The type of request element to check",
+                        "@": "_host"
+                      },
+                      "_value": {
+                        "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                        "<=": 4096,
+                        "@": ""
+                      }
+                    },
+                    {
+                      "?value": {
+                        "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                        "<=": 4096,
+                        "@": ""
+                      },
+                      "_key": {
+                        "#": "The name of the element contained in the particular type",
+                        "<=": 4096,
+                        "@": ""
+                      },
+                      "_type": {
+                        "#": "The type of request element to check",
+                        "|": [
+                          "_header",
+                          "_cookie",
+                          "_query"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "?headers": {
+              "<=": 100,
+              ">=": 1,
+              "@": {
+                "/^.{1,256}$/": {
+                  "<=": 4096,
+                  "@": ""
+                }
+              }
+            },
+            "?important": true,
+            "?isInternal": true,
+            "?locale": {
+              ">=": 1,
+              "@": {
+                "?cookie": {
+                  "<=": 4096,
+                  "@": ""
+                },
+                "?default": {
+                  "<=": 4096,
+                  "@": ""
+                },
+                "?path": {
+                  "<=": 4096,
+                  "@": ""
+                },
+                "?redirect": {
+                  "<=": 100,
+                  ">=": 1,
+                  "@": {
+                    "/^.{1,256}$/": {
+                      "<=": 4096,
+                      "@": ""
+                    }
+                  }
+                },
+                "?value": {
+                  "<=": 4096,
+                  "@": ""
+                }
+              }
+            },
+            "?methods": {
+              "<=": 10,
+              "@": [
+                {
+                  "<=": 32,
+                  "@": ""
+                }
+              ]
+            },
+            "?middleware": -1.0,
+            "?middlewarePath": "",
+            "?middlewareRawSrc": [
+              ""
+            ],
+            "?missing": {
+              "#": "An array of requirements that are needed to match",
+              "<=": 16,
+              "@": [
+                {
+                  "|": [
+                    {
+                      "_type": {
+                        "#": "The type of request element to check",
+                        "@": "_host"
+                      },
+                      "_value": {
+                        "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                        "<=": 4096,
+                        "@": ""
+                      }
+                    },
+                    {
+                      "?value": {
+                        "#": "A regular expression used to match the value. Named groups can be used in the destination",
+                        "<=": 4096,
+                        "@": ""
+                      },
+                      "_key": {
+                        "#": "The name of the element contained in the particular type",
+                        "<=": 4096,
+                        "@": ""
+                      },
+                      "_type": {
+                        "#": "The type of request element to check",
+                        "|": [
+                          "_header",
+                          "_cookie",
+                          "_query"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "?override": true,
+            "?status": {
+              "<=": 999,
+              ">=": 100,
+              "@": -1
+            },
+            "?user": true,
+            "_src": {
+              "<=": 4096,
+              "@": ""
+            }
+          },
+          {
+            "_handle": {
+              "|": [
+                "_error",
+                "_filesystem",
+                "_hit",
+                "_miss",
+                "_resource",
+                "_rewrite"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "?scope": {
+    "#": "This property determines the scope (user or team) under which the project will be deployed by Vercel CLI.",
+    "@": ""
+  },
+  "?trailingSlash": {
+    "#": "When `false`, visiting a path that ends with a forward slash will respond with a `308` status code and redirect to the path without the trailing slash.",
+    "@": true
+  },
+  "?version": {
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "<=": 2,
+    ">=": 2,
+    "@": -1
+  },
+  "?wildcard": {
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "<=": 25,
+    ">=": 1,
+    "@": [
+      {
+        "_domain": {
+          "<=": 255,
+          ">=": 1,
+          "@": ""
+        },
+        "_value": {
+          "<=": 1024,
+          ">=": 0,
+          "@": ""
+        }
+      }
+    ]
+  }
+}

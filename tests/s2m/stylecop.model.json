@@ -1,0 +1,202 @@
+{
+  "": "$ANY",
+  "#": "Configuration file for StyleCop Analyzers",
+  "?settings": {
+    "#": "The top-level object containing configuration properties for built-in rules.",
+    "?documentationRules": {
+      "#": "Configuration for documentation rules (SA1600-)",
+      "?companyName": {
+        "#": "The name of the company which appears in file headers.",
+        "@": ""
+      },
+      "?copyrightText": {
+        "#": "The copyright text which should appear in file headers.",
+        "@": ""
+      },
+      "?documentExposedElements": {
+        "#": "Specifies whether exposed elements need to be documented. When true, all publicly-exposed types and members require documentation.",
+        "@": true
+      },
+      "?documentInterfaces": {
+        "#": "Specifies whether interface members need to be documented. When true, all interface members require documentation, regardless of accessibility.",
+        "@": true
+      },
+      "?documentInternalElements": {
+        "#": "Specifies whether internal elements need to be documented. When true, all internally-exposed types and members require documentation.",
+        "@": true
+      },
+      "?documentPrivateElements": {
+        "#": "Specifies whether private elements need to be documented. When true, all types and members except for declared private fields require documentation.",
+        "@": true
+      },
+      "?documentPrivateFields": {
+        "#": "Specifies whether private fields need to be documented. When true, all fields require documentation, regardless of accessibility.",
+        "@": true
+      },
+      "?documentationCulture": {
+        "#": "The culture that should be used for documentation comments.",
+        "@": ""
+      },
+      "?excludeFromPunctuationCheck": {
+        "#": "Specifies the top-level tags within XML documentation that will be excluded from punctuation analysis.",
+        "@": [
+          "$ANY"
+        ]
+      },
+      "?fileNamingConvention": {
+        "#": "Specifies the preferred naming convention for files. The default value \"stylecop\" uses the naming convention defined by StyleCop Classic, while \"metadata\" uses a file naming convention that matches the metadata names of types.",
+        "|": [
+          "_stylecop",
+          "_metadata"
+        ]
+      },
+      "?headerDecoration": {
+        "#": "The text used as decoration for the copyright header comment.",
+        "@": ""
+      },
+      "?variables": {
+        "#": "Replacement variables which may be used in the 'copyrightText' value.",
+        "/^[a-zA-Z0-9]+$/": ""
+      },
+      "?xmlHeader": {
+        "#": "Determines whether the file header should be wrapped in the StyleCop-standard XML structure.",
+        "@": true
+      }
+    },
+    "?indentation": {
+      "#": "Indentation configuration",
+      "?indentationSize": {
+        "#": "Specifies the indentation size.",
+        ">=": 0,
+        "@": -1
+      },
+      "?tabSize": {
+        "#": "Specifies the tab width.",
+        ">=": 0,
+        "@": -1
+      },
+      "?useTabs": {
+        "#": "Specifies whether indentation should use hard tabs instead of spaces.",
+        "@": true
+      }
+    },
+    "?layoutRules": {
+      "#": "Configuration for layout rules (SA1500-)",
+      "?allowConsecutiveUsings": {
+        "#": "Specifies if SA1519 will allow consecutive using statements without braces",
+        "@": true
+      },
+      "?allowDoWhileOnClosingBrace": {
+        "#": "Specifies if SA1500 will allow the 'while' expression of a 'do'/'while' loop to be on the same line as the closing brace.",
+        "@": true
+      },
+      "?newlineAtEndOfFile": {
+        "#": "Specifies the handling for newline characters which appear at the end of a file\r\nallow: Files are allowed to end with a single newline character, but it is not required\r\nrequire: Files are required to end with a single newline character\r\nomit: Files may not end with a newline character",
+        "|": [
+          "_allow",
+          "_require",
+          "_omit"
+        ]
+      }
+    },
+    "?maintainabilityRules": {
+      "#": "Configuration for ordering rules (SA1400-)",
+      "?topLevelTypes": {
+        "!": true,
+        "#": "The set of type kinds which should be placed in separate files according to the type name.",
+        "@": [
+          {
+            "|": [
+              "_class",
+              "_interface",
+              "_struct",
+              "_delegate",
+              "_enum"
+            ]
+          }
+        ]
+      }
+    },
+    "?namingRules": {
+      "#": "Configuration for naming rules (SA1300-)",
+      "?allowCommonHungarianPrefixes": {
+        "#": "Determines whether common Hungarian notation prefixes should be allowed.",
+        "@": true
+      },
+      "?allowedHungarianPrefixes": {
+        "!": true,
+        "#": "Allowed Hungarian notation prefixes.",
+        "@": [
+          "/^[a-z]{1,2}$/"
+        ]
+      },
+      "?allowedNamespaceComponents": {
+        "!": true,
+        "#": "Allowed namespace components, such as ones beginning with a lowercase letter.",
+        "@": [
+          ""
+        ]
+      },
+      "?includeInferredTupleElementNames": {
+        "#": "Specifies whether inferred tuple element names will be analyzed as well.",
+        "@": true
+      },
+      "?tupleElementNameCasing": {
+        "#": "Specifies the casing convention used for tuple element names.",
+        "|": [
+          "_camelCase",
+          "_PascalCase"
+        ]
+      }
+    },
+    "?orderingRules": {
+      "#": "Configuration for ordering rules (SA1200-)",
+      "?blankLinesBetweenUsingGroups": {
+        "#": "Specifies if using groups should be separated by a blank line.\r\nallow: A blank line is allowed, but not required\r\nrequire: A blank line is required\r\nomit: A blank line is not allowed",
+        "|": [
+          "_allow",
+          "_require",
+          "_omit"
+        ]
+      },
+      "?elementOrder": {
+        "!": true,
+        "#": "Specifies the traits used for ordering elements within a document, along with their precedence.",
+        "@": [
+          {
+            "#": "",
+            "|": [
+              "_accessibility",
+              "_kind",
+              "_constant",
+              "_static",
+              "_readonly"
+            ]
+          }
+        ]
+      },
+      "?systemUsingDirectivesFirst": {
+        "#": "When true, System using directives should be placed before other using directives.",
+        "@": true
+      },
+      "?usingDirectivesPlacement": {
+        "#": "Specifies the desired placement of using directives.\r\ninsideNamespace: Place using directives inside the namespace definition\r\noutsideNamespace: Place using directives outside the namespace definition\r\npreserve: Allow using directives inside or outside the namespace definition",
+        "|": [
+          "_insideNamespace",
+          "_outsideNamespace",
+          "_preserve"
+        ]
+      }
+    },
+    "?readabilityRules": {
+      "#": "Configuration for readability rules (SA1100-)",
+      "?allowBuiltInTypeAliases": {
+        "#": "When true, diagnostics will not be reported for using aliases of built-in types.",
+        "@": true
+      }
+    },
+    "?spacingRules": {
+      "#": "Configuration for spacing rules (SA1000-)"
+    }
+  }
+}

@@ -1,9 +1,9 @@
 {
   "|": [
-    "red",
-    "amber",
-    "green",
+    "_red",
+    "_amber",
+    "_green",
     null,
-    42
+    "=42"
   ]
 }

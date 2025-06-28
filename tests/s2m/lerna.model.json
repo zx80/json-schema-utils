@@ -1,0 +1,113 @@
+{
+  "": "$ANY",
+  "#": "Lerna is a tool used in JavaScript monorepo projects. The lerna.json file is\nused to configure lerna to to best fit your project.",
+  "?command": {
+    "": "$ANY",
+    "#": "Options for the CLI commands.",
+    "?bootstrap": {
+      "": "$ANY",
+      "#": "Options for the bootstrap command.",
+      "?ignore": {
+        "#": "An array of globs that won't be bootstrapped when running \"lerna bootstrap\" command.",
+        "|": [
+          "",
+          [
+            ""
+          ]
+        ]
+      },
+      "?npmClientArgs": {
+        "#": "Array of strings that will be passed as arguments directly to \"npm install\" during the \"lerna bootstrap\" command.",
+        "@": [
+          ""
+        ]
+      }
+    },
+    "?init": {
+      "": "$ANY",
+      "#": "Options for the init command.",
+      "?exact": {
+        "#": "Use lerna 1.x behavior of \"exact\" comparison. It will enforce the exact match for all subsequent executions.",
+        "@": true
+      }
+    },
+    "?publish": {
+      "": "$ANY",
+      "#": "Options for the publish command.",
+      "?ignoreChanges": {
+        "#": "An array of globs that won't be included in \"lerna changed/publish\". Use this to prevent publishing of a new version unnecessarily for changes, such as fixing a README.md typo.",
+        "|": [
+          "",
+          [
+            ""
+          ]
+        ]
+      },
+      "?message": {
+        "#": "A custom commit message when performing version updates for publication. See https://github.com/lerna/lerna/tree/master/commands/version#--message-msg for more information.",
+        "@": ""
+      }
+    },
+    "?run": {
+      "": "$ANY",
+      "#": "Options for the run command.",
+      "?npmClient": {
+        "#": "Which npm client should be used when running package scripts.",
+        "@": ""
+      }
+    },
+    "?version": {
+      "": "$ANY",
+      "#": "Options for the version command.",
+      "?allowBranch": {
+        "#": "A whitelist of globs that match git branches where \"lerna version\" is enabled.",
+        "|": [
+          "",
+          [
+            ""
+          ]
+        ]
+      },
+      "?message": {
+        "#": "A custom commit message when performing version updates for publication. See https://github.com/lerna/lerna/tree/master/commands/version#--message-msg for more information.",
+        "@": ""
+      }
+    }
+  },
+  "?ignoreChanges": {
+    "#": "Array of globs of files to ignore when detecting changed packages.",
+    "@": [
+      ""
+    ]
+  },
+  "?npmClient": {
+    "#": "Specify which client to run commands with (change to \"yarn\" to run commands with yarn. Defaults to \"npm\".",
+    "@": ""
+  },
+  "?npmClientArgs": {
+    "#": "Array of strings that will be passed as arguments to the npmClient.",
+    "@": [
+      ""
+    ]
+  },
+  "?packages": {
+    "#": "Array of globs to use a package locations.",
+    "@": [
+      ""
+    ]
+  },
+  "?useWorkspaces": {
+    "#": "Enable workspaces integration when using Yarn.",
+    "@": true
+  },
+  "?version": {
+    "#": "The current version of the repository (or independent).",
+    "@": ""
+  },
+  "?workspaces": {
+    "#": "Array of globs to use a workspace locations.",
+    "@": [
+      ""
+    ]
+  }
+}

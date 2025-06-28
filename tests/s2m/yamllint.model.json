@@ -1,0 +1,20 @@
+{
+  "#": "yamllint uses a set of rules to check source files for problems.",
+  "$": {
+    "allRules": "$ignore",
+    "ignore": {
+      "": "$ANY",
+      "?ignore": {
+        "#": "Ignore files, so that the linter doesn't process them.",
+        "@": ""
+      }
+    },
+    "toggle": {
+      "|": [
+        "_enable",
+        "_disable"
+      ]
+    }
+  },
+  "@": "$ignore"
+}

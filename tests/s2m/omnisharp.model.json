@@ -1,0 +1,451 @@
+{
+  "": "$ANY",
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "?FileOptions": {
+    "": "$ANY",
+    "#": "Used to define which directories and files should be included in OmniSharp's project file / solution file discovery process. Not individual .cs files.",
+    "?ExcludeSearchPatterns": {
+      "#": "Can be used by tools such as VS Code to automatically share its exclusion settings with OmniSharp",
+      "@": [
+        ""
+      ]
+    },
+    "?SystemExcludeSearchPatterns": {
+      "#": "Recommended for manual editing",
+      "@": [
+        ""
+      ]
+    }
+  },
+  "?FormattingOptions": {
+    "": "$ANY",
+    "#": "Used to control C# formatting",
+    "?EnableEditorConfigSupport": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?IndentBlock": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?IndentBraces": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?IndentSwitchCaseSection": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?IndentSwitchCaseSectionWhenBlock": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?IndentSwitchSection": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?IndentationSize": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": -1
+    },
+    "?LabelPositioning": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": ""
+    },
+    "?NewLine": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": ""
+    },
+    "?NewLineForCatch": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLineForClausesInQuery": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLineForElse": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLineForFinally": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLineForMembersInAnonymousTypes": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLineForMembersInObjectInit": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLinesForBracesInAccessors": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLinesForBracesInAnonymousMethods": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLinesForBracesInAnonymousTypes": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLinesForBracesInControlBlocks": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLinesForBracesInLambdaExpressionBody": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLinesForBracesInMethods": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLinesForBracesInObjectCollectionArrayInitializers": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLinesForBracesInProperties": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?NewLinesForBracesInTypes": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceAfterCast": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceAfterColonInBaseTypeDeclaration": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceAfterComma": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceAfterControlFlowStatementKeyword": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceAfterDot": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceAfterMethodCallName": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceAfterSemicolonsInForStatement": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceBeforeColonInBaseTypeDeclaration": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceBeforeComma": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceBeforeDot": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceBeforeOpenSquareBracket": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceBeforeSemicolonsInForStatement": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceBetweenEmptyMethodCallParentheses": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceBetweenEmptyMethodDeclarationParentheses": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceBetweenEmptySquareBrackets": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceWithinCastParentheses": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceWithinExpressionParentheses": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceWithinMethodCallParentheses": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceWithinMethodDeclarationParenthesis": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceWithinOtherParentheses": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpaceWithinSquareBrackets": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpacesIgnoreAroundVariableDeclaration": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpacingAfterMethodDeclarationName": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?SpacingAroundBinaryOperator": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": ""
+    },
+    "?TabSize": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": -1
+    },
+    "?UseTabs": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?WrappingKeepStatementsOnSingleLine": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?WrappingPreserveSingleLine": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    }
+  },
+  "?ImplementTypeOptions": {
+    "": "$ANY",
+    "?InsertionBehavior": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "|": [
+        "_WithOtherMembersOfTheSameKind",
+        "_AtTheEnd"
+      ]
+    },
+    "?PropertyGenerationBehavior": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "|": [
+        "_PreferThrowingProperties",
+        "_PreferAutoProperties"
+      ]
+    }
+  },
+  "?Plugins": {
+    "": "$ANY",
+    "?LocationPaths": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": [
+        ""
+      ]
+    }
+  },
+  "?RenameOptions": {
+    "": "$ANY",
+    "?RenameInComments": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?RenameInStrings": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?RenameOverloads": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    }
+  },
+  "?RoslynExtensionsOptions": {
+    "": "$ANY",
+    "#": "Used to define refactorings, code actions and analyzer locations that OmniSharp should use (i.e. Roslynator)",
+    "?DocumentAnalysisTimeoutMs": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": -1
+    },
+    "?EnableAnalyzersSupport": {
+      "#": "If set to false, only refactorings are available",
+      "@": true
+    },
+    "?EnableDecompilationSupport": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?LocationPaths": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": [
+        ""
+      ]
+    }
+  },
+  "?cake": {
+    "": "$ANY",
+    "#": "Used to configure Cake (cake files)",
+    "?bakeryPath": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": ""
+    },
+    "?enabled": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    }
+  },
+  "?msbuild": {
+    "": "$ANY",
+    "#": "Used to configure MSBuild solutions and projects",
+    "?Configuration": {
+      "#": "Build configuration used for project evaluation",
+      "|": [
+        {
+          "|": [
+            "_Debug",
+            "_Release"
+          ]
+        },
+        ""
+      ]
+    },
+    "?CscToolExe": {
+      "#": "FileName of C# compiler",
+      "@": ""
+    },
+    "?CscToolPath": {
+      "#": "Local Roslyn path (e.g. <MSBuildPath>/Current/Bin/Roslyn)",
+      "@": ""
+    },
+    "?EnablePackageAutoRestore": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?MSBuildExtensionsPath": {
+      "#": "MSBuild extensions path. On Standalone this defaults to the MSBuild folder. In VisualStudio mode this folder will be %VSINSTALLDIR%\\MSBuild",
+      "@": ""
+    },
+    "?MSBuildSDKsPath": {
+      "#": "Path to the Sdks folder for this MSBuild instance",
+      "@": ""
+    },
+    "?Platform": {
+      "#": "Specifies which version of the Common Language Runtime (CLR) use for project evaluation",
+      "|": [
+        {
+          "|": [
+            "_AnyCPU",
+            "_x86",
+            "_x64",
+            "_ARM",
+            "_ARM64",
+            "_Itanium"
+          ]
+        },
+        ""
+      ]
+    },
+    "?RoslynTargetsPath": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": ""
+    },
+    "?TargetFrameworkRootPath": {
+      "#": "Root directory where the target framework will be looked for. Uses default path if this is null",
+      "@": ""
+    },
+    "?ToolsVersion": {
+      "#": "Value of ToolsVersion to use when building projects passed to this task",
+      "|": [
+        {
+          "|": [
+            "_Current",
+            "_2.0",
+            "_3.5",
+            "_4.0",
+            "_15.0"
+          ]
+        },
+        ""
+      ]
+    },
+    "?VisualStudioVersion": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": ""
+    },
+    "?enabled": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?loadProjectsOnDemand": {
+      "#": "If true, MSBuild project system will only be loading projects for files that were opened in the editor as well as referenced projects, recursively",
+      "@": true
+    }
+  },
+  "?script": {
+    "": "$ANY",
+    "#": "Used to configure C# scripting (CSX files)",
+    "?defaultTargetFramework": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "|": [
+        {
+          "|": [
+            "_netstandard1.0",
+            "_netstandard1.1",
+            "_netstandard1.2",
+            "_netstandard1.3",
+            "_netstandard1.4",
+            "_netstandard1.5",
+            "_netstandard1.6",
+            "_netstandard2.0",
+            "_netstandard2.1",
+            "_netcoreapp1.0",
+            "_netcoreapp1.1",
+            "_netcoreapp2.0",
+            "_netcoreapp2.1",
+            "_netcoreapp2.2",
+            "_netcoreapp3.0",
+            "_netcoreapp3.1",
+            "_net11",
+            "_net20",
+            "_net35",
+            "_net40",
+            "_net403",
+            "_net45",
+            "_net451",
+            "_net452",
+            "_net46",
+            "_net461",
+            "_net462",
+            "_net47",
+            "_net471",
+            "_net472",
+            "_net48"
+          ]
+        },
+        ""
+      ]
+    },
+    "?enableScriptNuGetReferences": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?enabled": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "@": true
+    },
+    "?rspFilePath": {
+      "#": "A response file (.rsp) is used to provide the command line arguments that are used to run the roslyn script compiler process. You can use this to override the default namespace includes among other things.",
+      "@": ""
+    }
+  }
+}

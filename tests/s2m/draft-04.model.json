@@ -1,0 +1,139 @@
+{
+  "": "$ANY",
+  "#": "Core schema meta-schema",
+  "$": {
+    "positiveInteger": {
+      ">=": 0,
+      "@": -1
+    },
+    "positiveIntegerDefault0": {
+      "&": [
+        "$positiveInteger",
+        {
+          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+          "@": "$ANY"
+        }
+      ]
+    },
+    "schemaArray": {
+      ">=": 1,
+      "@": [
+        "$#"
+      ]
+    },
+    "simpleTypes": {
+      "|": [
+        "_array",
+        "_boolean",
+        "_integer",
+        "_null",
+        "_number",
+        "_object",
+        "_string"
+      ]
+    },
+    "stringArray": {
+      "!": true,
+      ">=": 1,
+      "@": [
+        ""
+      ]
+    }
+  },
+  "?$schema": "",
+  "?additionalItems": {
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "|": [
+      true,
+      "$#"
+    ]
+  },
+  "?additionalProperties": {
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "|": [
+      true,
+      "$#"
+    ]
+  },
+  "?allOf": "$schemaArray",
+  "?anyOf": "$schemaArray",
+  "?default": "$ANY",
+  "?definitions": {
+    "": "$#",
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+  },
+  "?dependencies": {
+    "": {
+      "|": [
+        "$#",
+        "$stringArray"
+      ]
+    }
+  },
+  "?description": "",
+  "?enum": {
+    "!": true,
+    ">=": 1,
+    "@": [
+      "$ANY"
+    ]
+  },
+  "?exclusiveMaximum": {
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "@": true
+  },
+  "?exclusiveMinimum": {
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "@": true
+  },
+  "?format": "",
+  "?id": "",
+  "?items": {
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "|": [
+      "$#",
+      "$schemaArray"
+    ]
+  },
+  "?maxItems": "$positiveInteger",
+  "?maxLength": "$positiveInteger",
+  "?maxProperties": "$positiveInteger",
+  "?maximum": -1.0,
+  "?minItems": "$positiveIntegerDefault0",
+  "?minLength": "$positiveIntegerDefault0",
+  "?minProperties": "$positiveIntegerDefault0",
+  "?minimum": -1.0,
+  "?multipleOf": {
+    ">": 0,
+    "@": -1.0
+  },
+  "?not": "$#",
+  "?oneOf": "$schemaArray",
+  "?pattern": "$REGEX",
+  "?patternProperties": {
+    "": "$#",
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+  },
+  "?properties": {
+    "": "$#",
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+  },
+  "?required": "$stringArray",
+  "?title": "",
+  "?type": {
+    "|": [
+      "$simpleTypes",
+      {
+        "!": true,
+        ">=": 1,
+        "@": [
+          "$simpleTypes"
+        ]
+      }
+    ]
+  },
+  "?uniqueItems": {
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "@": true
+  }
+}

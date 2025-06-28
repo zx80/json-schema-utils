@@ -1,0 +1,921 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "^": [
+    {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": {
+        ">=": 2,
+        "@": [
+          -1.0
+        ]
+      },
+      "_type": "_Point"
+    },
+    {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": {
+        ">=": 2,
+        "@": [
+          {
+            ">=": 2,
+            "@": [
+              -1.0
+            ]
+          }
+        ]
+      },
+      "_type": "_LineString"
+    },
+    {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": [
+        {
+          ">=": 4,
+          "@": [
+            {
+              ">=": 2,
+              "@": [
+                -1.0
+              ]
+            }
+          ]
+        }
+      ],
+      "_type": "_Polygon"
+    },
+    {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": [
+        {
+          ">=": 2,
+          "@": [
+            -1.0
+          ]
+        }
+      ],
+      "_type": "_MultiPoint"
+    },
+    {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": [
+        {
+          ">=": 2,
+          "@": [
+            {
+              ">=": 2,
+              "@": [
+                -1.0
+              ]
+            }
+          ]
+        }
+      ],
+      "_type": "_MultiLineString"
+    },
+    {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": [
+        [
+          {
+            ">=": 4,
+            "@": [
+              {
+                ">=": 2,
+                "@": [
+                  -1.0
+                ]
+              }
+            ]
+          }
+        ]
+      ],
+      "_type": "_MultiPolygon"
+    },
+    {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_geometries": [
+        {
+          "^": [
+            {
+              "": "$ANY",
+              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+              "?bbox": {
+                ">=": 4,
+                "@": [
+                  -1.0
+                ]
+              },
+              "_coordinates": {
+                ">=": 2,
+                "@": [
+                  -1.0
+                ]
+              },
+              "_type": "_Point"
+            },
+            {
+              "": "$ANY",
+              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+              "?bbox": {
+                ">=": 4,
+                "@": [
+                  -1.0
+                ]
+              },
+              "_coordinates": {
+                ">=": 2,
+                "@": [
+                  {
+                    ">=": 2,
+                    "@": [
+                      -1.0
+                    ]
+                  }
+                ]
+              },
+              "_type": "_LineString"
+            },
+            {
+              "": "$ANY",
+              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+              "?bbox": {
+                ">=": 4,
+                "@": [
+                  -1.0
+                ]
+              },
+              "_coordinates": [
+                {
+                  ">=": 4,
+                  "@": [
+                    {
+                      ">=": 2,
+                      "@": [
+                        -1.0
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "_type": "_Polygon"
+            },
+            {
+              "": "$ANY",
+              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+              "?bbox": {
+                ">=": 4,
+                "@": [
+                  -1.0
+                ]
+              },
+              "_coordinates": [
+                {
+                  ">=": 2,
+                  "@": [
+                    -1.0
+                  ]
+                }
+              ],
+              "_type": "_MultiPoint"
+            },
+            {
+              "": "$ANY",
+              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+              "?bbox": {
+                ">=": 4,
+                "@": [
+                  -1.0
+                ]
+              },
+              "_coordinates": [
+                {
+                  ">=": 2,
+                  "@": [
+                    {
+                      ">=": 2,
+                      "@": [
+                        -1.0
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "_type": "_MultiLineString"
+            },
+            {
+              "": "$ANY",
+              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+              "?bbox": {
+                ">=": 4,
+                "@": [
+                  -1.0
+                ]
+              },
+              "_coordinates": [
+                [
+                  {
+                    ">=": 4,
+                    "@": [
+                      {
+                        ">=": 2,
+                        "@": [
+                          -1.0
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              "_type": "_MultiPolygon"
+            }
+          ]
+        }
+      ],
+      "_type": "_GeometryCollection"
+    },
+    {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "?id": {
+        "^": [
+          -1.0,
+          ""
+        ]
+      },
+      "_geometry": {
+        "^": [
+          null,
+          {
+            "": "$ANY",
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "?bbox": {
+              ">=": 4,
+              "@": [
+                -1.0
+              ]
+            },
+            "_coordinates": {
+              ">=": 2,
+              "@": [
+                -1.0
+              ]
+            },
+            "_type": "_Point"
+          },
+          {
+            "": "$ANY",
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "?bbox": {
+              ">=": 4,
+              "@": [
+                -1.0
+              ]
+            },
+            "_coordinates": {
+              ">=": 2,
+              "@": [
+                {
+                  ">=": 2,
+                  "@": [
+                    -1.0
+                  ]
+                }
+              ]
+            },
+            "_type": "_LineString"
+          },
+          {
+            "": "$ANY",
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "?bbox": {
+              ">=": 4,
+              "@": [
+                -1.0
+              ]
+            },
+            "_coordinates": [
+              {
+                ">=": 4,
+                "@": [
+                  {
+                    ">=": 2,
+                    "@": [
+                      -1.0
+                    ]
+                  }
+                ]
+              }
+            ],
+            "_type": "_Polygon"
+          },
+          {
+            "": "$ANY",
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "?bbox": {
+              ">=": 4,
+              "@": [
+                -1.0
+              ]
+            },
+            "_coordinates": [
+              {
+                ">=": 2,
+                "@": [
+                  -1.0
+                ]
+              }
+            ],
+            "_type": "_MultiPoint"
+          },
+          {
+            "": "$ANY",
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "?bbox": {
+              ">=": 4,
+              "@": [
+                -1.0
+              ]
+            },
+            "_coordinates": [
+              {
+                ">=": 2,
+                "@": [
+                  {
+                    ">=": 2,
+                    "@": [
+                      -1.0
+                    ]
+                  }
+                ]
+              }
+            ],
+            "_type": "_MultiLineString"
+          },
+          {
+            "": "$ANY",
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "?bbox": {
+              ">=": 4,
+              "@": [
+                -1.0
+              ]
+            },
+            "_coordinates": [
+              [
+                {
+                  ">=": 4,
+                  "@": [
+                    {
+                      ">=": 2,
+                      "@": [
+                        -1.0
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ],
+            "_type": "_MultiPolygon"
+          },
+          {
+            "": "$ANY",
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "?bbox": {
+              ">=": 4,
+              "@": [
+                -1.0
+              ]
+            },
+            "_geometries": [
+              {
+                "^": [
+                  {
+                    "": "$ANY",
+                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                    "?bbox": {
+                      ">=": 4,
+                      "@": [
+                        -1.0
+                      ]
+                    },
+                    "_coordinates": {
+                      ">=": 2,
+                      "@": [
+                        -1.0
+                      ]
+                    },
+                    "_type": "_Point"
+                  },
+                  {
+                    "": "$ANY",
+                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                    "?bbox": {
+                      ">=": 4,
+                      "@": [
+                        -1.0
+                      ]
+                    },
+                    "_coordinates": {
+                      ">=": 2,
+                      "@": [
+                        {
+                          ">=": 2,
+                          "@": [
+                            -1.0
+                          ]
+                        }
+                      ]
+                    },
+                    "_type": "_LineString"
+                  },
+                  {
+                    "": "$ANY",
+                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                    "?bbox": {
+                      ">=": 4,
+                      "@": [
+                        -1.0
+                      ]
+                    },
+                    "_coordinates": [
+                      {
+                        ">=": 4,
+                        "@": [
+                          {
+                            ">=": 2,
+                            "@": [
+                              -1.0
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "_type": "_Polygon"
+                  },
+                  {
+                    "": "$ANY",
+                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                    "?bbox": {
+                      ">=": 4,
+                      "@": [
+                        -1.0
+                      ]
+                    },
+                    "_coordinates": [
+                      {
+                        ">=": 2,
+                        "@": [
+                          -1.0
+                        ]
+                      }
+                    ],
+                    "_type": "_MultiPoint"
+                  },
+                  {
+                    "": "$ANY",
+                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                    "?bbox": {
+                      ">=": 4,
+                      "@": [
+                        -1.0
+                      ]
+                    },
+                    "_coordinates": [
+                      {
+                        ">=": 2,
+                        "@": [
+                          {
+                            ">=": 2,
+                            "@": [
+                              -1.0
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "_type": "_MultiLineString"
+                  },
+                  {
+                    "": "$ANY",
+                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                    "?bbox": {
+                      ">=": 4,
+                      "@": [
+                        -1.0
+                      ]
+                    },
+                    "_coordinates": [
+                      [
+                        {
+                          ">=": 4,
+                          "@": [
+                            {
+                              ">=": 2,
+                              "@": [
+                                -1.0
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    ],
+                    "_type": "_MultiPolygon"
+                  }
+                ]
+              }
+            ],
+            "_type": "_GeometryCollection"
+          }
+        ]
+      },
+      "_properties": {
+        "^": [
+          null,
+          {
+            "": "$ANY"
+          }
+        ]
+      },
+      "_type": "_Feature"
+    },
+    {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_features": [
+        {
+          "": "$ANY",
+          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+          "?bbox": {
+            ">=": 4,
+            "@": [
+              -1.0
+            ]
+          },
+          "?id": {
+            "^": [
+              -1.0,
+              ""
+            ]
+          },
+          "_geometry": {
+            "^": [
+              null,
+              {
+                "": "$ANY",
+                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                "?bbox": {
+                  ">=": 4,
+                  "@": [
+                    -1.0
+                  ]
+                },
+                "_coordinates": {
+                  ">=": 2,
+                  "@": [
+                    -1.0
+                  ]
+                },
+                "_type": "_Point"
+              },
+              {
+                "": "$ANY",
+                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                "?bbox": {
+                  ">=": 4,
+                  "@": [
+                    -1.0
+                  ]
+                },
+                "_coordinates": {
+                  ">=": 2,
+                  "@": [
+                    {
+                      ">=": 2,
+                      "@": [
+                        -1.0
+                      ]
+                    }
+                  ]
+                },
+                "_type": "_LineString"
+              },
+              {
+                "": "$ANY",
+                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                "?bbox": {
+                  ">=": 4,
+                  "@": [
+                    -1.0
+                  ]
+                },
+                "_coordinates": [
+                  {
+                    ">=": 4,
+                    "@": [
+                      {
+                        ">=": 2,
+                        "@": [
+                          -1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "_type": "_Polygon"
+              },
+              {
+                "": "$ANY",
+                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                "?bbox": {
+                  ">=": 4,
+                  "@": [
+                    -1.0
+                  ]
+                },
+                "_coordinates": [
+                  {
+                    ">=": 2,
+                    "@": [
+                      -1.0
+                    ]
+                  }
+                ],
+                "_type": "_MultiPoint"
+              },
+              {
+                "": "$ANY",
+                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                "?bbox": {
+                  ">=": 4,
+                  "@": [
+                    -1.0
+                  ]
+                },
+                "_coordinates": [
+                  {
+                    ">=": 2,
+                    "@": [
+                      {
+                        ">=": 2,
+                        "@": [
+                          -1.0
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "_type": "_MultiLineString"
+              },
+              {
+                "": "$ANY",
+                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                "?bbox": {
+                  ">=": 4,
+                  "@": [
+                    -1.0
+                  ]
+                },
+                "_coordinates": [
+                  [
+                    {
+                      ">=": 4,
+                      "@": [
+                        {
+                          ">=": 2,
+                          "@": [
+                            -1.0
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                ],
+                "_type": "_MultiPolygon"
+              },
+              {
+                "": "$ANY",
+                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                "?bbox": {
+                  ">=": 4,
+                  "@": [
+                    -1.0
+                  ]
+                },
+                "_geometries": [
+                  {
+                    "^": [
+                      {
+                        "": "$ANY",
+                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                        "?bbox": {
+                          ">=": 4,
+                          "@": [
+                            -1.0
+                          ]
+                        },
+                        "_coordinates": {
+                          ">=": 2,
+                          "@": [
+                            -1.0
+                          ]
+                        },
+                        "_type": "_Point"
+                      },
+                      {
+                        "": "$ANY",
+                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                        "?bbox": {
+                          ">=": 4,
+                          "@": [
+                            -1.0
+                          ]
+                        },
+                        "_coordinates": {
+                          ">=": 2,
+                          "@": [
+                            {
+                              ">=": 2,
+                              "@": [
+                                -1.0
+                              ]
+                            }
+                          ]
+                        },
+                        "_type": "_LineString"
+                      },
+                      {
+                        "": "$ANY",
+                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                        "?bbox": {
+                          ">=": 4,
+                          "@": [
+                            -1.0
+                          ]
+                        },
+                        "_coordinates": [
+                          {
+                            ">=": 4,
+                            "@": [
+                              {
+                                ">=": 2,
+                                "@": [
+                                  -1.0
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "_type": "_Polygon"
+                      },
+                      {
+                        "": "$ANY",
+                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                        "?bbox": {
+                          ">=": 4,
+                          "@": [
+                            -1.0
+                          ]
+                        },
+                        "_coordinates": [
+                          {
+                            ">=": 2,
+                            "@": [
+                              -1.0
+                            ]
+                          }
+                        ],
+                        "_type": "_MultiPoint"
+                      },
+                      {
+                        "": "$ANY",
+                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                        "?bbox": {
+                          ">=": 4,
+                          "@": [
+                            -1.0
+                          ]
+                        },
+                        "_coordinates": [
+                          {
+                            ">=": 2,
+                            "@": [
+                              {
+                                ">=": 2,
+                                "@": [
+                                  -1.0
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "_type": "_MultiLineString"
+                      },
+                      {
+                        "": "$ANY",
+                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+                        "?bbox": {
+                          ">=": 4,
+                          "@": [
+                            -1.0
+                          ]
+                        },
+                        "_coordinates": [
+                          [
+                            {
+                              ">=": 4,
+                              "@": [
+                                {
+                                  ">=": 2,
+                                  "@": [
+                                    -1.0
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        ],
+                        "_type": "_MultiPolygon"
+                      }
+                    ]
+                  }
+                ],
+                "_type": "_GeometryCollection"
+              }
+            ]
+          },
+          "_properties": {
+            "^": [
+              null,
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "_type": "_Feature"
+        }
+      ],
+      "_type": "_FeatureCollection"
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "$": {
+    "jetbrainsProduct": {
+      "?plugins": {
+        "#": "List of plugins which should be installed for users of this workspace. From the JetBrains Marketplace page, find a page of the required plugin, select 'Versions' tab, click any version to copy pluginId (short name such as org.rust.lang) of the plugin you want to install.",
+        "@": [
+          ""
+        ]
+      },
+      "?prebuilds": {
+        "#": "Enable warming up of JetBrains backend in prebuilds.",
+        "?version": {
+          "#": "Whether only stable, latest or both versions should be warmed up. Default is stable only.",
+          "|": [
+            "_stable",
+            "_latest",
+            "_both"
+          ]
+        }
+      },
+      "?vmoptions": {
+        "#": "Configure JVM options, for instance '-Xmx=4096m'.",
+        "@": ""
+      }
+    }
+  },
+  "?additionalRepositories": {
+    "#": "List of additional repositories that are part of this project.",
+    "@": [
+      {
+        "?checkoutLocation": {
+          "#": "Path to where the repository should be checked out relative to `/workspace`. Defaults to the simple repository name.",
+          "@": ""
+        },
+        "_url": {
+          "#": "The url of the git repository to clone. Supports any context URLs.",
+          "@": ""
+        }
+      }
+    ]
+  },
+  "?checkoutLocation": {
+    "#": "Path to where the repository should be checked out relative to `/workspace`. Defaults to the simple repository name.",
+    "@": ""
+  },
+  "?coreDump": {
+    "#": "Configure the default action of certain signals is to cause a process to terminate and produce a core dump file, a file containing an image of the process's memory at the time of termination. Disabled by default.",
+    "?enabled": true,
+    "?hardLimit": {
+      "#": "the hard limit acts as a ceiling for the soft limit. For more details please check https://man7.org/linux/man-pages/man2/getrlimit.2.html",
+      "@": -1.0
+    },
+    "?softLimit": {
+      "#": "upper limit on the size of the core dump file that will be produced if it receives a core dump signal",
+      "@": -1.0
+    }
+  },
+  "?experimentalNetwork": {
+    "#": "Experimental network configuration in workspaces (deprecated). Enabled by default",
+    "@": true
+  },
+  "?gitConfig": {
+    "": "",
+    "#": "Git config values should be provided in pairs. E.g. `core.autocrlf: input`. See https://git-scm.com/docs/git-config#_values."
+  },
+  "?github": {
+    "#": "Configures Gitpod's GitHub app",
+    "?prebuilds": {
+      "#": "Set to true to enable workspace prebuilds, false to disable them. Defaults to true.",
+      "|": [
+        true,
+        {
+          "": "$ANY",
+          "?addBadge": {
+            "#": "Add a Review in Gitpod badge to pull requests. Defaults to true.",
+            "@": true
+          },
+          "?addCheck": {
+            "#": "Add a commit check to pull requests. Set to 'fail-on-error' if you want broken prebuilds to block merging. Defaults to true.",
+            "|": [
+              "=true",
+              "=false",
+              "_prevent-merge-on-error"
+            ]
+          },
+          "?addLabel": {
+            "#": "Add a label to a PR when it's prebuilt. Set to true to use the default label (prebuilt-in-gitpod) or set to a string to use a different label name. This is a beta feature and may be unreliable. Defaults to false.",
+            "|": [
+              true,
+              ""
+            ]
+          },
+          "?branches": {
+            "#": "Enable prebuilds for all branches. Defaults to false.",
+            "@": true
+          },
+          "?master": {
+            "#": "Enable prebuilds for the default branch (typically master). Defaults to true.",
+            "@": true
+          },
+          "?pullRequests": {
+            "#": "Enable prebuilds for pull-requests from the original repo. Defaults to true.",
+            "@": true
+          },
+          "?pullRequestsFromForks": {
+            "#": "Enable prebuilds for pull-requests from any repo (e.g. from forks). Defaults to false.",
+            "@": true
+          }
+        }
+      ]
+    }
+  },
+  "?image": {
+    "#": "The Docker image to run your workspace in.",
+    "|": [
+      {
+        "?context": {
+          "#": "Relative path to the context path (optional). Should only be set if you need to copy files into the image.",
+          "@": ""
+        },
+        "_file": {
+          "#": "Relative path to a docker file.",
+          "@": ""
+        }
+      },
+      ""
+    ]
+  },
+  "?jetbrains": {
+    "#": "Configure JetBrains integration",
+    "?clion": {
+      "#": "Configure CLion integration",
+      "@": "$jetbrainsProduct"
+    },
+    "?goland": {
+      "#": "Configure GoLand integration",
+      "@": "$jetbrainsProduct"
+    },
+    "?intellij": {
+      "#": "Configure IntelliJ integration",
+      "@": "$jetbrainsProduct"
+    },
+    "?phpstorm": {
+      "#": "Configure PhpStorm integration",
+      "@": "$jetbrainsProduct"
+    },
+    "?plugins": {
+      "#": "List of plugins which should be installed for all JetBrains product for users of this workspace. From the JetBrains Marketplace page, find a page of the required plugin, select 'Versions' tab, click any version to copy pluginId (short name such as org.rust.lang) of the plugin you want to install.",
+      "@": [
+        ""
+      ]
+    },
+    "?pycharm": {
+      "#": "Configure PyCharm integration",
+      "@": "$jetbrainsProduct"
+    },
+    "?rider": {
+      "#": "Configure Rider integration",
+      "@": "$jetbrainsProduct"
+    },
+    "?rubymine": {
+      "#": "Configure RubyMine integration",
+      "@": "$jetbrainsProduct"
+    },
+    "?webstorm": {
+      "#": "Configure WebStorm integration",
+      "@": "$jetbrainsProduct"
+    }
+  },
+  "?mainConfiguration": {
+    "#": "The main repository, containing the dev environment configuration.",
+    "@": ""
+  },
+  "?ports": {
+    "#": "List of exposed ports.",
+    "@": [
+      {
+        "?description": {
+          "#": "A description to identify what is this port used for.",
+          "@": ""
+        },
+        "?name": {
+          "#": "Port name.",
+          "@": ""
+        },
+        "?onOpen": {
+          "#": "What to do when a service on this port was detected. 'notify' (default) will show a notification asking the user what to do. 'open-browser' will open a new browser tab. 'open-preview' will open in the preview on the right of the IDE. 'ignore' will do nothing.",
+          "|": [
+            "_open-browser",
+            "_open-preview",
+            "_notify",
+            "_ignore"
+          ]
+        },
+        "?protocol": {
+          "#": "The protocol of workspace port.",
+          "|": [
+            "_http",
+            "_https"
+          ]
+        },
+        "?visibility": {
+          "#": "Whether the port visibility should be private or public. 'private' (default) will only allow users with workspace access to access the port. 'public' will allow everyone with the port URL to access the port.",
+          "|": [
+            "_private",
+            "_public"
+          ]
+        },
+        "_port": {
+          "#": "The port number (e.g. 1337) or range (e.g. 3000-3999) to expose.",
+          "|": [
+            -1.0,
+            "/^\\d+[:-]\\d+$/"
+          ]
+        }
+      }
+    ]
+  },
+  "?tasks": {
+    "#": "List of tasks to run on start. Each task will open a terminal in the IDE.",
+    "@": [
+      {
+        "?before": {
+          "#": "A shell command to run before `init` and the main `command`. This command is executed on every start and is expected to terminate. If it fails, the following commands will not be executed.",
+          "@": ""
+        },
+        "?command": {
+          "#": "The main shell command to run after `before` and `init`. This command is executed last on every start and doesn't have to terminate.",
+          "@": ""
+        },
+        "?env": {
+          "": "$ANY",
+          "#": "Environment variables to set."
+        },
+        "?init": {
+          "#": "A shell command to run between `before` and the main `command`. This command is executed only on after initializing a workspace with a fresh clone, but not on restarts and snapshots. This command is expected to terminate. If it fails, the `command` property will not be executed.",
+          "@": ""
+        },
+        "?name": {
+          "#": "Name of the task. Shown on the tab of the opened terminal.",
+          "@": ""
+        },
+        "?openIn": {
+          "#": "The panel/area where to open the terminal. Default is 'bottom' panel.",
+          "|": [
+            "_bottom",
+            "_main",
+            "_left",
+            "_right"
+          ]
+        },
+        "?openMode": {
+          "#": "The opening mode. Default is 'tab-after'.",
+          "|": [
+            "_split-left",
+            "_split-right",
+            "_tab-before",
+            "_tab-after"
+          ]
+        },
+        "?prebuild": {
+          "#": "A shell command to run after `before`. This command is executed only on during workspace prebuilds. This command is expected to terminate. If it fails, the workspace build fails.",
+          "@": ""
+        }
+      }
+    ]
+  },
+  "?vscode": {
+    "#": "Configure VS Code integration",
+    "?extensions": {
+      "#": "List of extensions which should be installed for users of this workspace. The identifier of an extension is always '${publisher}.${name}'. For example: 'vscode.csharp'.",
+      "@": [
+        ""
+      ]
+    }
+  },
+  "?workspaceLocation": {
+    "#": "Path to where the IDE's workspace should be opened. Supports vscode's `*.code-workspace` files.",
+    "@": ""
+  }
+}

@@ -1,0 +1,1323 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "$": {
+    "CacheFormat": {
+      "|": [
+        "_legacy",
+        "_universal"
+      ]
+    },
+    "CacheSettings": {
+      "?cacheFormat": {
+        "#": "Format of the cache file.\n- `legacy` - use absolute paths in the cache file\n- `universal` - use a sharable format.",
+        "@": "$CacheFormat"
+      },
+      "?cacheLocation": {
+        "#": "Path to the cache location. Can be a file or a directory. If none specified `.cspellcache` will be used. Relative paths are relative to the config file in which it is defined.\n\nA prefix of `${cwd}` is replaced with the current working directory.",
+        "@": "$FSPathResolvable"
+      },
+      "?cacheStrategy": {
+        "#": "Strategy to use for detecting changed files, default: metadata",
+        "@": "$CacheStrategy"
+      },
+      "?useCache": {
+        "#": "Store the results of processed files in order to only operate on the changed ones.",
+        "@": true
+      }
+    },
+    "CacheStrategy": {
+      "#": "The Strategy to use to detect if a file has changed.\n- `metadata` - uses the file system timestamp and size to detect changes (fastest).\n- `content` - uses a hash of the file content to check file changes (slower - more accurate).",
+      "|": [
+        "_metadata",
+        "_content"
+      ]
+    },
+    "CharacterSet": {
+      "#": "This is a set of characters that can include `-` or `|`\n- `-` - indicates a range of characters: `a-c` => `abc`\n- `|` - is a group separator, indicating that the characters on either side    are not related.",
+      "@": ""
+    },
+    "CharacterSetCosts": {
+      "?penalty": {
+        "#": "The penalty cost to apply if the accent is used. This is used to discourage",
+        "@": -1.0
+      },
+      "_characters": {
+        "#": "This is a set of characters that can include `-` or `|`\n- `-` - indicates a range of characters: `a-c` => `abc`\n- `|` - is a group separator, indicating that the characters on either side    are not related.",
+        "@": "$CharacterSet"
+      },
+      "_cost": {
+        "#": "the cost to insert / delete / replace / swap the characters in a group",
+        "@": -1.0
+      }
+    },
+    "CostMapDefInsDel": {
+      "?description": {
+        "#": "A description to describe the purpose of the map.",
+        "@": ""
+      },
+      "?penalty": {
+        "#": "Add a penalty to the final cost. This is used to discourage certain suggestions.\n\nExample: ```yaml # Match adding/removing `-` to the end of a word. map: \"$(-$)\" replace: 50 penalty: 100 ```\n\nThis makes adding a `-` to the end of a word more expensive.\n\nThink of it as taking the toll way for speed but getting the bill later.",
+        "@": -1.0
+      },
+      "?replace": {
+        "#": "The cost to replace of of the substrings in the map with another substring in the map. Example: Map['a', 'i'] This would be the cost to substitute `a` with `i`: Like `bat` to `bit` or the reverse.",
+        "@": -1.0
+      },
+      "?swap": {
+        "#": "The cost to swap two adjacent substrings found in the map. Example: Map['e', 'i'] This represents the cost to change `ei` to `ie` or the reverse.",
+        "@": -1.0
+      },
+      "_insDel": {
+        "#": "The cost to insert/delete one of the substrings in the map. Note: insert/delete costs are symmetrical.",
+        "@": -1.0
+      },
+      "_map": {
+        "#": "The set of substrings to map, these are generally single character strings.\n\nMultiple sets can be defined by using a `|` to separate them.\n\nExample: `\"e\u00e9\u00ea|a\u00e5\u00e1\"` contains two different sets.\n\nTo add a multi-character substring use `()`.\n\nExample: `\"f(ph)(gh)\"` results in the following set: `f`, `ph`, `gh`.\n\n- To match the beginning of a word, use `^`: `\"(^I)\"\"`.\n- To match the end of a word, use `$`: `\"(e$)(ing$)\"`.",
+        "@": ""
+      }
+    },
+    "CostMapDefReplace": {
+      "?description": {
+        "#": "A description to describe the purpose of the map.",
+        "@": ""
+      },
+      "?insDel": {
+        "#": "The cost to insert/delete one of the substrings in the map. Note: insert/delete costs are symmetrical.",
+        "@": -1.0
+      },
+      "?penalty": {
+        "#": "Add a penalty to the final cost. This is used to discourage certain suggestions.\n\nExample: ```yaml # Match adding/removing `-` to the end of a word. map: \"$(-$)\" replace: 50 penalty: 100 ```\n\nThis makes adding a `-` to the end of a word more expensive.\n\nThink of it as taking the toll way for speed but getting the bill later.",
+        "@": -1.0
+      },
+      "?swap": {
+        "#": "The cost to swap two adjacent substrings found in the map. Example: Map['e', 'i'] This represents the cost to change `ei` to `ie` or the reverse.",
+        "@": -1.0
+      },
+      "_map": {
+        "#": "The set of substrings to map, these are generally single character strings.\n\nMultiple sets can be defined by using a `|` to separate them.\n\nExample: `\"e\u00e9\u00ea|a\u00e5\u00e1\"` contains two different sets.\n\nTo add a multi-character substring use `()`.\n\nExample: `\"f(ph)(gh)\"` results in the following set: `f`, `ph`, `gh`.\n\n- To match the beginning of a word, use `^`: `\"(^I)\"\"`.\n- To match the end of a word, use `$`: `\"(e$)(ing$)\"`.",
+        "@": ""
+      },
+      "_replace": {
+        "#": "The cost to replace of of the substrings in the map with another substring in the map. Example: Map['a', 'i'] This would be the cost to substitute `a` with `i`: Like `bat` to `bit` or the reverse.",
+        "@": -1.0
+      }
+    },
+    "CostMapDefSwap": {
+      "?description": {
+        "#": "A description to describe the purpose of the map.",
+        "@": ""
+      },
+      "?insDel": {
+        "#": "The cost to insert/delete one of the substrings in the map. Note: insert/delete costs are symmetrical.",
+        "@": -1.0
+      },
+      "?penalty": {
+        "#": "Add a penalty to the final cost. This is used to discourage certain suggestions.\n\nExample: ```yaml # Match adding/removing `-` to the end of a word. map: \"$(-$)\" replace: 50 penalty: 100 ```\n\nThis makes adding a `-` to the end of a word more expensive.\n\nThink of it as taking the toll way for speed but getting the bill later.",
+        "@": -1.0
+      },
+      "?replace": {
+        "#": "The cost to replace of of the substrings in the map with another substring in the map. Example: Map['a', 'i'] This would be the cost to substitute `a` with `i`: Like `bat` to `bit` or the reverse.",
+        "@": -1.0
+      },
+      "_map": {
+        "#": "The set of substrings to map, these are generally single character strings.\n\nMultiple sets can be defined by using a `|` to separate them.\n\nExample: `\"e\u00e9\u00ea|a\u00e5\u00e1\"` contains two different sets.\n\nTo add a multi-character substring use `()`.\n\nExample: `\"f(ph)(gh)\"` results in the following set: `f`, `ph`, `gh`.\n\n- To match the beginning of a word, use `^`: `\"(^I)\"\"`.\n- To match the end of a word, use `$`: `\"(e$)(ing$)\"`.",
+        "@": ""
+      },
+      "_swap": {
+        "#": "The cost to swap two adjacent substrings found in the map. Example: Map['e', 'i'] This represents the cost to change `ei` to `ie` or the reverse.",
+        "@": -1.0
+      }
+    },
+    "CustomDictionaryPath": {
+      "#": "A File System Path to a dictionary file.",
+      "@": "$FsDictionaryPath"
+    },
+    "CustomDictionaryScope": {
+      "#": "Specifies the scope of a dictionary.",
+      "|": [
+        "_user",
+        "_workspace",
+        "_folder"
+      ]
+    },
+    "DictionaryDefinition": {
+      "|": [
+        "$DictionaryDefinitionPreferred",
+        "$DictionaryDefinitionCustom",
+        "$DictionaryDefinitionAugmented",
+        "$DictionaryDefinitionInline",
+        "$DictionaryDefinitionAlternate"
+      ]
+    },
+    "DictionaryDefinitionAlternate": {
+      "#": "Only for legacy dictionary definitions.",
+      "?description": {
+        "#": "Optional description.",
+        "@": ""
+      },
+      "?noSuggest": {
+        "#": "Indicate that suggestions should not come from this dictionary. Words in this dictionary are considered correct, but will not be used when making spell correction suggestions.\n\nNote: if a word is suggested by another dictionary, but found in this dictionary, it will be removed from the set of possible suggestions.",
+        "@": true
+      },
+      "?repMap": {
+        "#": "Replacement pairs.",
+        "@": "$ReplaceMap"
+      },
+      "?type": {
+        "#": "Type of file:\n- S - single word per line,\n- W - each line can contain one or more words separated by space,\n- C - each line is treated like code (Camel Case is allowed).\n\nDefault is S.\n\nC is the slowest to load due to the need to split each line based upon code splitting rules.",
+        "@": "$DictionaryFileTypes"
+      },
+      "?useCompounds": {
+        "#": "Use Compounds.",
+        "@": true
+      },
+      "_file": {
+        "#": "Path to the file, only for legacy dictionary definitions.",
+        "@": "$DictionaryPath"
+      },
+      "_name": {
+        "#": "This is the name of a dictionary.\n\nName Format:\n- Must contain at least 1 number or letter.\n- Spaces are allowed.\n- Leading and trailing space will be removed.\n- Names ARE case-sensitive.\n- Must not contain `*`, `!`, `;`, `,`, `{`, `}`, `[`, `]`, `~`.",
+        "@": "$DictionaryId"
+      }
+    },
+    "DictionaryDefinitionAugmented": {
+      "#": "Used to provide extra data related to the dictionary",
+      "?description": {
+        "#": "Optional description.",
+        "@": ""
+      },
+      "?dictionaryInformation": "$DictionaryInformation",
+      "?noSuggest": {
+        "#": "Indicate that suggestions should not come from this dictionary. Words in this dictionary are considered correct, but will not be used when making spell correction suggestions.\n\nNote: if a word is suggested by another dictionary, but found in this dictionary, it will be removed from the set of possible suggestions.",
+        "@": true
+      },
+      "?repMap": {
+        "#": "Replacement pairs.",
+        "@": "$ReplaceMap"
+      },
+      "?type": {
+        "#": "Type of file:\n- S - single word per line,\n- W - each line can contain one or more words separated by space,\n- C - each line is treated like code (Camel Case is allowed).\n\nDefault is S.\n\nC is the slowest to load due to the need to split each line based upon code splitting rules.",
+        "@": "$DictionaryFileTypes"
+      },
+      "?useCompounds": {
+        "#": "Use Compounds.",
+        "@": true
+      },
+      "_name": {
+        "#": "This is the name of a dictionary.\n\nName Format:\n- Must contain at least 1 number or letter.\n- Spaces are allowed.\n- Leading and trailing space will be removed.\n- Names ARE case-sensitive.\n- Must not contain `*`, `!`, `;`, `,`, `{`, `}`, `[`, `]`, `~`.",
+        "@": "$DictionaryId"
+      },
+      "_path": {
+        "#": "Path to the file.",
+        "@": "$DictionaryPath"
+      }
+    },
+    "DictionaryDefinitionCustom": {
+      "#": "For Defining Custom dictionaries. They are generally scoped to a `user`, `workspace`, or `folder`. When `addWords` is true, indicates that the spell checker can add words to the file.\n\nNote: only plain text files with one word per line are supported at this moment.",
+      "?description": {
+        "#": "Optional description.",
+        "@": ""
+      },
+      "?noSuggest": {
+        "#": "Indicate that suggestions should not come from this dictionary. Words in this dictionary are considered correct, but will not be used when making spell correction suggestions.\n\nNote: if a word is suggested by another dictionary, but found in this dictionary, it will be removed from the set of possible suggestions.",
+        "@": true
+      },
+      "?repMap": {
+        "#": "Replacement pairs.",
+        "@": "$ReplaceMap"
+      },
+      "?scope": {
+        "#": "Defines the scope for when words will be added to the dictionary.\n\nScope values: `user`, `workspace`, `folder`.",
+        "|": [
+          "$CustomDictionaryScope",
+          [
+            "$CustomDictionaryScope"
+          ]
+        ]
+      },
+      "?type": {
+        "#": "Type of file:\n- S - single word per line,\n- W - each line can contain one or more words separated by space,\n- C - each line is treated like code (Camel Case is allowed).\n\nDefault is S.\n\nC is the slowest to load due to the need to split each line based upon code splitting rules.",
+        "@": "$DictionaryFileTypes"
+      },
+      "?useCompounds": {
+        "#": "Use Compounds.",
+        "@": true
+      },
+      "_addWords": {
+        "#": "When `true`, let's the spell checker know that words can be added to this dictionary.",
+        "@": true
+      },
+      "_name": {
+        "#": "This is the name of a dictionary.\n\nName Format:\n- Must contain at least 1 number or letter.\n- Spaces are allowed.\n- Leading and trailing space will be removed.\n- Names ARE case-sensitive.\n- Must not contain `*`, `!`, `;`, `,`, `{`, `}`, `[`, `]`, `~`.",
+        "@": "$DictionaryId"
+      },
+      "_path": {
+        "#": "Path to custom dictionary text file.",
+        "@": "$CustomDictionaryPath"
+      }
+    },
+    "DictionaryDefinitionInline": {
+      "#": "Inline Dictionary Definitions",
+      "|": [
+        "$DictionaryDefinitionInlineWords",
+        "$DictionaryDefinitionInlineIgnoreWords",
+        "$DictionaryDefinitionInlineFlagWords"
+      ]
+    },
+    "DictionaryDefinitionInlineFlagWords": {
+      "?description": {
+        "#": "Optional description.",
+        "@": ""
+      },
+      "?ignoreWords": {
+        "#": "List of words to be ignored. An ignored word will not show up as an error, even if it is also in the `flagWords`.",
+        "@": [
+          ""
+        ]
+      },
+      "?noSuggest": {
+        "#": "Indicate that suggestions should not come from this dictionary. Words in this dictionary are considered correct, but will not be used when making spell correction suggestions.\n\nNote: if a word is suggested by another dictionary, but found in this dictionary, it will be removed from the set of possible suggestions.",
+        "@": true
+      },
+      "?repMap": {
+        "#": "Replacement pairs.",
+        "@": "$ReplaceMap"
+      },
+      "?suggestWords": {
+        "#": "A list of suggested replacements for words. Suggested words provide a way to make preferred suggestions on word replacements. To hint at a preferred change, but not to require it.\n\nFormat of `suggestWords`\n- Single suggestion (possible auto fix)     - `word: suggestion`     - `word->suggestion`\n- Multiple suggestions (not auto fixable)    - `word: first, second, third`    - `word->first, second, third`",
+        "@": [
+          ""
+        ]
+      },
+      "?type": {
+        "#": "Type of file:\n- S - single word per line,\n- W - each line can contain one or more words separated by space,\n- C - each line is treated like code (Camel Case is allowed).\n\nDefault is S.\n\nC is the slowest to load due to the need to split each line based upon code splitting rules.",
+        "@": "$DictionaryFileTypes"
+      },
+      "?useCompounds": {
+        "#": "Use Compounds.",
+        "@": true
+      },
+      "?words": {
+        "#": "List of words to be considered correct.",
+        "@": [
+          ""
+        ]
+      },
+      "_flagWords": {
+        "#": "List of words to always be considered incorrect. Words found in `flagWords` override `words`.\n\nFormat of `flagWords`\n- single word entry - `word`\n- with suggestions - `word:suggestion` or `word->suggestion, suggestions`\n\nExample: ```ts \"flagWords\": [   \"color: colour\",   \"incase: in case, encase\",   \"canot->cannot\",   \"cancelled->canceled\" ] ```",
+        "@": [
+          ""
+        ]
+      },
+      "_name": {
+        "#": "This is the name of a dictionary.\n\nName Format:\n- Must contain at least 1 number or letter.\n- Spaces are allowed.\n- Leading and trailing space will be removed.\n- Names ARE case-sensitive.\n- Must not contain `*`, `!`, `;`, `,`, `{`, `}`, `[`, `]`, `~`.",
+        "@": "$DictionaryId"
+      }
+    },
+    "DictionaryDefinitionInlineIgnoreWords": {
+      "?description": {
+        "#": "Optional description.",
+        "@": ""
+      },
+      "?flagWords": {
+        "#": "List of words to always be considered incorrect. Words found in `flagWords` override `words`.\n\nFormat of `flagWords`\n- single word entry - `word`\n- with suggestions - `word:suggestion` or `word->suggestion, suggestions`\n\nExample: ```ts \"flagWords\": [   \"color: colour\",   \"incase: in case, encase\",   \"canot->cannot\",   \"cancelled->canceled\" ] ```",
+        "@": [
+          ""
+        ]
+      },
+      "?noSuggest": {
+        "#": "Indicate that suggestions should not come from this dictionary. Words in this dictionary are considered correct, but will not be used when making spell correction suggestions.\n\nNote: if a word is suggested by another dictionary, but found in this dictionary, it will be removed from the set of possible suggestions.",
+        "@": true
+      },
+      "?repMap": {
+        "#": "Replacement pairs.",
+        "@": "$ReplaceMap"
+      },
+      "?suggestWords": {
+        "#": "A list of suggested replacements for words. Suggested words provide a way to make preferred suggestions on word replacements. To hint at a preferred change, but not to require it.\n\nFormat of `suggestWords`\n- Single suggestion (possible auto fix)     - `word: suggestion`     - `word->suggestion`\n- Multiple suggestions (not auto fixable)    - `word: first, second, third`    - `word->first, second, third`",
+        "@": [
+          ""
+        ]
+      },
+      "?type": {
+        "#": "Type of file:\n- S - single word per line,\n- W - each line can contain one or more words separated by space,\n- C - each line is treated like code (Camel Case is allowed).\n\nDefault is S.\n\nC is the slowest to load due to the need to split each line based upon code splitting rules.",
+        "@": "$DictionaryFileTypes"
+      },
+      "?useCompounds": {
+        "#": "Use Compounds.",
+        "@": true
+      },
+      "?words": {
+        "#": "List of words to be considered correct.",
+        "@": [
+          ""
+        ]
+      },
+      "_ignoreWords": {
+        "#": "List of words to be ignored. An ignored word will not show up as an error, even if it is also in the `flagWords`.",
+        "@": [
+          ""
+        ]
+      },
+      "_name": {
+        "#": "This is the name of a dictionary.\n\nName Format:\n- Must contain at least 1 number or letter.\n- Spaces are allowed.\n- Leading and trailing space will be removed.\n- Names ARE case-sensitive.\n- Must not contain `*`, `!`, `;`, `,`, `{`, `}`, `[`, `]`, `~`.",
+        "@": "$DictionaryId"
+      }
+    },
+    "DictionaryDefinitionInlineWords": {
+      "?description": {
+        "#": "Optional description.",
+        "@": ""
+      },
+      "?flagWords": {
+        "#": "List of words to always be considered incorrect. Words found in `flagWords` override `words`.\n\nFormat of `flagWords`\n- single word entry - `word`\n- with suggestions - `word:suggestion` or `word->suggestion, suggestions`\n\nExample: ```ts \"flagWords\": [   \"color: colour\",   \"incase: in case, encase\",   \"canot->cannot\",   \"cancelled->canceled\" ] ```",
+        "@": [
+          ""
+        ]
+      },
+      "?ignoreWords": {
+        "#": "List of words to be ignored. An ignored word will not show up as an error, even if it is also in the `flagWords`.",
+        "@": [
+          ""
+        ]
+      },
+      "?noSuggest": {
+        "#": "Indicate that suggestions should not come from this dictionary. Words in this dictionary are considered correct, but will not be used when making spell correction suggestions.\n\nNote: if a word is suggested by another dictionary, but found in this dictionary, it will be removed from the set of possible suggestions.",
+        "@": true
+      },
+      "?repMap": {
+        "#": "Replacement pairs.",
+        "@": "$ReplaceMap"
+      },
+      "?suggestWords": {
+        "#": "A list of suggested replacements for words. Suggested words provide a way to make preferred suggestions on word replacements. To hint at a preferred change, but not to require it.\n\nFormat of `suggestWords`\n- Single suggestion (possible auto fix)     - `word: suggestion`     - `word->suggestion`\n- Multiple suggestions (not auto fixable)    - `word: first, second, third`    - `word->first, second, third`",
+        "@": [
+          ""
+        ]
+      },
+      "?type": {
+        "#": "Type of file:\n- S - single word per line,\n- W - each line can contain one or more words separated by space,\n- C - each line is treated like code (Camel Case is allowed).\n\nDefault is S.\n\nC is the slowest to load due to the need to split each line based upon code splitting rules.",
+        "@": "$DictionaryFileTypes"
+      },
+      "?useCompounds": {
+        "#": "Use Compounds.",
+        "@": true
+      },
+      "_name": {
+        "#": "This is the name of a dictionary.\n\nName Format:\n- Must contain at least 1 number or letter.\n- Spaces are allowed.\n- Leading and trailing space will be removed.\n- Names ARE case-sensitive.\n- Must not contain `*`, `!`, `;`, `,`, `{`, `}`, `[`, `]`, `~`.",
+        "@": "$DictionaryId"
+      },
+      "_words": {
+        "#": "List of words to be considered correct.",
+        "@": [
+          ""
+        ]
+      }
+    },
+    "DictionaryDefinitionPreferred": {
+      "?description": {
+        "#": "Optional description.",
+        "@": ""
+      },
+      "?noSuggest": {
+        "#": "Indicate that suggestions should not come from this dictionary. Words in this dictionary are considered correct, but will not be used when making spell correction suggestions.\n\nNote: if a word is suggested by another dictionary, but found in this dictionary, it will be removed from the set of possible suggestions.",
+        "@": true
+      },
+      "?repMap": {
+        "#": "Replacement pairs.",
+        "@": "$ReplaceMap"
+      },
+      "?type": {
+        "#": "Type of file:\n- S - single word per line,\n- W - each line can contain one or more words separated by space,\n- C - each line is treated like code (Camel Case is allowed).\n\nDefault is S.\n\nC is the slowest to load due to the need to split each line based upon code splitting rules.",
+        "@": "$DictionaryFileTypes"
+      },
+      "?useCompounds": {
+        "#": "Use Compounds.",
+        "@": true
+      },
+      "_name": {
+        "#": "This is the name of a dictionary.\n\nName Format:\n- Must contain at least 1 number or letter.\n- Spaces are allowed.\n- Leading and trailing space will be removed.\n- Names ARE case-sensitive.\n- Must not contain `*`, `!`, `;`, `,`, `{`, `}`, `[`, `]`, `~`.",
+        "@": "$DictionaryId"
+      },
+      "_path": {
+        "#": "Path to the file.",
+        "@": "$DictionaryPath"
+      }
+    },
+    "DictionaryFileTypes": {
+      "|": [
+        "_S",
+        "_W",
+        "_C",
+        "_T"
+      ]
+    },
+    "DictionaryId": {
+      "#": "This is the name of a dictionary.\n\nName Format:\n- Must contain at least 1 number or letter.\n- Spaces are allowed.\n- Leading and trailing space will be removed.\n- Names ARE case-sensitive.\n- Must not contain `*`, `!`, `;`, `,`, `{`, `}`, `[`, `]`, `~`.",
+      "@": "/^(?=[^!*,;{}[\\]~\\n]+$)(?=(.*\\w)).+$/"
+    },
+    "DictionaryInformation": {
+      "#": "Use by dictionary authors to help improve the quality of suggestions given from the dictionary.\n\nAdded with `v5.16.0`.",
+      "?accents": {
+        "#": "The accent characters.\n\nDefault: `\"\\u0300-\\u0341\"`",
+        "|": [
+          "$CharacterSet",
+          [
+            "$CharacterSetCosts"
+          ]
+        ]
+      },
+      "?adjustments": {
+        "#": "A collection of patterns to test against the suggested words. If the word matches the pattern, then the penalty is applied.",
+        "@": [
+          "$PatternAdjustment"
+        ]
+      },
+      "?alphabet": {
+        "#": "The alphabet to use.",
+        "|": [
+          "$CharacterSet",
+          [
+            "$CharacterSetCosts"
+          ]
+        ]
+      },
+      "?costs": {
+        "#": "Define edit costs.",
+        "@": "$EditCosts"
+      },
+      "?hunspellInformation": {
+        "#": "Used by dictionary authors",
+        "@": "$HunspellInformation"
+      },
+      "?ignore": {
+        "#": "An optional set of characters that can possibly be removed from a word before checking it.\n\nThis is useful in languages like Arabic where Harakat accents are optional.\n\nNote: All matching characters are removed or none. Partial removal is not supported.",
+        "@": "$CharacterSet"
+      },
+      "?locale": {
+        "#": "The locale of the dictionary. Example: `nl,nl-be`",
+        "@": ""
+      },
+      "?suggestionEditCosts": {
+        "#": "Used in making suggestions. The lower the value, the more likely the suggestion will be near the top of the suggestion list.",
+        "@": "$SuggestionCostsDefs"
+      }
+    },
+    "DictionaryNegRef": {
+      "#": "This a negative reference to a named dictionary.\n\nIt is used to exclude or include a dictionary by name.\n\nThe reference starts with 1 or more `!`.\n- `!<dictionary_name>` - Used to exclude the dictionary matching `<dictionary_name>`.\n- `!!<dictionary_name>` - Used to re-include a dictionary matching `<dictionary_name>`.    Overrides `!<dictionary_name>`.\n- `!!!<dictionary_name>` - Used to exclude a dictionary matching `<dictionary_name>`.    Overrides `!!<dictionary_name>`.",
+      "@": "/^(?=!+[^!*,;{}[\\]~\\n]+$)(?=(.*\\w)).+$/"
+    },
+    "DictionaryPath": {
+      "#": "A File System Path to a dictionary file.",
+      "@": "/^.*\\.(?:txt|trie)(?:\\.gz)?$/"
+    },
+    "DictionaryRef": {
+      "#": "This a reference to a named dictionary. It is expected to match the name of a dictionary.",
+      "@": "$DictionaryId"
+    },
+    "DictionaryReference": {
+      "#": "Reference to a dictionary by name. One of:\n-  {@link  DictionaryRef } \n-  {@link  DictionaryNegRef }",
+      "|": [
+        "$DictionaryRef",
+        "$DictionaryNegRef"
+      ]
+    },
+    "EditCosts": {
+      "?accentCosts": {
+        "#": "The cost to add / remove an accent This should be very cheap, it helps with fixing accent issues.",
+        "@": -1.0
+      },
+      "?baseCost": {
+        "#": "This is the base cost for making an edit.",
+        "@": -1.0
+      },
+      "?capsCosts": {
+        "#": "The cost to change capitalization. This should be very cheap, it helps with fixing capitalization issues.",
+        "@": -1.0
+      },
+      "?firstLetterPenalty": {
+        "#": "The extra cost incurred for changing the first letter of a word. This value should be less than `100 - baseCost`.",
+        "@": -1.0
+      },
+      "?nonAlphabetCosts": {
+        "#": "This is the cost for characters not in the alphabet.",
+        "@": -1.0
+      }
+    },
+    "FSPathResolvable": {
+      "#": "A File System Path.\n\nSpecial Properties:\n- `${cwd}` prefix - will be replaced with the current working directory.\n- Relative paths are relative to the configuration file.",
+      "@": "$FsPath"
+    },
+    "FeatureEnableOnly": true,
+    "Features": {
+      "#": "Features are behaviors or settings that can be explicitly configured.",
+      "?weighted-suggestions": {
+        "#": "Enable/disable using weighted suggestions.",
+        "@": "$FeatureEnableOnly"
+      }
+    },
+    "FsDictionaryPath": {
+      "#": "A File System Path. Relative paths are relative to the configuration file.",
+      "@": ""
+    },
+    "FsPath": {
+      "#": "A File System Path. Relative paths are relative to the configuration file.",
+      "@": ""
+    },
+    "Glob": {
+      "#": "These are glob expressions.",
+      "@": "$SimpleGlob"
+    },
+    "HunspellInformation": {
+      "?costs": {
+        "#": "The costs to apply when using the hunspell settings",
+        "?accentCosts": {
+          "#": "The cost to add / remove an accent This should be very cheap, it helps with fixing accent issues.",
+          "@": -1.0
+        },
+        "?baseCost": {
+          "#": "This is the base cost for making an edit.",
+          "@": -1.0
+        },
+        "?capsCosts": {
+          "#": "The cost to change capitalization. This should be very cheap, it helps with fixing capitalization issues.",
+          "@": -1.0
+        },
+        "?firstLetterPenalty": {
+          "#": "The extra cost incurred for changing the first letter of a word. This value should be less than `100 - baseCost`.",
+          "@": -1.0
+        },
+        "?ioConvertCost": {
+          "#": "The cost to convert between convert pairs.\n\nThe value should be slightly higher than the mapCost.",
+          "@": -1.0
+        },
+        "?keyboardCost": {
+          "#": "The cost of replacing or swapping any adjacent keyboard characters.\n\nThis should be slightly cheaper than `tryCharCost`.",
+          "@": -1.0
+        },
+        "?mapCost": {
+          "#": "mapSet replacement cost is the cost to substitute one character with another from the same set.\n\nMap characters are considered very similar to each other and are often the cause of simple mistakes.",
+          "@": -1.0
+        },
+        "?nonAlphabetCosts": {
+          "#": "This is the cost for characters not in the alphabet.",
+          "@": -1.0
+        },
+        "?replaceCosts": {
+          "#": "The cost to substitute pairs found in the replace settings.",
+          "@": -1.0
+        },
+        "?tryCharCost": {
+          "#": "The cost of inserting / deleting / or swapping any `tryChars` Defaults to `baseCosts`",
+          "@": -1.0
+        }
+      },
+      "_aff": {
+        "#": "Selected Hunspell AFF content. The content must be UTF-8\n\nSections:\n- TRY\n- MAP\n- REP\n- KEY\n- ICONV\n- OCONV\n\nExample: ```hunspell # Comment TRY aeistlunkodmrvpgjh\u00e4\u00f5b\u00fco\u00f6fcwzx\u00f0q\u00fe` MAP a\u00e0\u00e2\u00e4A\u00c0\u00c2\u00c4 MAP e\u00e9\u00e8\u00ea\u00ebE\u00c9\u00c8\u00ca\u00cb MAP i\u00ee\u00efyI\u00ce\u00cfY MAP o\u00f4\u00f6O\u00d4\u00d6 MAP (IJ)(\u0132) ```",
+        "@": ""
+      }
+    },
+    "LanguageId": {
+      "|": [
+        "$LanguageIdSingle",
+        "$LanguageIdMultiple",
+        "$LanguageIdMultipleNeg"
+      ]
+    },
+    "LanguageIdMultiple": {
+      "#": "This can be 'typescript,cpp,json,literal haskell', etc.",
+      "@": "/^([-\\w_\\s]+)(,[-\\w_\\s]+)*$/"
+    },
+    "LanguageIdMultipleNeg": {
+      "#": "This can be 'typescript,cpp,json,literal haskell', etc.",
+      "@": "/^(![-\\w_\\s]+)(,![-\\w_\\s]+)*$/"
+    },
+    "LanguageIdSingle": {
+      "#": "This can be '*', 'typescript', 'cpp', 'json', etc.",
+      "@": "/^(!?[-\\w_\\s]+)|(\\*)$/"
+    },
+    "LanguageSetting": {
+      "?allowCompoundWords": {
+        "#": "True to enable compound word checking. See [Case Sensitivity](https://cspell.org/docs/case-sensitive/) for more details.",
+        "@": true
+      },
+      "?caseSensitive": {
+        "#": "Determines if words must match case and accent rules.\n\n- `false` - Case is ignored and accents can be missing on the entire word.   Incorrect accents or partially missing accents will be marked as incorrect.\n- `true` - Case and accents are enforced.",
+        "@": true
+      },
+      "?description": {
+        "#": "Optional description of configuration.",
+        "@": ""
+      },
+      "?dictionaries": {
+        "#": "Optional list of dictionaries to use. Each entry should match the name of the dictionary.\n\nTo remove a dictionary from the list, add `!` before the name.\n\nFor example, `!typescript` will turn off the dictionary with the name `typescript`.\n\nSee the [Dictionaries](https://cspell.org/docs/dictionaries/) and [Custom Dictionaries](https://cspell.org/docs/dictionaries-custom/) for more details.",
+        "@": [
+          "$DictionaryReference"
+        ]
+      },
+      "?dictionaryDefinitions": {
+        "#": "Define additional available dictionaries.\n\nFor example, you can use the following to add a custom dictionary:\n\n```json \"dictionaryDefinitions\": [   { \"name\": \"custom-words\", \"path\": \"./custom-words.txt\"} ], \"dictionaries\": [\"custom-words\"] ```",
+        "@": [
+          "$DictionaryDefinition"
+        ]
+      },
+      "?enabled": {
+        "#": "Is the spell checker enabled.",
+        "@": true
+      },
+      "?flagWords": {
+        "#": "List of words to always be considered incorrect. Words found in `flagWords` override `words`.\n\nFormat of `flagWords`\n- single word entry - `word`\n- with suggestions - `word:suggestion` or `word->suggestion, suggestions`\n\nExample: ```ts \"flagWords\": [   \"color: colour\",   \"incase: in case, encase\",   \"canot->cannot\",   \"cancelled->canceled\" ] ```",
+        "@": [
+          ""
+        ]
+      },
+      "?id": {
+        "#": "Optional identifier.",
+        "@": ""
+      },
+      "?ignoreRegExpList": {
+        "#": "List of regular expression patterns or pattern names to exclude from spell checking.\n\nExample: `[\"href\"]` - to exclude html href pattern.\n\nRegular expressions use JavaScript regular expression syntax.\n\nExample: to ignore ALL-CAPS words\n\nJSON ```json \"ignoreRegExpList\": [\"/\\\\b[A-Z]+\\\\b/g\"] ```\n\nYAML ```yaml ignoreRegExpList:   - >-    /\\b[A-Z]+\\b/g ```\n\nBy default, several patterns are excluded. See [Configuration](https://cspell.org/configuration/patterns) for more details.\n\nWhile you can create your own patterns, you can also leverage several patterns that are [built-in to CSpell](https://cspell.org/types/cspell-types/types/PredefinedPatterns.html).",
+        "@": "$RegExpPatternList"
+      },
+      "?ignoreWords": {
+        "#": "List of words to be ignored. An ignored word will not show up as an error, even if it is also in the `flagWords`.",
+        "@": [
+          ""
+        ]
+      },
+      "?includeRegExpList": {
+        "#": "List of regular expression patterns or defined pattern names to match for spell checking.\n\nIf this property is defined, only text matching the included patterns will be checked.\n\nWhile you can create your own patterns, you can also leverage several patterns that are [built-in to CSpell](https://cspell.org/types/cspell-types/types/PredefinedPatterns.html).",
+        "@": "$RegExpPatternList"
+      },
+      "?local": {
+        "#": "Deprecated - The locale filter, matches against the language. This can be a comma separated list. \"*\" will match all locales.",
+        "|": [
+          "$LocaleId",
+          [
+            "$LocaleId"
+          ]
+        ]
+      },
+      "?locale": {
+        "#": "The locale filter, matches against the language. This can be a comma separated list. \"*\" will match all locales.",
+        "|": [
+          "$LocaleId",
+          [
+            "$LocaleId"
+          ]
+        ]
+      },
+      "?name": {
+        "#": "Optional name of configuration.",
+        "@": ""
+      },
+      "?noSuggestDictionaries": {
+        "#": "Optional list of dictionaries that will not be used for suggestions. Words in these dictionaries are considered correct, but will not be used when making spell correction suggestions.\n\nNote: if a word is suggested by another dictionary, but found in one of these dictionaries, it will be removed from the set of possible suggestions.",
+        "@": [
+          "$DictionaryReference"
+        ]
+      },
+      "?patterns": {
+        "#": "Defines a list of patterns that can be used with the `ignoreRegExpList` and `includeRegExpList` options.\n\nFor example:\n\n```javascript \"ignoreRegExpList\": [\"comments\"], \"patterns\": [   {     \"name\": \"comment-single-line\",     \"pattern\": \"/#.*\u200b/g\"   },   {     \"name\": \"comment-multi-line\",     \"pattern\": \"/(?:\\\\/\\\\*[\\\\s\\\\S]*?\\\\*\\\\/)/g\"   },   // You can also combine multiple named patterns into one single named pattern   {     \"name\": \"comments\",     \"pattern\": [\"comment-single-line\", \"comment-multi-line\"]   } ] ``` Defines a list of patterns that can be used with the `ignoreRegExpList` and `includeRegExpList` options.",
+        "@": [
+          "$RegExpPatternDefinition"
+        ]
+      },
+      "?suggestWords": {
+        "#": "A list of suggested replacements for words. Suggested words provide a way to make preferred suggestions on word replacements. To hint at a preferred change, but not to require it.\n\nFormat of `suggestWords`\n- Single suggestion (possible auto fix)     - `word: suggestion`     - `word->suggestion`\n- Multiple suggestions (not auto fixable)    - `word: first, second, third`    - `word->first, second, third`",
+        "@": [
+          ""
+        ]
+      },
+      "?words": {
+        "#": "List of words to be considered correct.",
+        "@": [
+          ""
+        ]
+      },
+      "_languageId": {
+        "#": "The language id.  Ex: \"typescript\", \"html\", or \"php\".  \"*\" -- will match all languages.",
+        "@": "$MatchingFileType"
+      }
+    },
+    "LocaleId": {
+      "#": "This is a written language locale like: 'en', 'en-GB', 'fr', 'es', 'de', etc.",
+      "@": ""
+    },
+    "MatchingFileType": {
+      "|": [
+        "$LanguageId",
+        [
+          "$LanguageId"
+        ]
+      ]
+    },
+    "OverrideSettings": {
+      "?allowCompoundWords": {
+        "#": "True to enable compound word checking. See [Case Sensitivity](https://cspell.org/docs/case-sensitive/) for more details.",
+        "@": true
+      },
+      "?caseSensitive": {
+        "#": "Determines if words must match case and accent rules.\n\n- `false` - Case is ignored and accents can be missing on the entire word.   Incorrect accents or partially missing accents will be marked as incorrect.\n- `true` - Case and accents are enforced.",
+        "@": true
+      },
+      "?description": {
+        "#": "Optional description of configuration.",
+        "@": ""
+      },
+      "?dictionaries": {
+        "#": "Optional list of dictionaries to use. Each entry should match the name of the dictionary.\n\nTo remove a dictionary from the list, add `!` before the name.\n\nFor example, `!typescript` will turn off the dictionary with the name `typescript`.\n\nSee the [Dictionaries](https://cspell.org/docs/dictionaries/) and [Custom Dictionaries](https://cspell.org/docs/dictionaries-custom/) for more details.",
+        "@": [
+          "$DictionaryReference"
+        ]
+      },
+      "?dictionaryDefinitions": {
+        "#": "Define additional available dictionaries.\n\nFor example, you can use the following to add a custom dictionary:\n\n```json \"dictionaryDefinitions\": [   { \"name\": \"custom-words\", \"path\": \"./custom-words.txt\"} ], \"dictionaries\": [\"custom-words\"] ```",
+        "@": [
+          "$DictionaryDefinition"
+        ]
+      },
+      "?enableFiletypes": {
+        "!": true,
+        "#": "Enable / Disable checking file types (languageIds).\n\nThese are in additional to the file types specified by `cSpell.enabledLanguageIds`.\n\nTo disable a language, prefix with `!` as in `!json`,\n\nExample: ``` jsonc       // enable checking for jsonc !json       // disable checking for json kotlin      // enable checking for kotlin ```",
+        "@": [
+          "$LanguageIdSingle"
+        ]
+      },
+      "?enabled": {
+        "#": "Is the spell checker enabled.",
+        "@": true
+      },
+      "?enabledLanguageIds": {
+        "#": "languageIds for the files to spell check.",
+        "@": [
+          "$LanguageIdSingle"
+        ]
+      },
+      "?flagWords": {
+        "#": "List of words to always be considered incorrect. Words found in `flagWords` override `words`.\n\nFormat of `flagWords`\n- single word entry - `word`\n- with suggestions - `word:suggestion` or `word->suggestion, suggestions`\n\nExample: ```ts \"flagWords\": [   \"color: colour\",   \"incase: in case, encase\",   \"canot->cannot\",   \"cancelled->canceled\" ] ```",
+        "@": [
+          ""
+        ]
+      },
+      "?id": {
+        "#": "Optional identifier.",
+        "@": ""
+      },
+      "?ignoreRegExpList": {
+        "#": "List of regular expression patterns or pattern names to exclude from spell checking.\n\nExample: `[\"href\"]` - to exclude html href pattern.\n\nRegular expressions use JavaScript regular expression syntax.\n\nExample: to ignore ALL-CAPS words\n\nJSON ```json \"ignoreRegExpList\": [\"/\\\\b[A-Z]+\\\\b/g\"] ```\n\nYAML ```yaml ignoreRegExpList:   - >-    /\\b[A-Z]+\\b/g ```\n\nBy default, several patterns are excluded. See [Configuration](https://cspell.org/configuration/patterns) for more details.\n\nWhile you can create your own patterns, you can also leverage several patterns that are [built-in to CSpell](https://cspell.org/types/cspell-types/types/PredefinedPatterns.html).",
+        "@": "$RegExpPatternList"
+      },
+      "?ignoreWords": {
+        "#": "List of words to be ignored. An ignored word will not show up as an error, even if it is also in the `flagWords`.",
+        "@": [
+          ""
+        ]
+      },
+      "?includeRegExpList": {
+        "#": "List of regular expression patterns or defined pattern names to match for spell checking.\n\nIf this property is defined, only text matching the included patterns will be checked.\n\nWhile you can create your own patterns, you can also leverage several patterns that are [built-in to CSpell](https://cspell.org/types/cspell-types/types/PredefinedPatterns.html).",
+        "@": "$RegExpPatternList"
+      },
+      "?language": {
+        "#": "Sets the locale.",
+        "@": "$LocaleId"
+      },
+      "?languageId": {
+        "#": "Sets the programming language id to match file type.",
+        "@": "$MatchingFileType"
+      },
+      "?languageSettings": {
+        "#": "Additional settings for individual languages.\n\nSee [Language Settings](https://cspell.org/configuration/language-settings/) for more details.",
+        "@": [
+          "$LanguageSetting"
+        ]
+      },
+      "?loadDefaultConfiguration": {
+        "#": "By default, the bundled dictionary configurations are loaded. Explicitly setting this to `false` will prevent ALL default configuration from being loaded.",
+        "@": true
+      },
+      "?maxDuplicateProblems": {
+        "#": "The maximum number of times the same word can be flagged as an error in a file.",
+        "@": -1.0
+      },
+      "?maxNumberOfProblems": {
+        "#": "The maximum number of problems to report in a file.",
+        "@": -1.0
+      },
+      "?minWordLength": {
+        "#": "The minimum length of a word before checking it against a dictionary.",
+        "@": -1.0
+      },
+      "?name": {
+        "#": "Optional name of configuration.",
+        "@": ""
+      },
+      "?noSuggestDictionaries": {
+        "#": "Optional list of dictionaries that will not be used for suggestions. Words in these dictionaries are considered correct, but will not be used when making spell correction suggestions.\n\nNote: if a word is suggested by another dictionary, but found in one of these dictionaries, it will be removed from the set of possible suggestions.",
+        "@": [
+          "$DictionaryReference"
+        ]
+      },
+      "?numSuggestions": {
+        "#": "Number of suggestions to make.",
+        "@": -1.0
+      },
+      "?patterns": {
+        "#": "Defines a list of patterns that can be used with the `ignoreRegExpList` and `includeRegExpList` options.\n\nFor example:\n\n```javascript \"ignoreRegExpList\": [\"comments\"], \"patterns\": [   {     \"name\": \"comment-single-line\",     \"pattern\": \"/#.*\u200b/g\"   },   {     \"name\": \"comment-multi-line\",     \"pattern\": \"/(?:\\\\/\\\\*[\\\\s\\\\S]*?\\\\*\\\\/)/g\"   },   // You can also combine multiple named patterns into one single named pattern   {     \"name\": \"comments\",     \"pattern\": [\"comment-single-line\", \"comment-multi-line\"]   } ] ``` Defines a list of patterns that can be used with the `ignoreRegExpList` and `includeRegExpList` options.",
+        "@": [
+          "$RegExpPatternDefinition"
+        ]
+      },
+      "?pnpFiles": {
+        "#": "The PnP files to search for. Note: `.mjs` files are not currently supported.",
+        "@": [
+          ""
+        ]
+      },
+      "?suggestWords": {
+        "#": "A list of suggested replacements for words. Suggested words provide a way to make preferred suggestions on word replacements. To hint at a preferred change, but not to require it.\n\nFormat of `suggestWords`\n- Single suggestion (possible auto fix)     - `word: suggestion`     - `word->suggestion`\n- Multiple suggestions (not auto fixable)    - `word: first, second, third`    - `word->first, second, third`",
+        "@": [
+          ""
+        ]
+      },
+      "?suggestionNumChanges": {
+        "#": "The maximum number of changes allowed on a word to be considered a suggestions.\n\nFor example, appending an `s` onto `example` -> `examples` is considered 1 change.\n\nRange: between 1 and 5.",
+        "@": -1.0
+      },
+      "?suggestionsTimeout": {
+        "#": "The maximum amount of time in milliseconds to generate suggestions for a word.",
+        "@": -1.0
+      },
+      "?usePnP": {
+        "#": "Packages managers like Yarn 2 use a `.pnp.cjs` file to assist in loading packages stored in the repository.\n\nWhen true, the spell checker will search up the directory structure for the existence of a PnP file and load it.",
+        "@": true
+      },
+      "?words": {
+        "#": "List of words to be considered correct.",
+        "@": [
+          ""
+        ]
+      },
+      "_filename": {
+        "#": "Glob pattern or patterns to match against.",
+        "|": [
+          "$Glob",
+          [
+            "$Glob"
+          ]
+        ]
+      }
+    },
+    "Pattern": "",
+    "PatternAdjustment": {
+      "_id": {
+        "#": "Id of the Adjustment, i.e. `short-compound`",
+        "@": ""
+      },
+      "_penalty": {
+        "#": "The amount of penalty to apply.",
+        "@": -1.0
+      },
+      "_regexp": {
+        "#": "RegExp pattern to match",
+        "@": ""
+      }
+    },
+    "PatternId": {
+      "#": "This matches the name in a pattern definition.",
+      "@": ""
+    },
+    "PatternRef": {
+      "#": "A PatternRef is a Pattern or PatternId.",
+      "|": [
+        "$Pattern",
+        "$PatternId",
+        "$PredefinedPatterns"
+      ]
+    },
+    "PredefinedPatterns": {
+      "|": [
+        "_Base64",
+        "_Base64MultiLine",
+        "_Base64SingleLine",
+        "_CStyleComment",
+        "_CStyleHexValue",
+        "_CSSHexValue",
+        "_CommitHash",
+        "_CommitHashLink",
+        "_Email",
+        "_EscapeCharacters",
+        "_HexValues",
+        "_href",
+        "_PhpHereDoc",
+        "_PublicKey",
+        "_RsaCert",
+        "_SshRsa",
+        "_SHA",
+        "_HashStrings",
+        "_SpellCheckerDisable",
+        "_SpellCheckerDisableBlock",
+        "_SpellCheckerDisableLine",
+        "_SpellCheckerDisableNext",
+        "_SpellCheckerIgnoreInDocSetting",
+        "_string",
+        "_UnicodeRef",
+        "_Urls",
+        "_UUID",
+        "_Everything"
+      ]
+    },
+    "RegExpPatternDefinition": {
+      "?description": {
+        "#": "Description of the pattern.",
+        "@": ""
+      },
+      "_name": {
+        "#": "Pattern name, used as an identifier in ignoreRegExpList and includeRegExpList. It is possible to redefine one of the predefined patterns to override its value.",
+        "@": "$PatternId"
+      },
+      "_pattern": {
+        "#": "RegExp pattern or array of RegExp patterns.",
+        "|": [
+          "$Pattern",
+          [
+            "$Pattern"
+          ]
+        ]
+      }
+    },
+    "RegExpPatternList": {
+      "#": "A list of pattern names or regular expressions.",
+      "@": [
+        "$PatternRef"
+      ]
+    },
+    "ReplaceEntry": {
+      "=": 2,
+      "@": [
+        ""
+      ]
+    },
+    "ReplaceMap": [
+      "$ReplaceEntry"
+    ],
+    "ReporterModuleName": {
+      "#": "The module or path to the the reporter to load.",
+      "@": ""
+    },
+    "ReporterOptions": {
+      "#": "Options to send to the reporter. These are defined by the reporter.",
+      "@": "$Serializable"
+    },
+    "ReporterSettings": {
+      "#": "Declare a reporter to use.\n\n`default` - is a special name for the default cli reporter.\n\nExamples:\n- `\"default\"` - to use the default reporter\n- `\"@cspell/cspell-json-reporter\"` - use the cspell JSON reporter.\n- `[\"@cspell/cspell-json-reporter\", { \"outFile\": \"out.json\" }]`",
+      "|": [
+        "$ReporterModuleName",
+        {
+          "=": 1,
+          "@": [
+            {
+              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+              "@": "$ReporterModuleName"
+            }
+          ]
+        },
+        [
+          {
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "@": "$ReporterModuleName"
+          },
+          {
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "@": "$ReporterOptions"
+          }
+        ]
+      ]
+    },
+    "Serializable": {
+      "|": [
+        -1.0,
+        "",
+        true,
+        null,
+        {
+          "": "$ANY"
+        }
+      ]
+    },
+    "SimpleGlob": {
+      "#": "Simple Glob string, the root will be globRoot.",
+      "@": ""
+    },
+    "SuggestionCostMapDef": {
+      "#": "A WeightedMapDef enables setting weights for edits between related characters and substrings.\n\nMultiple groups can be defined using a `|`. A multi-character substring is defined using `()`.\n\nFor example, in some languages, some letters sound alike.\n\n```yaml   map: 'sc(sh)(sch)(ss)|t(tt)' # two groups.   replace: 50    # Make it 1/2 the cost of a normal edit to replace a `t` with `tt`. ```\n\nThe following could be used to make inserting, removing, or replacing vowels cheaper. ```yaml   map: 'aeiouy'   insDel: 50     # Make it is cheaper to insert or delete a vowel.   replace: 45    # It is even cheaper to replace one with another. ```\n\nNote: the default edit distance is 100.",
+      "|": [
+        "$CostMapDefReplace",
+        "$CostMapDefInsDel",
+        "$CostMapDefSwap"
+      ]
+    },
+    "SuggestionCostsDefs": [
+      "$SuggestionCostMapDef"
+    ],
+    "Version": {
+      "|": [
+        "$VersionLatest",
+        "$VersionLegacy"
+      ]
+    },
+    "VersionLatest": {
+      "#": "Configuration File Version.",
+      "@": "_0.2"
+    },
+    "VersionLegacy": {
+      "#": "Legacy Configuration File Versions.",
+      "@": "_0.1"
+    }
+  },
+  "?$schema": {
+    "#": "Url to JSON Schema",
+    "@": ""
+  },
+  "?allowCompoundWords": {
+    "#": "True to enable compound word checking. See [Case Sensitivity](https://cspell.org/docs/case-sensitive/) for more details.",
+    "@": true
+  },
+  "?cache": {
+    "#": "Define cache settings.",
+    "@": "$CacheSettings"
+  },
+  "?caseSensitive": {
+    "#": "Determines if words must match case and accent rules.\n\n- `false` - Case is ignored and accents can be missing on the entire word.   Incorrect accents or partially missing accents will be marked as incorrect.\n- `true` - Case and accents are enforced.",
+    "@": true
+  },
+  "?description": {
+    "#": "Optional description of configuration.",
+    "@": ""
+  },
+  "?dictionaries": {
+    "#": "Optional list of dictionaries to use. Each entry should match the name of the dictionary.\n\nTo remove a dictionary from the list, add `!` before the name.\n\nFor example, `!typescript` will turn off the dictionary with the name `typescript`.\n\nSee the [Dictionaries](https://cspell.org/docs/dictionaries/) and [Custom Dictionaries](https://cspell.org/docs/dictionaries-custom/) for more details.",
+    "@": [
+      "$DictionaryReference"
+    ]
+  },
+  "?dictionaryDefinitions": {
+    "#": "Define additional available dictionaries.\n\nFor example, you can use the following to add a custom dictionary:\n\n```json \"dictionaryDefinitions\": [   { \"name\": \"custom-words\", \"path\": \"./custom-words.txt\"} ], \"dictionaries\": [\"custom-words\"] ```",
+    "@": [
+      "$DictionaryDefinition"
+    ]
+  },
+  "?enableFiletypes": {
+    "!": true,
+    "#": "Enable / Disable checking file types (languageIds).\n\nThese are in additional to the file types specified by `cSpell.enabledLanguageIds`.\n\nTo disable a language, prefix with `!` as in `!json`,\n\nExample: ``` jsonc       // enable checking for jsonc !json       // disable checking for json kotlin      // enable checking for kotlin ```",
+    "@": [
+      "$LanguageIdSingle"
+    ]
+  },
+  "?enableGlobDot": {
+    "#": "Enable scanning files and directories beginning with `.` (period).\n\nBy default, CSpell does not scan `hidden` files.",
+    "@": true
+  },
+  "?enabled": {
+    "#": "Is the spell checker enabled.",
+    "@": true
+  },
+  "?enabledLanguageIds": {
+    "#": "languageIds for the files to spell check.",
+    "@": [
+      "$LanguageIdSingle"
+    ]
+  },
+  "?failFast": {
+    "#": "Exit with non-zero code as soon as an issue/error is encountered (useful for CI or git hooks)",
+    "@": true
+  },
+  "?features": {
+    "#": "Configure CSpell features.",
+    "@": "$Features"
+  },
+  "?files": {
+    "#": "Glob patterns of files to be checked.\n\nGlob patterns are relative to the `globRoot` of the configuration file that defines them.",
+    "@": [
+      "$Glob"
+    ]
+  },
+  "?flagWords": {
+    "#": "List of words to always be considered incorrect. Words found in `flagWords` override `words`.\n\nFormat of `flagWords`\n- single word entry - `word`\n- with suggestions - `word:suggestion` or `word->suggestion, suggestions`\n\nExample: ```ts \"flagWords\": [   \"color: colour\",   \"incase: in case, encase\",   \"canot->cannot\",   \"cancelled->canceled\" ] ```",
+    "@": [
+      ""
+    ]
+  },
+  "?gitignoreRoot": {
+    "#": "Tells the spell checker to searching for `.gitignore` files when it reaches a matching root.",
+    "|": [
+      "$FsPath",
+      [
+        "$FsPath"
+      ]
+    ]
+  },
+  "?globRoot": {
+    "#": "The root to use for glob patterns found in this configuration. Default: location of the configuration file.   For compatibility reasons, config files with version 0.1, the glob root will   default to be `${cwd}`.\n\nUse `globRoot` to define a different location. `globRoot` can be relative to the location of this configuration file. Defining globRoot, does not impact imported configurations.\n\nSpecial Values:\n- `${cwd}` - will be replaced with the current working directory.\n- `.` - will be the location of the containing configuration file.",
+    "@": "$FSPathResolvable"
+  },
+  "?id": {
+    "#": "Optional identifier.",
+    "@": ""
+  },
+  "?ignorePaths": {
+    "#": "Glob patterns of files to be ignored.\n\nGlob patterns are relative to the `globRoot` of the configuration file that defines them.",
+    "@": [
+      "$Glob"
+    ]
+  },
+  "?ignoreRegExpList": {
+    "#": "List of regular expression patterns or pattern names to exclude from spell checking.\n\nExample: `[\"href\"]` - to exclude html href pattern.\n\nRegular expressions use JavaScript regular expression syntax.\n\nExample: to ignore ALL-CAPS words\n\nJSON ```json \"ignoreRegExpList\": [\"/\\\\b[A-Z]+\\\\b/g\"] ```\n\nYAML ```yaml ignoreRegExpList:   - >-    /\\b[A-Z]+\\b/g ```\n\nBy default, several patterns are excluded. See [Configuration](https://cspell.org/configuration/patterns) for more details.\n\nWhile you can create your own patterns, you can also leverage several patterns that are [built-in to CSpell](https://cspell.org/types/cspell-types/types/PredefinedPatterns.html).",
+    "@": "$RegExpPatternList"
+  },
+  "?ignoreWords": {
+    "#": "List of words to be ignored. An ignored word will not show up as an error, even if it is also in the `flagWords`.",
+    "@": [
+      ""
+    ]
+  },
+  "?import": {
+    "#": "Allows this configuration to inherit configuration for one or more other files.\n\nSee [Importing / Extending Configuration](https://cspell.org/configuration/imports/) for more details.",
+    "|": [
+      "$FsPath",
+      [
+        "$FsPath"
+      ]
+    ]
+  },
+  "?includeRegExpList": {
+    "#": "List of regular expression patterns or defined pattern names to match for spell checking.\n\nIf this property is defined, only text matching the included patterns will be checked.\n\nWhile you can create your own patterns, you can also leverage several patterns that are [built-in to CSpell](https://cspell.org/types/cspell-types/types/PredefinedPatterns.html).",
+    "@": "$RegExpPatternList"
+  },
+  "?language": {
+    "#": "Current active spelling language. This specifies the language locale to use in choosing the general dictionary.\n\nFor example:\n\n- \"en-GB\" for British English.\n- \"en,nl\" to enable both English and Dutch.",
+    "@": "$LocaleId"
+  },
+  "?languageId": {
+    "#": "Forces the spell checker to assume a give language id. Used mainly as an Override.",
+    "@": "$MatchingFileType"
+  },
+  "?languageSettings": {
+    "#": "Additional settings for individual languages.\n\nSee [Language Settings](https://cspell.org/configuration/language-settings/) for more details.",
+    "@": [
+      "$LanguageSetting"
+    ]
+  },
+  "?loadDefaultConfiguration": {
+    "#": "By default, the bundled dictionary configurations are loaded. Explicitly setting this to `false` will prevent ALL default configuration from being loaded.",
+    "@": true
+  },
+  "?maxDuplicateProblems": {
+    "#": "The maximum number of times the same word can be flagged as an error in a file.",
+    "@": -1.0
+  },
+  "?maxNumberOfProblems": {
+    "#": "The maximum number of problems to report in a file.",
+    "@": -1.0
+  },
+  "?minWordLength": {
+    "#": "The minimum length of a word before checking it against a dictionary.",
+    "@": -1.0
+  },
+  "?name": {
+    "#": "Optional name of configuration.",
+    "@": ""
+  },
+  "?noConfigSearch": {
+    "#": "Prevents searching for local configuration when checking individual documents.",
+    "@": true
+  },
+  "?noSuggestDictionaries": {
+    "#": "Optional list of dictionaries that will not be used for suggestions. Words in these dictionaries are considered correct, but will not be used when making spell correction suggestions.\n\nNote: if a word is suggested by another dictionary, but found in one of these dictionaries, it will be removed from the set of possible suggestions.",
+    "@": [
+      "$DictionaryReference"
+    ]
+  },
+  "?numSuggestions": {
+    "#": "Number of suggestions to make.",
+    "@": -1.0
+  },
+  "?overrides": {
+    "#": "Overrides are used to apply settings for specific files in your project.\n\nFor example:\n\n```javascript \"overrides\": [   // Force `*.hrr` and `*.crr` files to be treated as `cpp` files:   {     \"filename\": \"**\u200b/{*.hrr,*.crr}\",     \"languageId\": \"cpp\"   },   // Force `*.txt` to use the Dutch dictionary (Dutch dictionary needs to be installed separately):   {     \"language\": \"nl\",     \"filename\": \"**\u200b/dutch/**\u200b/*.txt\"   } ] ```",
+    "@": [
+      "$OverrideSettings"
+    ]
+  },
+  "?patterns": {
+    "#": "Defines a list of patterns that can be used with the `ignoreRegExpList` and `includeRegExpList` options.\n\nFor example:\n\n```javascript \"ignoreRegExpList\": [\"comments\"], \"patterns\": [   {     \"name\": \"comment-single-line\",     \"pattern\": \"/#.*\u200b/g\"   },   {     \"name\": \"comment-multi-line\",     \"pattern\": \"/(?:\\\\/\\\\*[\\\\s\\\\S]*?\\\\*\\\\/)/g\"   },   // You can also combine multiple named patterns into one single named pattern   {     \"name\": \"comments\",     \"pattern\": [\"comment-single-line\", \"comment-multi-line\"]   } ] ``` Defines a list of patterns that can be used with the `ignoreRegExpList` and `includeRegExpList` options.",
+    "@": [
+      "$RegExpPatternDefinition"
+    ]
+  },
+  "?pnpFiles": {
+    "#": "The PnP files to search for. Note: `.mjs` files are not currently supported.",
+    "@": [
+      ""
+    ]
+  },
+  "?readonly": {
+    "#": "Indicate that the configuration file should not be modified. This is used to prevent tools like the VS Code Spell Checker from modifying the file to add words and other configuration.",
+    "@": true
+  },
+  "?reporters": {
+    "#": "Define which reports to use. `default` - is a special name for the default cli reporter.\n\nExamples:\n- `[\"default\"]` - to use the default reporter\n- `[\"@cspell/cspell-json-reporter\"]` - use the cspell JSON reporter.\n- `[[\"@cspell/cspell-json-reporter\", { \"outFile\": \"out.json\" }]]`\n- `[ \"default\", [\"@cspell/cspell-json-reporter\", { \"outFile\": \"out.json\" }]]` - Use both the default reporter and the cspell-json-reporter.",
+    "@": [
+      "$ReporterSettings"
+    ]
+  },
+  "?showStatus": {
+    "#": "Show status.",
+    "@": true
+  },
+  "?spellCheckDelayMs": {
+    "#": "Delay in ms after a document has changed before checking it for spelling errors.",
+    "@": -1.0
+  },
+  "?suggestWords": {
+    "#": "A list of suggested replacements for words. Suggested words provide a way to make preferred suggestions on word replacements. To hint at a preferred change, but not to require it.\n\nFormat of `suggestWords`\n- Single suggestion (possible auto fix)     - `word: suggestion`     - `word->suggestion`\n- Multiple suggestions (not auto fixable)    - `word: first, second, third`    - `word->first, second, third`",
+    "@": [
+      ""
+    ]
+  },
+  "?suggestionNumChanges": {
+    "#": "The maximum number of changes allowed on a word to be considered a suggestions.\n\nFor example, appending an `s` onto `example` -> `examples` is considered 1 change.\n\nRange: between 1 and 5.",
+    "@": -1.0
+  },
+  "?suggestionsTimeout": {
+    "#": "The maximum amount of time in milliseconds to generate suggestions for a word.",
+    "@": -1.0
+  },
+  "?useGitignore": {
+    "#": "Tells the spell checker to load `.gitignore` files and skip files that match the globs in the `.gitignore` files found.",
+    "@": true
+  },
+  "?usePnP": {
+    "#": "Packages managers like Yarn 2 use a `.pnp.cjs` file to assist in loading packages stored in the repository.\n\nWhen true, the spell checker will search up the directory structure for the existence of a PnP file and load it.",
+    "@": true
+  },
+  "?userWords": {
+    "#": "Words to add to global dictionary -- should only be in the user config file.",
+    "@": [
+      ""
+    ]
+  },
+  "?validateDirectives": {
+    "#": "Verify that the in-document directives are correct.",
+    "@": true
+  },
+  "?version": {
+    "#": "Configuration format version of the settings file.\n\nThis controls how the settings in the configuration file behave.",
+    "@": "$Version"
+  },
+  "?words": {
+    "#": "List of words to be considered correct.",
+    "@": [
+      ""
+    ]
+  }
+}

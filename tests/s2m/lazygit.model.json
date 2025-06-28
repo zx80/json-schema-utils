@@ -1,0 +1,1361 @@
+{
+  "#": "UI settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+  "$": {
+    "color": {
+      "^": [
+        {
+          "|": [
+            "_black",
+            "_red",
+            "_green",
+            "_yellow",
+            "_blue",
+            "_magenta",
+            "_cyan",
+            "_white",
+            "_bold",
+            "_default",
+            "_reverse",
+            "_underline",
+            "_strikethrough"
+          ]
+        },
+        {
+          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+          "@": "/^#[0-9a-fA-F]{6}$/"
+        }
+      ]
+    },
+    "custom-commands-prompts-key-property": {
+      "#": "A key\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#common-fields",
+      "@": ""
+    },
+    "custom-commands-prompts-title-property": {
+      "#": "A title\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#common-fields",
+      "@": ""
+    },
+    "custom-commands-prompts-type-property": {
+      "#": "A type\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#common-fields",
+      "|": [
+        "_input",
+        "_confirm",
+        "_menu",
+        "_menuFromCommand"
+      ]
+    },
+    "keybinding": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "|": [
+        "",
+        null
+      ]
+    }
+  },
+  "?confirmOnQuit": {
+    "#": "Whether to confirm on on quit\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+    "@": true
+  },
+  "?customCommands": {
+    "!": true,
+    "#": "Custom commands\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+    "@": [
+      {
+        "#": "A custom command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+        "?after": {
+          "#": "Actions to take after the command has completed\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+          "?checkForConflicts": {
+            "#": "Whether to check for conflicts before running command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+            "@": true
+          }
+        },
+        "?description": {
+          "#": "A description\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+          "@": ""
+        },
+        "?loadingText": {
+          "#": "Text to display while waiting for command to finish\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+          "@": ""
+        },
+        "?prompts": {
+          "#": "Prompts before running a command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+          "@": [
+            {
+              "&": [
+                {
+                  "&": [
+                    {
+                      "&": [
+                        "$ANY",
+                        {
+                          "|": [
+                            {
+                              "&": [
+                                {
+                                  "": "$ANY",
+                                  "?type": "_input"
+                                },
+                                {
+                                  "?initialValue": {
+                                    "#": "An initial value\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#input",
+                                    "@": ""
+                                  },
+                                  "?key": "$custom-commands-prompts-key-property",
+                                  "?suggestions": {
+                                    "#": "Whether to show suggestions as the input is entered\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#input",
+                                    "^": [
+                                      {
+                                        "?preset": {
+                                          "#": "A preset\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#input",
+                                          "|": [
+                                            "_authors",
+                                            "_branches",
+                                            "_files",
+                                            "_refs",
+                                            "_remotes",
+                                            "_remoteBranches",
+                                            "_tags"
+                                          ]
+                                        }
+                                      },
+                                      {
+                                        "?command": {
+                                          "#": "A command where each line in the output is suggestion\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#input",
+                                          "@": ""
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "?title": "$custom-commands-prompts-title-property",
+                                  "?type": "$custom-commands-prompts-type-property"
+                                }
+                              ]
+                            },
+                            {
+                              "&": [
+                                {
+                                  "^": [
+                                    "$ANY",
+                                    {
+                                      "": "$ANY",
+                                      "?type": "_input"
+                                    }
+                                  ]
+                                },
+                                "$ANY"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "&": [
+                        "$ANY",
+                        {
+                          "|": [
+                            {
+                              "&": [
+                                {
+                                  "": "$ANY",
+                                  "?type": "_confirm"
+                                },
+                                {
+                                  "?body": {
+                                    "#": "A body\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#confirm",
+                                    "@": ""
+                                  },
+                                  "?key": "$custom-commands-prompts-key-property",
+                                  "?title": "$custom-commands-prompts-title-property",
+                                  "?type": "$custom-commands-prompts-type-property"
+                                }
+                              ]
+                            },
+                            {
+                              "&": [
+                                {
+                                  "^": [
+                                    "$ANY",
+                                    {
+                                      "": "$ANY",
+                                      "?type": "_confirm"
+                                    }
+                                  ]
+                                },
+                                "$ANY"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "&": [
+                        "$ANY",
+                        {
+                          "|": [
+                            {
+                              "&": [
+                                {
+                                  "": "$ANY",
+                                  "?type": "_menu"
+                                },
+                                {
+                                  "?key": "$custom-commands-prompts-key-property",
+                                  "?title": "$custom-commands-prompts-title-property",
+                                  "?type": "$custom-commands-prompts-type-property",
+                                  "_options": {
+                                    "!": true,
+                                    "#": "Options\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#menu",
+                                    "@": [
+                                      {
+                                        "#": "An option",
+                                        "?description": {
+                                          "#": "A second label part\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#menu",
+                                          "@": ""
+                                        },
+                                        "?name": {
+                                          "#": "A first label part\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#menu",
+                                          "@": ""
+                                        },
+                                        "_value": {
+                                          "#": "the value that will be used in the command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#menu",
+                                          ">=": 1,
+                                          "@": ""
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "&": [
+                                {
+                                  "^": [
+                                    "$ANY",
+                                    {
+                                      "": "$ANY",
+                                      "?type": "_menu"
+                                    }
+                                  ]
+                                },
+                                "$ANY"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "&": [
+                        "$ANY",
+                        {
+                          "|": [
+                            {
+                              "&": [
+                                {
+                                  "": "$ANY",
+                                  "?type": "_menuFromCommand"
+                                },
+                                {
+                                  "?filter": {
+                                    "#": "A regex specifying groups which kept from command output\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#menu-from-command",
+                                    "@": ""
+                                  },
+                                  "?key": "$custom-commands-prompts-key-property",
+                                  "?labelFormat": {
+                                    "#": "A label format\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#menu-from-command",
+                                    "@": ""
+                                  },
+                                  "?title": "$custom-commands-prompts-title-property",
+                                  "?type": "$custom-commands-prompts-type-property",
+                                  "?valueFormat": {
+                                    "#": "A value format\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#menu-from-command",
+                                    "@": ""
+                                  },
+                                  "_command": {
+                                    "#": "A command to generate options\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#menu-from-command",
+                                    "@": ""
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "&": [
+                                {
+                                  "^": [
+                                    "$ANY",
+                                    {
+                                      "": "$ANY",
+                                      "?type": "_menuFromCommand"
+                                    }
+                                  ]
+                                },
+                                "$ANY"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "": "$ANY",
+                  "#": "A prompt before running a command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+                  "_key": "$custom-commands-prompts-key-property",
+                  "_title": "$custom-commands-prompts-title-property",
+                  "_type": "$custom-commands-prompts-type-property"
+                }
+              ]
+            }
+          ]
+        },
+        "?showOutput": {
+          "#": "Whether to show the command output in popup\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+          "@": true
+        },
+        "?stream": {
+          "#": "Whether to stream command output to Command Log panel\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+          "@": true
+        },
+        "?subprocess": {
+          "#": "Whether to run command in subprocess\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+          "@": true
+        },
+        "_command": {
+          "#": "A command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+          "@": ""
+        },
+        "_context": {
+          "#": "A context\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+          "|": [
+            "_status",
+            "_files",
+            "_worktrees",
+            "_localBranches",
+            "_remotes",
+            "_remoteBranches",
+            "_tags",
+            "_commits",
+            "_reflogCommits",
+            "_subCommits",
+            "_commitFiles",
+            "_stash",
+            "_global"
+          ]
+        },
+        "_key": {
+          "#": "A command trigger\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
+          "@": "$keybinding"
+        }
+      }
+    ]
+  },
+  "?disableStartupPopups": {
+    "#": "Whether to disable startup popups\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+    "@": true
+  },
+  "?git": {
+    "#": "Git settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+    "?allBranchesLogCmd": {
+      "#": "A log command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": ""
+    },
+    "?autoFetch": {
+      "#": "Whether to automatically fetch\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?autoRefresh": {
+      "#": "Whether to automatically refresh\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?branchLogCmd": {
+      "#": "A log command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": ""
+    },
+    "?commit": {
+      "#": "Commit settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?signOff": {
+        "#": "Whether to sign commits off\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": true
+      }
+    },
+    "?commitPrefixes": {
+      "#": "Commit prefixes\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
+      "/./": {
+        "#": "A repository path\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
+        "_pattern": {
+          "#": "A pattern\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
+          ">=": 1,
+          "@": ""
+        },
+        "_replace": {
+          "#": "A replacement\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
+          ">=": 1,
+          "@": ""
+        }
+      }
+    },
+    "?diffContextSize": {
+      "#": "how many lines of context are shown around a change in diffs\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": -1
+    },
+    "?disableForcePushing": {
+      "#": "Whether to disable force pushing\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?fetchAll": {
+      "#": "Whether to fetch everything\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?log": {
+      "#": "Log settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?order": {
+        "#": "A commit order\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "|": [
+          "_date-order",
+          "_author-date-order",
+          "_topo-order",
+          "_default"
+        ]
+      },
+      "?showGraph": {
+        "#": "Whether to show a graph\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "|": [
+          "_always",
+          "_never",
+          "_when-maximised"
+        ]
+      },
+      "?showWholeGraph": {
+        "#": "Whether to show the whole graph\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": true
+      }
+    },
+    "?mainBranches": {
+      "!": true,
+      "#": "Main branches\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": [
+        {
+          "#": "A main branch\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+          ">=": 1,
+          "@": ""
+        }
+      ]
+    },
+    "?merging": {
+      "#": "Merging settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?args": {
+        "#": "Additional CLI arguments for 'git merge'\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": ""
+      },
+      "?manualCommit": {
+        "#": "Whether to use manual commits\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": true
+      }
+    },
+    "?overrideGpg": {
+      "#": "Whether not to spawn a separate process while using GPG\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?paging": {
+      "#": "Pager settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md",
+      "?colorArg": {
+        "#": "A pager color argument\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md",
+        "|": [
+          "_always",
+          "_never"
+        ]
+      },
+      "?pager": {
+        "#": "A pager\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md",
+        ">=": 1,
+        "@": ""
+      },
+      "?useConfig": {
+        "#": "Whether to use a config\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md",
+        "@": true
+      }
+    },
+    "?parseEmoji": {
+      "#": "Whether to parse emoji\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?skipHookPrefix": {
+      "#": "A prefix to skip\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": ""
+    }
+  },
+  "?gui": {
+    "#": "Settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+    "?animateExplosion": {
+      "#": "Whether to show explosion animation while nuking working tree\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?authorColors": {
+      "#": "Author colors\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-author-color",
+      "/./": {
+        "#": "An author color\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-author-color",
+        "@": "$color"
+      }
+    },
+    "?border": {
+      "#": "A border style\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "|": [
+        "_single",
+        "_double",
+        "_rounded",
+        "_hidden"
+      ]
+    },
+    "?branchColors": {
+      "#": "Branch colors\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-branch-color",
+      "/./": {
+        "#": "A branch color\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-branch-color",
+        "@": "$color"
+      }
+    },
+    "?commandLogSize": {
+      "#": "A command log size\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      ">=": 0,
+      "@": -1
+    },
+    "?commitLength": {
+      "#": "Settings of the current commit length\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?show": {
+        "#": "Whether to show the current commit length\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": true
+      }
+    },
+    "?expandFocusedSidePanel": {
+      "#": "Whether to expand focused side panel\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?language": {
+      "#": "A language\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "|": [
+        "_auto",
+        "_en",
+        "_zh-CN",
+        "_zh-TW",
+        "_pl",
+        "_nl",
+        "_ja",
+        "_ko",
+        "_ru"
+      ]
+    },
+    "?mainPanelSplitMode": {
+      "#": "A split mode of the current main panel\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "|": [
+        "_horizontal",
+        "_flexible",
+        "_vertical"
+      ]
+    },
+    "?mouseEvents": {
+      "#": "Whether to enable mouse events\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?nerdFontsVersion": {
+      "#": "A nerd font version\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "|": [
+        "_2",
+        "_3",
+        "_"
+      ]
+    },
+    "?scrollHeight": {
+      "#": "A scroll height\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      ">=": 1,
+      "@": -1
+    },
+    "?scrollPastBottom": {
+      "#": "Whether to allow scrolling past bottom of the current window\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?shortTimeFormat": {
+      "#": "A short time format\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": ""
+    },
+    "?showBottomLine": {
+      "#": "Whether to show a bottom line unless there is an important information\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?showBranchCommitHash": {
+      "#": "Whether to show a branch commit hash\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?showCommandLog": {
+      "#": "Whether to show command log\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?showFileTree": {
+      "#": "Whether to render render files in a tree format\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?showListFooter": {
+      "#": "Whether to show list footer\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?showRandomTip": {
+      "#": "Whether to show a random tip\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?sidePanelWidth": {
+      "#": "A width of the current side panel\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "<=": 1,
+      ">=": 0,
+      "@": -1.0
+    },
+    "?skipDiscardChangeWarning": {
+      "#": "Whether to disable change warning\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?skipRewordInEditorWarning": {
+      "#": "Whether to skip a confirmation before launching a reword editor\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?skipStashWarning": {
+      "#": "Whether to disable stash warning\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": true
+    },
+    "?splitDiff": {
+      "#": "Whether to skip diff\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "|": [
+        "_auto",
+        "_always"
+      ]
+    },
+    "?theme": {
+      "#": "Settings of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?activeBorderColor": {
+        "!": true,
+        "#": "Active border colors of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        ">=": 1,
+        "@": [
+          {
+            "#": "An active border color of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+            "@": "$color"
+          }
+        ]
+      },
+      "?cherryPickedCommitBgColor": {
+        "!": true,
+        "#": "Cherry picked commit background colors of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        ">=": 1,
+        "@": [
+          {
+            "#": "A cherry picked commit background color of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+            "@": "$color"
+          }
+        ]
+      },
+      "?cherryPickedCommitFgColor": {
+        "!": true,
+        "#": "Cherry picked commit foreground colors of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        ">=": 1,
+        "@": [
+          {
+            "#": "A cherry picked commit foreground color of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+            "@": "$color"
+          }
+        ]
+      },
+      "?defaultFgColor": {
+        "!": true,
+        "#": "Default foreground colors of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        ">=": 1,
+        "@": [
+          {
+            "#": "A default foreground color of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+            "@": "$color"
+          }
+        ]
+      },
+      "?inactiveBorderColor": {
+        "!": true,
+        "#": "Inactive border colors of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        ">=": 1,
+        "@": [
+          {
+            "#": "An inactive border color of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+            "@": "$color"
+          }
+        ]
+      },
+      "?optionsTextColor": {
+        "!": true,
+        "#": "Option text colors of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        ">=": 1,
+        "@": [
+          {
+            "#": "An option text color of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+            "@": "$color"
+          }
+        ]
+      },
+      "?searchingActiveBorderColor": {
+        "!": true,
+        "#": "Searching active border colors of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        ">=": 1,
+        "@": [
+          {
+            "#": "A searching active border color of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+            "@": "$color"
+          }
+        ]
+      },
+      "?selectedLineBgColor": {
+        "!": true,
+        "#": "Selected line background colors of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        ">=": 1,
+        "@": [
+          {
+            "#": "A selected line background color of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+            "@": "$color"
+          }
+        ]
+      },
+      "?selectedRangeBgColor": {
+        "!": true,
+        "#": "Selected range background colors of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        ">=": 1,
+        "@": [
+          {
+            "#": "A selected range background color of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+            "@": "$color"
+          }
+        ]
+      },
+      "?unstagedChangesColor": {
+        "!": true,
+        "#": "Unstaged changes colors of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        ">=": 1,
+        "@": [
+          {
+            "#": "An unstaged changes color of the current theme\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+            "@": "$color"
+          }
+        ]
+      }
+    },
+    "?timeFormat": {
+      "#": "A time format\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": ""
+    },
+    "?windowSize": {
+      "#": "A window size\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "|": [
+        "_normal",
+        "_half",
+        "_full"
+      ]
+    }
+  },
+  "?keybinding": {
+    "#": "Keybinding settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+    "?branches": {
+      "#": "Branch keybindings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?checkoutBranchByName": {
+        "#": "A checkout branch by name keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?createPullRequest": {
+        "#": "A create pull request keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?createTag": {
+        "#": "A create tag keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?fastForward": {
+        "#": "A fast forward keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?fetchRemote": {
+        "#": "A fetch remote keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?forceCheckoutBranch": {
+        "#": "A force checkout branch keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?mergeIntoCurrentBranch": {
+        "#": "A merge into current branch keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?pushTag": {
+        "#": "A push tag keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?rebaseBranch": {
+        "#": "A rebase branch keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?renameBranch": {
+        "#": "A rename branch keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?setUpstream": {
+        "#": "A set upstream keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?viewGitFlowOptions": {
+        "#": "A view git flow options keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?viewPullRequestOptions": {
+        "#": "A view pull request options keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      }
+    },
+    "?commitFiles": {
+      "#": "Commit file keybindings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?checkoutCommitFile": {
+        "#": "A checkout commit file keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      }
+    },
+    "?commits": {
+      "#": "Commit keybindings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?amendToCommit": {
+        "#": "A amend to commit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?checkoutCommit": {
+        "#": "A checkout commit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?cherryPickCopy": {
+        "#": "A cherry pick copy keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?cherryPickCopyRange": {
+        "#": "A cherry pick copy range keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?copyCommitMessageToClipboard": {
+        "#": "A copy commit message to clipboard keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?createFixupCommit": {
+        "#": "A create fixup commit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?markCommitAsFixup": {
+        "#": "A mark commit as fixup keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?moveDownCommit": {
+        "#": "A move down commit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?moveUpCommit": {
+        "#": "A move up commit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?openLogMenu": {
+        "#": "A open log menu keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?pasteCommits": {
+        "#": "A paste commits keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?pickCommit": {
+        "#": "A pick commit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?renameCommit": {
+        "#": "A rename commit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?renameCommitWithEditor": {
+        "#": "A rename commit with editor keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?resetCherryPick": {
+        "#": "A reset cherry pick keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?revertCommit": {
+        "#": "A revert commit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?squashAboveCommits": {
+        "#": "A squash above commits keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?squashDown": {
+        "#": "A squash down keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?tagCommit": {
+        "#": "A tag commit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?viewBisectOptions": {
+        "#": "A view bisect options keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?viewResetOptions": {
+        "#": "A view reset options keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      }
+    },
+    "?files": {
+      "#": "File keybindings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?amendLastCommit": {
+        "#": "A amend last commit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?commitChanges": {
+        "#": "A commit changes keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?commitChangesWithEditor": {
+        "#": "A commit changes with editor keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?commitChangesWithoutHook": {
+        "#": "A commit changes without hook keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?fetch": {
+        "#": "A fetch keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?ignoreFile": {
+        "#": "A ignore file keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?openMergeTool": {
+        "#": "A open merge tool keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?openStatusFilter": {
+        "#": "A open status filter keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?refreshFiles": {
+        "#": "A refresh files keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?stashAllChanges": {
+        "#": "A stash all changes keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?toggleStagedAll": {
+        "#": "A toggle staged all keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?toggleTreeView": {
+        "#": "A toggle tree view keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?viewResetOptions": {
+        "#": "A view reset options keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?viewStashOptions": {
+        "#": "A view stash options keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      }
+    },
+    "?main": {
+      "#": "Main keybindings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?pickBothHunks": {
+        "#": "A pick both hunks keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?toggleDragSelect": {
+        "#": "A toggle drag select keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?toggleDragSelect-alt": {
+        "#": "A toggle drag select-alt keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?toggleSelectHunk": {
+        "#": "A toggle select hunk keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      }
+    },
+    "?stash": {
+      "#": "Stash keybindings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?popStash": {
+        "#": "A pop stash keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?renameStash": {
+        "#": "A rename stash keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      }
+    },
+    "?status": {
+      "#": "Status keybindings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?checkForUpdate": {
+        "#": "A check for update keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?recentRepos": {
+        "#": "A recent repos keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      }
+    },
+    "?submodules": {
+      "#": "Submodules keybindings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?bulkMenu": {
+        "#": "A bulk menu keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?init": {
+        "#": "An init keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?update": {
+        "#": "An update keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      }
+    },
+    "?universal": {
+      "#": "Universal keybindings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "?confirm": {
+        "#": "A confirm keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?copyToClipboard": {
+        "#": "A copy to clipboard keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?createPatchOptionsMenu": {
+        "#": "A create patch options menu keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?createRebaseOptionsMenu": {
+        "#": "A create rebase options menu keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?decreaseContextInDiffView": {
+        "#": "A decrease context in diff view keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?diffingMenu": {
+        "#": "A diffing menu keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?diffingMenu-alt": {
+        "#": "A diffing menu-alt keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?edit": {
+        "#": "A edit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?executeCustomCommand": {
+        "#": "A execute custom command keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?extrasMenu": {
+        "#": "A extras menu keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?filteringMenu": {
+        "#": "A filtering menu keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?goInto": {
+        "#": "A go into keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?gotoBottom": {
+        "#": "A goto bottom keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?gotoTop": {
+        "#": "A goto top keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?increaseContextInDiffView": {
+        "#": "A increase context in diff view keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?jumpToBlock": {
+        "#": "A jump to block keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": [
+          "$ANY"
+        ]
+      },
+      "?new": {
+        "#": "A new keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?nextBlock": {
+        "#": "A next block keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?nextBlock-alt": {
+        "#": "A next block-alt keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?nextItem": {
+        "#": "A next item keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?nextItem-alt": {
+        "#": "A next item-alt keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?nextMatch": {
+        "#": "A next match keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?nextPage": {
+        "#": "A next page keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?nextScreenMode": {
+        "#": "A next screen mode keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?nextTab": {
+        "#": "A next tab keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?openFile": {
+        "#": "An open file keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?openRecentRepos": {
+        "#": "An open recent repos keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?optionMenu": {
+        "#": "An option menu keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": null
+      },
+      "?optionMenu-alt1": {
+        "#": "An option menu-alt1 keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?prevBlock": {
+        "#": "A previous block keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?prevBlock-alt": {
+        "#": "A previous block-alt keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?prevItem": {
+        "#": "A previous item keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?prevItem-alt": {
+        "#": "A previous item-alt keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?prevMatch": {
+        "#": "A previous match keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?prevPage": {
+        "#": "A previous page keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?prevScreenMode": {
+        "#": "A previous screen mode keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?prevTab": {
+        "#": "A previous tab keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?pullFiles": {
+        "#": "A pull files keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?pushFiles": {
+        "#": "A push files keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?quit": {
+        "#": "A quit keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?quit-alt1": {
+        "#": "A quit-alt1 keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?quitWithoutChangingDirectory": {
+        "#": "A quit without changing directory keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?redo": {
+        "#": "A redo keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?refresh": {
+        "#": "A refresh keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?remove": {
+        "#": "A remove keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?return": {
+        "#": "A return keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?scrollDownMain": {
+        "#": "A scroll down main keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?scrollDownMain-alt1": {
+        "#": "A scroll down main-alt1 keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?scrollDownMain-alt2": {
+        "#": "A scroll down main-alt2 keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?scrollLeft": {
+        "#": "A scroll left keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?scrollRight": {
+        "#": "A scroll right keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?scrollUpMain": {
+        "#": "A scroll up main keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?scrollUpMain-alt1": {
+        "#": "A scroll up main-alt1 keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?scrollUpMain-alt2": {
+        "#": "A scroll up main-alt2 keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?select": {
+        "#": "A select keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?submitEditorText": {
+        "#": "A submit editor text keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?togglePanel": {
+        "#": "A toggle panel keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?toggleWhitespaceInDiffView": {
+        "#": "A toggle whitespace in diff view keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      },
+      "?undo": {
+        "#": "An undo keybinding\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+        "@": "$keybinding"
+      }
+    }
+  },
+  "?notARepository": {
+    "#": "An action for non-repositories\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+    "|": [
+      "_prompt",
+      "_create",
+      "_skip",
+      "_quit"
+    ]
+  },
+  "?os": {
+    "#": "OS settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#configuring-file-editing",
+    "?copyToClipboardCmd": {
+      "#": "A copy to clipboard command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#configuring-file-editing",
+      "@": ""
+    },
+    "?edit": {
+      "#": "An editor command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#configuring-file-editing",
+      "@": ""
+    },
+    "?editAtLine": {
+      "#": "An editor command to open at specific line\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#configuring-file-editing",
+      "@": ""
+    },
+    "?editAtLineAndWait": {
+      "#": "An editor command to open at specific line and wait\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#configuring-file-editing",
+      "@": ""
+    },
+    "?editPreset": {
+      "#": "An edit preset\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#configuring-file-editing",
+      "|": [
+        "_vim",
+        "_nvim",
+        "_emacs",
+        "_nano",
+        "_vscode",
+        "_sublime",
+        "_bbedit",
+        "_kakoune",
+        "_helix",
+        "_xcode",
+        "_"
+      ]
+    },
+    "?open": {
+      "#": "An editor command for non-text files\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#configuring-file-editing",
+      "@": ""
+    },
+    "?openLink": {
+      "#": "An open link\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "@": ""
+    }
+  },
+  "?promptToReturnFromSubprocess": {
+    "#": "Whether to show confirmation on subprocess termination\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+    "@": true
+  },
+  "?quitOnTopLevelReturn": {
+    "#": "Whether to quit on 'esc' press while there is nothing to cancel/close\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+    "@": true
+  },
+  "?refresher": {
+    "#": "Refresh settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+    "?fetchInterval": {
+      "#": "A re-fetch interval in seconds\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      ">=": 0,
+      "@": -1
+    },
+    "?refreshInterval": {
+      "#": "A file/submodule refresh interval in seconds\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      ">=": 0,
+      "@": -1
+    }
+  },
+  "?services": {
+    "#": "Service settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-pull-request-urls",
+    "/./": {
+      "#": "A service\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-pull-request-urls",
+      "@": "/^[^:]+:[^:]+$/"
+    }
+  },
+  "?update": {
+    "#": "Update settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+    "?days": {
+      "#": "A day count\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      ">=": 0,
+      "@": -1
+    },
+    "?method": {
+      "#": "A method\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
+      "|": [
+        "_prompt",
+        "_background",
+        "_never"
+      ]
+    }
+  }
+}

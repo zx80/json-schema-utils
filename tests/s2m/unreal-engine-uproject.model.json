@@ -1,0 +1,264 @@
+{
+  "#": "Descriptor for projects. Contains all the information contained within a .uproject file.",
+  "$": {
+    "BuildConfiguration": {
+      "#": "Available build configurations. Mirorred from UnrealTargetConfiguration.",
+      "|": [
+        "_Unknown",
+        "_Debug",
+        "_DebugGame",
+        "_Development",
+        "_Shipping",
+        "_Test"
+      ]
+    },
+    "BuildTargetType": {
+      "#": "Enumerates build target types.",
+      "|": [
+        "_Unknown",
+        "_Game",
+        "_Server",
+        "_Client",
+        "_Editor",
+        "_Program"
+      ]
+    },
+    "ModuleDescriptor": {
+      "": "$ANY",
+      "#": "Description of a loadable module.",
+      "?AdditionalDependencies": {
+        "#": "List of additional dependencies for building this module.",
+        "@": [
+          ""
+        ]
+      },
+      "?HasExplicitPlatforms": {
+        "#": "When true, an empty PlatformAllowList is interpeted as 'no platforms' with the expectation that explict platforms will be added in plugin extensions.",
+        "@": true
+      },
+      "?LoadingPhase": {
+        "#": "When should the module be loaded during the startup sequence? This is sort of an advanced setting.",
+        "|": [
+          "_EarliestPossible",
+          "_PostConfigInit",
+          "_PostSplashScreen",
+          "_PreEarlyLoadingScreen",
+          "_PreLoadingScreen",
+          "_PreDefault",
+          "_Default",
+          "_PostDefault",
+          "_PostEngineInit",
+          "_None",
+          "_Max"
+        ]
+      },
+      "?Name": {
+        "#": "Name of this module.",
+        "@": ""
+      },
+      "?PlatformAllowList": {
+        "!": true,
+        "#": "List of allowed platforms.",
+        "@": [
+          ""
+        ]
+      },
+      "?PlatformDenyList": {
+        "!": true,
+        "#": "List of disallowed platforms.",
+        "@": [
+          ""
+        ]
+      },
+      "?ProgramAllowList": {
+        "!": true,
+        "#": "List of allowed programs.",
+        "@": [
+          ""
+        ]
+      },
+      "?ProgramDenyList": {
+        "!": true,
+        "#": "List of disallowed programs.",
+        "@": [
+          ""
+        ]
+      },
+      "?TargetAllowList": {
+        "!": true,
+        "#": "List of allowed targets.",
+        "@": [
+          "$BuildTargetType"
+        ]
+      },
+      "?TargetConfigurationAllowList": {
+        "!": true,
+        "#": "List of allowed target configurations.",
+        "@": [
+          "$BuildConfiguration"
+        ]
+      },
+      "?TargetConfigurationDenyList": {
+        "!": true,
+        "#": "List of disallowed target configurations.",
+        "@": [
+          "$BuildConfiguration"
+        ]
+      },
+      "?TargetDenyList": {
+        "!": true,
+        "#": "List of disallowed targets.",
+        "@": [
+          "$BuildTargetType"
+        ]
+      },
+      "?Type": {
+        "#": "Usage type of module.",
+        "|": [
+          "_Runtime",
+          "_RuntimeNoCommandlet",
+          "_RuntimeAndProgram",
+          "_CookedOnly",
+          "_UncookedOnly",
+          "_Developer",
+          "_DeveloperTool",
+          "_Editor",
+          "_EditorNoCommandlet",
+          "_EditorAndProgram",
+          "_Program",
+          "_ServerOnly",
+          "_ClientOnly",
+          "_ClientOnlyNoCommandlet",
+          "_Max"
+        ]
+      }
+    },
+    "PluginReferenceDescriptor": {
+      "": "$ANY",
+      "#": "Descriptor for a plugin reference.",
+      "?Description": {
+        "#": "Description of the plugin for users that do not have it installed.",
+        "@": ""
+      },
+      "?HasExplicitPlatforms": {
+        "#": "When true, empty SupportedTargetPlatforms and PlatformAllowList are interpreted as 'no platforms' with the expectation that explicit platforms will be added in plugin platform extensions.",
+        "@": true
+      },
+      "?MarketplaceURL": {
+        "#": "URL for this plugin on the marketplace, if the user doesn't have it installed.",
+        "@": ""
+      },
+      "?Optional": {
+        "#": "Whether this plugin is optional, and the game should silently ignore it not being present.",
+        "@": true
+      },
+      "?PlatformAllowList": {
+        "!": true,
+        "#": "List of allowed platforms.",
+        "@": [
+          ""
+        ]
+      },
+      "?PlatformDenyList": {
+        "!": true,
+        "#": "List of disallowed platforms.",
+        "@": [
+          ""
+        ]
+      },
+      "?TargetAllowList": {
+        "!": true,
+        "#": "List of allowed targets.",
+        "@": [
+          "$BuildTargetType"
+        ]
+      },
+      "?TargetConfigurationAllowList": {
+        "!": true,
+        "#": "List of allowed target configurations.",
+        "@": [
+          "$BuildConfiguration"
+        ]
+      },
+      "?TargetConfigurationDenyList": {
+        "!": true,
+        "#": "List of disallowed target configurations.",
+        "@": [
+          "$BuildConfiguration"
+        ]
+      },
+      "?TargetDenyList": {
+        "!": true,
+        "#": "List of disallowed targets.",
+        "@": [
+          "$BuildTargetType"
+        ]
+      },
+      "_Enabled": {
+        "#": "Whether it should be enabled by default.",
+        "@": true
+      },
+      "_Name": {
+        "#": "Name of the plugin.",
+        "@": ""
+      }
+    }
+  },
+  "?Category": {
+    "#": "Category to show under the project browser.",
+    "@": ""
+  },
+  "?Description": {
+    "#": "Description to show in the project browser.",
+    "@": ""
+  },
+  "?DisableEnginePluginsByDefault": {
+    "#": "Indicates that enabled by default engine plugins should not be enabled unless explicitly enabled by the project or target files.",
+    "@": true
+  },
+  "?EpicSampleNameHash": {
+    "#": "A hash that is used to determine if the project was forked from a sample.",
+    "@": -1.0
+  },
+  "?IsEnterpriseProject": {
+    "#": "Indicates if this project is an Enterprise project.",
+    "@": true
+  },
+  "?Modules": {
+    "!": true,
+    "#": "List of all modules associated with this project.",
+    "@": [
+      "$ModuleDescriptor"
+    ]
+  },
+  "?Plugins": {
+    "!": true,
+    "#": "List of plugins for this project (may be enabled/disabled).",
+    "@": [
+      "$PluginReferenceDescriptor"
+    ]
+  },
+  "?PostBuildSteps": {
+    "": "$ANY",
+    "#": "Custom steps to execute after building targets in this project."
+  },
+  "?PreBuildSteps": {
+    "": "$ANY",
+    "#": "Custom steps to execute before building targets in this project."
+  },
+  "?TargetPlatforms": {
+    "!": true,
+    "#": "Array of platforms that this project is targeting.",
+    "@": [
+      ""
+    ]
+  },
+  "_EngineAssociation": {
+    "#": "The engine to open this project with. Denotes by <major>.<minor> convention e.g. 4.20, 5.0 or source engine hash.",
+    "@": "/(^([0-9]+)\\.([0-9]+)$)|(^\\{[A-F0-9]{8}(-[A-F0-9]{4}){3}-[A-F0-9]{12}\\}$)/"
+  },
+  "_FileVersion": {
+    "#": "Descriptor version number.",
+    "@": -1.0
+  }
+}

@@ -1,0 +1,839 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "$": {
+    "//": "$ANY",
+    "buildOptionsDefinition": {
+      "": "$ANY",
+      "?buildOptions": {
+        "": "$ANY",
+        "?assumeChangesOnlyAffectDirectDependencies": {
+          "#": "Have recompiles in projects that use `incremental` and `watch` mode assume that changes within a file will only affect files directly depending on it.",
+          "@": true
+        },
+        "?dry": {
+          "#": "~",
+          "@": true
+        },
+        "?force": {
+          "#": "Build all projects, including those that appear to be up to date",
+          "@": true
+        },
+        "?incremental": {
+          "#": "Save .tsbuildinfo files to allow for incremental compilation of projects.",
+          "@": true
+        },
+        "?traceResolution": {
+          "#": "Log paths used during the `moduleResolution` process.",
+          "@": true
+        },
+        "?verbose": {
+          "#": "Enable verbose logging",
+          "@": true
+        }
+      }
+    },
+    "compileOnSaveDefinition": {
+      "": "$ANY",
+      "?compileOnSave": {
+        "#": "Enable Compile-on-Save for this project.",
+        "@": true
+      }
+    },
+    "compilerOptionsDefinition": {
+      "": "$ANY",
+      "?compilerOptions": {
+        "": "$ANY",
+        "#": "Instructs the TypeScript compiler how to compile .ts files.",
+        "?allowArbitraryExtensions": {
+          "#": "Enable importing files with any extension, provided a declaration file is present.",
+          "@": true
+        },
+        "?allowImportingTsExtensions": {
+          "#": "Allow imports to include TypeScript file extensions. Requires '--moduleResolution bundler' and either '--noEmit' or '--emitDeclarationOnly' to be set.",
+          "@": true
+        },
+        "?allowJs": {
+          "#": "Allow JavaScript files to be a part of your program. Use the `checkJS` option to get errors from these files.",
+          "@": true
+        },
+        "?allowSyntheticDefaultImports": {
+          "#": "Allow 'import x from y' when a module doesn't have a default export.",
+          "@": true
+        },
+        "?allowUmdGlobalAccess": {
+          "#": "Allow accessing UMD globals from modules.",
+          "@": true
+        },
+        "?allowUnreachableCode": {
+          "#": "Disable error reporting for unreachable code.",
+          "@": true
+        },
+        "?allowUnusedLabels": {
+          "#": "Disable error reporting for unused labels.",
+          "@": true
+        },
+        "?alwaysStrict": {
+          "#": "Ensure 'use strict' is always emitted.",
+          "@": true
+        },
+        "?assumeChangesOnlyAffectDirectDependencies": {
+          "#": "Have recompiles in '--incremental' and '--watch' assume that changes within a file will only affect files directly depending on it. Requires TypeScript version 3.8 or later.",
+          "@": true
+        },
+        "?baseUrl": {
+          "#": "Specify the base directory to resolve non-relative module names.",
+          "@": ""
+        },
+        "?charset": {
+          "#": "No longer supported. In early versions, manually set the text encoding for reading files.",
+          "@": ""
+        },
+        "?checkJs": {
+          "#": "Enable error reporting in type-checked JavaScript files.",
+          "@": true
+        },
+        "?composite": {
+          "#": "Enable constraints that allow a TypeScript project to be used with project references.",
+          "@": true
+        },
+        "?customConditions": {
+          "!": true,
+          "#": "Conditions to set in addition to the resolver-specific defaults when resolving imports.",
+          "@": [
+            ""
+          ]
+        },
+        "?declaration": {
+          "#": "Generate .d.ts files from TypeScript and JavaScript files in your project.",
+          "@": true
+        },
+        "?declarationDir": {
+          "#": "Specify the output directory for generated declaration files.",
+          "|": [
+            "",
+            null
+          ]
+        },
+        "?declarationMap": {
+          "#": "Create sourcemaps for d.ts files.",
+          "@": true
+        },
+        "?diagnostics": {
+          "#": "Output compiler performance information after building.",
+          "@": true
+        },
+        "?disableReferencedProjectLoad": {
+          "#": "Reduce the number of projects loaded automatically by TypeScript.",
+          "@": true
+        },
+        "?disableSizeLimit": {
+          "#": "Remove the 20mb cap on total source code size for JavaScript files in the TypeScript language server.",
+          "@": true
+        },
+        "?disableSolutionSearching": {
+          "#": "Opt a project out of multi-project reference checking when editing.",
+          "@": true
+        },
+        "?disableSourceOfProjectReferenceRedirect": {
+          "#": "Disable preferring source files instead of declaration files when referencing composite projects",
+          "@": true
+        },
+        "?downlevelIteration": {
+          "#": "Emit more compliant, but verbose and less performant JavaScript for iteration.",
+          "@": true
+        },
+        "?emitBOM": {
+          "#": "Emit a UTF-8 Byte Order Mark (BOM) in the beginning of output files.",
+          "@": true
+        },
+        "?emitDeclarationOnly": {
+          "#": "Only output d.ts files and not JavaScript files.",
+          "@": true
+        },
+        "?emitDecoratorMetadata": {
+          "#": "Emit design-type metadata for decorated declarations in source files.",
+          "@": true
+        },
+        "?esModuleInterop": {
+          "#": "Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility.",
+          "@": true
+        },
+        "?exactOptionalPropertyTypes": {
+          "#": "Differentiate between undefined and not present when type checking",
+          "@": true
+        },
+        "?experimentalDecorators": {
+          "#": "Enable experimental support for TC39 stage 2 draft decorators.",
+          "@": true
+        },
+        "?extendedDiagnostics": {
+          "#": "Output more detailed compiler performance information after building.",
+          "@": true
+        },
+        "?fallbackPolling": {
+          "#": "Specify the polling strategy to use when the system runs out of or doesn't support native file watchers. Requires TypeScript version 3.8 or later.",
+          "|": [
+            "_fixedPollingInterval",
+            "_priorityPollingInterval",
+            "_dynamicPriorityPolling",
+            "_fixedInterval",
+            "_priorityInterval",
+            "_dynamicPriority",
+            "_fixedChunkSize"
+          ]
+        },
+        "?forceConsistentCasingInFileNames": {
+          "#": "Ensure that casing is correct in imports.",
+          "@": true
+        },
+        "?generateCpuProfile": {
+          "#": "Emit a v8 CPU profile of the compiler run for debugging.",
+          "@": ""
+        },
+        "?importHelpers": {
+          "#": "Allow importing helper functions from tslib once per project, instead of including them per-file.",
+          "@": true
+        },
+        "?importsNotUsedAsValues": {
+          "#": "Specify emit/checking behavior for imports that are only used for types.",
+          "|": [
+            "_remove",
+            "_preserve",
+            "_error"
+          ]
+        },
+        "?incremental": {
+          "#": "Enable incremental compilation. Requires TypeScript version 3.4 or later.",
+          "@": true
+        },
+        "?inlineSourceMap": {
+          "#": "Include sourcemap files inside the emitted JavaScript.",
+          "@": true
+        },
+        "?inlineSources": {
+          "#": "Include source code in the sourcemaps inside the emitted JavaScript.",
+          "@": true
+        },
+        "?isolatedModules": {
+          "#": "Ensure that each file can be safely transpiled without relying on other imports.",
+          "@": true
+        },
+        "?jsx": {
+          "#": "Specify what JSX code is generated.",
+          "|": [
+            "_preserve",
+            "_react",
+            "_react-jsx",
+            "_react-jsxdev",
+            "_react-native"
+          ]
+        },
+        "?jsxFactory": {
+          "#": "Specify the JSX factory function used when targeting React JSX emit, e.g. 'React.createElement' or 'h'",
+          "@": ""
+        },
+        "?jsxFragmentFactory": {
+          "#": "Specify the JSX Fragment reference used for fragments when targeting React JSX emit e.g. 'React.Fragment' or 'Fragment'.",
+          "@": ""
+        },
+        "?jsxImportSource": {
+          "#": "Specify module specifier used to import the JSX factory functions when using `jsx: react-jsx`.",
+          "@": ""
+        },
+        "?keyofStringsOnly": {
+          "#": "Make keyof only return strings instead of string, numbers or symbols. Legacy option.",
+          "@": true
+        },
+        "?lib": {
+          "!": true,
+          "#": "Specify a set of bundled library declaration files that describe the target runtime environment.",
+          "@": [
+            {
+              "|": [
+                {
+                  "|": [
+                    "_ES5",
+                    "_ES6",
+                    "_ES2015",
+                    "_ES2015.Collection",
+                    "_ES2015.Core",
+                    "_ES2015.Generator",
+                    "_ES2015.Iterable",
+                    "_ES2015.Promise",
+                    "_ES2015.Proxy",
+                    "_ES2015.Reflect",
+                    "_ES2015.Symbol.WellKnown",
+                    "_ES2015.Symbol",
+                    "_ES2016",
+                    "_ES2016.Array.Include",
+                    "_ES2017",
+                    "_ES2017.Intl",
+                    "_ES2017.Object",
+                    "_ES2017.SharedMemory",
+                    "_ES2017.String",
+                    "_ES2017.TypedArrays",
+                    "_ES2018",
+                    "_ES2018.AsyncGenerator",
+                    "_ES2018.AsyncIterable",
+                    "_ES2018.Intl",
+                    "_ES2018.Promise",
+                    "_ES2018.Regexp",
+                    "_ES2019",
+                    "_ES2019.Array",
+                    "_ES2019.Intl",
+                    "_ES2019.Object",
+                    "_ES2019.String",
+                    "_ES2019.Symbol",
+                    "_ES2020",
+                    "_ES2020.BigInt",
+                    "_ES2020.Promise",
+                    "_ES2020.String",
+                    "_ES2020.Symbol.WellKnown",
+                    "_ESNext",
+                    "_ESNext.Array",
+                    "_ESNext.AsyncIterable",
+                    "_ESNext.BigInt",
+                    "_ESNext.Intl",
+                    "_ESNext.Promise",
+                    "_ESNext.String",
+                    "_ESNext.Symbol",
+                    "_DOM",
+                    "_DOM.Iterable",
+                    "_ScriptHost",
+                    "_WebWorker",
+                    "_WebWorker.ImportScripts",
+                    "_Webworker.Iterable",
+                    "_ES7",
+                    "_ES2021",
+                    "_ES2020.SharedMemory",
+                    "_ES2020.Intl",
+                    "_ES2021.Promise",
+                    "_ES2021.String",
+                    "_ES2021.WeakRef",
+                    "_ESNext.WeakRef",
+                    "_es2021.intl",
+                    "_ES2022",
+                    "_ES2022.Array",
+                    "_ES2022.Error",
+                    "_ES2022.Intl",
+                    "_ES2022.Object",
+                    "_ES2022.String"
+                  ]
+                },
+                "/^[Ee][Ss]5|[Ee][Ss]6|[Ee][Ss]7$/",
+                "/^[Ee][Ss]2015(\\.([Cc][Oo][Ll][Ll][Ee][Cc][Tt][Ii][Oo][Nn]|[Cc][Oo][Rr][Ee]|[Gg][Ee][Nn][Ee][Rr][Aa][Tt][Oo][Rr]|[Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Pp][Rr][Oo][Xx][Yy]|[Rr][Ee][Ff][Ll][Ee][Cc][Tt]|[Ss][Yy][Mm][Bb][Oo][Ll].[Ww][Ee][Ll][Ll][Kk][Nn][Oo][Ww][Nn]|[Ss][Yy][Mm][Bb][Oo][Ll]))?$/",
+                "/^[Ee][Ss]2016(\\.[Aa][Rr][Rr][Aa][Yy].[Ii][Nn][Cc][Ll][Uu][Dd][Ee])?$/",
+                "/^[Ee][Ss]2017(\\.([Ii][Nn][Tt][Ll]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Hh][Aa][Rr][Ee][Dd][Mm][Ee][Mm][Oo][Rr][Yy]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Tt][Yy][Pp][Ee][Dd][Aa][Rr][Rr][Aa][Yy][Ss]))?$/",
+                "/^[Ee][Ss]2018(\\.([Aa][Ss][Yy][Nn][Cc][Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Rr][Ee][Gg][Ee][Xx][Pp]))?$/",
+                "/^[Ee][Ss]2019(\\.([Aa][Rr][Rr][Aa][Yy]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll]))?$/",
+                "/^[Ee][Ss]2020(\\.([Bb][Ii][Gg][Ii][Nn][Tt]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll].[Ww][Ee][Ll][Ll][Kk][Nn][Oo][Ww][Nn]))?$/",
+                "/^[Ee][Ss]2021(\\.([Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ww][Ee][Aa][Kk][Rr][Ee][Ff]))?$/",
+                "/^[Ee][Ss]2022(\\.([Aa][Rr][Rr][Aa][Yy]|[Ee][Rr][Rr][Oo][Rr]|[Ii][Nn][Tt][Ll]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Tt][Rr][Ii][Nn][Gg]))?$/",
+                "/^[Ee][Ss][Nn][Ee][Xx][Tt](\\.([Aa][Rr][Rr][Aa][Yy]|[Aa][Ss][Yy][Nn][Cc][Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Bb][Ii][Gg][Ii][Nn][Tt]|[Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll]|[Ww][Ee][Aa][Kk][Rr][Ee][Ff]))?$/",
+                "/^[Dd][Oo][Mm](\\.[Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee])?$/",
+                "/^[Ss][Cc][Rr][Ii][Pp][Tt][Hh][Oo][Ss][Tt]$/",
+                "/^[Ww][Ee][Bb][Ww][Oo][Rr][Kk][Ee][Rr](\\.[Ii][Mm][Pp][Oo][Rr][Tt][Ss][Cc][Rr][Ii][Pp][Tt][Ss])?$/"
+              ]
+            }
+          ]
+        },
+        "?listEmittedFiles": {
+          "#": "Print the names of emitted files after a compilation.",
+          "@": true
+        },
+        "?listFiles": {
+          "#": "Print all of the files read during the compilation.",
+          "@": true
+        },
+        "?listFilesOnly": {
+          "#": "Print names of files that are part of the compilation and then stop processing.",
+          "@": true
+        },
+        "?mapRoot": {
+          "#": "Specify the location where debugger should locate map files instead of generated locations.",
+          "@": ""
+        },
+        "?maxNodeModuleJsDepth": {
+          "#": "Specify the maximum folder depth used for checking JavaScript files from `node_modules`. Only applicable with `allowJs`.",
+          "@": -1.0
+        },
+        "?module": {
+          "#": "Specify what module code is generated.",
+          "|": [
+            {
+              "|": [
+                "_CommonJS",
+                "_AMD",
+                "_System",
+                "_UMD",
+                "_ES6",
+                "_ES2015",
+                "_ES2020",
+                "_ESNext",
+                "_None",
+                "_ES2022",
+                "_Node16",
+                "_NodeNext"
+              ]
+            },
+            "/^([Cc][Oo][Mm][Mm][Oo][Nn][Jj][Ss]|[AaUu][Mm][Dd]|[Ss][Yy][Ss][Tt][Ee][Mm]|[Ee][Ss]([356]|20(1[567]|2[02])|[Nn][Ee][Xx][Tt])|[Nn][Oo][dD][Ee]16|[Nn][Oo][Dd][Ee][Nn][Ee][Xx][Tt]|[Nn][Oo][Nn][Ee])$/"
+          ]
+        },
+        "?moduleResolution": {
+          "#": "Specify how TypeScript looks up a file from a given module specifier.",
+          "|": [
+            {
+              "|": [
+                "_classic",
+                "_node",
+                "_node16",
+                "_nodenext",
+                "_bundler"
+              ]
+            },
+            "/^(([Nn]ode)|([Nn]ode16)|([Nn]ode[Nn]ext)|([Cc]lassic)|([Bb]undler))$/"
+          ]
+        },
+        "?newLine": {
+          "#": "Set the newline character for emitting files.",
+          "|": [
+            {
+              "|": [
+                "_crlf",
+                "_lf"
+              ]
+            },
+            "/^(CRLF|LF|crlf|lf)$/"
+          ]
+        },
+        "?noEmit": {
+          "#": "Disable emitting file from a compilation.",
+          "@": true
+        },
+        "?noEmitHelpers": {
+          "#": "Disable generating custom helper functions like `__extends` in compiled output.",
+          "@": true
+        },
+        "?noEmitOnError": {
+          "#": "Disable emitting files if any type checking errors are reported.",
+          "@": true
+        },
+        "?noErrorTruncation": {
+          "#": "Disable truncating types in error messages.",
+          "@": true
+        },
+        "?noFallthroughCasesInSwitch": {
+          "#": "Enable error reporting for fallthrough cases in switch statements.",
+          "@": true
+        },
+        "?noImplicitAny": {
+          "#": "Enable error reporting for expressions and declarations with an implied `any` type..",
+          "@": true
+        },
+        "?noImplicitOverride": {
+          "#": "Ensure overriding members in derived classes are marked with an override modifier.",
+          "@": true
+        },
+        "?noImplicitReturns": {
+          "#": "Enable error reporting for codepaths that do not explicitly return in a function.",
+          "@": true
+        },
+        "?noImplicitThis": {
+          "#": "Enable error reporting when `this` is given the type `any`.",
+          "@": true
+        },
+        "?noImplicitUseStrict": {
+          "#": "Disable adding 'use strict' directives in emitted JavaScript files.",
+          "@": true
+        },
+        "?noLib": {
+          "#": "Disable including any library files, including the default lib.d.ts.",
+          "@": true
+        },
+        "?noPropertyAccessFromIndexSignature": {
+          "#": "Enforces using indexed accessors for keys declared using an indexed type",
+          "@": true
+        },
+        "?noResolve": {
+          "#": "Disallow `import`s, `require`s or `<reference>`s from expanding the number of files TypeScript should add to a project.",
+          "@": true
+        },
+        "?noStrictGenericChecks": {
+          "#": "Disable strict checking of generic signatures in function types.",
+          "@": true
+        },
+        "?noUncheckedIndexedAccess": {
+          "#": "Add `undefined` to a type when accessed using an index.",
+          "@": true
+        },
+        "?noUnusedLocals": {
+          "#": "Enable error reporting when a local variables aren't read.",
+          "@": true
+        },
+        "?noUnusedParameters": {
+          "#": "Raise an error when a function parameter isn't read",
+          "@": true
+        },
+        "?outDir": {
+          "#": "Specify an output folder for all emitted files.",
+          "@": ""
+        },
+        "?outFile": {
+          "#": "Specify a file that bundles all outputs into one JavaScript file. If `declaration` is true, also designates a file that bundles all .d.ts output.",
+          "@": ""
+        },
+        "?paths": {
+          "": {
+            "!": true,
+            "@": [
+              {
+                "#": "Path mapping to be computed relative to baseUrl option.",
+                "@": ""
+              }
+            ]
+          },
+          "#": "Specify a set of entries that re-map imports to additional lookup locations."
+        },
+        "?plugins": {
+          "#": "Specify a list of language service plugins to include.",
+          "@": [
+            {
+              "": "$ANY",
+              "?name": {
+                "#": "Plugin name.",
+                "@": ""
+              }
+            }
+          ]
+        },
+        "?preserveConstEnums": {
+          "#": "Disable erasing `const enum` declarations in generated code.",
+          "@": true
+        },
+        "?preserveSymlinks": {
+          "#": "Disable resolving symlinks to their realpath. This correlates to the same flag in node.",
+          "@": true
+        },
+        "?preserveValueImports": {
+          "#": "Preserve unused imported values in the JavaScript output that would otherwise be removed",
+          "@": true
+        },
+        "?preserveWatchOutput": {
+          "#": "Disable wiping the console in watch mode",
+          "@": true
+        },
+        "?pretty": {
+          "#": "Enable color and formatting in output to make compiler errors easier to read",
+          "@": true
+        },
+        "?reactNamespace": {
+          "#": "Specify the object invoked for `createElement`. This only applies when targeting `react` JSX emit.",
+          "@": ""
+        },
+        "?removeComments": {
+          "#": "Disable emitting comments.",
+          "@": true
+        },
+        "?resolveJsonModule": {
+          "#": "Enable importing .json files",
+          "@": true
+        },
+        "?resolvePackageJsonExports": {
+          "#": "Use the package.json 'exports' field when resolving package imports.",
+          "@": true
+        },
+        "?resolvePackageJsonImports": {
+          "#": "Use the package.json 'imports' field when resolving imports.",
+          "@": true
+        },
+        "?rootDir": {
+          "#": "Specify the root folder within your source files.",
+          "@": ""
+        },
+        "?rootDirs": {
+          "!": true,
+          "#": "Allow multiple folders to be treated as one when resolving modules.",
+          "@": [
+            ""
+          ]
+        },
+        "?skipDefaultLibCheck": {
+          "#": "Skip type checking .d.ts files that are included with TypeScript.",
+          "@": true
+        },
+        "?skipLibCheck": {
+          "#": "Skip type checking all .d.ts files.",
+          "@": true
+        },
+        "?sourceMap": {
+          "#": "Create source map files for emitted JavaScript files.",
+          "@": true
+        },
+        "?sourceRoot": {
+          "#": "Specify the root path for debuggers to find the reference source code.",
+          "@": ""
+        },
+        "?strict": {
+          "#": "Enable all strict type checking options.",
+          "@": true
+        },
+        "?strictBindCallApply": {
+          "#": "Check that the arguments for `bind`, `call`, and `apply` methods match the original function.",
+          "@": true
+        },
+        "?strictFunctionTypes": {
+          "#": "When assigning functions, check to ensure parameters and the return values are subtype-compatible.",
+          "@": true
+        },
+        "?strictNullChecks": {
+          "#": "When type checking, take into account `null` and `undefined`.",
+          "@": true
+        },
+        "?strictPropertyInitialization": {
+          "#": "Check for class properties that are declared but not set in the constructor.",
+          "@": true
+        },
+        "?stripInternal": {
+          "#": "Disable emitting declarations that have `@internal` in their JSDoc comments.",
+          "@": true
+        },
+        "?suppressExcessPropertyErrors": {
+          "#": "Disable reporting of excess property errors during the creation of object literals.",
+          "@": true
+        },
+        "?suppressImplicitAnyIndexErrors": {
+          "#": "Suppress `noImplicitAny` errors when indexing objects that lack index signatures.",
+          "@": true
+        },
+        "?target": {
+          "#": "Set the JavaScript language version for emitted JavaScript and include compatible library declarations.",
+          "|": [
+            {
+              "|": [
+                "_ES3",
+                "_ES5",
+                "_ES6",
+                "_ES2015",
+                "_ES2016",
+                "_ES2017",
+                "_ES2018",
+                "_ES2019",
+                "_ES2020",
+                "_ES2021",
+                "_ES2022",
+                "_ES2023",
+                "_ESNext"
+              ]
+            },
+            "/^([Ee][Ss]([356]|(20(1[56789]|2[0123]))|[Nn][Ee][Xx][Tt]))$/"
+          ]
+        },
+        "?traceResolution": {
+          "#": "Enable tracing of the name resolution process. Requires TypeScript version 2.0 or later.",
+          "@": true
+        },
+        "?tsBuildInfoFile": {
+          "#": "Specify the folder for .tsbuildinfo incremental compilation files.",
+          "@": ""
+        },
+        "?typeRoots": {
+          "!": true,
+          "#": "Specify multiple folders that act like `./node_modules/@types`.",
+          "@": [
+            ""
+          ]
+        },
+        "?types": {
+          "!": true,
+          "#": "Specify type package names to be included without being referenced in a source file.",
+          "@": [
+            ""
+          ]
+        },
+        "?useDefineForClassFields": {
+          "#": "Emit ECMAScript-standard-compliant class fields.",
+          "@": true
+        },
+        "?useUnknownInCatchVariables": {
+          "#": "Default catch clause variables as `unknown` instead of `any`.",
+          "@": true
+        },
+        "?verbatimModuleSyntax": {
+          "#": "Do not transform or elide any imports or exports not marked as type-only, ensuring they are written in the output file's format based on the 'module' setting.",
+          "@": true
+        },
+        "?watch": {
+          "#": "Watch input files.",
+          "@": true
+        },
+        "?watchDirectory": {
+          "#": "Specify the strategy for watching directories under systems that lack recursive file-watching functionality. Requires TypeScript version 3.8 or later.",
+          "|": [
+            "_useFsEvents",
+            "_fixedPollingInterval",
+            "_dynamicPriorityPolling",
+            "_fixedChunkSizePolling"
+          ]
+        },
+        "?watchFile": {
+          "#": "Specify the strategy for watching individual files. Requires TypeScript version 3.8 or later.",
+          "|": [
+            "_fixedPollingInterval",
+            "_priorityPollingInterval",
+            "_dynamicPriorityPolling",
+            "_useFsEvents",
+            "_useFsEventsOnParentDirectory",
+            "_fixedChunkSizePolling"
+          ]
+        }
+      }
+    },
+    "excludeDefinition": {
+      "": "$ANY",
+      "?exclude": {
+        "!": true,
+        "#": "Specifies a list of files to be excluded from compilation. The 'exclude' property only affects the files included via the 'include' property and not the 'files' property. Glob patterns require TypeScript version 2.0 or later.",
+        "@": [
+          ""
+        ]
+      }
+    },
+    "extendsDefinition": {
+      "": "$ANY",
+      "?extends": {
+        "#": "Path to base configuration file to inherit from (requires TypeScript version 2.1 or later), or array of base files, with the rightmost files having the greater priority (requires TypeScript version 5.0 or later).",
+        "^": [
+          {
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "@": ""
+          },
+          {
+            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+            "@": [
+              ""
+            ]
+          }
+        ]
+      }
+    },
+    "filesDefinition": {
+      "": "$ANY",
+      "?files": {
+        "!": true,
+        "#": "If no 'files' or 'include' property is present in a tsconfig.json, the compiler defaults to including all files in the containing directory and subdirectories except those specified by 'exclude'. When a 'files' property is specified, only those files and those specified by 'include' are included.",
+        "@": [
+          ""
+        ]
+      }
+    },
+    "includeDefinition": {
+      "": "$ANY",
+      "?include": {
+        "!": true,
+        "#": "Specifies a list of glob patterns that match files to be included in compilation. If no 'files' or 'include' property is present in a tsconfig.json, the compiler defaults to including all files in the containing directory and subdirectories except those specified by 'exclude'. Requires TypeScript version 2.0 or later.",
+        "@": [
+          ""
+        ]
+      }
+    },
+    "referencesDefinition": {
+      "": "$ANY",
+      "?references": {
+        "!": true,
+        "#": "Referenced projects. Requires TypeScript version 3.0 or later.",
+        "@": [
+          {
+            "": "$ANY",
+            "#": "Project reference.",
+            "?path": {
+              "#": "Path to referenced tsconfig or to folder containing tsconfig.",
+              "@": ""
+            }
+          }
+        ]
+      }
+    },
+    "typeAcquisitionDefinition": {
+      "": "$ANY",
+      "?typeAcquisition": {
+        "": "$ANY",
+        "#": "Auto type (.d.ts) acquisition options for this project. Requires TypeScript version 2.1 or later.",
+        "?enable": {
+          "#": "Enable auto type acquisition",
+          "@": true
+        },
+        "?exclude": {
+          "!": true,
+          "#": "Specifies a list of type declarations to be excluded from auto type acquisition. Ex. [\"jquery\", \"lodash\"]",
+          "@": [
+            ""
+          ]
+        },
+        "?include": {
+          "!": true,
+          "#": "Specifies a list of type declarations to be included in auto type acquisition. Ex. [\"jquery\", \"lodash\"]",
+          "@": [
+            ""
+          ]
+        }
+      }
+    },
+    "watchOptionsDefinition": {
+      "": "$ANY",
+      "?watchOptions": {
+        "": "$ANY",
+        "#": "Settings for the watch mode in TypeScript.",
+        "?excludeDirectories": {
+          "!": true,
+          "#": "Remove a list of directories from the watch process.",
+          "@": [
+            ""
+          ]
+        },
+        "?excludeFiles": {
+          "!": true,
+          "#": "Remove a list of files from the watch mode's processing.",
+          "@": [
+            ""
+          ]
+        },
+        "?fallbackPolling": {
+          "#": "Specify what approach the watcher should use if the system runs out of native file watchers.",
+          "@": ""
+        },
+        "?force": {
+          "#": "~",
+          "@": ""
+        },
+        "?synchronousWatchDirectory": {
+          "#": "Synchronously call callbacks and update the state of directory watchers on platforms that don`t support recursive watching natively.",
+          "@": true
+        },
+        "?watchDirectory": {
+          "#": "Specify how directories are watched on systems that lack recursive file-watching functionality.",
+          "@": ""
+        },
+        "?watchFile": {
+          "#": "Specify how the TypeScript watch mode works.",
+          "@": ""
+        }
+      }
+    }
+  },
+  "&": [
+    "$compilerOptionsDefinition",
+    "$compileOnSaveDefinition",
+    "$typeAcquisitionDefinition",
+    "$extendsDefinition",
+    "$watchOptionsDefinition",
+    "$buildOptionsDefinition",
+    {
+      "|": [
+        "$filesDefinition",
+        "$excludeDefinition",
+        "$includeDefinition",
+        "$referencesDefinition"
+      ]
+    }
+  ]
+}

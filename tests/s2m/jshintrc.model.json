@@ -1,0 +1,331 @@
+{
+  "": "$ANY",
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "?asi": {
+    "#": "Suppresses warnings about missing semicolons",
+    "@": true
+  },
+  "?bitwise": {
+    "#": "Prohibit the use of bitwise operators (&, |, ^, etc.)",
+    "@": true
+  },
+  "?boss": {
+    "#": "Suppresses warnings about the use of assignments in cases where comparisons are expected",
+    "@": true
+  },
+  "?browser": {
+    "#": "[Environment] Web Browser (window, document, etc)",
+    "@": true
+  },
+  "?browserify": {
+    "#": "[Environment] Browserify",
+    "@": true
+  },
+  "?couch": {
+    "#": "[Environment] CouchDB",
+    "@": true
+  },
+  "?curly": {
+    "#": "Requires you to always put curly braces around blocks in loops and conditionals",
+    "@": true
+  },
+  "?debug": {
+    "#": "Suppresses warnings about the `debugger` statements in your code",
+    "@": true
+  },
+  "?devel": {
+    "#": "[Environment] Development/debugging (alert, confirm, etc)",
+    "@": true
+  },
+  "?dojo": {
+    "#": "[Environment] Dojo Toolkit",
+    "@": true
+  },
+  "?elision": {
+    "#": "Tells JSHint that your code uses ES3 array elision elements, or empty elements",
+    "@": true
+  },
+  "?eqeqeq": {
+    "#": "Prohibits the use of `==` and `!=` in favor of `===` and `!==`",
+    "@": true
+  },
+  "?eqnull": {
+    "#": "Suppresses warnings about `== null` comparisons",
+    "@": true
+  },
+  "?esversion": {
+    "#": "The ECMAScript version to which the code must adhere",
+    "|": [
+      "=3",
+      "=5",
+      "=6",
+      "=7",
+      "=8",
+      "=9",
+      "=10",
+      "=11"
+    ]
+  },
+  "?evil": {
+    "#": "Suppresses warnings about the use of `eval`",
+    "@": true
+  },
+  "?expr": {
+    "#": "Suppresses warnings about the use of expressions where normally you would expect to see assignments or function calls",
+    "@": true
+  },
+  "?extends": {
+    "#": "Specify the path to another configuration file to use as a base, relative to the current file",
+    "@": ""
+  },
+  "?forin": {
+    "#": "Requires all `for in` loops to filter object's items with obj.hasOwnProperty()",
+    "@": true
+  },
+  "?freeze": {
+    "#": "Prohibits overwriting prototypes of native objects such as Array, Date and so on",
+    "@": true
+  },
+  "?funcscope": {
+    "#": "Suppresses warnings about declaring variables inside of control structures while accessing them later from the outside",
+    "@": true
+  },
+  "?futurehostile": {
+    "#": "Enables warnings about the use of identifiers which are defined in future versions of JavaScript",
+    "@": true
+  },
+  "?globals": {
+    "": {
+      "#": "Name of the global. Set to `true` for read/write, `false` for read-only.",
+      "@": true
+    },
+    "#": "Specify a white list of global variables that are not formally defined in the source code"
+  },
+  "?iterator": {
+    "#": "Suppresses warnings about the __iterator__ property.",
+    "@": true
+  },
+  "?jasmine": {
+    "#": "[Environment] Jasmine unit testing framework",
+    "@": true
+  },
+  "?jquery": {
+    "#": "[Environment] jQuery",
+    "@": true
+  },
+  "?lastsemic": {
+    "#": "Suppresses warnings about missing semicolons, but only when the semicolon is omitted for the last statement in a one-line block",
+    "@": true
+  },
+  "?latedef": {
+    "#": "Prohibits the use of a variable before it was defined",
+    "|": [
+      "=true",
+      "=false",
+      "_nofunc"
+    ]
+  },
+  "?leanswitch": {
+    "#": "Prohibits unnecessary clauses within `switch` statements",
+    "@": true
+  },
+  "?loopfunc": {
+    "#": "Suppresses warnings about functions inside of loops",
+    "@": true
+  },
+  "?maxcomplexity": {
+    "#": "Max cyclomatic complexity per function",
+    "|": [
+      true,
+      -1
+    ]
+  },
+  "?maxdepth": {
+    "#": "Max depth of nested blocks",
+    "|": [
+      true,
+      -1
+    ]
+  },
+  "?maxerr": {
+    "#": "Maximum amount of warnings JSHint will produce before giving up",
+    "@": -1
+  },
+  "?maxparams": {
+    "#": "Max number of formal parameters allowed per function",
+    "|": [
+      true,
+      -1
+    ]
+  },
+  "?maxstatements": {
+    "#": "Max number statements per function",
+    "|": [
+      true,
+      -1
+    ]
+  },
+  "?mocha": {
+    "#": "[Environment] Mocha unit testing framework",
+    "@": true
+  },
+  "?module": {
+    "#": "[Environment] ES6 module",
+    "@": true
+  },
+  "?mootools": {
+    "#": "[Environment] MooTools",
+    "@": true
+  },
+  "?moz": {
+    "#": "Tells JSHint that your code uses Mozilla JavaScript extensions",
+    "@": true
+  },
+  "?noarg": {
+    "#": "Prohibits the use of `arguments.caller` and `arguments.callee`",
+    "@": true
+  },
+  "?nocomma": {
+    "#": "Prohibits the use of the comma operator",
+    "@": true
+  },
+  "?node": {
+    "#": "[Environment] Node.js",
+    "@": true
+  },
+  "?nonbsp": {
+    "#": "Warns about `non-breaking whitespace` characters",
+    "@": true
+  },
+  "?nonew": {
+    "#": "Prohibits the use of constructors for side-effects (without assignment)",
+    "@": true
+  },
+  "?nonstandard": {
+    "#": "[Environment] Widely adopted globals (escape, unescape, etc)",
+    "@": true
+  },
+  "?noreturnawait": {
+    "#": "Async functions resolve on their return value. In most cases, this makes returning the result of an AwaitExpression (which is itself a Promise instance) unnecessary",
+    "@": true
+  },
+  "?notypeof": {
+    "#": "Suppresses warnings about invalid `typeof`operator values",
+    "@": true
+  },
+  "?noyield": {
+    "#": "Suppresses warnings about generator functions with no `yield` statement in them",
+    "@": true
+  },
+  "?overrides": {
+    "": {
+      "": "$ANY",
+      "#": "The path pattern to apply the given options to"
+    },
+    "#": "Specify the options that should only be applied to files matching a given path pattern"
+  },
+  "?phantom": {
+    "#": "[Environment] PhantomJS runtime environment",
+    "@": true
+  },
+  "?plusplus": {
+    "#": "Prohibits the use of `++` and `--`",
+    "@": true
+  },
+  "?proto": {
+    "#": "Suppresses warnings about the `__proto__` property",
+    "@": true
+  },
+  "?prototypejs": {
+    "#": "[Environment] Prototype JavaScript framework",
+    "@": true
+  },
+  "?regexpu": {
+    "#": "Enables warnings for regular expressions which do not include the 'u' flag",
+    "@": true
+  },
+  "?rhino": {
+    "#": "[Environment] Rhino",
+    "@": true
+  },
+  "?scripturl": {
+    "#": "Suppresses warnings about the use of script-targeted URLs",
+    "@": true
+  },
+  "?shadow": {
+    "#": "Suppresses warnings about variable shadowing. i.e. declaring a variable that had been already declared somewhere in the outer scope",
+    "|": [
+      "=true",
+      "=false",
+      "_inner",
+      "_outer"
+    ]
+  },
+  "?shelljs": {
+    "#": "[Environment] Defines globals exposed by the ShellJS library",
+    "@": true
+  },
+  "?singleGroups": {
+    "#": "Prohibits the use of the grouping operator when it is not strictly required.",
+    "@": true
+  },
+  "?strict": {
+    "#": "Requires all code to run in ES5 strict mode",
+    "|": [
+      "=true",
+      "=false",
+      "_implied",
+      "_global",
+      "_func"
+    ]
+  },
+  "?supernew": {
+    "#": "Suppresses warnings about constructions like `new function () { ... };` and `new Object;`",
+    "@": true
+  },
+  "?trailingcomma": {
+    "#": "Warns when a comma is not placed after the last element in an array or object literal",
+    "@": true
+  },
+  "?typed": {
+    "#": "[Environment] Defines globals for typed array constructors",
+    "@": true
+  },
+  "?undef": {
+    "#": "Prohibits the use of explicitly undeclared variables",
+    "@": true
+  },
+  "?unused": {
+    "#": "Warns when you define and never use your variables",
+    "|": [
+      "=true",
+      "=false",
+      "_vars",
+      "_strict"
+    ]
+  },
+  "?validthis": {
+    "#": "Suppresses warnings about possible strict violations when the code is running in strict mode and you use `this` in a non-constructor function",
+    "@": true
+  },
+  "?varstmt": {
+    "#": "Forbids the use of VariableStatements (`var`) in favor of `let` and `const`",
+    "@": true
+  },
+  "?withstmt": {
+    "#": "Suppresses warnings about the use of the `with` statement",
+    "@": true
+  },
+  "?worker": {
+    "#": "[Environment] Web Workers",
+    "@": true
+  },
+  "?wsh": {
+    "#": "[Environment] Windows Scripting Host",
+    "@": true
+  },
+  "?yui": {
+    "#": "[Environment] Yahoo User Interface",
+    "@": true
+  }
+}

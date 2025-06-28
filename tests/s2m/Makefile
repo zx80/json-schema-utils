@@ -4,7 +4,7 @@ F.model     = $(F.schema:%.schema.json=%.model.json)
 .PHONY: gen
 gen: $(F.model)
 %.model.json: %.schema.json
-	jsu-model $< > $@
+	jsu-simpler $< | jsu-model --loose > $@
 
 .PHONY: clean
 clean:

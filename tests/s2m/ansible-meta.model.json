@@ -1,0 +1,1248 @@
+{
+  "#": "https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#using-role-dependencies",
+  "$": {
+    "AIXPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_AIX"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_6.1",
+              "_7.1",
+              "_7.2",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "AlpinePlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Alpine"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "AmazonLinuxPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Amazon Linux"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_all",
+              "_1",
+              "_2",
+              "_2023"
+            ]
+          }
+        ]
+      }
+    },
+    "AmazonPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Amazon"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_2013.03",
+              "_2013.09",
+              "_2014.03",
+              "_2014.09",
+              "_2015.03",
+              "_2015.09",
+              "_2016.03",
+              "_2016.09",
+              "_2017.03",
+              "_2017.09",
+              "_2017.12",
+              "_2018.03",
+              "_Candidate",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "ArchLinuxPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_ArchLinux"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "ClearLinuxPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_ClearLinux"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "CumulusPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Cumulus"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_2.5",
+              "_3.0",
+              "_3.1",
+              "_3.2",
+              "_3.3",
+              "_3.4",
+              "_3.5",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "DebianPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Debian"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_bookworm",
+              "_bullseye",
+              "_buster",
+              "_etch",
+              "_jessie",
+              "_lenny",
+              "_sid",
+              "_squeeze",
+              "_stretch",
+              "_wheezy",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "DellOSPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_DellOS"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_10",
+              "_6",
+              "_9",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "DependencyModel": {
+      "|": [
+        {
+          "": "$ANY",
+          "?become": {
+            "@": true
+          },
+          "?name": {
+            "@": ""
+          },
+          "?scm": {
+            "|": [
+              "_hg",
+              "_git"
+            ]
+          },
+          "?src": {
+            "@": ""
+          },
+          "?tags": {
+            "|": [
+              [
+                ""
+              ],
+              ""
+            ]
+          },
+          "?vars": {
+            "": "$ANY"
+          },
+          "?version": {
+            "@": ""
+          },
+          "?when": {
+            "@": "$complex_conditional"
+          },
+          "_role": {
+            "@": ""
+          }
+        },
+        {
+          "": "$ANY",
+          "?become": {
+            "@": true
+          },
+          "?name": {
+            "@": ""
+          },
+          "?role": {
+            "@": ""
+          },
+          "?scm": {
+            "|": [
+              "_hg",
+              "_git"
+            ]
+          },
+          "?tags": {
+            "|": [
+              [
+                ""
+              ],
+              ""
+            ]
+          },
+          "?vars": {
+            "": "$ANY"
+          },
+          "?version": {
+            "@": ""
+          },
+          "?when": {
+            "@": "$complex_conditional"
+          },
+          "_src": {
+            "@": ""
+          }
+        },
+        {
+          "": "$ANY",
+          "?become": {
+            "@": true
+          },
+          "?role": {
+            "@": ""
+          },
+          "?scm": {
+            "|": [
+              "_hg",
+              "_git"
+            ]
+          },
+          "?src": {
+            "@": ""
+          },
+          "?tags": {
+            "|": [
+              [
+                ""
+              ],
+              ""
+            ]
+          },
+          "?vars": {
+            "": "$ANY"
+          },
+          "?version": {
+            "@": ""
+          },
+          "?when": {
+            "@": "$complex_conditional"
+          },
+          "_name": {
+            "@": ""
+          }
+        }
+      ]
+    },
+    "DevuanPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Devuan"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_ascii",
+              "_beowulf",
+              "_ceres",
+              "_jessie",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "DragonFlyBSDPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_DragonFlyBSD"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_5.2",
+              "_5.4",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "ELPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_EL"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_5",
+              "_6",
+              "_7",
+              "_8",
+              "_9",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "FedoraPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Fedora"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_16",
+              "_17",
+              "_18",
+              "_19",
+              "_20",
+              "_21",
+              "_22",
+              "_23",
+              "_24",
+              "_25",
+              "_26",
+              "_27",
+              "_28",
+              "_29",
+              "_30",
+              "_31",
+              "_32",
+              "_33",
+              "_34",
+              "_35",
+              "_36",
+              "_37",
+              "_38",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "FreeBSDPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_FreeBSD"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_10.0",
+              "_10.1",
+              "_10.2",
+              "_10.3",
+              "_10.4",
+              "_11.0",
+              "_11.1",
+              "_11.2",
+              "_11.3",
+              "_11.4",
+              "_12.0",
+              "_12.1",
+              "_12.2",
+              "_13.0",
+              "_13.1",
+              "_13.2",
+              "_14.0",
+              "_8.0",
+              "_8.1",
+              "_8.2",
+              "_8.3",
+              "_8.4",
+              "_9.0",
+              "_9.1",
+              "_9.2",
+              "_9.3",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "GalaxyInfoModel": {
+      "&": [
+        {
+          "&": [
+            {
+              "&": [
+                "$ANY",
+                {
+                  "|": [
+                    {
+                      "&": [
+                        {
+                          "": "$ANY",
+                          "?standalone": "=true"
+                        },
+                        {
+                          "": "$ANY",
+                          "_author": "$ANY",
+                          "_description": "$ANY",
+                          "_license": "$ANY",
+                          "_min_ansible_version": "$ANY"
+                        }
+                      ]
+                    },
+                    {
+                      "&": [
+                        {
+                          "^": [
+                            "$ANY",
+                            {
+                              "": "$ANY",
+                              "?standalone": "=true"
+                            }
+                          ]
+                        },
+                        "$ANY"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                "$ANY",
+                {
+                  "|": [
+                    {
+                      "&": [
+                        {
+                          "": "$ANY",
+                          "?standalone": "=false"
+                        },
+                        {
+                          "&": [
+                            {
+                              "^": [
+                                "$ANY",
+                                {
+                                  "": "$ANY",
+                                  "_cloud_platforms": "$ANY",
+                                  "_galaxy_tags": "$ANY",
+                                  "_min_ansible_version": "$ANY",
+                                  "_namespace": "$ANY",
+                                  "_platforms": "$ANY",
+                                  "_role_name": "$ANY",
+                                  "_video_links": "$ANY"
+                                }
+                              ]
+                            },
+                            {
+                              "": "$ANY",
+                              "_description": "$ANY"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "&": [
+                        {
+                          "^": [
+                            "$ANY",
+                            {
+                              "": "$ANY",
+                              "?standalone": "=false"
+                            }
+                          ]
+                        },
+                        "$ANY"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "?author": {
+            "@": ""
+          },
+          "?cloud_platforms": {
+            "@": "$ANY"
+          },
+          "?company": {
+            "@": ""
+          },
+          "?description": {
+            "@": ""
+          },
+          "?galaxy_tags": {
+            "@": [
+              ""
+            ]
+          },
+          "?github_branch": {
+            "@": ""
+          },
+          "?issue_tracker_url": {
+            "@": ""
+          },
+          "?license": {
+            "@": ""
+          },
+          "?min_ansible_container_version": {
+            "@": ""
+          },
+          "?min_ansible_version": {
+            "@": ""
+          },
+          "?namespace": {
+            ">=": 2,
+            "@": "/^[a-z][a-z0-9_]+$/"
+          },
+          "?platforms": "$platforms",
+          "?role_name": {
+            ">=": 2,
+            "@": "/^[a-z][a-z0-9_]+$/"
+          },
+          "?standalone": {
+            "#": "Set to true for old standalone roles, or false for new collection roles.",
+            "@": true
+          },
+          "?video_links": {
+            "@": [
+              "$ANY"
+            ]
+          }
+        }
+      ]
+    },
+    "GenericBSDPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_GenericBSD"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "GenericLinuxPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_GenericLinux"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "GenericUNIXPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_GenericUNIX"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "GentooPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Gentoo"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "HardenedBSDPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_HardenedBSD"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_10",
+              "_11",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "IOSPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_IOS"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "JunosPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Junos"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "KaliPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Kali"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_2.0",
+              "_2016",
+              "_2017",
+              "_2018",
+              "_2019",
+              "_2020",
+              "_2021",
+              "_2022",
+              "_2023",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "MacOSXPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_MacOSX"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_10.10",
+              "_10.11",
+              "_10.12",
+              "_10.13",
+              "_10.14",
+              "_10.15",
+              "_10.7",
+              "_10.8",
+              "_10.9",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "MageiaPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Mageia"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_7",
+              "_8",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "NXOSPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_NXOS"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "NetBSDPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_NetBSD"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_8.0",
+              "_8.1",
+              "_8.2",
+              "_9.0",
+              "_9.1",
+              "_9.2",
+              "_9.3",
+              "_10.0",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "OpenBSDPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_OpenBSD"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_5.6",
+              "_5.7",
+              "_5.8",
+              "_5.9",
+              "_6.0",
+              "_6.1",
+              "_6.2",
+              "_6.3",
+              "_6.4",
+              "_6.5",
+              "_6.6",
+              "_6.7",
+              "_6.8",
+              "_6.9",
+              "_7.0",
+              "_7.1",
+              "_7.2",
+              "_7.3",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "OpenWrtPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_OpenWrt"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_17.01",
+              "_18.06",
+              "_19.07",
+              "_21.02",
+              "_22.03",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "OracleLinuxPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_OracleLinux"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_7.0",
+              "_7.1",
+              "_7.2",
+              "_7.3",
+              "_7.4",
+              "_7.5",
+              "_7.6",
+              "_7.7",
+              "_7.8",
+              "_7.9",
+              "_8.0",
+              "_8.1",
+              "_8.2",
+              "_8.3",
+              "_8.4",
+              "_8.5",
+              "_8.6",
+              "_8.7",
+              "_8.8",
+              "_9.0",
+              "_9.1",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "PAN-OSPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_PAN-OS"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_7.1",
+              "_8.0",
+              "_8.1",
+              "_9.0",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "SLESPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_SLES"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_10SP3",
+              "_10SP4",
+              "_11",
+              "_11SP1",
+              "_11SP2",
+              "_11SP3",
+              "_11SP4",
+              "_12",
+              "_12SP1",
+              "_12SP2",
+              "_12SP3",
+              "_12SP4",
+              "_12SP5",
+              "_15",
+              "_15SP1",
+              "_15SP2",
+              "_15SP3",
+              "_15SP4",
+              "_15SP5",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "SmartOSPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_SmartOS"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "SolarisPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Solaris"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_10",
+              "_11.0",
+              "_11.1",
+              "_11.2",
+              "_11.3",
+              "_11.4",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "SynologyPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Synology"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_6.0",
+              "_6.1",
+              "_6.2",
+              "_7.0",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "TMOSPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_TMOS"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_12.1",
+              "_13.0",
+              "_13.1",
+              "_14.0",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "UbuntuPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Ubuntu"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_artful",
+              "_bionic",
+              "_cosmic",
+              "_cuttlefish",
+              "_disco",
+              "_eoan",
+              "_focal",
+              "_groovy",
+              "_hirsute",
+              "_impish",
+              "_jammy",
+              "_lucid",
+              "_maverick",
+              "_natty",
+              "_oneiric",
+              "_precise",
+              "_quantal",
+              "_raring",
+              "_saucy",
+              "_trusty",
+              "_utopic",
+              "_vivid",
+              "_wily",
+              "_xenial",
+              "_yakkety",
+              "_zesty",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "Void_LinuxPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Void Linux"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "WindowsPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_Windows"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_2008R2",
+              "_2008x64",
+              "_2008x86",
+              "_2012",
+              "_2012R2",
+              "_2016",
+              "_2019",
+              "_2022",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "aosPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_aos"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "collections": {
+      "@": [
+        {
+          "@": "/^[a-z_]+\\.[a-z_]+$/"
+        }
+      ]
+    },
+    "complex_conditional": {
+      "^": [
+        true,
+        "",
+        [
+          ""
+        ]
+      ]
+    },
+    "eosPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_eos"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "macOSPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_macOS"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_Big-Sur",
+              "_Catalina",
+              "_High-Sierra",
+              "_Mojave",
+              "_Monterey",
+              "_Sierra",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "opensusePlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_opensuse"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_12.1",
+              "_12.2",
+              "_12.3",
+              "_13.1",
+              "_13.2",
+              "_15.0",
+              "_15.1",
+              "_15.2",
+              "_15.3",
+              "_15.4",
+              "_15.5",
+              "_42.1",
+              "_42.2",
+              "_42.3",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "os10PlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_os10"
+      },
+      "?versions": {
+        "@": [
+          "_all"
+        ]
+      }
+    },
+    "platforms": {
+      "@": [
+        {
+          "|": [
+            "$AIXPlatformModel",
+            "$AlpinePlatformModel",
+            "$AmazonPlatformModel",
+            "$AmazonLinuxPlatformModel",
+            "$aosPlatformModel",
+            "$ArchLinuxPlatformModel",
+            "$ClearLinuxPlatformModel",
+            "$CumulusPlatformModel",
+            "$NetBSDPlatformModel",
+            "$DebianPlatformModel",
+            "$DellOSPlatformModel",
+            "$DevuanPlatformModel",
+            "$DragonFlyBSDPlatformModel",
+            "$ELPlatformModel",
+            "$eosPlatformModel",
+            "$FedoraPlatformModel",
+            "$FreeBSDPlatformModel",
+            "$GenericBSDPlatformModel",
+            "$GenericLinuxPlatformModel",
+            "$GenericUNIXPlatformModel",
+            "$GentooPlatformModel",
+            "$HardenedBSDPlatformModel",
+            "$IOSPlatformModel",
+            "$JunosPlatformModel",
+            "$KaliPlatformModel",
+            "$macOSPlatformModel",
+            "$MacOSXPlatformModel",
+            "$MageiaPlatformModel",
+            "$NXOSPlatformModel",
+            "$OpenBSDPlatformModel",
+            "$opensusePlatformModel",
+            "$OpenWrtPlatformModel",
+            "$OracleLinuxPlatformModel",
+            "$os10PlatformModel",
+            "$PAN-OSPlatformModel",
+            "$SLESPlatformModel",
+            "$SmartOSPlatformModel",
+            "$SolarisPlatformModel",
+            "$SynologyPlatformModel",
+            "$TMOSPlatformModel",
+            "$UbuntuPlatformModel",
+            "$vCenterPlatformModel",
+            "$Void_LinuxPlatformModel",
+            "$vSpherePlatformModel",
+            "$WindowsPlatformModel"
+          ]
+        }
+      ]
+    },
+    "vCenterPlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_vCenter"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_5.5",
+              "_6.0",
+              "_6.5",
+              "_6.7",
+              "_7.0",
+              "_all"
+            ]
+          }
+        ]
+      }
+    },
+    "vSpherePlatformModel": {
+      "": "$ANY",
+      "?name": {
+        "@": "_vSphere"
+      },
+      "?versions": {
+        "@": [
+          {
+            "|": [
+              "_5.5",
+              "_6.0",
+              "_6.5",
+              "_6.7",
+              "_7.0",
+              "_all"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "|": [
+    {
+      "?allow_duplicates": {
+        "@": true
+      },
+      "?collections": "$collections",
+      "?dependencies": {
+        "@": [
+          "$DependencyModel"
+        ]
+      },
+      "?galaxy_info": "$GalaxyInfoModel"
+    },
+    null
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "": "$ANY",
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "$": {
+    "contactInfo": {
+      "": {
+        "#": "Custom contact or profile informations",
+        "@": ""
+      },
+      "?email": {
+        "#": "Contact e-mail pertaining to the mod",
+        "@": ""
+      },
+      "?homepage": {
+        "#": "Project or user homepage. Must be a valid HTTP/HTTPS address",
+        "@": ""
+      },
+      "?irc": {
+        "#": "IRC channel pertaining to the mod. Must be of a valid URL format",
+        "@": ""
+      },
+      "?issues": {
+        "#": "Project issue tracker. Must be a valid HTTP/HTTPS address",
+        "@": ""
+      },
+      "?sources": {
+        "#": "Project source code repository. Must be a valid URL",
+        "@": ""
+      }
+    },
+    "entrypoint": {
+      "^": [
+        {
+          "": "$ANY",
+          "?adapter": {
+            "#": "The language adapter to use",
+            "@": ""
+          },
+          "_value": {
+            "#": "The entrypoint function or class",
+            "@": ""
+          }
+        },
+        {
+          "#": "The entrypoint function or class",
+          "@": ""
+        }
+      ]
+    },
+    "environment": {
+      "#": "The environment where this mod will be loaded",
+      "|": [
+        "_*",
+        "_client",
+        "_server"
+      ]
+    },
+    "nestedJar": {
+      "": "$ANY",
+      "_file": {
+        "#": "A string value pointing to a path from the root of the JAR to a nested JAR which should be loaded alongside the outer mod JAR",
+        "@": ""
+      }
+    },
+    "person": {
+      "^": [
+        {
+          "#": "The name of the person",
+          "@": ""
+        },
+        {
+          "": "$ANY",
+          "?contact": {
+            "#": "Contact information for the person",
+            "@": "$contactInfo"
+          },
+          "_name": {
+            "#": "The name of the person",
+            "@": ""
+          }
+        }
+      ]
+    },
+    "versionRange": {
+      "#": "A version range that matches versions. The following variants are supported:\n\n- A single asterisk matches any version.\n- Ranges following NPM semver specification including >=, >, =, <, <=, X-ranges (1.x), tilde ranges (fixed minor) and caret ranges (fixed major).\n- Additionally exact string matches will always be performed.",
+      "@": ""
+    },
+    "versionRanges": {
+      "^": [
+        "$versionRange",
+        {
+          "#": "Multiple version ranges that are combined with an \"OR\" relationship - only one of the ranges needs to match",
+          "@": [
+            "$versionRange"
+          ]
+        }
+      ]
+    }
+  },
+  "?accessWidener": {
+    "#": "Path to an access widener definition file",
+    "@": ""
+  },
+  "?authors": {
+    "#": "The direct authorship information",
+    "@": [
+      "$person"
+    ]
+  },
+  "?breaks": {
+    "": "$versionRanges",
+    "#": "id\u2192versionRange map for dependencies. A successful match causes a hard failure"
+  },
+  "?conflicts": {
+    "": "$versionRanges",
+    "#": "id\u2192versionRange map for dependencies. A successful match causes a soft failure (warning)"
+  },
+  "?contact": {
+    "#": "Contact information for the mod",
+    "@": "$contactInfo"
+  },
+  "?contributors": {
+    "#": "Contributors to this mod",
+    "@": [
+      "$person"
+    ]
+  },
+  "?custom": {
+    "": "$ANY",
+    "#": "A map of namespace:id\u2192value for custom data fields."
+  },
+  "?depends": {
+    "": "$versionRanges",
+    "#": "id\u2192versionRange map for dependencies. Failure to meet these causes a hard failure"
+  },
+  "?description": {
+    "#": "Description of the mod",
+    "@": ""
+  },
+  "?entrypoints": {
+    "": {
+      "#": "Custom mod entrypoints",
+      "@": [
+        "$entrypoint"
+      ]
+    },
+    "#": "The entrypoints used by this mod",
+    "?client": {
+      "#": "The entrypoint for the client environment (classes must implement ClientModInitializer)",
+      "@": [
+        "$entrypoint"
+      ]
+    },
+    "?fabric-datagen": {
+      "#": "The entrypoint for the data generator environment (classes must implement DataGeneratorEntrypoint)",
+      "@": [
+        "$entrypoint"
+      ]
+    },
+    "?fabric-gametest": {
+      "#": "The entrypoint for the Game Test environment (classes must implement FabricGameTest)",
+      "@": [
+        "$entrypoint"
+      ]
+    },
+    "?main": {
+      "#": "The entrypoint for all environments (classes must implement ModInitializer)",
+      "@": [
+        "$entrypoint"
+      ]
+    },
+    "?preLaunch": {
+      "#": "The entrypoint called just before the game instance is created (classes must implement PreLaunchEntrypoint)",
+      "@": [
+        "$entrypoint"
+      ]
+    },
+    "?server": {
+      "#": "The entrypoint for the server environment (classes must implement DedicatedServerModInitializer)",
+      "@": [
+        "$entrypoint"
+      ]
+    }
+  },
+  "?environment": "$environment",
+  "?icon": {
+    "^": [
+      {
+        "#": "The path to a single .PNG file from the root of the JAR",
+        "@": ""
+      },
+      {
+        "": "$ANY",
+        "#": "A string\u2192string dictionary, where the keys conform to widths of each PNG file, and the values are said files' paths",
+        "/^[1-9][0-9]*$/": {
+          "#": "The path to a single .PNG file from the root of the JAR",
+          "@": ""
+        }
+      }
+    ]
+  },
+  "?jars": {
+    "#": "Contains an array of nestedJar objects",
+    "@": [
+      "$nestedJar"
+    ]
+  },
+  "?languageAdapters": {
+    "": "",
+    "#": "A string\u2192string dictionary, connecting namespaces to LanguageAdapter implementations"
+  },
+  "?license": {
+    "#": "The license the mod uses",
+    "^": [
+      "",
+      [
+        ""
+      ]
+    ]
+  },
+  "?mixins": [
+    {
+      "^": [
+        {
+          "#": "Path to mixin file from the root of the JAR",
+          "@": ""
+        },
+        {
+          "": "$ANY",
+          "?config": {
+            "#": "Path to mixin file from the root of the JAR",
+            "@": ""
+          },
+          "?environment": "$environment"
+        }
+      ]
+    }
+  ],
+  "?name": {
+    "#": "Name of the mod",
+    "@": ""
+  },
+  "?recommends": {
+    "": "$versionRanges",
+    "#": "id\u2192versionRange map for dependencies. Failure to meet these causes a soft failure (warning)"
+  },
+  "?suggests": {
+    "": "$versionRanges",
+    "#": "id\u2192versionRange map for dependencies. Are not matched and are mainly used as metadata"
+  },
+  "_id": {
+    "#": "The mod identifier",
+    "@": "/^[a-z][a-z0-9-_]{1,63}$/"
+  },
+  "_schemaVersion": {
+    "#": "The version of the fabric.mod.json schema",
+    "@": "=1"
+  },
+  "_version": {
+    "#": "The mod version",
+    "@": ""
+  }
+}

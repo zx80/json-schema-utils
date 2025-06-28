@@ -332,7 +332,7 @@ def simplifySchema(schema: JsonSchema, url: str):
 # move definitions at the root and resolve ids
 #
 
-def defId(schema) -> tuple[str|None, str|None]:
+def _defId(schema) -> tuple[str|None, str|None]:
     """return name of definitions and id properties."""
     if not isinstance(schema, dict):
         return (None, None)
@@ -344,24 +344,40 @@ def defId(schema) -> tuple[str|None, str|None]:
           None
     return (defn, idn)
 
-SUBCOUNT: int = 0
+_SUBCOUNT: int = 0
 
-# TODO handle definitions anywhere
 # TODO handle arbitrary path references
 
-def scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
+def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
                  moved: dict[str, str], ids: dict[str, str], path: list[str|int] = []):
-    """Move definitions/$defs to root schema based on id/$id with disambiguation"""
 
-    defn, idn = defId(schema)
+    log.debug(f"handing $ids/$defs at {path}")
+
+    global _SUBCOUNT
+    defn, idn = _defId(schema)
 
     if defn is None:
         return
 
-    todo = []
+    if path and defn and not idn:
+        # nested definitions, move them up
+        prefix = f"_defs_{_SUBCOUNT}_"
+        _SUBCOUNT += 1
 
-    # if we have an id, we move definitions to defs and rewrite refs
-    if idn and defn and path:
+        for name, sschema in schema[defn].items():
+            nname = rootdef + "/" + prefix + name
+            npath = f"#/{'/'.join(path)}/{defn}/{name}"
+            sschema["$comment"] = f"origin: {npath}"
+            moved[npath] = nname
+            defs[nname] = sschema
+
+        schema["$comment"] = f"{defn} {_SUBCOUNT} moved"
+
+        del schema[defn]
+
+    elif path and defn and idn:
+        # if we have a nested id, we move definitions to defs and rewrite local refs
+
         sid = schema[idn]
         assert isinstance(sid, str)
 
@@ -369,26 +385,16 @@ def scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
         if "id" in schema:  # both $id and id…
             del schema["id"]
 
-        global SUBCOUNT
-
         # keep track of changes
-        schema["$comment"] = f"{idn} {SUBCOUNT}: {sid}"
+        schema["$comment"] = f"{idn} {_SUBCOUNT}: {sid}"
 
-        prefix = f"_subs_{SUBCOUNT}_"
-        SUBCOUNT += 1
+        prefix = f"_id_{_SUBCOUNT}_"
+        _SUBCOUNT += 1
 
         # to remap long references later
         assert sid not in moved
         moved[sid + "#/" + defn + "/"] = rootdef + "/" + prefix
         ids[sid] = "#/" + "/".join(path)
-
-        def fltRef(schema, lpath):
-            if isinstance(schema, dict):
-                if "$id" in schema or "id" in schema:
-                    todo.append((schema, path))
-                    return False
-                return True
-            return False
 
         def rwtRef(schema, lpath):
             if isinstance(schema, dict) and "$ref" in schema:
@@ -403,39 +409,57 @@ def scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
         for name, sschem in schema[defn].items():
             pname = prefix + name
             assert pname not in defs
-            defs[pname] = recurseSchema(sschem, "", flt=fltRef, rwt=rwtRef)
+            defs[pname] = recurseSchema(sschem, "", rwt=rwtRef)
 
         del schema[defn]
 
-        recurseSchema(schema, "", flt=fltRef, rwt=rwtRef)
+        recurseSchema(schema, "", rwt=rwtRef)
 
-    if not path:
-        for name, s in schema[defn].items():
-            todo.append((s, path + [ defn, name ]))
-
-    # recurse
-    while todo:
-        s, p = todo.pop()
-        scopeSubDefs(s, defs, rootdef, moved, ids, p)
 
 def scopeDefs(schema: JsonSchema):
-    defn, idn = defId(schema)
+    """Move internal definitions/$defs to root schema, possibly handing nested $id"""
+
+    # collect $id/id and $defs/definitions
+    todo_ids, todo_defs = [], []
+
+    def fltDefs(schema, path):
+        if path and isinstance(schema, dict):
+            defn, idn = _defId(schema)
+            if idn is not None:
+                todo_ids.append((schema, path))
+            elif defn is not None:
+                todo_defs.append((schema, path))
+        return True
+
+    recurseSchema(schema, "", flt=fltDefs)
+
+    if not todo_ids and not todo_defs:
+        return
+
+    # ensure definitions root
+    defn, idn = _defId(schema)
 
     if defn is None:
-        return
+        defn = "$defs"
+        schema[defn] = {}
 
     # do internal renamings
     rootdef, moved, ids = f"#/{defn}", {}, {}
 
-    scopeSubDefs(schema, schema[defn], rootdef, moved, ids, [])
+    for s, p in todo_ids:
+        _scopeSubDefs(s, schema[defn], rootdef, moved, ids, p)
 
-    # log.info(f"ids={ids}")
+    for s, p in todo_defs:
+        _scopeSubDefs(s, schema[defn], rootdef, moved, ids, p)
 
-    # do full url renamings
+    # do full url renamings and other references renamings
     def rwtGref(schema, path):
         if isinstance(schema, dict) and "$ref" in schema:
             dest = schema["$ref"]
-            if dest and dest[0] != "#":
+            assert isinstance(dest, str), f"str $ref at {path}"
+            if dest in moved:
+                schema["$ref"] = moved[dest]
+            elif dest and dest[0] != "#":
                 # inefficient
                 for old, new in moved.items():
                     if dest.startswith(old):

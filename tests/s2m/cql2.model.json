@@ -1,0 +1,672 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "$": {
+    "accenti": {
+      "": "$ANY",
+      "_args": {
+        "=": 1,
+        "@": [
+          {
+            "^": [
+              "$characterExpression",
+              "$propertyRef",
+              "$functionRef"
+            ]
+          }
+        ]
+      },
+      "_op": "_accenti"
+    },
+    "andOrExpression": {
+      "": "$ANY",
+      "_args": {
+        ">=": 2,
+        "@": [
+          "$#"
+        ]
+      },
+      "_op": {
+        "|": [
+          "_and",
+          "_or"
+        ]
+      }
+    },
+    "arithmeticExpression": {
+      "": "$ANY",
+      "_args": "$arithmeticOperands",
+      "_op": {
+        "|": [
+          "_+",
+          "_-",
+          "_*",
+          "_/",
+          "_^",
+          "_%",
+          "_div"
+        ]
+      }
+    },
+    "arithmeticOperands": {
+      "=": 2,
+      "@": [
+        {
+          "^": [
+            "$arithmeticExpression",
+            "$propertyRef",
+            "$functionRef",
+            -1.0
+          ]
+        }
+      ]
+    },
+    "arrayExpression": [
+      {
+        "^": [
+          "$characterExpression",
+          "$numericExpression",
+          "$#",
+          "$spatialInstance",
+          "$temporalInstance",
+          "$arrayExpression",
+          "$propertyRef"
+        ]
+      }
+    ],
+    "arrayOperands": {
+      "=": 2,
+      "@": [
+        {
+          "^": [
+            "$arrayExpression",
+            "$propertyRef",
+            "$functionRef"
+          ]
+        }
+      ]
+    },
+    "arrayPredicate": {
+      "": "$ANY",
+      "_args": "$arrayOperands",
+      "_op": {
+        "|": [
+          "_a_containedBy",
+          "_a_contains",
+          "_a_equals",
+          "_a_overlaps"
+        ]
+      }
+    },
+    "bbox": {
+      "&": [
+        {
+          "^": [
+            {
+              "=": 4,
+              "@": [
+                "$ANY"
+              ]
+            },
+            {
+              "=": 6,
+              "@": [
+                "$ANY"
+              ]
+            }
+          ]
+        },
+        [
+          -1.0
+        ]
+      ]
+    },
+    "bboxLiteral": {
+      "": "$ANY",
+      "_bbox": "$bbox"
+    },
+    "binaryComparisonPredicate": {
+      "": "$ANY",
+      "_args": "$scalarOperands",
+      "_op": {
+        "|": [
+          "_=",
+          "_<>",
+          "_<",
+          "_>",
+          "_<=",
+          "_>="
+        ]
+      }
+    },
+    "casei": {
+      "": "$ANY",
+      "_args": {
+        "=": 1,
+        "@": [
+          {
+            "^": [
+              "$characterExpression",
+              "$propertyRef",
+              "$functionRef"
+            ]
+          }
+        ]
+      },
+      "_op": "_casei"
+    },
+    "characterExpression": {
+      "^": [
+        "$casei",
+        "$accenti",
+        ""
+      ]
+    },
+    "comparisonPredicate": {
+      "^": [
+        "$binaryComparisonPredicate",
+        "$isLikePredicate",
+        "$isBetweenPredicate",
+        "$isInListPredicate",
+        "$isNullPredicate"
+      ]
+    },
+    "dateInstant": {
+      "": "$ANY",
+      "_date": "$dateString"
+    },
+    "dateString": "/^\\d{4}-\\d{2}-\\d{2}$/",
+    "functionRef": {
+      "": "$ANY",
+      "_args": [
+        {
+          "^": [
+            "$characterExpression",
+            "$numericExpression",
+            "$#",
+            "$spatialInstance",
+            "$temporalInstance",
+            "$arrayExpression",
+            "$propertyRef"
+          ]
+        }
+      ],
+      "_op": {
+        "&": [
+          {
+            "^": [
+              "$ANY",
+              {
+                "|": [
+                  "_and",
+                  "_or",
+                  "_not",
+                  "_=",
+                  "_<>",
+                  "_<",
+                  "_>",
+                  "_<=",
+                  "_>=",
+                  "_like",
+                  "_between",
+                  "_in",
+                  "_isNull",
+                  "_casei",
+                  "_accenti",
+                  "_s_contains",
+                  "_s_crosses",
+                  "_s_disjoint",
+                  "_s_equals",
+                  "_s_intersects",
+                  "_s_overlaps",
+                  "_s_touches",
+                  "_s_within",
+                  "_t_after",
+                  "_t_before",
+                  "_t_contains",
+                  "_t_disjoint",
+                  "_t_during",
+                  "_t_equals",
+                  "_t_finishedBy",
+                  "_t_finishes",
+                  "_t_intersects",
+                  "_t_meets",
+                  "_t_metBy",
+                  "_t_overlappedBy",
+                  "_t_overlaps",
+                  "_t_startedBy",
+                  "_t_starts",
+                  "_a_containedBy",
+                  "_a_contains",
+                  "_a_equals",
+                  "_a_overlaps",
+                  "_+",
+                  "_-",
+                  "_*",
+                  "_/",
+                  "_^",
+                  "_%",
+                  "_div"
+                ]
+              }
+            ]
+          },
+          ""
+        ]
+      }
+    },
+    "geometryLiteral": {
+      "^": [
+        "$point",
+        "$linestring",
+        "$polygon",
+        "$multipoint",
+        "$multilinestring",
+        "$multipolygon",
+        "$geometrycollection"
+      ]
+    },
+    "geometrycollection": {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "_geometries": {
+        ">=": 2,
+        "@": [
+          {
+            "^": [
+              "$point",
+              "$linestring",
+              "$polygon",
+              "$multipoint",
+              "$multilinestring",
+              "$multipolygon"
+            ]
+          }
+        ]
+      },
+      "_type": "_GeometryCollection"
+    },
+    "inListOperands": {
+      "=": 2,
+      "@": [
+        "$scalarExpression",
+        [
+          "$scalarExpression"
+        ],
+        "$ANY"
+      ]
+    },
+    "instantInstance": {
+      "^": [
+        "$dateInstant",
+        "$timestampInstant"
+      ]
+    },
+    "instantString": {
+      "^": [
+        "$dateString",
+        "$timestampString"
+      ]
+    },
+    "intervalArray": {
+      "=": 2,
+      "@": [
+        {
+          "^": [
+            "$instantString",
+            "_..",
+            "$propertyRef",
+            "$functionRef"
+          ]
+        }
+      ]
+    },
+    "intervalInstance": {
+      "": "$ANY",
+      "_interval": "$intervalArray"
+    },
+    "isBetweenOperands": {
+      "=": 3,
+      "@": [
+        {
+          "^": [
+            "$numericExpression",
+            "$propertyRef",
+            "$functionRef"
+          ]
+        }
+      ]
+    },
+    "isBetweenPredicate": {
+      "": "$ANY",
+      "_args": "$isBetweenOperands",
+      "_op": "_between"
+    },
+    "isInListPredicate": {
+      "": "$ANY",
+      "_args": "$inListOperands",
+      "_op": "_in"
+    },
+    "isLikeOperands": {
+      "=": 2,
+      "@": [
+        {
+          "^": [
+            "$characterExpression",
+            "$propertyRef",
+            "$functionRef"
+          ]
+        },
+        "$patternExpression",
+        "$ANY"
+      ]
+    },
+    "isLikePredicate": {
+      "": "$ANY",
+      "_args": "$isLikeOperands",
+      "_op": "_like"
+    },
+    "isNullOperand": {
+      "=": 1,
+      "@": [
+        {
+          "^": [
+            "$characterExpression",
+            "$numericExpression",
+            "$#",
+            "$spatialInstance",
+            "$temporalInstance",
+            "$propertyRef"
+          ]
+        }
+      ]
+    },
+    "isNullPredicate": {
+      "": "$ANY",
+      "_args": "$isNullOperand",
+      "_op": "_isNull"
+    },
+    "linestring": {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": {
+        ">=": 2,
+        "@": [
+          {
+            ">=": 2,
+            "@": [
+              -1.0
+            ]
+          }
+        ]
+      },
+      "_type": "_LineString"
+    },
+    "multilinestring": {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": [
+        {
+          ">=": 2,
+          "@": [
+            {
+              ">=": 2,
+              "@": [
+                -1.0
+              ]
+            }
+          ]
+        }
+      ],
+      "_type": "_MultiLineString"
+    },
+    "multipoint": {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": [
+        {
+          ">=": 2,
+          "@": [
+            -1.0
+          ]
+        }
+      ],
+      "_type": "_MultiPoint"
+    },
+    "multipolygon": {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": [
+        [
+          {
+            ">=": 4,
+            "@": [
+              {
+                ">=": 2,
+                "@": [
+                  -1.0
+                ]
+              }
+            ]
+          }
+        ]
+      ],
+      "_type": "_MultiPolygon"
+    },
+    "notExpression": {
+      "": "$ANY",
+      "_args": {
+        "=": 1,
+        "@": [
+          "$#"
+        ]
+      },
+      "_op": "_not"
+    },
+    "numericExpression": {
+      "^": [
+        "$arithmeticExpression",
+        -1.0
+      ]
+    },
+    "patternExpression": {
+      "^": [
+        {
+          "": "$ANY",
+          "_args": {
+            "=": 1,
+            "@": [
+              "$patternExpression"
+            ]
+          },
+          "_op": "_casei"
+        },
+        {
+          "": "$ANY",
+          "_args": {
+            "=": 1,
+            "@": [
+              "$patternExpression"
+            ]
+          },
+          "_op": "_accenti"
+        },
+        ""
+      ]
+    },
+    "point": {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": {
+        ">=": 2,
+        "@": [
+          -1.0
+        ]
+      },
+      "_type": "_Point"
+    },
+    "polygon": {
+      "": "$ANY",
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?bbox": {
+        ">=": 4,
+        "@": [
+          -1.0
+        ]
+      },
+      "_coordinates": [
+        {
+          ">=": 4,
+          "@": [
+            {
+              ">=": 2,
+              "@": [
+                -1.0
+              ]
+            }
+          ]
+        }
+      ],
+      "_type": "_Polygon"
+    },
+    "propertyRef": {
+      "": "$ANY",
+      "_property": ""
+    },
+    "scalarExpression": {
+      "^": [
+        "$characterExpression",
+        "$numericExpression",
+        true,
+        "$instantInstance",
+        "$functionRef",
+        "$propertyRef"
+      ]
+    },
+    "scalarOperands": {
+      "=": 2,
+      "@": [
+        "$scalarExpression"
+      ]
+    },
+    "spatialInstance": {
+      "^": [
+        "$geometryLiteral",
+        "$bboxLiteral"
+      ]
+    },
+    "spatialOperands": {
+      "=": 2,
+      "@": [
+        {
+          "^": [
+            "$spatialInstance",
+            "$propertyRef",
+            "$functionRef"
+          ]
+        }
+      ]
+    },
+    "spatialPredicate": {
+      "": "$ANY",
+      "_args": "$spatialOperands",
+      "_op": {
+        "|": [
+          "_s_contains",
+          "_s_crosses",
+          "_s_disjoint",
+          "_s_equals",
+          "_s_intersects",
+          "_s_overlaps",
+          "_s_touches",
+          "_s_within"
+        ]
+      }
+    },
+    "temporalInstance": {
+      "^": [
+        "$instantInstance",
+        "$intervalInstance"
+      ]
+    },
+    "temporalOperands": {
+      "=": 2,
+      "@": [
+        {
+          "^": [
+            "$temporalInstance",
+            "$propertyRef",
+            "$functionRef"
+          ]
+        }
+      ]
+    },
+    "temporalPredicate": {
+      "": "$ANY",
+      "_args": "$temporalOperands",
+      "_op": {
+        "|": [
+          "_t_after",
+          "_t_before",
+          "_t_contains",
+          "_t_disjoint",
+          "_t_during",
+          "_t_equals",
+          "_t_finishedBy",
+          "_t_finishes",
+          "_t_intersects",
+          "_t_meets",
+          "_t_metBy",
+          "_t_overlappedBy",
+          "_t_overlaps",
+          "_t_startedBy",
+          "_t_starts"
+        ]
+      }
+    },
+    "timestampInstant": {
+      "": "$ANY",
+      "_timestamp": "$timestampString"
+    },
+    "timestampString": "/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$/"
+  },
+  "^": [
+    "$andOrExpression",
+    "$notExpression",
+    "$comparisonPredicate",
+    "$spatialPredicate",
+    "$temporalPredicate",
+    "$arrayPredicate",
+    "$functionRef",
+    true
+  ]
+}

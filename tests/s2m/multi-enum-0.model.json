@@ -1,8 +1,8 @@
 {
   "|": [
-    true,
-    false,
-    "hello",
-    "world"
+    "=true",
+    "=false",
+    "_hello",
+    "_world"
   ]
 }

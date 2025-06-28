@@ -1,0 +1,277 @@
+{
+  "": "$ANY",
+  "#": "A schema for Pulumi project files.",
+  "$": {
+    "configItemsType": {
+      "&": [
+        {
+          "": "$ANY",
+          "?items": "$configItemsType",
+          "_type": {
+            "^": [
+              "$simpleConfigType",
+              "$configItemsType"
+            ]
+          }
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "?type": "_array"
+                },
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "?type": "_array"
+                    }
+                  ]
+                },
+                "$ANY"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "configTypeDeclaration": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?default": "$ANY",
+      "?description": "",
+      "?items": "$configItemsType",
+      "?secret": true,
+      "?type": "$simpleConfigType",
+      "?value": "$ANY"
+    },
+    "pluginOptions": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "?version": {
+        "#": "Version of the plugin, if not set, will match any version the engine requests.",
+        "@": ""
+      },
+      "_name": {
+        "#": "Name of the plugin",
+        "@": ""
+      },
+      "_path": {
+        "#": "Path to the plugin folder",
+        "@": ""
+      }
+    },
+    "simpleConfigType": {
+      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+      "|": [
+        "_string",
+        "_integer",
+        "_boolean",
+        "_array"
+      ]
+    }
+  },
+  "?author": {
+    "#": "Author is an optional author that created this project.",
+    "|": [
+      "",
+      null
+    ]
+  },
+  "?backend": {
+    "#": "Backend of the project.",
+    "|": [
+      {
+        "?url": {
+          "#": "URL is optional field to explicitly set backend url",
+          "@": ""
+        }
+      },
+      null
+    ]
+  },
+  "?config": {
+    "#": "A map of configuration keys to their types. Using config directory location relative to the location of Pulumi.yaml is a deprecated use of this key. Use stackConfigDir instead.",
+    "|": [
+      {
+        "": {
+          "^": [
+            "",
+            -1,
+            true,
+            [
+              "$ANY"
+            ],
+            "$configTypeDeclaration"
+          ]
+        },
+        "?secret": {
+          "#": "If true this configuration value should be encrypted.",
+          "@": true
+        }
+      },
+      null
+    ]
+  },
+  "?description": {
+    "#": "Description of the project.",
+    "|": [
+      "",
+      null
+    ]
+  },
+  "?license": {
+    "#": "License is the optional license governing this project's usage.",
+    "|": [
+      "",
+      null
+    ]
+  },
+  "?main": {
+    "#": "Path to the Pulumi program. The default is the working directory.",
+    "|": [
+      "",
+      null
+    ]
+  },
+  "?options": {
+    "#": "Additional project options.",
+    "|": [
+      {
+        "?refresh": {
+          "#": "Set to \"always\" to refresh the state before performing a Pulumi operation.",
+          "@": "_always"
+        }
+      },
+      null
+    ]
+  },
+  "?plugins": {
+    "": "$ANY",
+    "#": "Override for the plugin selection. Intended for use in developing pulumi plugins.",
+    "?analyzers": {
+      "#": "Plugins for policy analyzers.",
+      "@": [
+        "$pluginOptions"
+      ]
+    },
+    "?languages": {
+      "#": "Plugins for languages.",
+      "@": [
+        "$pluginOptions"
+      ]
+    },
+    "?providers": {
+      "#": "Plugins for resource providers.",
+      "@": [
+        "$pluginOptions"
+      ]
+    }
+  },
+  "?stackConfigDir": {
+    "#": "Config directory location relative to the location of Pulumi.yaml.",
+    "|": [
+      "",
+      null
+    ]
+  },
+  "?template": {
+    "#": "ProjectTemplate is a Pulumi project template manifest.",
+    "|": [
+      {
+        "?config": {
+          "#": "Config to apply to each stack in the project.",
+          "|": [
+            {
+              "": {
+                "": "$ANY",
+                "?default": {
+                  "#": "Default value of the config.",
+                  "@": "$ANY"
+                },
+                "?description": {
+                  "#": "Description of the config.",
+                  "|": [
+                    "",
+                    null
+                  ]
+                },
+                "?secret": {
+                  "#": "Boolean indicating if the configuration is labeled as a secret.",
+                  "|": [
+                    true,
+                    null
+                  ]
+                }
+              }
+            },
+            null
+          ]
+        },
+        "?description": {
+          "#": "Description of the template.",
+          "|": [
+            "",
+            null
+          ]
+        },
+        "?important": {
+          "#": "Important indicates the template is important and should be listed by default.",
+          "|": [
+            true,
+            null
+          ]
+        },
+        "?quickstart": {
+          "#": "Quickstart contains optional text to be displayed after template creation.",
+          "|": [
+            "",
+            null
+          ]
+        }
+      },
+      null
+    ]
+  },
+  "?website": {
+    "#": "Website is an optional website for additional info about this project.",
+    "|": [
+      "",
+      null
+    ]
+  },
+  "_name": {
+    "#": "Name of the project containing alphanumeric characters, hyphens, underscores, and periods.",
+    ">=": 1,
+    "@": ""
+  },
+  "_runtime": {
+    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "^": [
+      {
+        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+        ">=": 1,
+        "@": ""
+      },
+      {
+        "?name": {
+          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+          ">=": 1,
+          "@": ""
+        },
+        "?options": {
+          "": "$ANY",
+          "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+        }
+      }
+    ]
+  }
+}

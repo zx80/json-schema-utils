@@ -5,17 +5,17 @@
     "",
     {
       "|": [
-        "Street",
-        "Avenue",
-        "Boulevard"
+        "_Street",
+        "_Avenue",
+        "_Boulevard"
       ]
     },
     {
       "|": [
-        "NW",
-        "NE",
-        "SW",
-        "SE"
+        "_NW",
+        "_NE",
+        "_SW",
+        "_SE"
       ]
     },
     ""
