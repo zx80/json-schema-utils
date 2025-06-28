@@ -263,13 +263,20 @@ def doubt(ok: bool, msg: str, strict: bool):
 def allOfLayer(schema: dict, operator: str):
     schemas = copy.deepcopy(schema[operator])
     del schema[operator]
+    # extract ignoreables
+    nschema = {}
+    for k, v in list(schema.items()):
+        if k in IGNORE:
+            nschema[k] = v
+            del schema[k]
     # forward type just in case for *Of
     if "type" in schema and isinstance(schema["type"], str) and isinstance(schemas, list):
         t = schema["type"]
         for s in schemas:
             if isinstance(s, dict) and not "type" in s:
                 s["type"] = t
-    return {"allOf": [{operator: schemas}, schema]}
+    nschema["allOf"] = [{operator: schemas}, schema]
+    return nschema
 
 
 def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool = True):
@@ -398,6 +405,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
             )
     elif "if" in schema:
         log.warning(f"ignoring lone if at [{spath}]")
+        del schema["if"]
 
     # FIXME adhoc handling for table-schema.json and ADEME
     if "type" in schema and schema["type"] == "object" and ("anyOf" in schema or "oneOf" in schema):
