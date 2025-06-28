@@ -715,10 +715,15 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
                 sitems = schema["items"]
                 if isinstance(sitems, list):
                     # OLD JSON Schema prefixItems…
-                    return [
+                    array = [
                         schema2model(s, path + ["items", i], strict, False)
                             for i, s in enumerate(sitems)
                     ]
+                    if strict:
+                        return array
+                    else:  # trigger varlen tuple…
+                        array.append("$ANY")
+                        return { "@": array, ">=": 0 }
                 else:
                     assert isinstance(sitems, (dict, bool)), f"valid schema at [{spath}]"
                     model = [schema2model(schema["items"], path + ["items"], strict, False)]
