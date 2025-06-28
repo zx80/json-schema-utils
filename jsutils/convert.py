@@ -804,7 +804,8 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
                 if "pattern" in pnames:
                     pat = pnames["pattern"]
                     assert isinstance(pat, str), f"pattern is string at [{spath}]"
-                    model[f"/{pat}/"] = addprops
+                    model[f"/{pat}/"] = \
+                        schema2model(addprops, path + ["propertyNames"], strict, False)
                 if "format" in pnames:
                     fmt = pnames["format"]
                     model[format2model(fmt)] = addprops
