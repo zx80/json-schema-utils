@@ -78,7 +78,7 @@ def getEnum(ls: list[JsonSchema], is_one: bool) -> list[Any]|None:
 def _typeCompat(t: str, v: Any) -> bool:
     """Check JSON type / value compatibility."""
     return ((t == "null" and v is None) or
-            (t == "bool" and isinstance(v, bool)) or
+            (t == "boolean" and isinstance(v, bool)) or
             (t == "number" and isinstance(v, (int, float))) or
             (t == "string" and isinstance(v, str)) or
             (t == "array" and isinstance(v, (list, tuple))) or
