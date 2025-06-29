@@ -109,7 +109,7 @@ def buildModel(model, constraints: dict, defs: dict, sharp: dict, is_root = Fals
 
 META_KEYS = [
     "title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly", "id",
-    "$schema", "$id", "$comment",
+    "$schema", "$id", "$comment", "$dynamicAnchor",
     # OLD?
     "context", "notes",
     # extensions and strange stuff?
@@ -241,7 +241,8 @@ def format2model(fmt: str):
         return _FMT2MODEL[fmt]
     else:
         log.warning(f"unknow format: {fmt}")
-        return f"$UNKNOWN:{fmt}"
+        # return f"$UNKNOWN:{fmt}"
+        return ""
 
 def doubt(ok: bool, msg: str, strict: bool):
     if not ok:
