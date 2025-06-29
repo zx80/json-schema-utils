@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "x1": { "type": "boolean" },
+    "x2": { "type": "boolean" }
+  },
+  "required": ["name"],
+  "additionalProperties": false,
+  "$comment": "brain damaged attempt at excluding that both x1/x2 are true",
+  "if": {
+    "not": {
+      "anyOf": [
+        { "properties": { "x1": { "enum": [false, null] } } },
+        { "properties": { "x2": { "enum": [false, null] } } },
+        { "not": { "properties": { "x1": { "type": "boolean" } } } },
+        { "not": { "properties": { "x2": { "type": "boolean" } } } }
+      ]
+    }
+  },
+  "then": {
+    "properties": { "name": { "type": "string" } },
+    "additionalProperties": false
+  }
+}

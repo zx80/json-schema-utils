@@ -212,6 +212,29 @@ def simplifySchema(schema: JsonSchema, url: str):
                         else:
                             schema["enum"] = lv
 
+        # void condition application
+        for kw in ("then", "else"):
+            if kw in schema:
+                subs = schema[kw]
+                compat = True
+                for k, v in subs.items():
+                    if k in _IGNORABLE:
+                        pass
+                    elif k in schema and v == schema[k]:
+                        pass
+                    elif k in schema:
+                        # special case, check for inclusion
+                        if k == "required":
+                            assert isinstance(v, list)  # and str
+                            for n in v:
+                                if n not in schema["required"]:
+                                    compat = False
+                    else:
+                        compat = False
+                if compat:
+                    log.info(f"removing ineffective {kw}")
+                    del schema[kw]
+
         # if/then/else
         if "if" not in schema:
             for kw in ("then", "else"):
@@ -221,6 +244,25 @@ def simplifySchema(schema: JsonSchema, url: str):
         if "if" in schema and not ("then" in schema or "else" in schema):
             log.info(f"removing lone if at {path}")
             del schema["if"]
+
+        # simplify condition if possible
+        if "if" in schema:
+            cond = schema["if"]
+            if "not" in cond and only(cond, "not", *_IGNORABLE):
+                log.info("simplifying if not")
+                schema["if"] = cond["not"]
+                sthen = schema.get("then", None)
+                selse = schema.get("else", None)
+                if sthen is not None:
+                    schema["else"] = sthen
+                    if selse is not None:
+                        schema["then"] = selse
+                    else:
+                        del schema["then"]
+                else:
+                    assert selse is not None
+                    schema["then"] = selse
+                    del schema["else"]
 
         # short type list
         if "type" in schema and isinstance(schema["type"], list):
