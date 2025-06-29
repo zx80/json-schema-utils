@@ -356,9 +356,10 @@ def jsu_model():
     ap = argparse.ArgumentParser()
     ap_common(ap)
     ap.add_argument("--id", action="store_true", default=False, help="enable $id lookup")
+    ap.add_argument("--no-id", dest="id", action="store_false", help="disable $id lookup")
     ap.add_argument("--strict", action="store_true", default=True, help="reject doubtful schemas")
     ap.add_argument("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
-    ap.add_argument("schemas", nargs="*", help="schemas to inline")
+    ap.add_argument("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
