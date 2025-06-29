@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "oneOf": [
+    { "required": [ "foo" ] },
+    { "required": [ "bla" ] }
+  ],
+  "properties": {
+    "foo": { "const": 1 },
+    "bla": { "const": 2 },
+    "wtf": { "const": 3 }
+  },
+  "patternProperties": {
+    "^@": { "const": 4 }
+  },
+  "additionalProperties": false
+}

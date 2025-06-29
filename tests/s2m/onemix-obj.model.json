@@ -1,0 +1,17 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "^": [
+    {
+      "/^@/": "=4",
+      "?bla": "=2",
+      "?wtf": "=3",
+      "_foo": "=1"
+    },
+    {
+      "/^@/": "=4",
+      "?foo": "=1",
+      "?wtf": "=3",
+      "_bla": "=2"
+    }
+  ]
+}

@@ -252,6 +252,7 @@ def doubt(ok: bool, msg: str, strict: bool):
 
 
 def allOfLayer(schema: dict, operator: str):
+    # log.warning(f"ao {operator} in: {schema}")
     schemas = copy.deepcopy(schema[operator])
     del schema[operator]
     # extract ignoreables
@@ -403,7 +404,8 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
         log.warning(f"ignoring lone if at [{spath}]")
         del schema["if"]
 
-    # FIXME adhoc handling for table-schema.json and ADEME
+    # FIXME adhoc handling for table-schema.json and ADEME and others
+    # FIXME maybe this is not needed anymore?
     if "type" in schema and schema["type"] == "object" and ("anyOf" in schema or "oneOf" in schema):
         log.warning(f"distributing object on anyOf/oneOf at [{spath}]")
         # special case for Ademe
@@ -440,8 +442,14 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
             addprop = schema["additionalProperties"]
             del schema["additionalProperties"]
             for s in lof:
-                # cold overwrite
+                # cold overwrite, should warn
                 s["additionalProperties"] = addprop
+        if "patternProperties" in schema:
+            pp = schema["patternProperties"]
+            del schema["patternProperties"]
+            for s in lof:
+                # cold overwrite, should warn
+                s["patternProperties"] = pp
 
     if "type" in schema and ("allOf" in schema or "anyOf" in schema or "oneOf" in schema or
                              "enum" in schema or "$ref" in schema):
