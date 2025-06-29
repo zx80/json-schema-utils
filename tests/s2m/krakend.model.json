@@ -225,66 +225,64 @@
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1gcp.json": {
       "#": "Enterprise only. Enables GCP authentication between KrakenD and Google Cloud service account.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
-      "&": [
+      "|": [
         {
-          "|": [
-            {
-              "?credentials_file": {
-                "#": "The relative or absolute path to a credentials file in JSON format that contains all the credentials to authenticate API calls to the given service account.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
-                "@": ""
-              },
-              "?credentials_json": {
-                "": "$ANY",
-                "#": "An inline JSON object containing all the credentials fields to authenticate to GCP.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
-              },
-              "?custom_claims": {
-                "": "$ANY",
-                "#": "Custom private claims that you can optionally add to an ID token.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
-              },
-              "_audience": {
-                "#": "The audience in GCP looks like an URL, and contains the destination service you will ask a token for. Most of the times this URL will match exactly with the `host` entry.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
-                "@": ""
-              }
-            },
-            {
-              "?credentials_json": {
-                "": "$ANY",
-                "#": "An inline JSON object containing all the credentials fields to authenticate to GCP.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
-              },
-              "?custom_claims": {
-                "": "$ANY",
-                "#": "Custom private claims that you can optionally add to an ID token.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
-              },
-              "_audience": {
-                "#": "The audience in GCP looks like an URL, and contains the destination service you will ask a token for. Most of the times this URL will match exactly with the `host` entry.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
-                "@": ""
-              },
-              "_credentials_file": {
-                "#": "The relative or absolute path to a credentials file in JSON format that contains all the credentials to authenticate API calls to the given service account.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
-                "@": ""
-              }
-            },
-            {
-              "?credentials_file": {
-                "#": "The relative or absolute path to a credentials file in JSON format that contains all the credentials to authenticate API calls to the given service account.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
-                "@": ""
-              },
-              "?custom_claims": {
-                "": "$ANY",
-                "#": "Custom private claims that you can optionally add to an ID token.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
-              },
-              "_audience": {
-                "#": "The audience in GCP looks like an URL, and contains the destination service you will ask a token for. Most of the times this URL will match exactly with the `host` entry.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
-                "@": ""
-              },
-              "_credentials_json": {
-                "": "$ANY",
-                "#": "An inline JSON object containing all the credentials fields to authenticate to GCP.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
-              }
-            }
-          ]
+          "/^[@$_#]/": "$ANY",
+          "?credentials_file": {
+            "#": "The relative or absolute path to a credentials file in JSON format that contains all the credentials to authenticate API calls to the given service account.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
+            "@": ""
+          },
+          "?credentials_json": {
+            "": "$ANY",
+            "#": "An inline JSON object containing all the credentials fields to authenticate to GCP.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
+          },
+          "?custom_claims": {
+            "": "$ANY",
+            "#": "Custom private claims that you can optionally add to an ID token.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
+          },
+          "_audience": {
+            "#": "The audience in GCP looks like an URL, and contains the destination service you will ask a token for. Most of the times this URL will match exactly with the `host` entry.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
+            "@": ""
+          }
         },
-        "$ANY"
+        {
+          "/^[@$_#]/": "$ANY",
+          "?credentials_json": {
+            "": "$ANY",
+            "#": "An inline JSON object containing all the credentials fields to authenticate to GCP.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
+          },
+          "?custom_claims": {
+            "": "$ANY",
+            "#": "Custom private claims that you can optionally add to an ID token.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
+          },
+          "_audience": {
+            "#": "The audience in GCP looks like an URL, and contains the destination service you will ask a token for. Most of the times this URL will match exactly with the `host` entry.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
+            "@": ""
+          },
+          "_credentials_file": {
+            "#": "The relative or absolute path to a credentials file in JSON format that contains all the credentials to authenticate API calls to the given service account.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
+            "@": ""
+          }
+        },
+        {
+          "/^[@$_#]/": "$ANY",
+          "?credentials_file": {
+            "#": "The relative or absolute path to a credentials file in JSON format that contains all the credentials to authenticate API calls to the given service account.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
+            "@": ""
+          },
+          "?custom_claims": {
+            "": "$ANY",
+            "#": "Custom private claims that you can optionally add to an ID token.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
+          },
+          "_audience": {
+            "#": "The audience in GCP looks like an URL, and contains the destination service you will ask a token for. Most of the times this URL will match exactly with the `host` entry.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
+            "@": ""
+          },
+          "_credentials_json": {
+            "": "$ANY",
+            "#": "An inline JSON object containing all the credentials fields to authenticate to GCP.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/"
+          }
+        }
       ]
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1jose.json": {
@@ -362,562 +360,556 @@
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1signer.json": {
       "#": "creates a wrapper for your login endpoint that signs with your secret key the selected fields of the backend payload right before returning the content to the end-user.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-      "&": [
+      "^": [
         {
-          "^": [
-            {
-              "?cipher_suites": {
-                "#": "Override the default cipher suites (see [JWT validation](https://www.krakend.io/docs/authorization/jwt-signing/)). Unless you have a legacy JWK, **you don't need to set this value**.",
-                "@": [
-                  {
-                    "#": "\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                    "|": [
-                      "=5",
-                      "=10",
-                      "=47",
-                      "=53",
-                      "=60",
-                      "=156",
-                      "=157",
-                      "=49159",
-                      "=49161",
-                      "=49162",
-                      "=49169",
-                      "=49170",
-                      "=49171",
-                      "=49172",
-                      "=49187",
-                      "=49191",
-                      "=49199",
-                      "=49195",
-                      "=49200",
-                      "=49196",
-                      "=52392",
-                      "=52393"
-                    ]
-                  }
-                ]
-              },
-              "?cypher_key": {
-                "#": "The cyphering key.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?full": {
-                "#": "Use JSON format instead of the compact form JWT provides.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
-                "@": true
-              },
-              "?jwk_fingerprints": {
-                "#": "A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?jwk_local_ca": {
-                "#": "Path to the CA\u2019s certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?jwk_url": {
-                "#": " The URL to the JWK endpoint with the private keys used to sign the token.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": ""
-              },
-              "?keys_to_sign": {
-                "#": "List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?kid": {
-                "#": "The key ID purpose is to match a specific key, as the jwk_url might contain several keys.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?leeway": {
-                "#": "A margin of extra time where you will still accept the token after its expiration date. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": "$_psub_1_"
-              },
-              "?secret_url": {
-                "#": "An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) ([see providers](https://www.krakend.io/docs/authorization/jwt-validation/#accepted-providers-for-encrypting-payloads)).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "/(base64key|awskms|azurekeyvault|gcpkms|hashivault)://(.*)/"
-              },
-              "_alg": {
-                "#": "The hashing algorithm used by the issuer. Usually `RS256`. The algorithm you choose directly affects the CPU consumption.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+          "/^[@$_#]/": "$ANY",
+          "?cipher_suites": {
+            "#": "Override the default cipher suites (see [JWT validation](https://www.krakend.io/docs/authorization/jwt-signing/)). Unless you have a legacy JWK, **you don't need to set this value**.",
+            "@": [
+              {
+                "#": "\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
                 "|": [
-                  "_EdDSA",
-                  "_HS256",
-                  "_HS384",
-                  "_HS512",
-                  "_RS256",
-                  "_RS384",
-                  "_RS512",
-                  "_ES256",
-                  "_ES384",
-                  "_ES512",
-                  "_PS256",
-                  "_PS384",
-                  "_PS512"
+                  "=5",
+                  "=10",
+                  "=47",
+                  "=53",
+                  "=60",
+                  "=156",
+                  "=157",
+                  "=49159",
+                  "=49161",
+                  "=49162",
+                  "=49169",
+                  "=49170",
+                  "=49171",
+                  "=49172",
+                  "=49187",
+                  "=49191",
+                  "=49199",
+                  "=49195",
+                  "=49200",
+                  "=49196",
+                  "=52392",
+                  "=52393"
                 ]
-              },
-              "_disable_jwk_security": {
-                "#": "Disables HTTP security of the JWK client and allows insecure connections (plain HTTP) to download the keys. The flag should be `false` when you use HTTPS, and `true` when using plain HTTP or loading the key from a local file.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
-                "@": true
-              },
-              "_jwk_local_path": {
-                "#": "Local path to the JWK public keys, has preference over `jwk_url`. Instead of pointing to an external URL (with `jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add `secret_url` and `cypher_key`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
               }
-            },
-            {
-              "?cipher_suites": {
-                "#": "Override the default cipher suites (see [JWT validation](https://www.krakend.io/docs/authorization/jwt-signing/)). Unless you have a legacy JWK, **you don't need to set this value**.",
-                "@": [
-                  {
-                    "#": "\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                    "|": [
-                      "=5",
-                      "=10",
-                      "=47",
-                      "=53",
-                      "=60",
-                      "=156",
-                      "=157",
-                      "=49159",
-                      "=49161",
-                      "=49162",
-                      "=49169",
-                      "=49170",
-                      "=49171",
-                      "=49172",
-                      "=49187",
-                      "=49191",
-                      "=49199",
-                      "=49195",
-                      "=49200",
-                      "=49196",
-                      "=52392",
-                      "=52393"
-                    ]
-                  }
-                ]
-              },
-              "?cypher_key": {
-                "#": "The cyphering key.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?disable_jwk_security": {
-                "#": "Disables HTTP security of the JWK client and allows insecure connections (plain HTTP) to download the keys. The flag should be `false` when you use HTTPS, and `true` when using plain HTTP or loading the key from a local file.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
-                "@": true
-              },
-              "?full": {
-                "#": "Use JSON format instead of the compact form JWT provides.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
-                "@": true
-              },
-              "?jwk_fingerprints": {
-                "#": "A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?jwk_local_ca": {
-                "#": "Path to the CA\u2019s certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?jwk_local_path": {
-                "#": "Local path to the JWK public keys, has preference over `jwk_url`. Instead of pointing to an external URL (with `jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add `secret_url` and `cypher_key`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?keys_to_sign": {
-                "#": "List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?kid": {
-                "#": "The key ID purpose is to match a specific key, as the jwk_url might contain several keys.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?leeway": {
-                "#": "A margin of extra time where you will still accept the token after its expiration date. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": "$_psub_1_"
-              },
-              "?secret_url": {
-                "#": "An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) ([see providers](https://www.krakend.io/docs/authorization/jwt-validation/#accepted-providers-for-encrypting-payloads)).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "/(base64key|awskms|azurekeyvault|gcpkms|hashivault)://(.*)/"
-              },
-              "_alg": {
-                "#": "The hashing algorithm used by the issuer. Usually `RS256`. The algorithm you choose directly affects the CPU consumption.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "|": [
-                  "_EdDSA",
-                  "_HS256",
-                  "_HS384",
-                  "_HS512",
-                  "_RS256",
-                  "_RS384",
-                  "_RS512",
-                  "_ES256",
-                  "_ES384",
-                  "_ES512",
-                  "_PS256",
-                  "_PS384",
-                  "_PS512"
-                ]
-              },
-              "_jwk_url": {
-                "#": " The URL to the JWK endpoint with the private keys used to sign the token.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": ""
-              }
-            }
-          ]
+            ]
+          },
+          "?cypher_key": {
+            "#": "The cyphering key.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?full": {
+            "#": "Use JSON format instead of the compact form JWT provides.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
+            "@": true
+          },
+          "?jwk_fingerprints": {
+            "#": "A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?jwk_local_ca": {
+            "#": "Path to the CA\u2019s certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?jwk_url": {
+            "#": " The URL to the JWK endpoint with the private keys used to sign the token.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+            "@": ""
+          },
+          "?keys_to_sign": {
+            "#": "List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?kid": {
+            "#": "The key ID purpose is to match a specific key, as the jwk_url might contain several keys.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?leeway": {
+            "#": "A margin of extra time where you will still accept the token after its expiration date. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+            "@": "$_psub_1_"
+          },
+          "?secret_url": {
+            "#": "An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) ([see providers](https://www.krakend.io/docs/authorization/jwt-validation/#accepted-providers-for-encrypting-payloads)).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": "/(base64key|awskms|azurekeyvault|gcpkms|hashivault)://(.*)/"
+          },
+          "_alg": {
+            "#": "The hashing algorithm used by the issuer. Usually `RS256`. The algorithm you choose directly affects the CPU consumption.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+            "|": [
+              "_EdDSA",
+              "_HS256",
+              "_HS384",
+              "_HS512",
+              "_RS256",
+              "_RS384",
+              "_RS512",
+              "_ES256",
+              "_ES384",
+              "_ES512",
+              "_PS256",
+              "_PS384",
+              "_PS512"
+            ]
+          },
+          "_disable_jwk_security": {
+            "#": "Disables HTTP security of the JWK client and allows insecure connections (plain HTTP) to download the keys. The flag should be `false` when you use HTTPS, and `true` when using plain HTTP or loading the key from a local file.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
+            "@": true
+          },
+          "_jwk_local_path": {
+            "#": "Local path to the JWK public keys, has preference over `jwk_url`. Instead of pointing to an external URL (with `jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add `secret_url` and `cypher_key`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          }
         },
-        "$ANY"
+        {
+          "/^[@$_#]/": "$ANY",
+          "?cipher_suites": {
+            "#": "Override the default cipher suites (see [JWT validation](https://www.krakend.io/docs/authorization/jwt-signing/)). Unless you have a legacy JWK, **you don't need to set this value**.",
+            "@": [
+              {
+                "#": "\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+                "|": [
+                  "=5",
+                  "=10",
+                  "=47",
+                  "=53",
+                  "=60",
+                  "=156",
+                  "=157",
+                  "=49159",
+                  "=49161",
+                  "=49162",
+                  "=49169",
+                  "=49170",
+                  "=49171",
+                  "=49172",
+                  "=49187",
+                  "=49191",
+                  "=49199",
+                  "=49195",
+                  "=49200",
+                  "=49196",
+                  "=52392",
+                  "=52393"
+                ]
+              }
+            ]
+          },
+          "?cypher_key": {
+            "#": "The cyphering key.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?disable_jwk_security": {
+            "#": "Disables HTTP security of the JWK client and allows insecure connections (plain HTTP) to download the keys. The flag should be `false` when you use HTTPS, and `true` when using plain HTTP or loading the key from a local file.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
+            "@": true
+          },
+          "?full": {
+            "#": "Use JSON format instead of the compact form JWT provides.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
+            "@": true
+          },
+          "?jwk_fingerprints": {
+            "#": "A list of fingerprints (the unique identifier of the certificate) for certificate pinning and avoid man in the middle attacks. Add fingerprints in base64 format.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?jwk_local_ca": {
+            "#": "Path to the CA\u2019s certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?jwk_local_path": {
+            "#": "Local path to the JWK public keys, has preference over `jwk_url`. Instead of pointing to an external URL (with `jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add `secret_url` and `cypher_key`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?keys_to_sign": {
+            "#": "List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?kid": {
+            "#": "The key ID purpose is to match a specific key, as the jwk_url might contain several keys.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?leeway": {
+            "#": "A margin of extra time where you will still accept the token after its expiration date. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+            "@": "$_psub_1_"
+          },
+          "?secret_url": {
+            "#": "An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) ([see providers](https://www.krakend.io/docs/authorization/jwt-validation/#accepted-providers-for-encrypting-payloads)).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": "/(base64key|awskms|azurekeyvault|gcpkms|hashivault)://(.*)/"
+          },
+          "_alg": {
+            "#": "The hashing algorithm used by the issuer. Usually `RS256`. The algorithm you choose directly affects the CPU consumption.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+            "|": [
+              "_EdDSA",
+              "_HS256",
+              "_HS384",
+              "_HS512",
+              "_RS256",
+              "_RS384",
+              "_RS512",
+              "_ES256",
+              "_ES384",
+              "_ES512",
+              "_PS256",
+              "_PS384",
+              "_PS512"
+            ]
+          },
+          "_jwk_url": {
+            "#": " The URL to the JWK endpoint with the private keys used to sign the token.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+            "@": ""
+          }
+        }
       ]
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1validator.json": {
       "#": "Protect endpoints from public usage by validating JWT tokens generated by any industry-standard OpenID Connect (OIDC) integration.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-      "&": [
+      "^": [
         {
-          "^": [
-            {
-              "?audience": {
-                "#": "Reject tokens that do not contain ALL audiences declared in the list.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  ""
-                ]
-              },
-              "?auth_header_name": {
-                "#": "Allows to parse the token from a custom header.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?cache": {
-                "#": "Set this value to `true` (recommended) to stop downloading keys on every request and store them in memory for the next `cache_duration` period and avoid hammering the key server, as recommended for performance. Do not use this flag when using `jwk_local_ca`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": true
-              },
-              "?cache_duration": {
-                "#": "The cache duration in seconds when the `cache` is enabled. 15 minutes when unset.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": -1
-              },
-              "?cipher_suites": {
-                "#": "Override the default cipher suites. Use it if you want to enforce an even higher security standard.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  {
-                    "#": "\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                    "|": [
-                      "=5",
-                      "=10",
-                      "=47",
-                      "=53",
-                      "=60",
-                      "=156",
-                      "=157",
-                      "=49159",
-                      "=49161",
-                      "=49162",
-                      "=49169",
-                      "=49170",
-                      "=49171",
-                      "=49172",
-                      "=49187",
-                      "=49191",
-                      "=49199",
-                      "=49195",
-                      "=49200",
-                      "=49196",
-                      "=52392",
-                      "=52393"
-                    ]
-                  }
-                ]
-              },
-              "?cookie_key": {
-                "#": "Add the key name of the cookie containing the token when it is not passed in the headers\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?cypher_key": {
-                "#": "The cyphering key.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?disable_jwk_security": {
-                "#": "When true, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Useful for development environments.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": true
-              },
-              "?failed_jwk_key_cooldown": {
-                "#": "When a request comes with a token declaring an unknown `kid` (or the key strategy you choose), and the JWK is in a remote destination, KrakenD downloads the JWK from the Identity Provider for its recognition. Suppose there is a network failure, or the key is not in the list (e.g., you rotated the keys without anticipation). In that case, you can tell the gateway not to contact the Identity Provider again during the time specified here. We recommend setting this value, even with a low time (e.g., `10s`), to prevent misconfigurations from hammering your Identity Providers. Any values under one second are ignored.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "$_psub_1_"
-              },
-              "?issuer": {
-                "#": "When set, tokens not matching the issuer are rejected.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?jwk_fingerprints": {
-                "#": "A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man-in-the-middle attacks. Add fingerprints in base64 format.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  ""
-                ]
-              },
-              "?jwk_local_ca": {
-                "#": "Path to the CA's certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?jwk_url": {
-                "#": "The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity. Use with `cache` to avoid re-downloading the key on every request. Consider enabling [shared caching](https://www.krakend.io/docs/authorization/jwk-caching/) too. The identity server will receive an HTTP(s) request from KrakenD with a KrakenD user agent, and the identity server must reply with a JSON object and a content-type `application/jwk-set+json` or `application/json`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?key_identify_strategy": {
-                "#": "Allows strategies other than `kid` to load keys.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+          "/^[@$_#]/": "$ANY",
+          "?audience": {
+            "#": "Reject tokens that do not contain ALL audiences declared in the list.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              ""
+            ]
+          },
+          "?auth_header_name": {
+            "#": "Allows to parse the token from a custom header.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?cache": {
+            "#": "Set this value to `true` (recommended) to stop downloading keys on every request and store them in memory for the next `cache_duration` period and avoid hammering the key server, as recommended for performance. Do not use this flag when using `jwk_local_ca`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": true
+          },
+          "?cache_duration": {
+            "#": "The cache duration in seconds when the `cache` is enabled. 15 minutes when unset.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": -1
+          },
+          "?cipher_suites": {
+            "#": "Override the default cipher suites. Use it if you want to enforce an even higher security standard.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              {
+                "#": "\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
                 "|": [
-                  "_kid",
-                  "_x5t",
-                  "_kid_x5t"
+                  "=5",
+                  "=10",
+                  "=47",
+                  "=53",
+                  "=60",
+                  "=156",
+                  "=157",
+                  "=49159",
+                  "=49161",
+                  "=49162",
+                  "=49169",
+                  "=49170",
+                  "=49171",
+                  "=49172",
+                  "=49187",
+                  "=49191",
+                  "=49199",
+                  "=49195",
+                  "=49200",
+                  "=49196",
+                  "=52392",
+                  "=52393"
                 ]
-              },
-              "?leeway": {
-                "#": "A margin of time where you will accept an already expired token. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "$_psub_1_"
-              },
-              "?operation_debug": {
-                "#": "When `true`, any JWT **validation operation** gets printed in the log with a level `ERROR`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": true
-              },
-              "?propagate_claims": {
-                "#": "Enables passing claims in the backend's request header. You can pass nested claims using the dot `.` operator. E.g.: `realm_access.roles`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  {
-                    "=": 2,
-                    "@": [
-                      ""
-                    ]
-                  }
-                ]
-              },
-              "?roles": {
-                "#": " When set, the JWT token not having at least one of the listed roles is rejected.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  ""
-                ]
-              },
-              "?roles_key": {
-                "#": "When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, add `roles_key_is_nested` and use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: [\"myrole\"] } }`. Notice that the roles object you choose is a list, not a map.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?roles_key_is_nested": {
-                "#": "If the roles key uses a nested object using the `.` dot notation, you must set it to `true` to traverse the object.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": true
-              },
-              "?scopes": {
-                "#": "A list of scopes to validate. The token, after decoding it, can have the scopes declared as a space-separated list, e.g.: `\"my_scopes\": \"resource1:action1 resource3:action7\"` or inside a list, e.g.: `\"my_scopes\": [\"resource1:action1\",\"resource3:action7\"]`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  ""
-                ]
-              },
-              "?scopes_key": {
-                "#": "The key name where KrakenD can find the scopes. The key can be a nested object using the `.` dot notation, e.g.: `data.access.my_scopes`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?scopes_matcher": {
-                "#": "Defines if the user needs to have in its token at least one of the listed claims (`any`), or `all` of them.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "|": [
-                  "_any",
-                  "_all"
-                ]
-              },
-              "?secret_url": {
-                "#": "An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "/(base64key|awskms|azurekeyvault|gcpkms|hashivault)://(.*)/"
-              },
-              "_alg": {
-                "#": "The hashing algorithm used by the token issuer.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "|": [
-                  "_EdDSA",
-                  "_HS256",
-                  "_HS384",
-                  "_HS512",
-                  "_RS256",
-                  "_RS384",
-                  "_RS512",
-                  "_ES256",
-                  "_ES384",
-                  "_ES512",
-                  "_PS256",
-                  "_PS384",
-                  "_PS512"
-                ]
-              },
-              "_jwk_local_path": {
-                "#": "Local path to the JWK public keys, has preference over `jwk_url`. Instead of pointing to an external URL (with `jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add `secret_url` and `cypher_key`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
               }
-            },
-            {
-              "?audience": {
-                "#": "Reject tokens that do not contain ALL audiences declared in the list.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            ]
+          },
+          "?cookie_key": {
+            "#": "Add the key name of the cookie containing the token when it is not passed in the headers\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?cypher_key": {
+            "#": "The cyphering key.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?disable_jwk_security": {
+            "#": "When true, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Useful for development environments.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": true
+          },
+          "?failed_jwk_key_cooldown": {
+            "#": "When a request comes with a token declaring an unknown `kid` (or the key strategy you choose), and the JWK is in a remote destination, KrakenD downloads the JWK from the Identity Provider for its recognition. Suppose there is a network failure, or the key is not in the list (e.g., you rotated the keys without anticipation). In that case, you can tell the gateway not to contact the Identity Provider again during the time specified here. We recommend setting this value, even with a low time (e.g., `10s`), to prevent misconfigurations from hammering your Identity Providers. Any values under one second are ignored.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": "$_psub_1_"
+          },
+          "?issuer": {
+            "#": "When set, tokens not matching the issuer are rejected.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?jwk_fingerprints": {
+            "#": "A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man-in-the-middle attacks. Add fingerprints in base64 format.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              ""
+            ]
+          },
+          "?jwk_local_ca": {
+            "#": "Path to the CA's certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?jwk_url": {
+            "#": "The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity. Use with `cache` to avoid re-downloading the key on every request. Consider enabling [shared caching](https://www.krakend.io/docs/authorization/jwk-caching/) too. The identity server will receive an HTTP(s) request from KrakenD with a KrakenD user agent, and the identity server must reply with a JSON object and a content-type `application/jwk-set+json` or `application/json`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?key_identify_strategy": {
+            "#": "Allows strategies other than `kid` to load keys.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "|": [
+              "_kid",
+              "_x5t",
+              "_kid_x5t"
+            ]
+          },
+          "?leeway": {
+            "#": "A margin of time where you will accept an already expired token. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": "$_psub_1_"
+          },
+          "?operation_debug": {
+            "#": "When `true`, any JWT **validation operation** gets printed in the log with a level `ERROR`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": true
+          },
+          "?propagate_claims": {
+            "#": "Enables passing claims in the backend's request header. You can pass nested claims using the dot `.` operator. E.g.: `realm_access.roles`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              {
+                "=": 2,
                 "@": [
                   ""
                 ]
-              },
-              "?auth_header_name": {
-                "#": "Allows to parse the token from a custom header.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?cache": {
-                "#": "Set this value to `true` (recommended) to stop downloading keys on every request and store them in memory for the next `cache_duration` period and avoid hammering the key server, as recommended for performance. Do not use this flag when using `jwk_local_ca`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": true
-              },
-              "?cache_duration": {
-                "#": "The cache duration in seconds when the `cache` is enabled. 15 minutes when unset.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": -1
-              },
-              "?cipher_suites": {
-                "#": "Override the default cipher suites. Use it if you want to enforce an even higher security standard.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  {
-                    "#": "\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                    "|": [
-                      "=5",
-                      "=10",
-                      "=47",
-                      "=53",
-                      "=60",
-                      "=156",
-                      "=157",
-                      "=49159",
-                      "=49161",
-                      "=49162",
-                      "=49169",
-                      "=49170",
-                      "=49171",
-                      "=49172",
-                      "=49187",
-                      "=49191",
-                      "=49199",
-                      "=49195",
-                      "=49200",
-                      "=49196",
-                      "=52392",
-                      "=52393"
-                    ]
-                  }
-                ]
-              },
-              "?cookie_key": {
-                "#": "Add the key name of the cookie containing the token when it is not passed in the headers\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?cypher_key": {
-                "#": "The cyphering key.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?disable_jwk_security": {
-                "#": "When true, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Useful for development environments.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": true
-              },
-              "?failed_jwk_key_cooldown": {
-                "#": "When a request comes with a token declaring an unknown `kid` (or the key strategy you choose), and the JWK is in a remote destination, KrakenD downloads the JWK from the Identity Provider for its recognition. Suppose there is a network failure, or the key is not in the list (e.g., you rotated the keys without anticipation). In that case, you can tell the gateway not to contact the Identity Provider again during the time specified here. We recommend setting this value, even with a low time (e.g., `10s`), to prevent misconfigurations from hammering your Identity Providers. Any values under one second are ignored.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "$_psub_1_"
-              },
-              "?issuer": {
-                "#": "When set, tokens not matching the issuer are rejected.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?jwk_fingerprints": {
-                "#": "A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man-in-the-middle attacks. Add fingerprints in base64 format.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  ""
-                ]
-              },
-              "?jwk_local_ca": {
-                "#": "Path to the CA's certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?jwk_local_path": {
-                "#": "Local path to the JWK public keys, has preference over `jwk_url`. Instead of pointing to an external URL (with `jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add `secret_url` and `cypher_key`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?key_identify_strategy": {
-                "#": "Allows strategies other than `kid` to load keys.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "|": [
-                  "_kid",
-                  "_x5t",
-                  "_kid_x5t"
-                ]
-              },
-              "?leeway": {
-                "#": "A margin of time where you will accept an already expired token. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "$_psub_1_"
-              },
-              "?operation_debug": {
-                "#": "When `true`, any JWT **validation operation** gets printed in the log with a level `ERROR`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": true
-              },
-              "?propagate_claims": {
-                "#": "Enables passing claims in the backend's request header. You can pass nested claims using the dot `.` operator. E.g.: `realm_access.roles`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  {
-                    "=": 2,
-                    "@": [
-                      ""
-                    ]
-                  }
-                ]
-              },
-              "?roles": {
-                "#": " When set, the JWT token not having at least one of the listed roles is rejected.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  ""
-                ]
-              },
-              "?roles_key": {
-                "#": "When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, add `roles_key_is_nested` and use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: [\"myrole\"] } }`. Notice that the roles object you choose is a list, not a map.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?roles_key_is_nested": {
-                "#": "If the roles key uses a nested object using the `.` dot notation, you must set it to `true` to traverse the object.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": true
-              },
-              "?scopes": {
-                "#": "A list of scopes to validate. The token, after decoding it, can have the scopes declared as a space-separated list, e.g.: `\"my_scopes\": \"resource1:action1 resource3:action7\"` or inside a list, e.g.: `\"my_scopes\": [\"resource1:action1\",\"resource3:action7\"]`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": [
-                  ""
-                ]
-              },
-              "?scopes_key": {
-                "#": "The key name where KrakenD can find the scopes. The key can be a nested object using the `.` dot notation, e.g.: `data.access.my_scopes`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
-              },
-              "?scopes_matcher": {
-                "#": "Defines if the user needs to have in its token at least one of the listed claims (`any`), or `all` of them.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "|": [
-                  "_any",
-                  "_all"
-                ]
-              },
-              "?secret_url": {
-                "#": "An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "/(base64key|awskms|azurekeyvault|gcpkms|hashivault)://(.*)/"
-              },
-              "_alg": {
-                "#": "The hashing algorithm used by the token issuer.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "|": [
-                  "_EdDSA",
-                  "_HS256",
-                  "_HS384",
-                  "_HS512",
-                  "_RS256",
-                  "_RS384",
-                  "_RS512",
-                  "_ES256",
-                  "_ES384",
-                  "_ES512",
-                  "_PS256",
-                  "_PS384",
-                  "_PS512"
-                ]
-              },
-              "_jwk_url": {
-                "#": "The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity. Use with `cache` to avoid re-downloading the key on every request. Consider enabling [shared caching](https://www.krakend.io/docs/authorization/jwk-caching/) too. The identity server will receive an HTTP(s) request from KrakenD with a KrakenD user agent, and the identity server must reply with a JSON object and a content-type `application/jwk-set+json` or `application/json`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": ""
               }
-            }
-          ]
+            ]
+          },
+          "?roles": {
+            "#": " When set, the JWT token not having at least one of the listed roles is rejected.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              ""
+            ]
+          },
+          "?roles_key": {
+            "#": "When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, add `roles_key_is_nested` and use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: [\"myrole\"] } }`. Notice that the roles object you choose is a list, not a map.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?roles_key_is_nested": {
+            "#": "If the roles key uses a nested object using the `.` dot notation, you must set it to `true` to traverse the object.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": true
+          },
+          "?scopes": {
+            "#": "A list of scopes to validate. The token, after decoding it, can have the scopes declared as a space-separated list, e.g.: `\"my_scopes\": \"resource1:action1 resource3:action7\"` or inside a list, e.g.: `\"my_scopes\": [\"resource1:action1\",\"resource3:action7\"]`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              ""
+            ]
+          },
+          "?scopes_key": {
+            "#": "The key name where KrakenD can find the scopes. The key can be a nested object using the `.` dot notation, e.g.: `data.access.my_scopes`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?scopes_matcher": {
+            "#": "Defines if the user needs to have in its token at least one of the listed claims (`any`), or `all` of them.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "|": [
+              "_any",
+              "_all"
+            ]
+          },
+          "?secret_url": {
+            "#": "An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": "/(base64key|awskms|azurekeyvault|gcpkms|hashivault)://(.*)/"
+          },
+          "_alg": {
+            "#": "The hashing algorithm used by the token issuer.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "|": [
+              "_EdDSA",
+              "_HS256",
+              "_HS384",
+              "_HS512",
+              "_RS256",
+              "_RS384",
+              "_RS512",
+              "_ES256",
+              "_ES384",
+              "_ES512",
+              "_PS256",
+              "_PS384",
+              "_PS512"
+            ]
+          },
+          "_jwk_local_path": {
+            "#": "Local path to the JWK public keys, has preference over `jwk_url`. Instead of pointing to an external URL (with `jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add `secret_url` and `cypher_key`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          }
         },
-        "$ANY"
+        {
+          "/^[@$_#]/": "$ANY",
+          "?audience": {
+            "#": "Reject tokens that do not contain ALL audiences declared in the list.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              ""
+            ]
+          },
+          "?auth_header_name": {
+            "#": "Allows to parse the token from a custom header.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?cache": {
+            "#": "Set this value to `true` (recommended) to stop downloading keys on every request and store them in memory for the next `cache_duration` period and avoid hammering the key server, as recommended for performance. Do not use this flag when using `jwk_local_ca`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": true
+          },
+          "?cache_duration": {
+            "#": "The cache duration in seconds when the `cache` is enabled. 15 minutes when unset.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": -1
+          },
+          "?cipher_suites": {
+            "#": "Override the default cipher suites. Use it if you want to enforce an even higher security standard.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              {
+                "#": "\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+                "|": [
+                  "=5",
+                  "=10",
+                  "=47",
+                  "=53",
+                  "=60",
+                  "=156",
+                  "=157",
+                  "=49159",
+                  "=49161",
+                  "=49162",
+                  "=49169",
+                  "=49170",
+                  "=49171",
+                  "=49172",
+                  "=49187",
+                  "=49191",
+                  "=49199",
+                  "=49195",
+                  "=49200",
+                  "=49196",
+                  "=52392",
+                  "=52393"
+                ]
+              }
+            ]
+          },
+          "?cookie_key": {
+            "#": "Add the key name of the cookie containing the token when it is not passed in the headers\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?cypher_key": {
+            "#": "The cyphering key.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?disable_jwk_security": {
+            "#": "When true, disables security of the JWK client and allows insecure connections (plain HTTP) to download the keys. Useful for development environments.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": true
+          },
+          "?failed_jwk_key_cooldown": {
+            "#": "When a request comes with a token declaring an unknown `kid` (or the key strategy you choose), and the JWK is in a remote destination, KrakenD downloads the JWK from the Identity Provider for its recognition. Suppose there is a network failure, or the key is not in the list (e.g., you rotated the keys without anticipation). In that case, you can tell the gateway not to contact the Identity Provider again during the time specified here. We recommend setting this value, even with a low time (e.g., `10s`), to prevent misconfigurations from hammering your Identity Providers. Any values under one second are ignored.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": "$_psub_1_"
+          },
+          "?issuer": {
+            "#": "When set, tokens not matching the issuer are rejected.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?jwk_fingerprints": {
+            "#": "A list of fingerprints (the certificate's unique identifier) for certificate pinning and avoid man-in-the-middle attacks. Add fingerprints in base64 format.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              ""
+            ]
+          },
+          "?jwk_local_ca": {
+            "#": "Path to the CA's certificate verifying a secure connection when downloading the JWK. Use when not recognized by the system (e.g., self-signed certificates).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?jwk_local_path": {
+            "#": "Local path to the JWK public keys, has preference over `jwk_url`. Instead of pointing to an external URL (with `jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add `secret_url` and `cypher_key`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?key_identify_strategy": {
+            "#": "Allows strategies other than `kid` to load keys.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "|": [
+              "_kid",
+              "_x5t",
+              "_kid_x5t"
+            ]
+          },
+          "?leeway": {
+            "#": "A margin of time where you will accept an already expired token. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": "$_psub_1_"
+          },
+          "?operation_debug": {
+            "#": "When `true`, any JWT **validation operation** gets printed in the log with a level `ERROR`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": true
+          },
+          "?propagate_claims": {
+            "#": "Enables passing claims in the backend's request header. You can pass nested claims using the dot `.` operator. E.g.: `realm_access.roles`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              {
+                "=": 2,
+                "@": [
+                  ""
+                ]
+              }
+            ]
+          },
+          "?roles": {
+            "#": " When set, the JWT token not having at least one of the listed roles is rejected.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              ""
+            ]
+          },
+          "?roles_key": {
+            "#": "When validating users through roles, provide the key name inside the JWT payload that lists their roles. If this key is nested inside another object, add `roles_key_is_nested` and use the dot notation `.` to traverse each level. E.g.: `resource_access.myclient.roles` represents the payload `{resource_access: { myclient: { roles: [\"myrole\"] } }`. Notice that the roles object you choose is a list, not a map.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?roles_key_is_nested": {
+            "#": "If the roles key uses a nested object using the `.` dot notation, you must set it to `true` to traverse the object.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": true
+          },
+          "?scopes": {
+            "#": "A list of scopes to validate. The token, after decoding it, can have the scopes declared as a space-separated list, e.g.: `\"my_scopes\": \"resource1:action1 resource3:action7\"` or inside a list, e.g.: `\"my_scopes\": [\"resource1:action1\",\"resource3:action7\"]`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": [
+              ""
+            ]
+          },
+          "?scopes_key": {
+            "#": "The key name where KrakenD can find the scopes. The key can be a nested object using the `.` dot notation, e.g.: `data.access.my_scopes`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          },
+          "?scopes_matcher": {
+            "#": "Defines if the user needs to have in its token at least one of the listed claims (`any`), or `all` of them.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "|": [
+              "_any",
+              "_all"
+            ]
+          },
+          "?secret_url": {
+            "#": "An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) (see providers).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": "/(base64key|awskms|azurekeyvault|gcpkms|hashivault)://(.*)/"
+          },
+          "_alg": {
+            "#": "The hashing algorithm used by the token issuer.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "|": [
+              "_EdDSA",
+              "_HS256",
+              "_HS384",
+              "_HS512",
+              "_RS256",
+              "_RS384",
+              "_RS512",
+              "_ES256",
+              "_ES384",
+              "_ES512",
+              "_PS256",
+              "_PS384",
+              "_PS512"
+            ]
+          },
+          "_jwk_url": {
+            "#": "The URL to the JWK endpoint with the public keys used to verify the token's authenticity and integrity. Use with `cache` to avoid re-downloading the key on every request. Consider enabling [shared caching](https://www.krakend.io/docs/authorization/jwk-caching/) too. The identity server will receive an HTTP(s) request from KrakenD with a KrakenD user agent, and the identity server must reply with a JSON object and a content-type `application/jwk-set+json` or `application/json`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+            "@": ""
+          }
+        }
       ]
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend.json": {
@@ -1234,62 +1226,59 @@
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1graphql.json": {
       "#": "Convert REST endpoints to GraphQL calls (adapter/transformer)",
-      "&": [
+      "^": [
         {
-          "^": [
-            {
-              "?operationName": {
-                "#": "A meaningful and explicit name for your operation, required in multi-operation documents and for helpful debugging and server-side logging.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
-                "@": ""
-              },
-              "?query_path": {
-                "#": "Path to the file containing the query. This file is loaded during startup and never checked again, if it changes KrakenD will be unaware of it.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
-                "@": ""
-              },
-              "?variables": {
-                "": "$ANY",
-                "#": "A dictionary defining all the variables sent to the GraphQL server. You can use `{placeholders}` to inject parameters from the endpoint URL.\n\nSee: https://www.krakend.io/docs/backends/graphql/"
-              },
-              "_query": {
-                "#": "An inline GraphQL query you want to send to the server. Use this attribute for simple and inline queries, use `query_path` instead for larger queries. Use escaping when needed.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
-                "@": ""
-              },
-              "_type": {
-                "#": "The type of query you are declaring, `query` (read), or `mutation` (write).\n\nSee: https://www.krakend.io/docs/backends/graphql/",
-                "|": [
-                  "_query",
-                  "_mutation"
-                ]
-              }
-            },
-            {
-              "?operationName": {
-                "#": "A meaningful and explicit name for your operation, required in multi-operation documents and for helpful debugging and server-side logging.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
-                "@": ""
-              },
-              "?query": {
-                "#": "An inline GraphQL query you want to send to the server. Use this attribute for simple and inline queries, use `query_path` instead for larger queries. Use escaping when needed.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
-                "@": ""
-              },
-              "?variables": {
-                "": "$ANY",
-                "#": "A dictionary defining all the variables sent to the GraphQL server. You can use `{placeholders}` to inject parameters from the endpoint URL.\n\nSee: https://www.krakend.io/docs/backends/graphql/"
-              },
-              "_query_path": {
-                "#": "Path to the file containing the query. This file is loaded during startup and never checked again, if it changes KrakenD will be unaware of it.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
-                "@": ""
-              },
-              "_type": {
-                "#": "The type of query you are declaring, `query` (read), or `mutation` (write).\n\nSee: https://www.krakend.io/docs/backends/graphql/",
-                "|": [
-                  "_query",
-                  "_mutation"
-                ]
-              }
-            }
-          ]
+          "/^[@$_#]/": "$ANY",
+          "?operationName": {
+            "#": "A meaningful and explicit name for your operation, required in multi-operation documents and for helpful debugging and server-side logging.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
+            "@": ""
+          },
+          "?query_path": {
+            "#": "Path to the file containing the query. This file is loaded during startup and never checked again, if it changes KrakenD will be unaware of it.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
+            "@": ""
+          },
+          "?variables": {
+            "": "$ANY",
+            "#": "A dictionary defining all the variables sent to the GraphQL server. You can use `{placeholders}` to inject parameters from the endpoint URL.\n\nSee: https://www.krakend.io/docs/backends/graphql/"
+          },
+          "_query": {
+            "#": "An inline GraphQL query you want to send to the server. Use this attribute for simple and inline queries, use `query_path` instead for larger queries. Use escaping when needed.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
+            "@": ""
+          },
+          "_type": {
+            "#": "The type of query you are declaring, `query` (read), or `mutation` (write).\n\nSee: https://www.krakend.io/docs/backends/graphql/",
+            "|": [
+              "_query",
+              "_mutation"
+            ]
+          }
         },
-        "$ANY"
+        {
+          "/^[@$_#]/": "$ANY",
+          "?operationName": {
+            "#": "A meaningful and explicit name for your operation, required in multi-operation documents and for helpful debugging and server-side logging.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
+            "@": ""
+          },
+          "?query": {
+            "#": "An inline GraphQL query you want to send to the server. Use this attribute for simple and inline queries, use `query_path` instead for larger queries. Use escaping when needed.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
+            "@": ""
+          },
+          "?variables": {
+            "": "$ANY",
+            "#": "A dictionary defining all the variables sent to the GraphQL server. You can use `{placeholders}` to inject parameters from the endpoint URL.\n\nSee: https://www.krakend.io/docs/backends/graphql/"
+          },
+          "_query_path": {
+            "#": "Path to the file containing the query. This file is loaded during startup and never checked again, if it changes KrakenD will be unaware of it.\n\nSee: https://www.krakend.io/docs/backends/graphql/",
+            "@": ""
+          },
+          "_type": {
+            "#": "The type of query you are declaring, `query` (read), or `mutation` (write).\n\nSee: https://www.krakend.io/docs/backends/graphql/",
+            "|": [
+              "_query",
+              "_mutation"
+            ]
+          }
+        }
       ]
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1grpc.json": {
@@ -1408,48 +1397,45 @@
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1soap.json": {
       "#": "Enterprise only. Build and modify requests to communicate with SOAP services.\n\nSee: https://www.krakend.io/docs/backends/soap/",
-      "&": [
+      "^": [
         {
-          "^": [
-            {
-              "?content_type": {
-                "#": "The `Content-Type` used in your template, and that will be sent to the SOAP server. This is not the content-type the end-user sent in the request.\n\nSee: https://www.krakend.io/docs/backends/soap/",
-                "@": ""
-              },
-              "?debug": {
-                "#": "When `true`, shows useful information in the logs with `DEBUG` level about the input received and the body generated. Do not enable in production. Debug logs are multiline and designed fore developer readibility, not machine processing.\n\nSee: https://www.krakend.io/docs/backends/soap/",
-                "@": true
-              },
-              "?template": {
-                "#": "An inline base64 encoded Go template with the body XML content you want to send to the SOAP service. This option is useful if you don't want to rely on external files and embed the template in the configuration.\n\nSee: https://www.krakend.io/docs/backends/soap/",
-                "@": ""
-              },
-              "_path": {
-                "#": "The path to the Go template file you want to use to craft the body.\n\nSee: https://www.krakend.io/docs/backends/soap/",
-                "@": ""
-              }
-            },
-            {
-              "?content_type": {
-                "#": "The `Content-Type` used in your template, and that will be sent to the SOAP server. This is not the content-type the end-user sent in the request.\n\nSee: https://www.krakend.io/docs/backends/soap/",
-                "@": ""
-              },
-              "?debug": {
-                "#": "When `true`, shows useful information in the logs with `DEBUG` level about the input received and the body generated. Do not enable in production. Debug logs are multiline and designed fore developer readibility, not machine processing.\n\nSee: https://www.krakend.io/docs/backends/soap/",
-                "@": true
-              },
-              "?path": {
-                "#": "The path to the Go template file you want to use to craft the body.\n\nSee: https://www.krakend.io/docs/backends/soap/",
-                "@": ""
-              },
-              "_template": {
-                "#": "An inline base64 encoded Go template with the body XML content you want to send to the SOAP service. This option is useful if you don't want to rely on external files and embed the template in the configuration.\n\nSee: https://www.krakend.io/docs/backends/soap/",
-                "@": ""
-              }
-            }
-          ]
+          "/^[@$_#]/": "$ANY",
+          "?content_type": {
+            "#": "The `Content-Type` used in your template, and that will be sent to the SOAP server. This is not the content-type the end-user sent in the request.\n\nSee: https://www.krakend.io/docs/backends/soap/",
+            "@": ""
+          },
+          "?debug": {
+            "#": "When `true`, shows useful information in the logs with `DEBUG` level about the input received and the body generated. Do not enable in production. Debug logs are multiline and designed fore developer readibility, not machine processing.\n\nSee: https://www.krakend.io/docs/backends/soap/",
+            "@": true
+          },
+          "?template": {
+            "#": "An inline base64 encoded Go template with the body XML content you want to send to the SOAP service. This option is useful if you don't want to rely on external files and embed the template in the configuration.\n\nSee: https://www.krakend.io/docs/backends/soap/",
+            "@": ""
+          },
+          "_path": {
+            "#": "The path to the Go template file you want to use to craft the body.\n\nSee: https://www.krakend.io/docs/backends/soap/",
+            "@": ""
+          }
         },
-        "$ANY"
+        {
+          "/^[@$_#]/": "$ANY",
+          "?content_type": {
+            "#": "The `Content-Type` used in your template, and that will be sent to the SOAP server. This is not the content-type the end-user sent in the request.\n\nSee: https://www.krakend.io/docs/backends/soap/",
+            "@": ""
+          },
+          "?debug": {
+            "#": "When `true`, shows useful information in the logs with `DEBUG` level about the input received and the body generated. Do not enable in production. Debug logs are multiline and designed fore developer readibility, not machine processing.\n\nSee: https://www.krakend.io/docs/backends/soap/",
+            "@": true
+          },
+          "?path": {
+            "#": "The path to the Go template file you want to use to craft the body.\n\nSee: https://www.krakend.io/docs/backends/soap/",
+            "@": ""
+          },
+          "_template": {
+            "#": "An inline base64 encoded Go template with the body XML content you want to send to the SOAP service. This option is useful if you don't want to rely on external files and embed the template in the configuration.\n\nSee: https://www.krakend.io/docs/backends/soap/",
+            "@": ""
+          }
+        }
       ]
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1static-filesystem.json": {
@@ -2015,6 +2001,7 @@
         {
           "^": [
             {
+              "/^[@$_#]/": "$ANY",
               "?content_type": {
                 "#": "The `Content-Type` you are generating in the template, so it can be recognized by whoever is using it.\n\nSee: https://www.krakend.io/docs/enterprise/backends/body-generator/",
                 "@": ""
@@ -2033,6 +2020,7 @@
               }
             },
             {
+              "/^[@$_#]/": "$ANY",
               "?content_type": {
                 "#": "The `Content-Type` you are generating in the template, so it can be recognized by whoever is using it.\n\nSee: https://www.krakend.io/docs/enterprise/backends/body-generator/",
                 "@": ""
@@ -3067,40 +3055,37 @@
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1url-rewrite.json": {
       "#": "Enterprise only. Allows you to declare additional URLs other than the ones defined under the endpoints configuration, used as aliases of existing endpoints.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/",
-      "&": [
+      "|": [
         {
-          "|": [
-            {
-              "?regexp": {
-                "#": "A list of lists, containing the regular expression that defines the URL to be rewritten, and its endpoint destination. You can use the capturing groups with the syntax `${1}`, `${2}`, etc.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/",
-                "@": [
-                  [
-                    "$ANY"
-                  ]
-                ]
-              },
-              "_literal": {
-                "": "$ANY",
-                "#": "A map with the exact desired url and its mapping to an endpoint. If the endpoint has `{placeholders}` you need to write them, but the literal value `{placeholders}` is passed.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/"
-              }
-            },
-            {
-              "?literal": {
-                "": "$ANY",
-                "#": "A map with the exact desired url and its mapping to an endpoint. If the endpoint has `{placeholders}` you need to write them, but the literal value `{placeholders}` is passed.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/"
-              },
-              "_regexp": {
-                "#": "A list of lists, containing the regular expression that defines the URL to be rewritten, and its endpoint destination. You can use the capturing groups with the syntax `${1}`, `${2}`, etc.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/",
-                "@": [
-                  [
-                    "$ANY"
-                  ]
-                ]
-              }
-            }
-          ]
+          "/^[@$_#]/": "$ANY",
+          "?regexp": {
+            "#": "A list of lists, containing the regular expression that defines the URL to be rewritten, and its endpoint destination. You can use the capturing groups with the syntax `${1}`, `${2}`, etc.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/",
+            "@": [
+              [
+                "$ANY"
+              ]
+            ]
+          },
+          "_literal": {
+            "": "$ANY",
+            "#": "A map with the exact desired url and its mapping to an endpoint. If the endpoint has `{placeholders}` you need to write them, but the literal value `{placeholders}` is passed.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/"
+          }
         },
-        "$ANY"
+        {
+          "/^[@$_#]/": "$ANY",
+          "?literal": {
+            "": "$ANY",
+            "#": "A map with the exact desired url and its mapping to an endpoint. If the endpoint has `{placeholders}` you need to write them, but the literal value `{placeholders}` is passed.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/"
+          },
+          "_regexp": {
+            "#": "A list of lists, containing the regular expression that defines the URL to be rewritten, and its endpoint destination. You can use the capturing groups with the syntax `${1}`, `${2}`, etc.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/",
+            "@": [
+              [
+                "$ANY"
+              ]
+            ]
+          }
+        }
       ]
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1virtualhost.json": {
@@ -3612,252 +3597,250 @@
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1security~1policies.json": {
       "#": "The policies engine allows you to write custom sets of policies that are validated during requests, responses, or token validation.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-      "&": [
+      "|": [
         {
-          "|": [
-            {
-              "?auto_join_policies": {
-                "#": "When true, all policies of the same type concatenate with an AND operation to evaluate a single expression. Performs faster, but its harder the debug.",
-                "@": true
-              },
-              "?debug": {
-                "#": "When true, all the inputs and evaluation results are printed in the console.",
-                "@": true
-              },
-              "?disable_macros": {
-                "#": "Advanced macros can be disabled in those policies not needing them for a faster evaluation.",
-                "@": true
-              },
-              "?jwt": {
-                "#": "All the policies applied in the JWT context (token validation). **You must configure `auth/validator`** for the policies to run, otherwise they will be skipped. Any policy failing will generate a `401 Unauthorized` error. Works in the `endpoint` context only, and is not available under `backend`.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                "/^[@$_#]/": "$ANY",
-                "_policies": {
-                  "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                  "@": [
-                    {
-                      "@": ""
-                    }
-                  ]
+          "/^[@$_#]/": "$ANY",
+          "?auto_join_policies": {
+            "#": "When true, all policies of the same type concatenate with an AND operation to evaluate a single expression. Performs faster, but its harder the debug.",
+            "@": true
+          },
+          "?debug": {
+            "#": "When true, all the inputs and evaluation results are printed in the console.",
+            "@": true
+          },
+          "?disable_macros": {
+            "#": "Advanced macros can be disabled in those policies not needing them for a faster evaluation.",
+            "@": true
+          },
+          "?jwt": {
+            "#": "All the policies applied in the JWT context (token validation). **You must configure `auth/validator`** for the policies to run, otherwise they will be skipped. Any policy failing will generate a `401 Unauthorized` error. Works in the `endpoint` context only, and is not available under `backend`.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+            "/^[@$_#]/": "$ANY",
+            "_policies": {
+              "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+              "@": [
+                {
+                  "@": ""
                 }
-              },
-              "?resp": {
-                "#": "All the policies applied in the response context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                "/^[@$_#]/": "$ANY",
-                "?error": {
-                  "": "$ANY",
-                  "?body": {
-                    "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?content_type": {
-                    "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?status": {
-                    "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": -1
-                  }
-                },
-                "_policies": {
-                  "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                  "@": [
-                    {
-                      "@": ""
-                    }
-                  ]
-                }
-              },
-              "_req": {
-                "#": "All the policies applied in the request context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                "/^[@$_#]/": "$ANY",
-                "?error": {
-                  "": "$ANY",
-                  "?body": {
-                    "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?content_type": {
-                    "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?status": {
-                    "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": -1
-                  }
-                },
-                "_policies": {
-                  "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                  "@": [
-                    {
-                      "@": ""
-                    }
-                  ]
-                }
-              }
-            },
-            {
-              "?auto_join_policies": {
-                "#": "When true, all policies of the same type concatenate with an AND operation to evaluate a single expression. Performs faster, but its harder the debug.",
-                "@": true
-              },
-              "?debug": {
-                "#": "When true, all the inputs and evaluation results are printed in the console.",
-                "@": true
-              },
-              "?disable_macros": {
-                "#": "Advanced macros can be disabled in those policies not needing them for a faster evaluation.",
-                "@": true
-              },
-              "?jwt": {
-                "#": "All the policies applied in the JWT context (token validation). **You must configure `auth/validator`** for the policies to run, otherwise they will be skipped. Any policy failing will generate a `401 Unauthorized` error. Works in the `endpoint` context only, and is not available under `backend`.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                "/^[@$_#]/": "$ANY",
-                "_policies": {
-                  "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                  "@": [
-                    {
-                      "@": ""
-                    }
-                  ]
-                }
-              },
-              "?req": {
-                "#": "All the policies applied in the request context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                "/^[@$_#]/": "$ANY",
-                "?error": {
-                  "": "$ANY",
-                  "?body": {
-                    "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?content_type": {
-                    "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?status": {
-                    "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": -1
-                  }
-                },
-                "_policies": {
-                  "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                  "@": [
-                    {
-                      "@": ""
-                    }
-                  ]
-                }
-              },
-              "_resp": {
-                "#": "All the policies applied in the response context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                "/^[@$_#]/": "$ANY",
-                "?error": {
-                  "": "$ANY",
-                  "?body": {
-                    "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?content_type": {
-                    "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?status": {
-                    "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": -1
-                  }
-                },
-                "_policies": {
-                  "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                  "@": [
-                    {
-                      "@": ""
-                    }
-                  ]
-                }
-              }
-            },
-            {
-              "?auto_join_policies": {
-                "#": "When true, all policies of the same type concatenate with an AND operation to evaluate a single expression. Performs faster, but its harder the debug.",
-                "@": true
-              },
-              "?debug": {
-                "#": "When true, all the inputs and evaluation results are printed in the console.",
-                "@": true
-              },
-              "?disable_macros": {
-                "#": "Advanced macros can be disabled in those policies not needing them for a faster evaluation.",
-                "@": true
-              },
-              "?req": {
-                "#": "All the policies applied in the request context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                "/^[@$_#]/": "$ANY",
-                "?error": {
-                  "": "$ANY",
-                  "?body": {
-                    "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?content_type": {
-                    "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?status": {
-                    "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": -1
-                  }
-                },
-                "_policies": {
-                  "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                  "@": [
-                    {
-                      "@": ""
-                    }
-                  ]
-                }
-              },
-              "?resp": {
-                "#": "All the policies applied in the response context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                "/^[@$_#]/": "$ANY",
-                "?error": {
-                  "": "$ANY",
-                  "?body": {
-                    "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?content_type": {
-                    "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": ""
-                  },
-                  "?status": {
-                    "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                    "@": -1
-                  }
-                },
-                "_policies": {
-                  "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                  "@": [
-                    {
-                      "@": ""
-                    }
-                  ]
-                }
-              },
-              "_jwt": {
-                "#": "All the policies applied in the JWT context (token validation). **You must configure `auth/validator`** for the policies to run, otherwise they will be skipped. Any policy failing will generate a `401 Unauthorized` error. Works in the `endpoint` context only, and is not available under `backend`.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                "/^[@$_#]/": "$ANY",
-                "_policies": {
-                  "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-                  "@": [
-                    {
-                      "@": ""
-                    }
-                  ]
-                }
-              }
+              ]
             }
-          ]
+          },
+          "?resp": {
+            "#": "All the policies applied in the response context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+            "/^[@$_#]/": "$ANY",
+            "?error": {
+              "": "$ANY",
+              "?body": {
+                "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?content_type": {
+                "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?status": {
+                "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": -1
+              }
+            },
+            "_policies": {
+              "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+              "@": [
+                {
+                  "@": ""
+                }
+              ]
+            }
+          },
+          "_req": {
+            "#": "All the policies applied in the request context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+            "/^[@$_#]/": "$ANY",
+            "?error": {
+              "": "$ANY",
+              "?body": {
+                "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?content_type": {
+                "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?status": {
+                "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": -1
+              }
+            },
+            "_policies": {
+              "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+              "@": [
+                {
+                  "@": ""
+                }
+              ]
+            }
+          }
         },
-        "$ANY"
+        {
+          "/^[@$_#]/": "$ANY",
+          "?auto_join_policies": {
+            "#": "When true, all policies of the same type concatenate with an AND operation to evaluate a single expression. Performs faster, but its harder the debug.",
+            "@": true
+          },
+          "?debug": {
+            "#": "When true, all the inputs and evaluation results are printed in the console.",
+            "@": true
+          },
+          "?disable_macros": {
+            "#": "Advanced macros can be disabled in those policies not needing them for a faster evaluation.",
+            "@": true
+          },
+          "?jwt": {
+            "#": "All the policies applied in the JWT context (token validation). **You must configure `auth/validator`** for the policies to run, otherwise they will be skipped. Any policy failing will generate a `401 Unauthorized` error. Works in the `endpoint` context only, and is not available under `backend`.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+            "/^[@$_#]/": "$ANY",
+            "_policies": {
+              "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+              "@": [
+                {
+                  "@": ""
+                }
+              ]
+            }
+          },
+          "?req": {
+            "#": "All the policies applied in the request context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+            "/^[@$_#]/": "$ANY",
+            "?error": {
+              "": "$ANY",
+              "?body": {
+                "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?content_type": {
+                "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?status": {
+                "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": -1
+              }
+            },
+            "_policies": {
+              "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+              "@": [
+                {
+                  "@": ""
+                }
+              ]
+            }
+          },
+          "_resp": {
+            "#": "All the policies applied in the response context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+            "/^[@$_#]/": "$ANY",
+            "?error": {
+              "": "$ANY",
+              "?body": {
+                "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?content_type": {
+                "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?status": {
+                "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": -1
+              }
+            },
+            "_policies": {
+              "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+              "@": [
+                {
+                  "@": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "/^[@$_#]/": "$ANY",
+          "?auto_join_policies": {
+            "#": "When true, all policies of the same type concatenate with an AND operation to evaluate a single expression. Performs faster, but its harder the debug.",
+            "@": true
+          },
+          "?debug": {
+            "#": "When true, all the inputs and evaluation results are printed in the console.",
+            "@": true
+          },
+          "?disable_macros": {
+            "#": "Advanced macros can be disabled in those policies not needing them for a faster evaluation.",
+            "@": true
+          },
+          "?req": {
+            "#": "All the policies applied in the request context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+            "/^[@$_#]/": "$ANY",
+            "?error": {
+              "": "$ANY",
+              "?body": {
+                "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?content_type": {
+                "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?status": {
+                "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": -1
+              }
+            },
+            "_policies": {
+              "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+              "@": [
+                {
+                  "@": ""
+                }
+              ]
+            }
+          },
+          "?resp": {
+            "#": "All the policies applied in the response context.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+            "/^[@$_#]/": "$ANY",
+            "?error": {
+              "": "$ANY",
+              "?body": {
+                "#": "Leave an empty string to use the validation error, or write a string with the error response body. This error is NOT returned in the response, but in the application logs, unless you enable `return_detailed_errors` in the `router` section. You can add escaped JSON, XML, etc in the string and add a Content-Type.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?content_type": {
+                "#": "The Content-Type header you'd like to send with the error response. When unset, uses `text/plain` by default.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": ""
+              },
+              "?status": {
+                "#": "The HTTP status code you want to return when the validation fails.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+                "@": -1
+              }
+            },
+            "_policies": {
+              "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+              "@": [
+                {
+                  "@": ""
+                }
+              ]
+            }
+          },
+          "_jwt": {
+            "#": "All the policies applied in the JWT context (token validation). **You must configure `auth/validator`** for the policies to run, otherwise they will be skipped. Any policy failing will generate a `401 Unauthorized` error. Works in the `endpoint` context only, and is not available under `backend`.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+            "/^[@$_#]/": "$ANY",
+            "_policies": {
+              "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
+              "@": [
+                {
+                  "@": ""
+                }
+              ]
+            }
+          }
+        }
       ]
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1server~1static-filesystem.json": {
@@ -3884,44 +3867,41 @@
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1server~1virtualhost.json": {
       "#": "Enterprise only. The Virtual Host server allows you to run different configurations of KrakenD endpoints based on the host accessing the server.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
-      "&": [
+      "^": [
         {
-          "^": [
-            {
-              "?aliased_hosts": {
-                "": "$ANY",
-                "#": "A map of all recognized virtual hosts where the key is the alias and the value the host name, including the port if it's not 443 or 80. The values declared here must match the content of the `Host` header passed by the client. The alias must be an alphanumeric string.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
-                "?[a-z0-9_]": {
-                  "#": "The key of this map must compile with the regexp `a-z0-9_` and the host name is the string that matches the value sent by the user in the `Host` header.",
-                  "@": ""
-                }
-              },
-              "_hosts": {
-                "#": "All recognized virtual hosts by KrakenD must be listed here. The values declared here must match the content of the `Host` header when passed by the client.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
-                "@": [
-                  ""
-                ]
-              }
-            },
-            {
-              "?hosts": {
-                "#": "All recognized virtual hosts by KrakenD must be listed here. The values declared here must match the content of the `Host` header when passed by the client.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
-                "@": [
-                  ""
-                ]
-              },
-              "_aliased_hosts": {
-                "": "$ANY",
-                "#": "A map of all recognized virtual hosts where the key is the alias and the value the host name, including the port if it's not 443 or 80. The values declared here must match the content of the `Host` header passed by the client. The alias must be an alphanumeric string.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
-                "?[a-z0-9_]": {
-                  "#": "The key of this map must compile with the regexp `a-z0-9_` and the host name is the string that matches the value sent by the user in the `Host` header.",
-                  "@": ""
-                }
-              }
+          "/^[@$_#]/": "$ANY",
+          "?aliased_hosts": {
+            "": "$ANY",
+            "#": "A map of all recognized virtual hosts where the key is the alias and the value the host name, including the port if it's not 443 or 80. The values declared here must match the content of the `Host` header passed by the client. The alias must be an alphanumeric string.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
+            "?[a-z0-9_]": {
+              "#": "The key of this map must compile with the regexp `a-z0-9_` and the host name is the string that matches the value sent by the user in the `Host` header.",
+              "@": ""
             }
-          ]
+          },
+          "_hosts": {
+            "#": "All recognized virtual hosts by KrakenD must be listed here. The values declared here must match the content of the `Host` header when passed by the client.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
+            "@": [
+              ""
+            ]
+          }
         },
-        "$ANY"
+        {
+          "/^[@$_#]/": "$ANY",
+          "?hosts": {
+            "#": "All recognized virtual hosts by KrakenD must be listed here. The values declared here must match the content of the `Host` header when passed by the client.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
+            "@": [
+              ""
+            ]
+          },
+          "_aliased_hosts": {
+            "": "$ANY",
+            "#": "A map of all recognized virtual hosts where the key is the alias and the value the host name, including the port if it's not 443 or 80. The values declared here must match the content of the `Host` header passed by the client. The alias must be an alphanumeric string.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
+            "?[a-z0-9_]": {
+              "#": "The key of this map must compile with the regexp `a-z0-9_` and the host name is the string that matches the value sent by the user in the `Host` header.",
+              "@": ""
+            }
+          }
+        }
       ]
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1service_extra_config.json": {
@@ -4333,48 +4313,45 @@
           },
           "?jaeger": {
             "#": "Submit spans to a Jaeger Collector (HTTP) with `endpoint` or to a Jaeger Agent (UDP) with `agent_endpoint`. \n\nSee https://www.krakend.io/docs/telemetry/jaeger/",
-            "&": [
+            "^": [
               {
-                "^": [
-                  {
-                    "?agent_endpoint": {
-                      "#": "The address where the Jaeger Agent is (Thrift over UDP), e.g., `jaeger:6831`\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
-                      "@": ""
-                    },
-                    "?buffer_max_count": {
-                      "#": "Total number of traces to buffer in memory\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
-                      "@": -1
-                    },
-                    "_endpoint": {
-                      "#": "The full URL including port indicating where your Jaeger Collector is (Thrift over HTTP/S), e.g., `http://jaeger:14268/api/traces`\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
-                      "@": ""
-                    },
-                    "_service_name": {
-                      "#": "The service name registered in Jaeger\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
-                      "@": ""
-                    }
-                  },
-                  {
-                    "?buffer_max_count": {
-                      "#": "Total number of traces to buffer in memory\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
-                      "@": -1
-                    },
-                    "?endpoint": {
-                      "#": "The full URL including port indicating where your Jaeger Collector is (Thrift over HTTP/S), e.g., `http://jaeger:14268/api/traces`\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
-                      "@": ""
-                    },
-                    "_agent_endpoint": {
-                      "#": "The address where the Jaeger Agent is (Thrift over UDP), e.g., `jaeger:6831`\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
-                      "@": ""
-                    },
-                    "_service_name": {
-                      "#": "The service name registered in Jaeger\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
-                      "@": ""
-                    }
-                  }
-                ]
+                "/^[@$_#]/": "$ANY",
+                "?agent_endpoint": {
+                  "#": "The address where the Jaeger Agent is (Thrift over UDP), e.g., `jaeger:6831`\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
+                  "@": ""
+                },
+                "?buffer_max_count": {
+                  "#": "Total number of traces to buffer in memory\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
+                  "@": -1
+                },
+                "_endpoint": {
+                  "#": "The full URL including port indicating where your Jaeger Collector is (Thrift over HTTP/S), e.g., `http://jaeger:14268/api/traces`\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
+                  "@": ""
+                },
+                "_service_name": {
+                  "#": "The service name registered in Jaeger\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
+                  "@": ""
+                }
               },
-              "$ANY"
+              {
+                "/^[@$_#]/": "$ANY",
+                "?buffer_max_count": {
+                  "#": "Total number of traces to buffer in memory\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
+                  "@": -1
+                },
+                "?endpoint": {
+                  "#": "The full URL including port indicating where your Jaeger Collector is (Thrift over HTTP/S), e.g., `http://jaeger:14268/api/traces`\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
+                  "@": ""
+                },
+                "_agent_endpoint": {
+                  "#": "The address where the Jaeger Agent is (Thrift over UDP), e.g., `jaeger:6831`\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
+                  "@": ""
+                },
+                "_service_name": {
+                  "#": "The service name registered in Jaeger\n\nSee: https://www.krakend.io/docs/telemetry/jaeger/",
+                  "@": ""
+                }
+              }
             ]
           },
           "?logger": {
@@ -4463,56 +4440,53 @@
           },
           "?xray": {
             "#": "AWS X-Ray is a service offered by Amazon that provides an end-to-end view of requests as they travel through your application, and shows a map of your application's underlying components.",
-            "&": [
+            "^": [
               {
-                "^": [
-                  {
-                    "?use_env": {
-                      "#": "When true the AWS credentials (access_key_id and secret_access_key) are taken from environment vars. Don't specify them then.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
-                      "@": true
-                    },
-                    "_access_key_id": {
-                      "#": " Your access key ID provided by Amazon. Needed when `use_env` is unset or set to false.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
-                      "@": ""
-                    },
-                    "_region": {
-                      "#": "The AWS geographical region, e.g, `us-east-1`.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
-                      "@": ""
-                    },
-                    "_secret_access_key": {
-                      "#": "Your secret access key provided by Amazon. Needed when `use_env` is unset or set to false.\n\nSee: https://www.krakend.io",
-                      "@": ""
-                    },
-                    "_version": {
-                      "#": "The version of the AWS X-Ray service to use.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
-                      "@": ""
-                    }
-                  },
-                  {
-                    "?access_key_id": {
-                      "#": " Your access key ID provided by Amazon. Needed when `use_env` is unset or set to false.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
-                      "@": ""
-                    },
-                    "?secret_access_key": {
-                      "#": "Your secret access key provided by Amazon. Needed when `use_env` is unset or set to false.\n\nSee: https://www.krakend.io",
-                      "@": ""
-                    },
-                    "_region": {
-                      "#": "The AWS geographical region, e.g, `us-east-1`.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
-                      "@": ""
-                    },
-                    "_use_env": {
-                      "#": "When true the AWS credentials (access_key_id and secret_access_key) are taken from environment vars. Don't specify them then.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
-                      "@": true
-                    },
-                    "_version": {
-                      "#": "The version of the AWS X-Ray service to use.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
-                      "@": ""
-                    }
-                  }
-                ]
+                "/^[@$_#]/": "$ANY",
+                "?use_env": {
+                  "#": "When true the AWS credentials (access_key_id and secret_access_key) are taken from environment vars. Don't specify them then.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
+                  "@": true
+                },
+                "_access_key_id": {
+                  "#": " Your access key ID provided by Amazon. Needed when `use_env` is unset or set to false.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
+                  "@": ""
+                },
+                "_region": {
+                  "#": "The AWS geographical region, e.g, `us-east-1`.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
+                  "@": ""
+                },
+                "_secret_access_key": {
+                  "#": "Your secret access key provided by Amazon. Needed when `use_env` is unset or set to false.\n\nSee: https://www.krakend.io",
+                  "@": ""
+                },
+                "_version": {
+                  "#": "The version of the AWS X-Ray service to use.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
+                  "@": ""
+                }
               },
-              "$ANY"
+              {
+                "/^[@$_#]/": "$ANY",
+                "?access_key_id": {
+                  "#": " Your access key ID provided by Amazon. Needed when `use_env` is unset or set to false.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
+                  "@": ""
+                },
+                "?secret_access_key": {
+                  "#": "Your secret access key provided by Amazon. Needed when `use_env` is unset or set to false.\n\nSee: https://www.krakend.io",
+                  "@": ""
+                },
+                "_region": {
+                  "#": "The AWS geographical region, e.g, `us-east-1`.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
+                  "@": ""
+                },
+                "_use_env": {
+                  "#": "When true the AWS credentials (access_key_id and secret_access_key) are taken from environment vars. Don't specify them then.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
+                  "@": true
+                },
+                "_version": {
+                  "#": "The version of the AWS X-Ray service to use.\n\nSee: https://www.krakend.io/docs/telemetry/xray/",
+                  "@": ""
+                }
+              }
             ]
           },
           "?zipkin": {
@@ -4919,182 +4893,179 @@
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1tls.json": {
       "#": "Enabling TLS for HTTPS and HTTP/2.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-      "&": [
+      "|": [
         {
-          "|": [
-            {
-              "?ca_certs": {
-                "#": "An array with all the CA certificates you would like to load to KrakenD **when using mTLS**, in addition to the certificates present in the system's CA. Each certificate in the list is a relative or absolute path to the PEM file. If you have a format other than PEM, you must convert the certificate to PEM using a conversion tool. See also `disable_system_ca_pool` to avoid system's CA.\n\nSee: https://www.krakend.io/docs/authorization/mutual-authentication/",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?cipher_suites": {
-                "!": true,
-                "#": "The list of cipher suites as defined in the documentation.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?curve_preferences": {
-                "!": true,
-                "#": "The list of all the identifiers for the curve preferences. Use `23` for CurveP256, `24` for CurveP384 or `25` for CurveP521.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                "@": [
-                  {
-                    "|": [
-                      "=23",
-                      "=24",
-                      "=25"
-                    ]
-                  }
-                ]
-              },
-              "?disable_system_ca_pool": {
-                "#": "Ignore any certificate in the system's CA. The only certificates loaded will be the ones in the `ca_certs` list when true.\n\nSee: https://www.krakend.io/docs/service-settings/http-server-settings/",
-                "@": true
-              },
-              "?disabled": {
-                "#": "A flag to disable TLS (useful while in development).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                "@": true
-              },
-              "?enable_mtls": {
-                "#": "Whether to enable or not Mutual Authentication. When mTLS is enabled, **all KrakenD endpoints** require clients to provide a known client-side X.509 authentication certificate. KrakenD relies on the system\u2019s CA to validate certificates.\n\nSee: https://www.krakend.io/docs/authorization/mutual-authentication/",
-                "@": true
-              },
-              "?max_version": {
-                "#": "Maximum TLS version supported.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+          "/^[@$_#]/": "$ANY",
+          "?ca_certs": {
+            "#": "An array with all the CA certificates you would like to load to KrakenD **when using mTLS**, in addition to the certificates present in the system's CA. Each certificate in the list is a relative or absolute path to the PEM file. If you have a format other than PEM, you must convert the certificate to PEM using a conversion tool. See also `disable_system_ca_pool` to avoid system's CA.\n\nSee: https://www.krakend.io/docs/authorization/mutual-authentication/",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?cipher_suites": {
+            "!": true,
+            "#": "The list of cipher suites as defined in the documentation.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?curve_preferences": {
+            "!": true,
+            "#": "The list of all the identifiers for the curve preferences. Use `23` for CurveP256, `24` for CurveP384 or `25` for CurveP521.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+            "@": [
+              {
                 "|": [
-                  "_SSL3.0",
-                  "_TLS10",
-                  "_TLS11",
-                  "_TLS12",
-                  "_TLS13"
-                ]
-              },
-              "?min_version": {
-                "#": "Minimum TLS version supported. When specifiying very old and insecure versions under TLS12 you must provide the `ciphers_list`.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                "|": [
-                  "_SSL3.0",
-                  "_TLS10",
-                  "_TLS11",
-                  "_TLS12",
-                  "_TLS13"
-                ]
-              },
-              "?private_key": {
-                "#": "Declaration of the `private_key` under the `tls` object is now deprecated. Please move this attribute inside the `keys` array.",
-                "@": ""
-              },
-              "?public_key": {
-                "#": "Declaration of the `public_key` under the `tls` object is now deprecated. Please move this attribute inside the `keys` array.",
-                "@": ""
-              },
-              "_keys": {
-                "#": "An array with all the key pairs you want the TLS to work with. You can support multiple and unrelated domains in a single process.",
-                ">=": 1,
-                "@": [
-                  {
-                    "": "$ANY",
-                    "?private_key": {
-                      "#": "Absolute path to the private key, or relative to the current [working directory](https://www.krakend.io/docs/configuration/working-directory/).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                      "@": ""
-                    },
-                    "?public_key": {
-                      "#": "Absolute path to the public key, or relative to the current [working directory](https://www.krakend.io/docs/configuration/working-directory/).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                      "@": ""
-                    }
-                  }
+                  "=23",
+                  "=24",
+                  "=25"
                 ]
               }
-            },
-            {
-              "?ca_certs": {
-                "#": "An array with all the CA certificates you would like to load to KrakenD **when using mTLS**, in addition to the certificates present in the system's CA. Each certificate in the list is a relative or absolute path to the PEM file. If you have a format other than PEM, you must convert the certificate to PEM using a conversion tool. See also `disable_system_ca_pool` to avoid system's CA.\n\nSee: https://www.krakend.io/docs/authorization/mutual-authentication/",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?cipher_suites": {
-                "!": true,
-                "#": "The list of cipher suites as defined in the documentation.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?curve_preferences": {
-                "!": true,
-                "#": "The list of all the identifiers for the curve preferences. Use `23` for CurveP256, `24` for CurveP384 or `25` for CurveP521.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                "@": [
-                  {
-                    "|": [
-                      "=23",
-                      "=24",
-                      "=25"
-                    ]
-                  }
-                ]
-              },
-              "?disable_system_ca_pool": {
-                "#": "Ignore any certificate in the system's CA. The only certificates loaded will be the ones in the `ca_certs` list when true.\n\nSee: https://www.krakend.io/docs/service-settings/http-server-settings/",
-                "@": true
-              },
-              "?disabled": {
-                "#": "A flag to disable TLS (useful while in development).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                "@": true
-              },
-              "?enable_mtls": {
-                "#": "Whether to enable or not Mutual Authentication. When mTLS is enabled, **all KrakenD endpoints** require clients to provide a known client-side X.509 authentication certificate. KrakenD relies on the system\u2019s CA to validate certificates.\n\nSee: https://www.krakend.io/docs/authorization/mutual-authentication/",
-                "@": true
-              },
-              "?keys": {
-                "#": "An array with all the key pairs you want the TLS to work with. You can support multiple and unrelated domains in a single process.",
-                ">=": 1,
-                "@": [
-                  {
-                    "": "$ANY",
-                    "?private_key": {
-                      "#": "Absolute path to the private key, or relative to the current [working directory](https://www.krakend.io/docs/configuration/working-directory/).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                      "@": ""
-                    },
-                    "?public_key": {
-                      "#": "Absolute path to the public key, or relative to the current [working directory](https://www.krakend.io/docs/configuration/working-directory/).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                      "@": ""
-                    }
-                  }
-                ]
-              },
-              "?max_version": {
-                "#": "Maximum TLS version supported.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                "|": [
-                  "_SSL3.0",
-                  "_TLS10",
-                  "_TLS11",
-                  "_TLS12",
-                  "_TLS13"
-                ]
-              },
-              "?min_version": {
-                "#": "Minimum TLS version supported. When specifiying very old and insecure versions under TLS12 you must provide the `ciphers_list`.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-                "|": [
-                  "_SSL3.0",
-                  "_TLS10",
-                  "_TLS11",
-                  "_TLS12",
-                  "_TLS13"
-                ]
-              },
-              "?private_key": {
-                "#": "Declaration of the `private_key` under the `tls` object is now deprecated. Please move this attribute inside the `keys` array.",
-                "@": ""
-              },
-              "?public_key": {
-                "#": "Declaration of the `public_key` under the `tls` object is now deprecated. Please move this attribute inside the `keys` array.",
-                "@": ""
+            ]
+          },
+          "?disable_system_ca_pool": {
+            "#": "Ignore any certificate in the system's CA. The only certificates loaded will be the ones in the `ca_certs` list when true.\n\nSee: https://www.krakend.io/docs/service-settings/http-server-settings/",
+            "@": true
+          },
+          "?disabled": {
+            "#": "A flag to disable TLS (useful while in development).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+            "@": true
+          },
+          "?enable_mtls": {
+            "#": "Whether to enable or not Mutual Authentication. When mTLS is enabled, **all KrakenD endpoints** require clients to provide a known client-side X.509 authentication certificate. KrakenD relies on the system\u2019s CA to validate certificates.\n\nSee: https://www.krakend.io/docs/authorization/mutual-authentication/",
+            "@": true
+          },
+          "?max_version": {
+            "#": "Maximum TLS version supported.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+            "|": [
+              "_SSL3.0",
+              "_TLS10",
+              "_TLS11",
+              "_TLS12",
+              "_TLS13"
+            ]
+          },
+          "?min_version": {
+            "#": "Minimum TLS version supported. When specifiying very old and insecure versions under TLS12 you must provide the `ciphers_list`.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+            "|": [
+              "_SSL3.0",
+              "_TLS10",
+              "_TLS11",
+              "_TLS12",
+              "_TLS13"
+            ]
+          },
+          "?private_key": {
+            "#": "Declaration of the `private_key` under the `tls` object is now deprecated. Please move this attribute inside the `keys` array.",
+            "@": ""
+          },
+          "?public_key": {
+            "#": "Declaration of the `public_key` under the `tls` object is now deprecated. Please move this attribute inside the `keys` array.",
+            "@": ""
+          },
+          "_keys": {
+            "#": "An array with all the key pairs you want the TLS to work with. You can support multiple and unrelated domains in a single process.",
+            ">=": 1,
+            "@": [
+              {
+                "": "$ANY",
+                "?private_key": {
+                  "#": "Absolute path to the private key, or relative to the current [working directory](https://www.krakend.io/docs/configuration/working-directory/).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+                  "@": ""
+                },
+                "?public_key": {
+                  "#": "Absolute path to the public key, or relative to the current [working directory](https://www.krakend.io/docs/configuration/working-directory/).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+                  "@": ""
+                }
               }
-            }
-          ]
+            ]
+          }
         },
-        "$ANY"
+        {
+          "/^[@$_#]/": "$ANY",
+          "?ca_certs": {
+            "#": "An array with all the CA certificates you would like to load to KrakenD **when using mTLS**, in addition to the certificates present in the system's CA. Each certificate in the list is a relative or absolute path to the PEM file. If you have a format other than PEM, you must convert the certificate to PEM using a conversion tool. See also `disable_system_ca_pool` to avoid system's CA.\n\nSee: https://www.krakend.io/docs/authorization/mutual-authentication/",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?cipher_suites": {
+            "!": true,
+            "#": "The list of cipher suites as defined in the documentation.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?curve_preferences": {
+            "!": true,
+            "#": "The list of all the identifiers for the curve preferences. Use `23` for CurveP256, `24` for CurveP384 or `25` for CurveP521.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+            "@": [
+              {
+                "|": [
+                  "=23",
+                  "=24",
+                  "=25"
+                ]
+              }
+            ]
+          },
+          "?disable_system_ca_pool": {
+            "#": "Ignore any certificate in the system's CA. The only certificates loaded will be the ones in the `ca_certs` list when true.\n\nSee: https://www.krakend.io/docs/service-settings/http-server-settings/",
+            "@": true
+          },
+          "?disabled": {
+            "#": "A flag to disable TLS (useful while in development).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+            "@": true
+          },
+          "?enable_mtls": {
+            "#": "Whether to enable or not Mutual Authentication. When mTLS is enabled, **all KrakenD endpoints** require clients to provide a known client-side X.509 authentication certificate. KrakenD relies on the system\u2019s CA to validate certificates.\n\nSee: https://www.krakend.io/docs/authorization/mutual-authentication/",
+            "@": true
+          },
+          "?keys": {
+            "#": "An array with all the key pairs you want the TLS to work with. You can support multiple and unrelated domains in a single process.",
+            ">=": 1,
+            "@": [
+              {
+                "": "$ANY",
+                "?private_key": {
+                  "#": "Absolute path to the private key, or relative to the current [working directory](https://www.krakend.io/docs/configuration/working-directory/).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+                  "@": ""
+                },
+                "?public_key": {
+                  "#": "Absolute path to the public key, or relative to the current [working directory](https://www.krakend.io/docs/configuration/working-directory/).\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+                  "@": ""
+                }
+              }
+            ]
+          },
+          "?max_version": {
+            "#": "Maximum TLS version supported.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+            "|": [
+              "_SSL3.0",
+              "_TLS10",
+              "_TLS11",
+              "_TLS12",
+              "_TLS13"
+            ]
+          },
+          "?min_version": {
+            "#": "Minimum TLS version supported. When specifiying very old and insecure versions under TLS12 you must provide the `ciphers_list`.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
+            "|": [
+              "_SSL3.0",
+              "_TLS10",
+              "_TLS11",
+              "_TLS12",
+              "_TLS13"
+            ]
+          },
+          "?private_key": {
+            "#": "Declaration of the `private_key` under the `tls` object is now deprecated. Please move this attribute inside the `keys` array.",
+            "@": ""
+          },
+          "?public_key": {
+            "#": "Declaration of the `public_key` under the `tls` object is now deprecated. Please move this attribute inside the `keys` array.",
+            "@": ""
+          }
+        }
       ]
     },
     "https%3A~1~1www.krakend.io~1schema~1v2.7~1validation~1cel.json": {
