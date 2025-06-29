@@ -3,7 +3,6 @@
   "^": [
     {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -20,7 +19,6 @@
     },
     {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -42,7 +40,6 @@
     },
     {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -66,7 +63,6 @@
     },
     {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -85,7 +81,6 @@
     },
     {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -109,7 +104,6 @@
     },
     {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -135,7 +129,6 @@
     },
     {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -147,7 +140,6 @@
           "^": [
             {
               "": "$ANY",
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "?bbox": {
                 ">=": 4,
                 "@": [
@@ -164,7 +156,6 @@
             },
             {
               "": "$ANY",
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "?bbox": {
                 ">=": 4,
                 "@": [
@@ -186,7 +177,6 @@
             },
             {
               "": "$ANY",
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "?bbox": {
                 ">=": 4,
                 "@": [
@@ -210,7 +200,6 @@
             },
             {
               "": "$ANY",
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "?bbox": {
                 ">=": 4,
                 "@": [
@@ -229,7 +218,6 @@
             },
             {
               "": "$ANY",
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "?bbox": {
                 ">=": 4,
                 "@": [
@@ -253,7 +241,6 @@
             },
             {
               "": "$ANY",
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "?bbox": {
                 ">=": 4,
                 "@": [
@@ -284,7 +271,6 @@
     },
     {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -302,7 +288,6 @@
           null,
           {
             "": "$ANY",
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "?bbox": {
               ">=": 4,
               "@": [
@@ -319,7 +304,6 @@
           },
           {
             "": "$ANY",
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "?bbox": {
               ">=": 4,
               "@": [
@@ -341,7 +325,6 @@
           },
           {
             "": "$ANY",
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "?bbox": {
               ">=": 4,
               "@": [
@@ -365,7 +348,6 @@
           },
           {
             "": "$ANY",
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "?bbox": {
               ">=": 4,
               "@": [
@@ -384,7 +366,6 @@
           },
           {
             "": "$ANY",
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "?bbox": {
               ">=": 4,
               "@": [
@@ -408,7 +389,6 @@
           },
           {
             "": "$ANY",
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "?bbox": {
               ">=": 4,
               "@": [
@@ -434,7 +414,6 @@
           },
           {
             "": "$ANY",
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "?bbox": {
               ">=": 4,
               "@": [
@@ -446,7 +425,6 @@
                 "^": [
                   {
                     "": "$ANY",
-                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                     "?bbox": {
                       ">=": 4,
                       "@": [
@@ -463,7 +441,6 @@
                   },
                   {
                     "": "$ANY",
-                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                     "?bbox": {
                       ">=": 4,
                       "@": [
@@ -485,7 +462,6 @@
                   },
                   {
                     "": "$ANY",
-                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                     "?bbox": {
                       ">=": 4,
                       "@": [
@@ -509,7 +485,6 @@
                   },
                   {
                     "": "$ANY",
-                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                     "?bbox": {
                       ">=": 4,
                       "@": [
@@ -528,7 +503,6 @@
                   },
                   {
                     "": "$ANY",
-                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                     "?bbox": {
                       ">=": 4,
                       "@": [
@@ -552,7 +526,6 @@
                   },
                   {
                     "": "$ANY",
-                    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                     "?bbox": {
                       ">=": 4,
                       "@": [
@@ -595,7 +568,6 @@
     },
     {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -605,7 +577,6 @@
       "_features": [
         {
           "": "$ANY",
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "?bbox": {
             ">=": 4,
             "@": [
@@ -623,7 +594,6 @@
               null,
               {
                 "": "$ANY",
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "?bbox": {
                   ">=": 4,
                   "@": [
@@ -640,7 +610,6 @@
               },
               {
                 "": "$ANY",
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "?bbox": {
                   ">=": 4,
                   "@": [
@@ -662,7 +631,6 @@
               },
               {
                 "": "$ANY",
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "?bbox": {
                   ">=": 4,
                   "@": [
@@ -686,7 +654,6 @@
               },
               {
                 "": "$ANY",
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "?bbox": {
                   ">=": 4,
                   "@": [
@@ -705,7 +672,6 @@
               },
               {
                 "": "$ANY",
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "?bbox": {
                   ">=": 4,
                   "@": [
@@ -729,7 +695,6 @@
               },
               {
                 "": "$ANY",
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "?bbox": {
                   ">=": 4,
                   "@": [
@@ -755,7 +720,6 @@
               },
               {
                 "": "$ANY",
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "?bbox": {
                   ">=": 4,
                   "@": [
@@ -767,7 +731,6 @@
                     "^": [
                       {
                         "": "$ANY",
-                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                         "?bbox": {
                           ">=": 4,
                           "@": [
@@ -784,7 +747,6 @@
                       },
                       {
                         "": "$ANY",
-                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                         "?bbox": {
                           ">=": 4,
                           "@": [
@@ -806,7 +768,6 @@
                       },
                       {
                         "": "$ANY",
-                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                         "?bbox": {
                           ">=": 4,
                           "@": [
@@ -830,7 +791,6 @@
                       },
                       {
                         "": "$ANY",
-                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                         "?bbox": {
                           ">=": 4,
                           "@": [
@@ -849,7 +809,6 @@
                       },
                       {
                         "": "$ANY",
-                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                         "?bbox": {
                           ">=": 4,
                           "@": [
@@ -873,7 +832,6 @@
                       },
                       {
                         "": "$ANY",
-                        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                         "?bbox": {
                           ">=": 4,
                           "@": [

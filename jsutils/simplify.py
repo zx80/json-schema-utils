@@ -331,6 +331,7 @@ def simplifySchema(schema: JsonSchema, url: str):
 #
 # move definitions at the root and resolve ids
 #
+from urllib.parse import quote, unquote
 
 def _defId(schema) -> tuple[str|None, str|None]:
     """return name of definitions and id properties."""
@@ -349,7 +350,8 @@ _SUBCOUNT: int = 0
 # TODO handle arbitrary path references
 
 def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
-                 moved: dict[str, str], ids: dict[str, str], path: list[str|int] = []):
+                  moved: dict[str, str], ids: dict[str, str], delete: list[tuple[Any, str]],
+                  path: list[str|int] = []):
 
     log.debug(f"handing $ids/$defs at {path}")
 
@@ -361,19 +363,28 @@ def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
 
     if path and defn and not idn:
         # nested definitions, move them up
+
         prefix = f"_defs_{_SUBCOUNT}_"
         _SUBCOUNT += 1
 
         for name, sschema in schema[defn].items():
-            nname = rootdef + "/" + prefix + name
-            npath = f"#/{'/'.join(path)}/{defn}/{name}"
-            sschema["$comment"] = f"origin: {npath}"
-            moved[npath] = nname
-            defs[nname] = sschema
+            # FIXME name may be quite ugly… eg a full URL
+            if "/" not in name:  # reuse name if simple
+                new_name = prefix + name
+                old_name = name
+            else:
+                new_name = f"_dsub_{_SUBCOUNT}_"
+                _SUBCOUNT += 1
+                old_name = quote(name).replace("~", "~0").replace("/", "~1")
+            npath = rootdef + "/" + new_name
+            opath = f"#/{'/'.join(path)}/{defn}/{old_name}"
+            sschema["$comment"] = f"origin: {opath}"
+            moved[opath] = npath
+            defs[new_name] = sschema
 
         schema["$comment"] = f"{defn} {_SUBCOUNT} moved"
 
-        del schema[defn]
+        delete.append((schema, defn, None, None, None))
 
     elif path and defn and idn:
         # if we have a nested id, we move definitions to defs and rewrite local refs
@@ -382,7 +393,7 @@ def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
         assert isinstance(sid, str)
 
         del schema[idn]
-        if "id" in schema:  # both $id and id…
+        if "id" in schema:  # WTF: both $id and id…
             del schema["id"]
 
         # keep track of changes
@@ -392,28 +403,37 @@ def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
         _SUBCOUNT += 1
 
         # to remap long references later
-        assert sid not in moved
-        moved[sid + "#/" + defn + "/"] = rootdef + "/" + prefix
-        ids[sid] = "#/" + "/".join(path)
+        # we have a local path for an external url
+        ids[sid] = rootdef + "/" + prefix
+        iddefs = f"#/{defn}/"
+        # id's defs with be there
+        moved[sid + iddefs] = rootdef + "/" + prefix
+        # "#/" + "/".join(p if "/" not in p and "%" not in p else
+        #                            quote(p).replace("~", "~0").replace("/", "~1")
+        #                                for p in path)
 
+        # remap all sub-schema local references
         def rwtRef(schema, lpath):
             if isinstance(schema, dict) and "$ref" in schema:
                 dest = schema["$ref"]
                 assert isinstance(dest, str)
-                if dest.startswith(rootdef):
-                    schema["$ref"] = "#/$defs/" + prefix + dest[len(rootdef)+1:]
-                if dest in ("#", "#/"):
-                    schema["$ref"] = "#/" + "/".join(path)
+                if dest.startswith(iddefs):  # local ref
+                    schema["$ref"] = rootdef + "/" + prefix + dest[len(iddefs):]
+                elif dest in ("#", "#/"):  # myself, will have to be made consistent later!
+                    schema["$ref"] = ids[sid]
             return schema
 
+        recurseSchema(schema, "", rwt=rwtRef)
+
+        # move local definitions as global
         for name, sschem in schema[defn].items():
             pname = prefix + name
             assert pname not in defs
-            defs[pname] = recurseSchema(sschem, "", rwt=rwtRef)
+            defs[pname] = sschem
 
-        del schema[defn]
-
-        recurseSchema(schema, "", rwt=rwtRef)
+        # we need to keep the schema in place for handling arbitrary url
+        # whole object will be moved later
+        delete.append((schema, defn, prefix, ids[sid], sid))
 
 
 def scopeDefs(schema: JsonSchema):
@@ -444,13 +464,48 @@ def scopeDefs(schema: JsonSchema):
         schema[defn] = {}
 
     # do internal renamings
-    rootdef, moved, ids = f"#/{defn}", {}, {}
+    rootdef, moved, ids, delete = f"#/{defn}", {}, {}, []
 
     for s, p in todo_ids:
-        _scopeSubDefs(s, schema[defn], rootdef, moved, ids, p)
+        _scopeSubDefs(s, schema[defn], rootdef, moved, ids, delete, p)
 
     for s, p in todo_defs:
-        _scopeSubDefs(s, schema[defn], rootdef, moved, ids, p)
+        _scopeSubDefs(s, schema[defn], rootdef, moved, ids, delete, p)
+
+    # move arbitrary references
+    def mvRef(rschema, path):
+        if isinstance(rschema, dict) and "$ref" in rschema:
+            dest = rschema["$ref"]
+            log.info(f"found {dest} at {path}")
+            if dest.startswith("#/") and dest not in moved:
+                dpath = dest[2:].split("/")
+                if len(dpath) != 2 or dpath[0] != defn:
+                    # not a simple name, follow path
+                    jdest = schema
+                    for segment in dpath:
+                        if isinstance(jdest, dict):
+                            # hmmm
+                            if segment in jdest:
+                                jdest = jdest[segment]
+                            elif "~" in segment  or "%" in segment:
+                                segment = unquote(segment).replace("~1", "/").replace("~0", "~")
+                                jdest = jdest[segment]
+                        elif isinstance(jdest, list):
+                            jdest = jdest[int(segment)]  # TODO proper exception
+                        else:
+                            raise Exception(f"cannot follow path {dpath} at {segment}")
+                    global _SUBCOUNT
+                    name = f"_psub_{_SUBCOUNT}_"
+                    _SUBCOUNT += 1
+                    ndest = f"#/{defn}/{name}"
+                    log.info(f"moving {dest} to {ndest}")
+                    schema[defn][name] = copy.deepcopy(jdest)
+                    rschema["$ref"] = ndest
+                    moved[dest] = ndest  # for other identical references
+                # TODO also rename ugly references?
+        return rschema
+
+    recurseSchema(schema, "", rwt=mvRef)
 
     # do full url renamings and other references renamings
     def rwtGref(schema, path):
@@ -471,3 +526,13 @@ def scopeDefs(schema: JsonSchema):
         return schema
 
     recurseSchema(schema, "", rwt=rwtGref)
+
+    # cleanup internal definitions
+    for j, n, prefix, dest, sid in delete:
+        del j[n]
+        if prefix is not None:
+            # move whole id-ed object as global as well, replaced with a ref
+            schema[defn][prefix] = { p: s for p, s in j.items() }
+            j.clear()
+            j["$comment"] = f"{sid} moved as $def"
+            j["$ref"] = dest

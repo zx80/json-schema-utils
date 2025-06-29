@@ -1,26 +1,6 @@
 {
   "#": "JSON Model generated from a JSON Schema with json-schema-utils",
   "$": {
-    "#/definitions/_defs_2_parameter": {
-      "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-      "?name": ""
-    },
-    "#/definitions/_defs_3_deviceType": {
-      "#": "Represents device types on which the app is running",
-      "?desktop": {
-        "#": "Represents indicator whether desktop device is supported, default true",
-        "@": true
-      },
-      "?phone": {
-        "#": "Represents indicator whether phone device is supported, default true",
-        "@": true
-      },
-      "?tablet": {
-        "#": "Represents indicator whether tablet device is supported, default true",
-        "@": true
-      }
-    },
     "Configuration.BasicDataType": {
       "#": "Basic data types for parameters and filters",
       "|": [
@@ -260,7 +240,6 @@
       "?actionableArea": {
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Full",
               "_Chart"
@@ -326,7 +305,6 @@
           "#": "Whether the popover is connected to the chart. If it's not it won't open",
           "^": [
             {
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "@": true
             },
             "$simpleBinding"
@@ -339,7 +317,6 @@
           "#": "Represents the title alignment",
           "^": [
             {
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "|": [
                 "_Left",
                 "_Center",
@@ -357,7 +334,6 @@
           "#": "Represents the visibility state of the title",
           "^": [
             {
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "@": true
             },
             "$simpleBinding"
@@ -389,7 +365,6 @@
         "#": "Data type of the dimension as displayed in the chart. Currently only in time series chart, it is required to set data type to 'date' if this column is going to feed the 'timeAxis'",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_string",
               "_number",
@@ -446,7 +421,6 @@
         "#": "Defines how the legend will be aligned",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_TopLeft",
               "_Center"
@@ -459,7 +433,6 @@
         "#": "Defines where the legend will be positioned",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Top",
               "_Bottom",
@@ -592,7 +565,6 @@
         "#": "The type of the item - one of the types defined in the legend",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Type01",
               "_Type02",
@@ -642,7 +614,6 @@
         "#": "The type of the legend item corresponding with the described component",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Type01",
               "_Type02",
@@ -692,7 +663,6 @@
         "#": "The type of the special date - one of the types defined in the legend",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Type01",
               "_Type02",
@@ -768,7 +738,6 @@
         "#": "Defines the layout type of the attributes",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_OneColumn",
               "_TwoColumns"
@@ -940,7 +909,6 @@
         "#": "Defines if the image will take the full width of the group, including the paddings. If set to false there will be padding. For best result use together with 'alignment': 'Stretched' for the group",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "$simpleBinding"
@@ -981,7 +949,6 @@
         "#": "The number of displayed symbols for RatingIndicator",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": -1.0
           },
           "$simpleBinding"
@@ -1028,7 +995,6 @@
         "#": "[Experimental] The alignment of the side indicators",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Begin",
               "_End"
@@ -1041,7 +1007,6 @@
         "#": "[Experimental] The size of the icons in an IconGroup",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_XS",
               "_S",
@@ -1078,7 +1043,6 @@
         "#": "Defines the type of the displayed information. Some of the types are deprecated",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Default",
               "_NumericData",
@@ -1131,7 +1095,6 @@
         "#": "Defines how float values are visualized for RatingIndicator: Full (values are rounded to the nearest integer value (e.g. 1.7 -> 2)) or  Half (values are rounded to the nearest half value (e.g. 1.7 -> 1.5))",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Full",
               "_Half"
@@ -1190,7 +1153,6 @@
       "?size": {
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_S",
               "_L"
@@ -1213,7 +1175,6 @@
         "#": "The trend indicator (direction)",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Down",
               "_None",
@@ -1256,7 +1217,6 @@
         "#": "Defines whether the user input is required",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "$simpleBinding"
@@ -1266,7 +1226,6 @@
         "#": "Defines whether the value is restricted to predefined options",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "$simpleBinding"
@@ -1276,7 +1235,6 @@
         "#": "Defines the validation type",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Error",
               "_Warning",
@@ -1485,7 +1443,6 @@
       }
     },
     "Enums.ValueColor": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "|": [
         "_Critical",
         "_Error",
@@ -1546,7 +1503,6 @@
         "#": "[Experimental] Visibility of the header",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "$simpleBinding"
@@ -1585,7 +1541,6 @@
         "#": "The alignment of the side indicators",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Begin",
               "_End"
@@ -1628,7 +1583,6 @@
         "#": "[Experimental] Visibility of the header",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "$simpleBinding"
@@ -1659,7 +1613,6 @@
         "#": "The trend indicator (direction)",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Down",
               "_None",
@@ -1677,7 +1630,6 @@
         "#": "Visibility of the main indicator",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "$simpleBinding"
@@ -1712,7 +1664,6 @@
         "#": "Visibility of the side indicator",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "$simpleBinding"
@@ -1852,6 +1803,128 @@
         ]
       }
     },
+    "_defs_2_parameter": {
+      "": "$ANY",
+      "?name": ""
+    },
+    "_defs_3_deviceType": {
+      "#": "Represents device types on which the app is running",
+      "?desktop": {
+        "#": "Represents indicator whether desktop device is supported, default true",
+        "@": true
+      },
+      "?phone": {
+        "#": "Represents indicator whether phone device is supported, default true",
+        "@": true
+      },
+      "?tablet": {
+        "#": "Represents indicator whether tablet device is supported, default true",
+        "@": true
+      }
+    },
+    "_id_0_": {
+      "|": [
+        {
+          "": "$ANY",
+          "?$comment": "",
+          "?$id": "$URI",
+          "?$ref": "$URI",
+          "?$schema": "$URI",
+          "?additionalItems": "$_id_0_",
+          "?additionalProperties": "$_id_0_",
+          "?allOf": "$_id_0_schemaArray",
+          "?anyOf": "$_id_0_schemaArray",
+          "?const": "$ANY",
+          "?contains": "$_id_0_",
+          "?contentEncoding": "",
+          "?contentMediaType": "",
+          "?default": "$ANY",
+          "?definitions": {
+            "": "$_id_0_"
+          },
+          "?dependencies": {
+            "": {
+              "|": [
+                "$_id_0_",
+                "$_id_0_stringArray"
+              ]
+            }
+          },
+          "?description": "",
+          "?else": "$_id_0_",
+          "?enum": {
+            "!": true,
+            ">=": 1,
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?examples": [
+            "$ANY"
+          ],
+          "?exclusiveMaximum": -1.0,
+          "?exclusiveMinimum": -1.0,
+          "?format": "",
+          "?if": "$_id_0_",
+          "?items": {
+            "|": [
+              "$_id_0_",
+              "$_id_0_schemaArray"
+            ]
+          },
+          "?maxItems": "$_id_0_nonNegativeInteger",
+          "?maxLength": "$_id_0_nonNegativeInteger",
+          "?maxProperties": "$_id_0_nonNegativeInteger",
+          "?maximum": -1.0,
+          "?minItems": "$_id_0_nonNegativeIntegerDefault0",
+          "?minLength": "$_id_0_nonNegativeIntegerDefault0",
+          "?minProperties": "$_id_0_nonNegativeIntegerDefault0",
+          "?minimum": -1.0,
+          "?multipleOf": {
+            ">": 0,
+            "@": -1.0
+          },
+          "?not": "$_id_0_",
+          "?oneOf": "$_id_0_schemaArray",
+          "?pattern": "$REGEX",
+          "?patternProperties": {
+            "": "$_id_0_",
+            "$REGEX": {
+              "$ref": "#/definitions/_id_0_"
+            }
+          },
+          "?properties": {
+            "": "$_id_0_"
+          },
+          "?propertyNames": "$_id_0_",
+          "?readOnly": {
+            "@": true
+          },
+          "?required": "$_id_0_stringArray",
+          "?then": "$_id_0_",
+          "?title": "",
+          "?type": {
+            "|": [
+              "$_id_0_simpleTypes",
+              {
+                "!": true,
+                ">=": 1,
+                "@": [
+                  "$_id_0_simpleTypes"
+                ]
+              }
+            ]
+          },
+          "?uniqueItems": {
+            "@": true
+          },
+          "?writeOnly": {
+            "@": true
+          }
+        },
+        true
+      ]
+    },
     "_id_0_nonNegativeInteger": {
       ">=": 0,
       "@": -1
@@ -1860,7 +1933,6 @@
       "&": [
         "$_id_0_nonNegativeInteger",
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": "$ANY"
         }
       ]
@@ -1868,7 +1940,7 @@
     "_id_0_schemaArray": {
       ">=": 1,
       "@": [
-        "$http://json-schema.org/draft-07/schema"
+        "$_id_0_"
       ]
     },
     "_id_0_simpleTypes": {
@@ -1884,16 +1956,18 @@
     },
     "_id_0_stringArray": {
       "!": true,
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": [
         ""
       ]
     },
+    "_id_1_": {
+      "@": "$_id_1_AdaptiveCard"
+    },
     "_id_1_Action.Execute": {
+      "#": "Gathers input fields, merges with optional data field, and sends an event to the client. Clients process the event by sending an Invoke activity of type adaptiveCard/action to the target Bot. The inputs that are gathered are those on the current card, and in the case of a show card those on any parent cards. See [Universal Action Model](https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/universal-action-model) documentation for more details.",
       "&": [
         "$_id_1_Extendable.Action",
         {
-          "#": "Gathers input fields, merges with optional data field, and sends an event to the client. Clients process the event by sending an Invoke activity of type adaptiveCard/action to the target Bot. The inputs that are gathered are those on the current card, and in the case of a show card those on any parent cards. See [Universal Action Model](https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/universal-action-model) documentation for more details.",
           "?associatedInputs": {
             "#": "Controls which inputs are associated with the action.",
             "@": "$_id_1_AssociatedInputs"
@@ -1928,10 +2002,10 @@
       ]
     },
     "_id_1_Action.OpenUrl": {
+      "#": "When invoked, show the given url either by launching it in an external web browser or showing within an embedded web browser.",
       "&": [
         "$_id_1_Extendable.Action",
         {
-          "#": "When invoked, show the given url either by launching it in an external web browser or showing within an embedded web browser.",
           "?fallback": "$ANY",
           "?iconUrl": "$ANY",
           "?id": "$ANY",
@@ -1953,10 +2027,10 @@
       ]
     },
     "_id_1_Action.ShowCard": {
+      "#": "Defines an AdaptiveCard which is shown to the user when the button or link is clicked.",
       "&": [
         "$_id_1_Extendable.Action",
         {
-          "#": "Defines an AdaptiveCard which is shown to the user when the button or link is clicked.",
           "?card": {
             "#": "The Adaptive Card to show. Inputs in ShowCards will not be submitted if the submit button is located on a parent card. See https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/input-validation for more details.",
             "@": "$_id_1_AdaptiveCard"
@@ -1978,10 +2052,10 @@
       ]
     },
     "_id_1_Action.Submit": {
+      "#": "Gathers input fields, merges with optional data field, and sends an event to the client. It is up to the client to determine how this data is processed. For example: With BotFramework bots, the client would send an activity through the messaging medium to the bot. The inputs that are gathered are those on the current card, and in the case of a show card those on any parent cards. See https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/input-validation for more details.",
       "&": [
         "$_id_1_Extendable.Action",
         {
-          "#": "Gathers input fields, merges with optional data field, and sends an event to the client. It is up to the client to determine how this data is processed. For example: With BotFramework bots, the client would send an activity through the messaging medium to the bot. The inputs that are gathered are those on the current card, and in the case of a show card those on any parent cards. See https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/input-validation for more details.",
           "?associatedInputs": {
             "#": "Controls which inputs are associated with the submit action.",
             "@": "$_id_1_AssociatedInputs"
@@ -2012,10 +2086,10 @@
       ]
     },
     "_id_1_Action.ToggleVisibility": {
+      "#": "An action that toggles the visibility of associated card elements.",
       "&": [
         "$_id_1_Extendable.Action",
         {
-          "#": "An action that toggles the visibility of associated card elements.",
           "?fallback": "$ANY",
           "?iconUrl": "$ANY",
           "?id": "$ANY",
@@ -2039,6 +2113,7 @@
       ]
     },
     "_id_1_ActionMode": {
+      "#": "Determines whether an action is displayed with a button or is moved to the overflow menu.",
       "&": [
         {
           "|": [
@@ -2051,17 +2126,14 @@
             "/^([p|P][r|R][i|I][m|M][a|A][r|R][y|Y])|([s|S][e|E][c|C][o|O][n|N][d|D][a|A][r|R][y|Y])$/"
           ]
         },
-        {
-          "#": "Determines whether an action is displayed with a button or is moved to the overflow menu.",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "_id_1_ActionSet": {
+      "#": "Displays a set of actions.",
       "&": [
         "$_id_1_Extendable.Element",
         {
-          "#": "Displays a set of actions.",
           "?fallback": "$ANY",
           "?height": "$ANY",
           "?id": "$ANY",
@@ -2083,6 +2155,7 @@
       ]
     },
     "_id_1_ActionStyle": {
+      "#": "Controls the style of an Action, which influences how the action is displayed, spoken, etc.",
       "&": [
         {
           "|": [
@@ -2096,10 +2169,7 @@
             "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([p|P][o|O][s|S][i|I][t|T][i|I][v|V][e|E])|([d|D][e|E][s|S][t|T][r|R][u|U][c|C][t|T][i|I][v|V][e|E])$/"
           ]
         },
-        {
-          "#": "Controls the style of an Action, which influences how the action is displayed, spoken, etc.",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "_id_1_AdaptiveCard": {
@@ -2119,6 +2189,7 @@
         "@": "$_id_1_Authentication"
       },
       "?backgroundImage": {
+        "#": "Specifies the background image of the card.",
         "&": [
           {
             "|": [
@@ -2129,10 +2200,7 @@
               }
             ]
           },
-          {
-            "#": "Specifies the background image of the card.",
-            "@": "$ANY"
-          }
+          "$ANY"
         ]
       },
       "?body": {
@@ -2158,6 +2226,7 @@
         "@": "$_id_1_Refresh"
       },
       "?rtl": {
+        "#": "When `true` content in this Adaptive Card should be presented right to left. When 'false' content in this Adaptive Card should be presented left to right. If unset, the default platform behavior will apply.",
         "&": [
           {
             "|": [
@@ -2165,10 +2234,7 @@
               null
             ]
           },
-          {
-            "#": "When `true` content in this Adaptive Card should be presented right to left. When 'false' content in this Adaptive Card should be presented left to right. If unset, the default platform behavior will apply.",
-            "@": "$ANY"
-          }
+          "$ANY"
         ]
       },
       "?selectAction": {
@@ -2310,11 +2376,12 @@
       ]
     },
     "_id_1_Column": {
+      "#": "Defines a container that is part of a ColumnSet.",
       "&": [
         "$_id_1_Extendable.ToggleableItem",
         {
-          "#": "Defines a container that is part of a ColumnSet.",
           "?backgroundImage": {
+            "#": "Specifies the background image. Acceptable formats are PNG, JPEG, and GIF",
             "&": [
               {
                 "|": [
@@ -2325,10 +2392,7 @@
                   }
                 ]
               },
-              {
-                "#": "Specifies the background image. Acceptable formats are PNG, JPEG, and GIF",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?bleed": {
@@ -2336,6 +2400,7 @@
             "@": true
           },
           "?fallback": {
+            "#": "Describes what to do when an unknown item is encountered or the requires of this or any children can't be met.",
             "&": [
               {
                 "|": [
@@ -2343,10 +2408,7 @@
                   "$_id_1_FallbackOption"
                 ]
               },
-              {
-                "#": "Describes what to do when an unknown item is encountered or the requires of this or any children can't be met.",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?id": "$ANY",
@@ -2363,6 +2425,7 @@
           },
           "?requires": "$ANY",
           "?rtl": {
+            "#": "When `true` content in this column should be presented right to left. When 'false' content in this column should be presented left to right. When unset layout direction will inherit from parent container or column. If unset in all ancestors, the default platform behavior will apply.",
             "&": [
               {
                 "|": [
@@ -2370,10 +2433,7 @@
                   null
                 ]
               },
-              {
-                "#": "When `true` content in this column should be presented right to left. When 'false' content in this column should be presented left to right. When unset layout direction will inherit from parent container or column. If unset in all ancestors, the default platform behavior will apply.",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?selectAction": {
@@ -2400,6 +2460,7 @@
             "@": "_Column"
           },
           "?verticalContentAlignment": {
+            "#": "Defines how the content should be aligned vertically within the column. When not specified, the value of verticalContentAlignment is inherited from the parent container. If no parent container has verticalContentAlignment set, it defaults to Top.",
             "&": [
               {
                 "|": [
@@ -2407,10 +2468,7 @@
                   null
                 ]
               },
-              {
-                "#": "Defines how the content should be aligned vertically within the column. When not specified, the value of verticalContentAlignment is inherited from the parent container. If no parent container has verticalContentAlignment set, it defaults to Top.",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?width": {
@@ -2424,10 +2482,10 @@
       ]
     },
     "_id_1_ColumnSet": {
+      "#": "ColumnSet divides a region into Columns, allowing elements to sit side-by-side.",
       "&": [
         "$_id_1_Extendable.Element",
         {
-          "#": "ColumnSet divides a region into Columns, allowing elements to sit side-by-side.",
           "?bleed": {
             "#": "Determines whether the element should bleed through its parent's padding.",
             "@": true
@@ -2461,6 +2519,7 @@
           "?separator": "$ANY",
           "?spacing": "$ANY",
           "?style": {
+            "#": "Style hint for `ColumnSet`.",
             "&": [
               {
                 "|": [
@@ -2468,10 +2527,7 @@
                   null
                 ]
               },
-              {
-                "#": "Style hint for `ColumnSet`.",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?type": {
@@ -2482,11 +2538,12 @@
       ]
     },
     "_id_1_Container": {
+      "#": "Containers group items together.",
       "&": [
         "$_id_1_Extendable.Element",
         {
-          "#": "Containers group items together.",
           "?backgroundImage": {
+            "#": "Specifies the background image. Acceptable formats are PNG, JPEG, and GIF",
             "&": [
               {
                 "|": [
@@ -2497,10 +2554,7 @@
                   }
                 ]
               },
-              {
-                "#": "Specifies the background image. Acceptable formats are PNG, JPEG, and GIF",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?bleed": {
@@ -2517,6 +2571,7 @@
           },
           "?requires": "$ANY",
           "?rtl?": {
+            "#": "When `true` content in this container should be presented right to left. When 'false' content in this container should be presented left to right. When unset layout direction will inherit from parent container or column. If unset in all ancestors, the default platform behavior will apply.",
             "&": [
               {
                 "|": [
@@ -2524,10 +2579,7 @@
                   null
                 ]
               },
-              {
-                "#": "When `true` content in this container should be presented right to left. When 'false' content in this container should be presented left to right. When unset layout direction will inherit from parent container or column. If unset in all ancestors, the default platform behavior will apply.",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?selectAction": {
@@ -2548,6 +2600,7 @@
             "@": "_Container"
           },
           "?verticalContentAlignment": {
+            "#": "Defines how the content should be aligned vertically within the container. When not specified, the value of verticalContentAlignment is inherited from the parent container. If no parent container has verticalContentAlignment set, it defaults to Top.",
             "&": [
               {
                 "|": [
@@ -2555,10 +2608,7 @@
                   null
                 ]
               },
-              {
-                "#": "Defines how the content should be aligned vertically within the container. When not specified, the value of verticalContentAlignment is inherited from the parent container. If no parent container has verticalContentAlignment set, it defaults to Top.",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "_items": {
@@ -2591,6 +2641,7 @@
         {
           "": "$ANY",
           "?fallback": {
+            "#": "Describes what to do when an unknown element is encountered or the requires of this or any children can't be met.",
             "&": [
               {
                 "|": [
@@ -2598,10 +2649,7 @@
                   "$_id_1_FallbackOption"
                 ]
               },
-              {
-                "#": "Describes what to do when an unknown element is encountered or the requires of this or any children can't be met.",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?iconUrl": {
@@ -2642,6 +2690,7 @@
         {
           "": "$ANY",
           "?fallback": {
+            "#": "Describes what to do when an unknown element is encountered or the requires of this or any children can't be met.",
             "&": [
               {
                 "|": [
@@ -2649,10 +2698,7 @@
                   "$_id_1_FallbackOption"
                 ]
               },
-              {
-                "#": "Describes what to do when an unknown element is encountered or the requires of this or any children can't be met.",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?height": {
@@ -2681,6 +2727,7 @@
         "@": ""
       },
       "?fallback": {
+        "#": "Describes what to do when an unknown element is encountered or the requires of this or any children can't be met.",
         "&": [
           {
             "|": [
@@ -2688,10 +2735,7 @@
               "$_id_1_FallbackOption"
             ]
           },
-          {
-            "#": "Describes what to do when an unknown element is encountered or the requires of this or any children can't be met.",
-            "@": "$ANY"
-          }
+          "$ANY"
         ]
       },
       "?height": {
@@ -2767,10 +2811,10 @@
       }
     },
     "_id_1_FactSet": {
+      "#": "The FactSet element displays a series of facts (i.e. name/value pairs) in a tabular form.",
       "&": [
         "$_id_1_Extendable.Element",
         {
-          "#": "The FactSet element displays a series of facts (i.e. name/value pairs) in a tabular form.",
           "?fallback": "$ANY",
           "?height": "$ANY",
           "?id": "$ANY",
@@ -2858,6 +2902,7 @@
         "@": ""
       },
       "?fallback": {
+        "#": "Describes what to do when an unknown element is encountered or the requires of this or any children can't be met.",
         "&": [
           {
             "|": [
@@ -2865,13 +2910,11 @@
               "$_id_1_FallbackOption"
             ]
           },
-          {
-            "#": "Describes what to do when an unknown element is encountered or the requires of this or any children can't be met.",
-            "@": "$ANY"
-          }
+          "$ANY"
         ]
       },
       "?height": {
+        "#": "The desired height of the image. If specified as a pixel value, ending in 'px', E.g., 50px, the image will distort to fit that exact height. This overrides the `size` property.",
         "&": [
           {
             "|": [
@@ -2879,10 +2922,7 @@
               "$_id_1_BlockElementHeight"
             ]
           },
-          {
-            "#": "The desired height of the image. If specified as a pixel value, ending in 'px', E.g., 50px, the image will distort to fit that exact height. This overrides the `size` property.",
-            "@": "$ANY"
-          }
+          "$ANY"
         ]
       },
       "?horizontalAlignment": {
@@ -2951,10 +2991,10 @@
       ]
     },
     "_id_1_ImageSet": {
+      "#": "The ImageSet displays a collection of Images similar to a gallery. Acceptable formats are PNG, JPEG, and GIF",
       "&": [
         "$_id_1_Extendable.Element",
         {
-          "#": "The ImageSet displays a collection of Images similar to a gallery. Acceptable formats are PNG, JPEG, and GIF",
           "?fallback": "$ANY",
           "?height": "$ANY",
           "?id": "$ANY",
@@ -3685,10 +3725,10 @@
       }
     },
     "_id_1_Input.ChoiceSet": {
+      "#": "Allows a user to input a Choice.",
       "&": [
         "$_id_1_Extendable.Input",
         {
-          "#": "Allows a user to input a Choice.",
           "?choices": {
             "#": "`Choice` options.",
             "@": [
@@ -3730,10 +3770,10 @@
       ]
     },
     "_id_1_Input.Date": {
+      "#": "Lets a user choose a date.",
       "&": [
         "$_id_1_Extendable.Input",
         {
-          "#": "Lets a user choose a date.",
           "?errorMessage": "$ANY",
           "?fallback": "$ANY",
           "?height": "$ANY",
@@ -3768,10 +3808,10 @@
       ]
     },
     "_id_1_Input.Number": {
+      "#": "Allows a user to enter a number.",
       "&": [
         "$_id_1_Extendable.Input",
         {
-          "#": "Allows a user to enter a number.",
           "?errorMessage": "$ANY",
           "?fallback": "$ANY",
           "?height": "$ANY",
@@ -3806,10 +3846,10 @@
       ]
     },
     "_id_1_Input.Text": {
+      "#": "Lets a user enter text.",
       "&": [
         "$_id_1_Extendable.Input",
         {
-          "#": "Lets a user enter text.",
           "?errorMessage": "$ANY",
           "?fallback": "$ANY",
           "?height": "$ANY",
@@ -3856,10 +3896,10 @@
       ]
     },
     "_id_1_Input.Time": {
+      "#": "Lets a user select a time.",
       "&": [
         "$_id_1_Extendable.Input",
         {
-          "#": "Lets a user select a time.",
           "?errorMessage": "$ANY",
           "?fallback": "$ANY",
           "?height": "$ANY",
@@ -3894,10 +3934,10 @@
       ]
     },
     "_id_1_Input.Toggle": {
+      "#": "Lets a user choose between two options.",
       "&": [
         "$_id_1_Extendable.Input",
         {
-          "#": "Lets a user choose between two options.",
           "?errorMessage": "$ANY",
           "?fallback": "$ANY",
           "?height": "$ANY",
@@ -3936,10 +3976,10 @@
       ]
     },
     "_id_1_Media": {
+      "#": "Displays a media player for audio or video content.",
       "&": [
         "$_id_1_Extendable.Element",
         {
-          "#": "Displays a media player for audio or video content.",
           "?altText": {
             "#": "Alternate text describing the audio or video.",
             "@": ""
@@ -4001,10 +4041,10 @@
       }
     },
     "_id_1_RichTextBlock": {
+      "#": "Defines an array of inlines, allowing for inline text formatting.",
       "&": [
         "$_id_1_Extendable.Element",
         {
-          "#": "Defines an array of inlines, allowing for inline text formatting.",
           "?fallback": "$ANY",
           "?height": "$ANY",
           "?horizontalAlignment": {
@@ -4050,10 +4090,10 @@
       ]
     },
     "_id_1_Table": {
+      "#": "Provides a way to display data in a tabular form.",
       "&": [
         "$_id_1_Extendable.Element",
         {
-          "#": "Provides a way to display data in a tabular form.",
           "?columns": {
             "#": "Defines the number of columns in the table, their sizes, and more.",
             "@": [
@@ -4112,6 +4152,7 @@
     "_id_1_TableCell": {
       "#": "Represents a cell within a row of a Table element.",
       "?backgroundImage": {
+        "#": "Specifies the background image. Acceptable formats are PNG, JPEG, and GIF",
         "&": [
           {
             "|": [
@@ -4122,10 +4163,7 @@
               }
             ]
           },
-          {
-            "#": "Specifies the background image. Acceptable formats are PNG, JPEG, and GIF",
-            "@": "$ANY"
-          }
+          "$ANY"
         ]
       },
       "?bleed": {
@@ -4137,6 +4175,7 @@
         "@": ""
       },
       "?rtl?": {
+        "#": "When `true` content in this container should be presented right to left. When 'false' content in this container should be presented left to right. When unset layout direction will inherit from parent container or column. If unset in all ancestors, the default platform behavior will apply.",
         "&": [
           {
             "|": [
@@ -4144,10 +4183,7 @@
               null
             ]
           },
-          {
-            "#": "When `true` content in this container should be presented right to left. When 'false' content in this container should be presented left to right. When unset layout direction will inherit from parent container or column. If unset in all ancestors, the default platform behavior will apply.",
-            "@": "$ANY"
-          }
+          "$ANY"
         ]
       },
       "?selectAction": {
@@ -4166,6 +4202,7 @@
         "@": "_TableCell"
       },
       "?verticalContentAlignment": {
+        "#": "Defines how the content should be aligned vertically within the container. When not specified, the value of verticalContentAlignment is inherited from the parent container. If no parent container has verticalContentAlignment set, it defaults to Top.",
         "&": [
           {
             "|": [
@@ -4173,10 +4210,7 @@
               null
             ]
           },
-          {
-            "#": "Defines how the content should be aligned vertically within the container. When not specified, the value of verticalContentAlignment is inherited from the parent container. If no parent container has verticalContentAlignment set, it defaults to Top.",
-            "@": "$ANY"
-          }
+          "$ANY"
         ]
       },
       "_items": {
@@ -4275,10 +4309,10 @@
       ]
     },
     "_id_1_TextBlock": {
+      "#": "Displays text, allowing control over font sizes, weight, and color.",
       "&": [
         "$_id_1_Extendable.Element",
         {
-          "#": "Displays text, allowing control over font sizes, weight, and color.",
           "?color": {
             "#": "Controls the color of `TextBlock` elements.",
             "|": [
@@ -4288,6 +4322,7 @@
           },
           "?fallback": "$ANY",
           "?fontType": {
+            "#": "Type of font to use for rendering",
             "&": [
               {
                 "|": [
@@ -4295,10 +4330,7 @@
                   null
                 ]
               },
-              {
-                "#": "Type of font to use for rendering",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?height": "$ANY",
@@ -4362,6 +4394,7 @@
       ]
     },
     "_id_1_TextBlockStyle": {
+      "#": "Controls how a TextBlock behaves.",
       "&": [
         {
           "|": [
@@ -4374,10 +4407,7 @@
             "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([h|H][e|E][a|A][d|D][i|I][n|N][g|G])$/"
           ]
         },
-        {
-          "#": "Controls how a TextBlock behaves.",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "_id_1_TextInputStyle": {
@@ -4396,6 +4426,7 @@
       ]
     },
     "_id_1_TextRun": {
+      "#": "Defines a single run of formatted text. A TextRun with no properties set can be represented in the json as string containing the text as a shorthand for the json object. These two representations are equivalent.",
       "&": [
         {
           "|": [
@@ -4470,10 +4501,7 @@
             }
           ]
         },
-        {
-          "#": "Defines a single run of formatted text. A TextRun with no properties set can be represented in the json as string containing the text as a shorthand for the json object. These two representations are equivalent.",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "_id_1_TokenExchangeResource": {
@@ -4589,7 +4617,6 @@
         "#": "Use this property only when the item is related to a popover/popup",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Dialog",
               "_Grid",
@@ -4606,7 +4633,6 @@
         "#": "The type of the button",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Accept",
               "_Attention",
@@ -4635,7 +4661,6 @@
         "#": "Defines items priority",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_AlwaysOverflow",
               "_Disappear",
@@ -4659,7 +4684,6 @@
         "#": "The type of the item",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Button",
               "_ToolbarSpacer",
@@ -5086,6 +5110,7 @@
         "@": "$setting"
       },
       "?type": {
+        "#": "Represents type of the data source. The supported types are OData, ODataAnnotation, INA, XML, JSON, FHIR, WebSocket, http",
         "&": [
           {
             "^": [
@@ -5104,10 +5129,7 @@
               }
             ]
           },
-          {
-            "#": "Represents type of the data source. The supported types are OData, ODataAnnotation, INA, XML, JSON, FHIR, WebSocket, http",
-            "@": "/^[a-zA-Z0-9_\\-]+$/"
-          }
+          "/^[a-zA-Z0-9_\\-]+$/"
         ]
       },
       "_customType": "$NONE",
@@ -5449,119 +5471,10 @@
       }
     },
     "http://json-schema.org/draft-07/schema": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-      "|": [
-        {
-          "": "$ANY",
-          "?$comment": "",
-          "?$id": "$URI",
-          "?$ref": "$URI",
-          "?$schema": "$URI",
-          "?additionalItems": "$http://json-schema.org/draft-07/schema",
-          "?additionalProperties": "$http://json-schema.org/draft-07/schema",
-          "?allOf": "$_id_0_schemaArray",
-          "?anyOf": "$_id_0_schemaArray",
-          "?const": "$ANY",
-          "?contains": "$http://json-schema.org/draft-07/schema",
-          "?contentEncoding": "",
-          "?contentMediaType": "",
-          "?default": "$ANY",
-          "?definitions": {
-            "": "$http://json-schema.org/draft-07/schema",
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils"
-          },
-          "?dependencies": {
-            "": {
-              "|": [
-                "$http://json-schema.org/draft-07/schema",
-                "$_id_0_stringArray"
-              ]
-            }
-          },
-          "?description": "",
-          "?else": "$http://json-schema.org/draft-07/schema",
-          "?enum": {
-            "!": true,
-            ">=": 1,
-            "@": [
-              "$ANY"
-            ]
-          },
-          "?examples": [
-            "$ANY"
-          ],
-          "?exclusiveMaximum": -1.0,
-          "?exclusiveMinimum": -1.0,
-          "?format": "",
-          "?if": "$http://json-schema.org/draft-07/schema",
-          "?items": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-            "|": [
-              "$http://json-schema.org/draft-07/schema",
-              "$_id_0_schemaArray"
-            ]
-          },
-          "?maxItems": "$_id_0_nonNegativeInteger",
-          "?maxLength": "$_id_0_nonNegativeInteger",
-          "?maxProperties": "$_id_0_nonNegativeInteger",
-          "?maximum": -1.0,
-          "?minItems": "$_id_0_nonNegativeIntegerDefault0",
-          "?minLength": "$_id_0_nonNegativeIntegerDefault0",
-          "?minProperties": "$_id_0_nonNegativeIntegerDefault0",
-          "?minimum": -1.0,
-          "?multipleOf": {
-            ">": 0,
-            "@": -1.0
-          },
-          "?not": "$http://json-schema.org/draft-07/schema",
-          "?oneOf": "$_id_0_schemaArray",
-          "?pattern": "$REGEX",
-          "?patternProperties": {
-            "": "$http://json-schema.org/draft-07/schema",
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-            "$REGEX": {
-              "$ref": "#/definitions/http://json-schema.org/draft-07/schema"
-            }
-          },
-          "?properties": {
-            "": "$http://json-schema.org/draft-07/schema",
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils"
-          },
-          "?propertyNames": "$http://json-schema.org/draft-07/schema",
-          "?readOnly": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-            "@": true
-          },
-          "?required": "$_id_0_stringArray",
-          "?then": "$http://json-schema.org/draft-07/schema",
-          "?title": "",
-          "?type": {
-            "|": [
-              "$_id_0_simpleTypes",
-              {
-                "!": true,
-                ">=": 1,
-                "@": [
-                  "$_id_0_simpleTypes"
-                ]
-              }
-            ]
-          },
-          "?uniqueItems": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-            "@": true
-          },
-          "?writeOnly": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-            "@": true
-          }
-        },
-        true
-      ]
+      "@": "$_id_0_"
     },
     "https://adaptivecards.io/schemas/adaptive-card.json": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-      "@": "$_id_1_AdaptiveCard"
+      "@": "$_id_1_"
     },
     "i18n_key_string": {
       "|": [
@@ -5590,7 +5503,6 @@
         "#": "Represents the shape of the icon",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Square",
               "_Circle"
@@ -5628,7 +5540,6 @@
     "iconBackgroundColor": {
       "^": [
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "|": [
             "_Accent1",
             "_Accent2",
@@ -5664,7 +5575,6 @@
         "#": "Represents the shape of the icon",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_Square",
               "_Circle"
@@ -5702,7 +5612,6 @@
       "#": "Represents identifier",
       "^": [
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": true
         },
         {
@@ -6100,7 +6009,6 @@
         "#": "The HTTP method",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_GET",
               "_POST",
@@ -6118,7 +6026,6 @@
         "#": "The mode of the request",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "|": [
               "_no-cors",
               "_same-origin",
@@ -6143,7 +6050,6 @@
         "#": "A timeout (in milliseconds) for the request. A value of 0 means there will be no timeout.",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": -1.0
           },
           "$simpleBinding"
@@ -6153,7 +6059,6 @@
         "#": "Indicates whether cross-site requests should be made using credentials",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "$simpleBinding"
@@ -6281,14 +6186,18 @@
     "routeTarget": {
       "#": "Represents the definition of a target of a route.",
       "^": [
-        [
-          {
-            "^": [
-              "",
-              "$routeTargetObject"
-            ]
-          }
-        ],
+        {
+          ">=": 0,
+          "@": [
+            {
+              "^": [
+                "",
+                "$routeTargetObject"
+              ]
+            },
+            "$ANY"
+          ]
+        },
         "",
         "$routeTargetObject"
       ]
@@ -6929,7 +6838,6 @@
         "#": "Represents the type of transition when navigating from previous view to this view",
         "|": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": ""
           },
           {
@@ -7091,7 +6999,6 @@
     "visibility": {
       "^": [
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": true
         },
         "$simpleBinding"
@@ -7139,7 +7046,6 @@
       "#": "Represents path inside the artifact to the properties file containing text symbols for the artifacts texts",
       "^": [
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": ""
         }
       ]
@@ -7209,7 +7115,7 @@
     },
     "_inputs": {
       "#": "Represents the inputs of the task ui",
-      "@": "$http://json-schema.org/draft-07/schema"
+      "@": "$_id_0_"
     },
     "_outcomes": {
       "!": true,
@@ -7236,10 +7142,11 @@
     },
     "_outputs": {
       "#": "Represents the outputs of the task ui",
-      "@": "$http://json-schema.org/draft-07/schema"
+      "@": "$_id_0_"
     }
   },
   "?sap.card": {
+    "#": "Represents general card attributes",
     "&": [
       {
         "&": [
@@ -7596,7 +7503,6 @@
         ]
       },
       {
-        "#": "Represents general card attributes",
         "?_version": {
           "#": "Represents SAP.CARD attributes format version. It is managed by namespace owner",
           "|": [
@@ -7735,7 +7641,6 @@
             "#": "[Experimental] Visibility of the footer",
             "^": [
               {
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "@": true
               },
               "$simpleBinding"
@@ -7746,7 +7651,6 @@
           "#": "Represents card header position - under or over the content",
           "^": [
             {
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "|": [
                 "_Top",
                 "_Bottom"
@@ -8309,7 +8213,6 @@
       "#": "Represents path inside the package to the properties file containing text symbols for the packages texts",
       "^": [
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": ""
         }
       ]
@@ -8952,7 +8855,6 @@
       "#": "Represents path inside the app to the properties file containing text symbols for the Descriptor or properties file specific settings (including supportedLocales, fallbackLocale, terminologies and enhanceWith)",
       "^": [
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": ""
         },
         {

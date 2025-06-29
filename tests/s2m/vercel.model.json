@@ -8,7 +8,6 @@
     "#": "Aliases that will get assigned when the deployment is `READY` and the target is `production`. The client needs to make a `GET` request to its API to ensure the assignment",
     "^": [
       {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": ""
       },
       {
@@ -214,7 +213,6 @@
   },
   "?github": {
     "": "$ANY",
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "?autoAlias": {
       "#": "When set to `false`, Vercel for GitHub will not deploy the given project regardless of the GitHub app being installed.",
       "@": true
@@ -552,7 +550,6 @@
           "@": true
         },
         "?statusCode": {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "<=": 999,
           ">=": 100,
           "@": -1
@@ -871,13 +868,11 @@
     "@": true
   },
   "?version": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "<=": 2,
     ">=": 2,
     "@": -1
   },
   "?wildcard": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "<=": 25,
     ">=": 1,
     "@": [

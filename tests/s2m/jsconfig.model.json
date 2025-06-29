@@ -704,11 +704,9 @@
         "#": "Path to base configuration file to inherit from (requires TypeScript version 2.1 or later), or array of base files, with the rightmost files having the greater priority (requires TypeScript version 5.0 or later).",
         "^": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": ""
           },
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": [
               ""
             ]

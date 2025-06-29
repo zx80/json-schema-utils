@@ -1,12 +1,14 @@
 {
+  "$schema": 1,
+  "$schema=https://json-schema.org/draft/2020-12/schema": 1,
   "*-array/array": 1,
   "*-integer-number/number": 1,
-  "*-object/object": 1,
+  "*-object/meta-object": 1,
   "*-string/string": 2,
-  "<$schema>": "<unknown_explicit_schema>",
+  "<$schema>": "https://json-schema.org/draft/2020-12/schema",
   "<bad-root>": false,
-  "<explicit-schema>": false,
-  "<file-hash>": "08f4898d62627f8c5945",
+  "<explicit-schema>": true,
+  "<file-hash>": "55410e001baba0902e72",
   "<input-file>": "person.schema.json",
   "<json-metrics>": {
     "array": 1,
@@ -16,11 +18,13 @@
     "items": 2,
     "null": 0,
     "object": 6,
-    "props": 15,
-    "string": 24
+    "props": 16,
+    "string": 26
   },
-  "<normed-hash>": "230c8aa8caa469d1fb31",
+  "<normed-hash>": "14c94665262594133232",
   "<schema-prop>": true,
+  "<version-path>": "$",
+  "<version>": 9,
   "<versions>": [
     4,
     5,

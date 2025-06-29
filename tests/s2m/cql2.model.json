@@ -267,7 +267,6 @@
     },
     "geometrycollection": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "_geometries": {
         ">=": 2,
         "@": [
@@ -387,7 +386,6 @@
     },
     "linestring": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -409,7 +407,6 @@
     },
     "multilinestring": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -433,7 +430,6 @@
     },
     "multipoint": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -452,7 +448,6 @@
     },
     "multipolygon": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -519,7 +514,6 @@
     },
     "point": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [
@@ -536,7 +530,6 @@
     },
     "polygon": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?bbox": {
         ">=": 4,
         "@": [

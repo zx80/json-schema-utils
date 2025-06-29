@@ -42,7 +42,6 @@
                 "@": ""
               },
               "?dependency_type": {
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "|": [
                   "_development",
                   "_production",
@@ -50,7 +49,6 @@
                 ]
               },
               "?update_type": {
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "|": [
                   "_security:patch",
                   "_semver:patch",
@@ -68,11 +66,9 @@
         "#": "Preferences for the format of Dependabot's commit messages and pull request titles. By default, Dependabot will attempt to detect your commit message preferences and use those.",
         "?include_scope": true,
         "?prefix": {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": ""
         },
         "?prefix_development": {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": ""
         }
       },
@@ -89,7 +85,6 @@
         "#": "Labels to set on update pull requests. By default 'dependencies' is used.",
         "@": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": ""
           }
         ]
@@ -177,7 +172,6 @@
     }
   ],
   "_version": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "<=": 1,
     ">=": 1,
     "@": -1

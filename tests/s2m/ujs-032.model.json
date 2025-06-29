@@ -1,5 +1,6 @@
 {
   "!": true,
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
   "@": [
     "$ANY"
   ]

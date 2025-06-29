@@ -8,10 +8,5 @@
       "type": "string"
     }
   },
-  "then": {
-    "required": [
-      "name"
-    ]
-  },
   "type": "object"
 }

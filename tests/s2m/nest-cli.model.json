@@ -105,7 +105,6 @@
         "@": true
       },
       "?plugins": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": [
           "$PluginItems"
         ]
@@ -299,7 +298,6 @@
     },
     "GraphQLPluginOptions": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?typeFileNameSuffix": {
         "#": "(GraphQL Only) GraphQL types files suffix. Default value: ['.input.ts', '.args.ts', '.entity.ts', '.model.ts']. See https://docs.nestjs.com/graphql/cli-plugin#using-the-cli-plugin for details.",
         "@": [
@@ -308,7 +306,6 @@
       }
     },
     "PluginItems": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "|": [
         "",
         {
@@ -344,7 +341,6 @@
     },
     "SwaggerPluginOptions": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?classValidatorShim": {
         "#": "(Swagger Only) If set to true, the module will reuse class-validator validation decorators (e.g. @Max(10) will add max: 10 to schema definition). See https://docs.nestjs.com/openapi/cli-plugin#using-the-cli-plugin for details",
         "@": true
@@ -384,7 +380,6 @@
   },
   "?generateOptions": "$GenerateOptions",
   "?language": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "@": ""
   },
   "?monorepo": {
@@ -392,8 +387,7 @@
     "@": true
   },
   "?projects": {
-    "": "$ProjectConfiguration",
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+    "": "$ProjectConfiguration"
   },
   "?root": {
     "#": "(monorepo only) Points at the project root of the default project.",

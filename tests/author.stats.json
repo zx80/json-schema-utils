@@ -1,10 +1,12 @@
 {
-  "*-object/object": 1,
+  "$schema": 1,
+  "$schema=https://json-schema.org/draft/2020-12/schema": 1,
+  "*-object/meta-object": 1,
   "*-string/string": 3,
-  "<$schema>": "<unknown_explicit_schema>",
+  "<$schema>": "https://json-schema.org/draft/2020-12/schema",
   "<bad-root>": false,
-  "<explicit-schema>": false,
-  "<file-hash>": "9b62a1160d94114fc61b",
+  "<explicit-schema>": true,
+  "<file-hash>": "5b74bd090f17f36b0046",
   "<input-file>": "author.schema.json",
   "<json-metrics>": {
     "array": 1,
@@ -14,11 +16,13 @@
     "items": 2,
     "null": 0,
     "object": 5,
-    "props": 13,
-    "string": 22
+    "props": 14,
+    "string": 24
   },
-  "<normed-hash>": "2a847e7d79403eb9d799",
+  "<normed-hash>": "25604f6cb931e0ceab04",
   "<schema-prop>": true,
+  "<version-path>": "$",
+  "<version>": 9,
   "<versions>": [
     4,
     5,

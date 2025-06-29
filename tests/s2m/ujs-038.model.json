@@ -1,4 +1,5 @@
 {
   "": "$ANY",
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
   "?country": "_United States of America"
 }

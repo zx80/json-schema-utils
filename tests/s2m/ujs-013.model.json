@@ -1,4 +1,5 @@
 {
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
   "?number": -1.0,
   "?street_name": "",
   "?street_type": {

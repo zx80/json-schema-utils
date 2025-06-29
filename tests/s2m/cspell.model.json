@@ -1017,21 +1017,22 @@
           "=": 1,
           "@": [
             {
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "@": "$ReporterModuleName"
             }
           ]
         },
-        [
-          {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-            "@": "$ReporterModuleName"
-          },
-          {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-            "@": "$ReporterOptions"
-          }
-        ]
+        {
+          ">=": 0,
+          "@": [
+            {
+              "@": "$ReporterModuleName"
+            },
+            {
+              "@": "$ReporterOptions"
+            },
+            "$ANY"
+          ]
+        }
       ]
     },
     "Serializable": {

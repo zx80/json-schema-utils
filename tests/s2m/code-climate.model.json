@@ -3,18 +3,15 @@
   "#": "Configuration file as an alternative for configuring your repository in the settings page.",
   "$": {
     "config": {
-      "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+      "": "$ANY"
     },
     "enabled": {
       "": "$ANY",
       "?enabled": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       }
     },
     "threshold": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "|": [
         -1,
         null
@@ -23,53 +20,40 @@
   },
   "?checks": {
     "": "$ANY",
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "?argument-count": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$enabled"
     },
     "?complex-logic": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$enabled"
     },
     "?file-lines": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$enabled"
     },
     "?identical-code": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$enabled"
     },
     "?method-complexity": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$enabled"
     },
     "?method-count": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$enabled"
     },
     "?method-lines": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$enabled"
     },
     "?nested-control-flow": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$enabled"
     },
     "?return-statements": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$enabled"
     },
     "?similar-code": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$enabled"
     }
   },
   "?exclude_patterns": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "@": [
       {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": ""
       }
     ]
@@ -79,16 +63,13 @@
     "#": "To add a plugin to your analysis. You can find the complete list of available plugins here: https://docs.codeclimate.com/docs/list-of-engines"
   },
   "?prepare": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "@": [
       {
         "": "$ANY",
         "?path": {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": ""
         },
         "?url": {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": "$URI"
         }
       }

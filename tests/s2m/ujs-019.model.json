@@ -1,6 +1,4 @@
 {
-  "$": {
-    "_1": "^[A-Za-z_][A-Za-z0-9_]*$"
-  },
-  "$_1": "$ANY"
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "/^[A-Za-z_][A-Za-z0-9_]*$/": "$ANY"
 }

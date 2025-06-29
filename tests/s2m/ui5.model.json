@@ -1,8 +1,7 @@
 {
   "#": "Schema for UI5 Tooling Configuration File (ui5.yaml)",
   "$": {
-    "#/$defs/_defs_0_builder-bundles": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-bundles": {
       "@": [
         {
           "?bundleDefinition": "$_defs_0_builder-bundles-bundleDefinition",
@@ -10,8 +9,7 @@
         }
       ]
     },
-    "#/$defs/_defs_0_builder-bundles-2.4": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-bundles-2.4": {
       "@": [
         {
           "?bundleDefinition": "$_defs_0_builder-bundles-bundleDefinition-2.4",
@@ -19,8 +17,7 @@
         }
       ]
     },
-    "#/$defs/_defs_0_builder-bundles-3.0": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-bundles-3.0": {
       "@": [
         {
           "?bundleDefinition": "$_defs_0_builder-bundles-bundleDefinition-2.4",
@@ -28,32 +25,26 @@
         }
       ]
     },
-    "#/$defs/_defs_0_builder-bundles-bundleDefinition": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-bundles-bundleDefinition": {
       "?defaultFileTypes": [
         ""
       ],
       "?sections": [
         {
           "?declareRawModules": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "?name": "",
           "?renderer": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "?resolve": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "?resolveConditional": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "?sort": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "_filters": [
@@ -71,32 +62,26 @@
       ],
       "_name": ""
     },
-    "#/$defs/_defs_0_builder-bundles-bundleDefinition-2.4": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-bundles-bundleDefinition-2.4": {
       "?defaultFileTypes": [
         ""
       ],
       "?sections": [
         {
           "?declareRawModules": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "?name": "",
           "?renderer": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "?resolve": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "?resolveConditional": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "?sort": {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": true
           },
           "_filters": [
@@ -115,58 +100,44 @@
       ],
       "_name": ""
     },
-    "#/$defs/_defs_0_builder-bundles-bundleOptions": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-bundles-bundleOptions": {
       "?addTryCatchRestartWrapper": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?decorateBootstrapModule": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?numberOfParts": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": -1.0
       },
       "?optimize": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?usePredefineCalls": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       }
     },
-    "#/$defs/_defs_0_builder-bundles-bundleOptions-3.0": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-bundles-bundleOptions-3.0": {
       "?addTryCatchRestartWrapper": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?decorateBootstrapModule": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?numberOfParts": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": -1.0
       },
       "?optimize": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?sourceMap": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?usePredefineCalls": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       }
     },
-    "#/$defs/_defs_0_builder-componentPreload": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-componentPreload": {
       "?namespaces": [
         ""
       ],
@@ -174,8 +145,7 @@
         ""
       ]
     },
-    "#/$defs/_defs_0_builder-componentPreload-specVersion-2.3": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-componentPreload-specVersion-2.3": {
       "?excludes": [
         ""
       ],
@@ -186,26 +156,22 @@
         ""
       ]
     },
-    "#/$defs/_defs_0_builder-libraryPreload": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-libraryPreload": {
       "?excludes": [
         ""
       ]
     },
-    "#/$defs/_defs_0_builder-minification": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-minification": {
       "?excludes": [
         ""
       ]
     },
-    "#/$defs/_defs_0_builder-resources": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-resources": {
       "?excludes": [
         ""
       ]
     },
-    "#/$defs/_defs_0_builder-settings": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_builder-settings": {
       "?includeDependency": [
         ""
       ],
@@ -216,8 +182,7 @@
         ""
       ]
     },
-    "#/$defs/_defs_0_customTasks": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_customTasks": {
       "@": [
         {
           "^": [
@@ -235,18 +200,15 @@
         }
       ]
     },
-    "#/$defs/_defs_0_framework": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_framework": {
       "?libraries": [
         {
           "&": [
             {
               "?development": {
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "@": true
               },
               "?optional": {
-                "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                 "@": true
               },
               "_name": ""
@@ -376,36 +338,28 @@
         ]
       }
     },
-    "#/$defs/_defs_0_metadata": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_metadata": {
       "?allowSapInternal": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?copyright": "",
       "?deprecated": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?sapInternal": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "_name": ""
     },
-    "#/$defs/_defs_0_metadata-3.0": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_metadata-3.0": {
       "?allowSapInternal": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?copyright": "",
       "?deprecated": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?sapInternal": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "_name": {
@@ -415,15 +369,14 @@
         "@": "/^(?:@[0-9a-z-_.]+\\/)?[a-z][0-9a-z-_.]*$/"
       }
     },
-    "#/$defs/_defs_0_resources-configuration-propertiesFileSourceEncoding": {
+    "_defs_0_resources-configuration-propertiesFileSourceEncoding": {
       "#": "By default, the UI5 Tooling expects *.properties files to be UTF-8 encoded.",
       "|": [
         "_UTF-8",
         "_ISO-8859-1"
       ]
     },
-    "#/$defs/_defs_0_server": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_0_server": {
       "?customMiddleware": [
         {
           "^": [
@@ -447,8 +400,7 @@
         "?httpsPort": -1.0
       }
     },
-    "#/$defs/_defs_1_builder": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_1_builder": {
       "?bundles": "$_defs_0_builder-bundles",
       "?cachebuster": {
         "?signatureType": {
@@ -462,8 +414,7 @@
       "?customTasks": "$_defs_0_customTasks",
       "?resources": "$_defs_0_builder-resources"
     },
-    "#/$defs/_defs_1_builder-specVersion-2.3": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_1_builder-specVersion-2.3": {
       "?bundles": "$_defs_0_builder-bundles",
       "?cachebuster": {
         "?signatureType": {
@@ -477,8 +428,7 @@
       "?customTasks": "$_defs_0_customTasks",
       "?resources": "$_defs_0_builder-resources"
     },
-    "#/$defs/_defs_1_builder-specVersion-2.4": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_1_builder-specVersion-2.4": {
       "?bundles": "$_defs_0_builder-bundles-2.4",
       "?cachebuster": {
         "?signatureType": {
@@ -492,8 +442,7 @@
       "?customTasks": "$_defs_0_customTasks",
       "?resources": "$_defs_0_builder-resources"
     },
-    "#/$defs/_defs_1_builder-specVersion-2.5": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_1_builder-specVersion-2.5": {
       "?bundles": "$_defs_0_builder-bundles-2.4",
       "?cachebuster": {
         "?signatureType": {
@@ -508,8 +457,7 @@
       "?resources": "$_defs_0_builder-resources",
       "?settings": "$_defs_0_builder-settings"
     },
-    "#/$defs/_defs_1_builder-specVersion-2.6": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_1_builder-specVersion-2.6": {
       "?bundles": "$_defs_0_builder-bundles-2.4",
       "?cachebuster": {
         "?signatureType": {
@@ -525,8 +473,7 @@
       "?resources": "$_defs_0_builder-resources",
       "?settings": "$_defs_0_builder-settings"
     },
-    "#/$defs/_defs_1_builder-specVersion-3.0": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_1_builder-specVersion-3.0": {
       "?bundles": "$_defs_0_builder-bundles-3.0",
       "?cachebuster": {
         "?signatureType": {
@@ -542,8 +489,7 @@
       "?resources": "$_defs_0_builder-resources",
       "?settings": "$_defs_0_builder-settings"
     },
-    "#/$defs/_defs_1_resources": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_1_resources": {
       "?configuration": {
         "?paths": {
           "?webapp": ""
@@ -551,22 +497,19 @@
         "?propertiesFileSourceEncoding": "$_defs_0_resources-configuration-propertiesFileSourceEncoding"
       }
     },
-    "#/$defs/_defs_2_builder": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_2_builder": {
       "?bundles": "$_defs_0_builder-bundles",
       "?componentPreload": "$_defs_0_builder-componentPreload",
       "?customTasks": "$_defs_0_customTasks",
       "?jsdoc": "$_defs_2_builder-jsdoc",
       "?resources": "$_defs_0_builder-resources"
     },
-    "#/$defs/_defs_2_builder-jsdoc": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_2_builder-jsdoc": {
       "?excludes": [
         ""
       ]
     },
-    "#/$defs/_defs_2_builder-specVersion-2.3": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_2_builder-specVersion-2.3": {
       "?bundles": "$_defs_0_builder-bundles",
       "?componentPreload": "$_defs_0_builder-componentPreload-specVersion-2.3",
       "?customTasks": "$_defs_0_customTasks",
@@ -574,8 +517,7 @@
       "?libraryPreload": "$_defs_0_builder-libraryPreload",
       "?resources": "$_defs_0_builder-resources"
     },
-    "#/$defs/_defs_2_builder-specVersion-2.4": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_2_builder-specVersion-2.4": {
       "?bundles": "$_defs_0_builder-bundles-2.4",
       "?componentPreload": "$_defs_0_builder-componentPreload-specVersion-2.3",
       "?customTasks": "$_defs_0_customTasks",
@@ -583,8 +525,7 @@
       "?libraryPreload": "$_defs_0_builder-libraryPreload",
       "?resources": "$_defs_0_builder-resources"
     },
-    "#/$defs/_defs_2_builder-specVersion-2.5": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_2_builder-specVersion-2.5": {
       "?bundles": "$_defs_0_builder-bundles-2.4",
       "?componentPreload": "$_defs_0_builder-componentPreload-specVersion-2.3",
       "?customTasks": "$_defs_0_customTasks",
@@ -593,8 +534,7 @@
       "?resources": "$_defs_0_builder-resources",
       "?settings": "$_defs_0_builder-settings"
     },
-    "#/$defs/_defs_2_builder-specVersion-2.6": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_2_builder-specVersion-2.6": {
       "?bundles": "$_defs_0_builder-bundles-2.4",
       "?componentPreload": "$_defs_0_builder-componentPreload-specVersion-2.3",
       "?customTasks": "$_defs_0_customTasks",
@@ -604,8 +544,7 @@
       "?resources": "$_defs_0_builder-resources",
       "?settings": "$_defs_0_builder-settings"
     },
-    "#/$defs/_defs_2_builder-specVersion-3.0": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_2_builder-specVersion-3.0": {
       "?bundles": "$_defs_0_builder-bundles-3.0",
       "?componentPreload": "$_defs_0_builder-componentPreload-specVersion-2.3",
       "?customTasks": "$_defs_0_customTasks",
@@ -615,8 +554,7 @@
       "?resources": "$_defs_0_builder-resources",
       "?settings": "$_defs_0_builder-settings"
     },
-    "#/$defs/_defs_2_resources": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_2_resources": {
       "?configuration": {
         "?paths": {
           "?src": "",
@@ -625,41 +563,34 @@
         "?propertiesFileSourceEncoding": "$_defs_0_resources-configuration-propertiesFileSourceEncoding"
       }
     },
-    "#/$defs/_defs_3_builder": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_3_builder": {
       "?customTasks": "$_defs_0_customTasks",
       "?resources": "$_defs_0_builder-resources"
     },
-    "#/$defs/_defs_3_builder-specVersion-2.5": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_3_builder-specVersion-2.5": {
       "?customTasks": "$_defs_0_customTasks",
       "?resources": "$_defs_0_builder-resources",
       "?settings": "$_defs_0_builder-settings"
     },
-    "#/$defs/_defs_4_builder-specVersion-2.5": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_4_builder-specVersion-2.5": {
       "?settings": "$_defs_0_builder-settings"
     },
-    "#/$defs/_defs_4_builder-specVersion-3.1": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_4_builder-specVersion-3.1": {
       "?resources": "$_defs_0_builder-resources",
       "?settings": "$_defs_0_builder-settings"
     },
-    "#/$defs/_defs_4_resources": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_4_resources": {
       "?configuration": {
         "?paths": {
           "/.+/": ""
         }
       }
     },
-    "#/$defs/_defs_5_metadata": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_5_metadata": {
       "?copyright": "",
       "_name": ""
     },
-    "#/$defs/_defs_5_metadata-3.0": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_5_metadata-3.0": {
       "?copyright": "",
       "_name": {
         "#": "Unique identifier for the extension, for example: ui5-task-fearless-rock",
@@ -668,16 +599,13 @@
         "@": "/^(?:@[0-9a-z-_.]+\\/)?[a-z][0-9a-z-_.]*$/"
       }
     },
-    "#/$defs/_defs_6_task": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_6_task": {
       "?path": ""
     },
-    "#/$defs/_defs_7_middleware": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_7_middleware": {
       "?path": ""
     },
-    "#/$defs/_defs_8_shims": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+    "_defs_8_shims": {
       "?collections": {
         "/.+/": {
           "?modules": {
@@ -776,7 +704,6 @@
                           }
                         },
                         {
-                          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                           "&": [
                             {
                               "": "$ANY",
@@ -846,7 +773,6 @@
                                                   "?type": "_application"
                                                 },
                                                 {
-                                                  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                                                   "&": [
                                                     {
                                                       "": "$ANY",
@@ -1221,7 +1147,6 @@
                                                               "?type": "_library"
                                                             },
                                                             {
-                                                              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                                                               "&": [
                                                                 {
                                                                   "": "$ANY",
@@ -1596,7 +1521,6 @@
                                                                           "?type": "_theme-library"
                                                                         },
                                                                         {
-                                                                          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                                                                           "&": [
                                                                             {
                                                                               "": "$ANY",
@@ -1842,7 +1766,6 @@
                                                                                       "?type": "_module"
                                                                                     },
                                                                                     {
-                                                                                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                                                                                       "&": [
                                                                                         {
                                                                                           "": "$ANY",
@@ -2163,7 +2086,6 @@
                                       "?kind": "_extension"
                                     },
                                     {
-                                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                                       "&": [
                                         {
                                           "": "$ANY",
@@ -2228,7 +2150,6 @@
                                                               "?type": "_task"
                                                             },
                                                             {
-                                                              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                                                               "&": [
                                                                 {
                                                                   "": "$ANY",
@@ -2393,7 +2314,6 @@
                                                                           "?type": "_server-middleware"
                                                                         },
                                                                         {
-                                                                          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                                                                           "&": [
                                                                             {
                                                                               "": "$ANY",
@@ -2558,7 +2478,6 @@
                                                                                       "?type": "_project-shim"
                                                                                     },
                                                                                     {
-                                                                                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                                                                                       "&": [
                                                                                         {
                                                                                           "": "$ANY",

@@ -21,7 +21,6 @@
           ]
         },
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": "/^#[0-9a-fA-F]{6}$/"
         }
       ]
@@ -44,7 +43,6 @@
       ]
     },
     "keybinding": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "|": [
         "",
         null
@@ -80,6 +78,7 @@
           "#": "Prompts before running a command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
           "@": [
             {
+              "#": "A prompt before running a command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
               "&": [
                 {
                   "&": [
@@ -302,7 +301,6 @@
                 },
                 {
                   "": "$ANY",
-                  "#": "A prompt before running a command\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md#custom-command-keybindings",
                   "_key": "$custom-commands-prompts-key-property",
                   "_title": "$custom-commands-prompts-title-property",
                   "_type": "$custom-commands-prompts-type-property"

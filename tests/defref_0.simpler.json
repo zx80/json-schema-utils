@@ -1,0 +1,59 @@
+{
+  "$comment": "test moving defs, ids and ugly references",
+  "$defs": {
+    "A": {
+      "const": "a"
+    },
+    "_id_0_": {
+      "$comment": "$id 0: https://comics.net/",
+      "properties": {
+        "J": {
+          "$ref": "#/$defs/_id_0_I"
+        },
+        "K": {
+          "$ref": "#/$defs/_id_0_https%3A~1~1wtf.org~1char"
+        }
+      }
+    },
+    "_id_0_I": {
+      "const": "i"
+    },
+    "_id_0_https://wtf.org/char": {
+      "const": "c"
+    },
+    "_psub_1_": {
+      "$ref": "#/$defs/A"
+    },
+    "_psub_2_": {
+      "const": "i"
+    },
+    "_psub_3_": {
+      "const": "c"
+    },
+    "https://geojson.org/geo": {
+      "const": "b"
+    }
+  },
+  "properties": {
+    "A": {
+      "$ref": "#/$defs/A"
+    },
+    "A2": {
+      "$ref": "#/$defs/_psub_1_"
+    },
+    "B": {
+      "$ref": "#/$defs/https%3A~1~1geojson.org~1geo"
+    },
+    "C": {
+      "$ref": "#/$defs/_psub_3_"
+    },
+    "I2": {
+      "$ref": "#/$defs/_psub_2_"
+    },
+    "X": {
+      "$comment": "https://comics.net/ moved as $def",
+      "$ref": "#/$defs/_id_0_"
+    }
+  },
+  "type": "object"
+}

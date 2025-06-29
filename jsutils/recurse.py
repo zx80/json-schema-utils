@@ -45,7 +45,7 @@ def _recurseSchema(
             if prop in schema:
                 props = schema[prop]
                 assert isinstance(props, dict)
-                for p, s in props.items():
+                for p, s in list(props.items()):
                     props[p] = _recurseSchema(s, url, path + [prop, p], flt, rwt)
 
     recValue(schema, "properties", "dependentSchemas", "patternProperties")

@@ -269,6 +269,7 @@ def allOfLayer(schema: dict, operator: str):
     return nschema
 
 
+# TODO handle a global defs so as to be able to create new ones
 def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool = True):
     """Convert a JSON schema to a JSON model assuming a 2020-12 semantics."""
 
@@ -308,11 +309,15 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
         assert isinstance(_defs, dict)
         for name, val in _defs.items():
             log.info(f"registering {dname}/{name} at [{spath}]")
+            # if name is ugly, $ref are encoded, we encode here as well
+            if "/" in name or "%" in name:
+                encoded = quote(name).replace("~", "~0").replace("/", "~1")
+            else:
+                encoded = name
             # keep json schema for handling $ref #
-            IDS[dname][name] = val
-            # provide a local converted version as well?
-            # this may not be enough in some cases
-            defs[name] = schema2model(val, path + [dname, name], strict, False)
+            IDS[dname][encoded] = val
+            # provide a local converted version as well? not enough??
+            defs[encoded] = schema2model(val, path + [dname, name], strict, False)
         # special root handling
         IDS[""] = "$#"
 
@@ -496,14 +501,21 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
         if only(schema, "$ref", *IGNORE):
             ref = schema["$ref"]
             assert isinstance(ref, str) and len(ref) > 0
+            if ref in ("#/", "#"):
+                return "$#"
+
+            name = None
             if ref.startswith("#/$defs/") and only(schema, "$ref", *IGNORE):
                 # keep a reference if simple
-                return buildModel("$" + ref[8:], {}, defs, sharp, is_root)
+                name = ref[8:]
             elif ref.startswith("#/definitions/") and only(schema, "$ref", *IGNORE):
-                return buildModel("$" + ref[14:], {}, defs, sharp, is_root)
-            elif ref in ("#/", "#"):
-                return "$#"
-            elif ref.startswith("#/"):
+                name = ref[14:]
+            if name is not None and "/" not in name:
+                return buildModel("$" + name, {}, defs, sharp, is_root)
+
+            # else we have to navigate…
+            # FIXME should be useless? should have been simplified?
+            if ref.startswith("#/"):
                 names = ref[2:].split("/")
                 # standard /$def/foo
                 if names and names[0] in ("$defs", "definitions"):
@@ -514,6 +526,8 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
                 else:  # arbitrary path
                     val = SCHEMA
                     for name in names:
+                        if "~0" in name or "~1" in name or "%" in name:
+                            name = unquote(name).replace("~1", "/").replace("~0", "~")
                         assert name in val, f"following path in {ref}: missing {name} at [{spath}]"
                         val = val[name]
                 model = schema2model(val, path + ["$ref"], strict, False)
@@ -798,9 +812,11 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
                 # does not seem very useful?
                 pnames = schema["propertyNames"]
                 if "additionalProperties" in schema:
-                    addprops = schema["additionalProperties"]
+                    target = schema2model(schema["additionalProperties"], path, strict, False)
                 else:
-                    addprops = "$ANY"
+                    target = "$ANY"
+
+                # TODO for other cases, we could create a new reference
                 assert only(pnames, "pattern", "type", "format", *IGNORE), \
                     f"props for prop names at [{spath}]"
                 # if given a type, it must be string
@@ -809,12 +825,12 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
                 if "pattern" in pnames:
                     pat = pnames["pattern"]
                     assert isinstance(pat, str), f"pattern is string at [{spath}]"
-                    model[f"/{pat}/"] = \
-                        schema2model(addprops, path + ["propertyNames"], strict, False)
-                if "format" in pnames:
+                    model[f"/{pat}/"] = target
+                elif "format" in pnames:
                     fmt = pnames["format"]
-                    model[format2model(fmt)] = addprops
-                # else nothing?!
+                    model[format2model(fmt)] = target
+                else:
+                    model[""] = target
 
             if "properties" in schema:
                 props = schema["properties"]

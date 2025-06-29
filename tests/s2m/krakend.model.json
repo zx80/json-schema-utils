@@ -1,7 +1,11 @@
 {
   "#": "JSON Model generated from a JSON Schema with json-schema-utils",
   "$": {
-    "#/definitions/_defs_0_timeunit": {
+    "_defs_0_timeunit": {
+      "#": "The amount of time you want to assign followed by its unit (e.g.: `2s`, `200ms`). Valid time units are: ns, us, (or \u00b5s), ms, s, m, h.",
+      "@": "/^[0-9]+(ns|ms|us|\u00b5s|s|m|h)$/"
+    },
+    "_psub_1_": {
       "#": "The amount of time you want to assign followed by its unit (e.g.: `2s`, `200ms`). Valid time units are: ns, us, (or \u00b5s), ms, s, m, h.",
       "@": "/^[0-9]+(ns|ms|us|\u00b5s|s|m|h)$/"
     },
@@ -73,7 +77,7 @@
             },
             "?health_interval": {
               "#": "The time between pings checking that the agent is connected to the queue and alive. Regardless of the health interval, if an agent fails, KrakenD will restart it again immediately as defined by `max_retries`and `backoff_strategy`.\n\nSee: https://www.krakend.io/docs/async/",
-              "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+              "@": "$_psub_1_"
             },
             "?max_retries": {
               "#": "The maximum number of times you will allow KrakenD to retry reconnecting to a broken messaging system. Use 0 for unlimited retries.\n\nSee: https://www.krakend.io/docs/async/",
@@ -106,7 +110,7 @@
             },
             "?timeout": {
               "#": "The maximum time the agent will wait to process an event sent to the backend. If the backend fails to process it, the message is reinserted for later consumption. Defaults to the timeout in the root level, or to `2s` if no value is declared.\n\nSee: https://www.krakend.io/docs/async/",
-              "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+              "@": "$_psub_1_"
             },
             "?workers": {
               "#": "The number of workers (consuming processes) you want to start simultaneously for this agent.\n\nSee: https://www.krakend.io/docs/async/",
@@ -220,6 +224,7 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/auth/gcp.json": {
+      "#": "Enterprise only. Enables GCP authentication between KrakenD and Google Cloud service account.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
       "&": [
         {
           "|": [
@@ -279,10 +284,7 @@
             }
           ]
         },
-        {
-          "#": "Enterprise only. Enables GCP authentication between KrakenD and Google Cloud service account.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "https://www.krakend.io/schema/v2.7/auth/jose.json": {
@@ -322,7 +324,7 @@
       },
       "?revoke_server_ping_interval": {
         "#": "Time the server and the client wait to verify they are alive with each other (health check). Defaults to `30s`. Do not lower this value a lot; otherwise, you will have a lot of internal traffic.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/revoke-server/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "?revoke_server_ping_url": {
         "#": "The address to the `/instances` endpoint in the Revoke Server.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/revoke-server/",
@@ -359,6 +361,7 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/auth/signer.json": {
+      "#": "creates a wrapper for your login endpoint that signs with your secret key the selected fields of the backend payload right before returning the content to the end-user.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
       "&": [
         {
           "^": [
@@ -429,7 +432,7 @@
               },
               "?leeway": {
                 "#": "A margin of extra time where you will still accept the token after its expiration date. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+                "@": "$_psub_1_"
               },
               "?secret_url": {
                 "#": "An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) ([see providers](https://www.krakend.io/docs/authorization/jwt-validation/#accepted-providers-for-encrypting-payloads)).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
@@ -533,7 +536,7 @@
               },
               "?leeway": {
                 "#": "A margin of extra time where you will still accept the token after its expiration date. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+                "@": "$_psub_1_"
               },
               "?secret_url": {
                 "#": "An URL with a custom scheme using one of the supported providers (e.g.: `awskms://keyID`) ([see providers](https://www.krakend.io/docs/authorization/jwt-validation/#accepted-providers-for-encrypting-payloads)).\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
@@ -564,13 +567,11 @@
             }
           ]
         },
-        {
-          "#": "creates a wrapper for your login endpoint that signs with your secret key the selected fields of the backend payload right before returning the content to the end-user.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "https://www.krakend.io/schema/v2.7/auth/validator.json": {
+      "#": "Protect endpoints from public usage by validating JWT tokens generated by any industry-standard OpenID Connect (OIDC) integration.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
       "&": [
         {
           "^": [
@@ -639,7 +640,7 @@
               },
               "?failed_jwk_key_cooldown": {
                 "#": "When a request comes with a token declaring an unknown `kid` (or the key strategy you choose), and the JWK is in a remote destination, KrakenD downloads the JWK from the Identity Provider for its recognition. Suppose there is a network failure, or the key is not in the list (e.g., you rotated the keys without anticipation). In that case, you can tell the gateway not to contact the Identity Provider again during the time specified here. We recommend setting this value, even with a low time (e.g., `10s`), to prevent misconfigurations from hammering your Identity Providers. Any values under one second are ignored.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+                "@": "$_psub_1_"
               },
               "?issuer": {
                 "#": "When set, tokens not matching the issuer are rejected.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
@@ -669,7 +670,7 @@
               },
               "?leeway": {
                 "#": "A margin of time where you will accept an already expired token. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+                "@": "$_psub_1_"
               },
               "?operation_debug": {
                 "#": "When `true`, any JWT **validation operation** gets printed in the log with a level `ERROR`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
@@ -809,7 +810,7 @@
               },
               "?failed_jwk_key_cooldown": {
                 "#": "When a request comes with a token declaring an unknown `kid` (or the key strategy you choose), and the JWK is in a remote destination, KrakenD downloads the JWK from the Identity Provider for its recognition. Suppose there is a network failure, or the key is not in the list (e.g., you rotated the keys without anticipation). In that case, you can tell the gateway not to contact the Identity Provider again during the time specified here. We recommend setting this value, even with a low time (e.g., `10s`), to prevent misconfigurations from hammering your Identity Providers. Any values under one second are ignored.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+                "@": "$_psub_1_"
               },
               "?issuer": {
                 "#": "When set, tokens not matching the issuer are rejected.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
@@ -839,7 +840,7 @@
               },
               "?leeway": {
                 "#": "A margin of time where you will accept an already expired token. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-                "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+                "@": "$_psub_1_"
               },
               "?operation_debug": {
                 "#": "When `true`, any JWT **validation operation** gets printed in the log with a level `ERROR`. You will see if a client does not have sufficient roles, the allowed claims, scopes, and other useful information.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
@@ -916,10 +917,7 @@
             }
           ]
         },
-        {
-          "#": "Protect endpoints from public usage by validating JWT tokens generated by any industry-standard OpenID Connect (OIDC) integration.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "https://www.krakend.io/schema/v2.7/backend.json": {
@@ -974,7 +972,6 @@
         "#": "A second level of header filtering that defines the list of all headers allowed to reach this backend when different than the endpoint.\nBy default, all headers in the endpoint `input_headers` reach the backend, unless otherwise specified here. An empty list `[]` is considered a zero-value and allows all headers to pass. Use `[\"\"]` to explicitly remove all headers. See [headers forwarding](https://www.krakend.io/docs/endpoints/parameter-forwarding/#headers-forwarding)",
         "@": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": ""
           }
         ]
@@ -984,7 +981,6 @@
         "#": "A second level of query string filtering that defines the list of all query strings allowed to reach this backend when different than the endpoint.\nBy default, all query strings in the endpoint `input_query_strings` reach the backend, unless otherwise specified here. An empty list `[]` is considered a zero-value and allows all headers to pass. Use `[\"\"]` to explicitly remove all query strings. See [query strings forwarding](https://www.krakend.io/docs/endpoints/parameter-forwarding/#query-string-forwarding)",
         "@": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": ""
           }
         ]
@@ -1166,6 +1162,7 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/backend/graphql.json": {
+      "#": "Convert REST endpoints to GraphQL calls (adapter/transformer)",
       "&": [
         {
           "^": [
@@ -1221,10 +1218,7 @@
             }
           ]
         },
-        {
-          "#": "Convert REST endpoints to GraphQL calls (adapter/transformer)",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "https://www.krakend.io/schema/v2.7/backend/grpc.json": {
@@ -1342,6 +1336,7 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/backend/soap.json": {
+      "#": "Enterprise only. Build and modify requests to communicate with SOAP services.\n\nSee: https://www.krakend.io/docs/backends/soap/",
       "&": [
         {
           "^": [
@@ -1383,10 +1378,7 @@
             }
           ]
         },
-        {
-          "#": "Enterprise only. Build and modify requests to communicate with SOAP services.\n\nSee: https://www.krakend.io/docs/backends/soap/",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "https://www.krakend.io/schema/v2.7/backend/static-filesystem.json": {
@@ -1402,7 +1394,6 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/backend_extra_config.json": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "/^[@$_#]/": "$ANY",
       "?auth/client-credentials": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1client-credentials.json",
       "?auth/gcp": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1gcp.json",
@@ -1622,7 +1613,6 @@
         "#": "Sets a description for the URL parameters (e.g.: `/foo/{param}`) required in the endpoint. Make sure to include to write the param exactly as in the endpoint definition.\n\nSee: https://www.krakend.io/docs/enterprise/developer/openapi/",
         "@": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "/^[@$_#]/": "$ANY",
             "?description": {
               "#": "The description of the parameter",
@@ -1639,7 +1629,6 @@
         "#": "Sets a description for the query strings allowed in the endpoint. Make sure to include the same strings in the endpoint's `input_query_strings`.\n\nSee: https://www.krakend.io/docs/enterprise/developer/openapi/",
         "@": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "/^[@$_#]/": "$ANY",
             "?description": {
               "#": "The description of the querystring",
@@ -1758,7 +1747,6 @@
         "#": "Sets a description for the tags classifiying endpoints when generating the OpenAPI spec.\n\nSee: https://www.krakend.io/docs/enterprise/developer/openapi/",
         "@": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "/^[@$_#]/": "$ANY",
             "?description": {
               "#": "Describe what this tag is grouping",
@@ -1787,11 +1775,10 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/endpoint.json": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "/^[@$_#]/": "$ANY",
       "?cache_ttl": {
         "#": "Sets or overrides the cache headers to inform for how long the client or CDN can cache the request to this endpoint. Setting this value to a zero-value will use the `cache_ttl` of the service if any. Related: [caching backend responses](https://www.krakend.io/docs/backends/caching/).",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "?concurrent_calls": {
         "#": "The concurrent requests are an excellent technique to improve the response times and decrease error rates by requesting in parallel the same information multiple times. Yes, you make the same request to several backends instead of asking to just one. When the first backend returns the information, the remaining requests are canceled.\n\nSee: https://www.krakend.io/docs/endpoints/concurrent-requests/",
@@ -1808,7 +1795,6 @@
         "#": "Defines the list of all headers allowed to reach the backend when passed.\nBy default, KrakenD won't pass any header from the client to the backend. This list is **case-insensitive**. You can declare headers in lowercase, uppercase, or mixed.\nAn entry `[\"Cookie\"]` forwards all cookies, and a single star element `[\"*\"]` as value forwards everything to the backend (**it's safer to avoid this option**), including cookies. See [headers forwarding](https://www.krakend.io/docs/endpoints/parameter-forwarding/#headers-forwarding)",
         "@": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": ""
           }
         ]
@@ -1818,7 +1804,6 @@
         "#": "Defines the exact list of quey strings parameters that are allowed to reach the backend. This list is **case-sensitive**.\nBy default, KrakenD won't pass any query string to the backend.\nA single star element `[\"*\"]` as value forwards everything to the backend (**it's safer to avoid this option**)\n\nSee: https://www.krakend.io/docs/endpoints/parameter-forwarding/",
         "@": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": ""
           }
         ]
@@ -1847,7 +1832,7 @@
       },
       "?timeout": {
         "#": "The duration you write in the timeout represents the **whole duration of the pipe**, so it counts the time all your backends take to respond and the processing of all the components involved in the endpoint (the request, fetching data, manipulation, etc.). Usually specified in seconds (`s`) or milliseconds (`ms`. e.g.: `2000ms` or `2s`). If you don't set any timeout, the timeout is taken from the entry in the service level, or to the system's default",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "_backend": {
         "#": "List of all the [backend objects](https://www.krakend.io/docs/backends/) queried for this endpoint",
@@ -1862,7 +1847,6 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/endpoint_extra_config.json": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "/^[@$_#]/": "$ANY",
       "?auth/api-keys": {
         "#": "Enterprise only. Validates that users of this endpoint pass a valid API-key containing one of the declared roles.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/api-keys/",
@@ -1900,7 +1884,6 @@
       "?modifier/response-body-generator": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1body-generator.json",
       "?plugin/req-resp-modifier": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1req-resp-modifier.json",
       "?proxy": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "/^[@$_#]/": "$ANY",
         "?combiner": {
           "#": "For custom builds of KrakenD only",
@@ -2027,6 +2010,7 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/modifier/body-generator.json": {
+      "#": "Enterprise only. Crafts the body/payload using a templating system.\n\nSee: https://www.krakend.io/backends/body-generator/",
       "&": [
         {
           "^": [
@@ -2068,10 +2052,7 @@
             }
           ]
         },
-        {
-          "#": "Enterprise only. Crafts the body/payload using a templating system.\n\nSee: https://www.krakend.io/backends/body-generator/",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "https://www.krakend.io/schema/v2.7/modifier/jmespath.json": {
@@ -2932,7 +2913,6 @@
     },
     "https://www.krakend.io/schema/v2.7/plugin/http-client.json": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?name": {
         "#": "The name of the plugin to load. Only one plugin is supported per backend.\n\nSee: https://www.krakend.io/docs/extending/injecting-plugins/",
         "@": ""
@@ -2940,7 +2920,6 @@
     },
     "https://www.krakend.io/schema/v2.7/plugin/http-server.json": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?geoip": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1geoip.json",
       "?ip-filter": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1ip-filter.json",
       "?jwk-aggregator": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1jwk-aggregator.json",
@@ -3017,7 +2996,7 @@
       },
       "_period": {
         "#": "For how long the content lives in the cache. Usually in seconds, minutes, or hours. E.g., use `120s` or `2m` for two minutes\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/global-rate-limit/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "_rate": {
         "#": "Number of allowed requests during the observed period.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/global-rate-limit/",
@@ -3038,7 +3017,6 @@
     },
     "https://www.krakend.io/schema/v2.7/plugin/req-resp-modifier.json": {
       "": "$ANY",
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?content-replacer": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1content-replacer.json",
       "?ip-filter": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1ip-filter.json",
       "?name": {
@@ -3088,6 +3066,7 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/plugin/url-rewrite.json": {
+      "#": "Enterprise only. Allows you to declare additional URLs other than the ones defined under the endpoints configuration, used as aliases of existing endpoints.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/",
       "&": [
         {
           "|": [
@@ -3121,10 +3100,7 @@
             }
           ]
         },
-        {
-          "#": "Enterprise only. Allows you to declare additional URLs other than the ones defined under the endpoints configuration, used as aliases of existing endpoints.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "https://www.krakend.io/schema/v2.7/plugin/virtualhost.json": {
@@ -3146,7 +3122,6 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/proxy.json": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "/^[@$_#]/": "$ANY",
       "?decompress_gzip": {
         "#": "Enterprise Only. Decompresses any Gzipped content before sending it to the backend when the `Content-Encoding` has `gzip` in the first position. You can also set this value globally at the [service level](/docs/enterprise/service-settings/router-options/#max_payload).\n\nSee: https://www.krakend.io/docs/service-settings/router-options/",
@@ -3169,7 +3144,6 @@
       "#": "The flatmap middleware allows you to manipulate collections (or arrays, or lists, you name it) from the backend response. While the basic manipulation operations allow you to work directly with objects, the collections require a different approach: the flatmap component.\n\nSee: https://www.krakend.io/docs/backend/flatmap/",
       "@": [
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "/^[@$_#]/": "$ANY",
           "_args": {
             "#": "The arguments passed to the operation.\n\nSee: https://www.krakend.io/docs/backends/flatmap/",
@@ -3217,7 +3191,7 @@
       "/^[@$_#]/": "$ANY",
       "?every": {
         "#": "Time period in which the counter works. For instance, if you set an `every` of `10m` and a `max_rate` of `5`, you are allowing 5 requests every ten minutes.\n\nSee: https://www.krakend.io/docs/endpoints/rate-limit/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "_capacity": {
         "#": "The capacity according to the [token bucket algorithm](https://www.krakend.io/docs/throttling/token-bucket/). Defines the maximum requests you can do in an instant (including the zero moment when you start the gateway), and can be larger or smaller than the `max_rate`. When unsure, use the same value of `max_rate`, so the maximum number of requests can be consumed at once.\n\nSee: https://www.krakend.io/docs/backends/rate-limit/",
@@ -3229,7 +3203,6 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/qos/ratelimit/router.json": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "|": [
         {
           "": "$ANY",
@@ -3239,7 +3212,7 @@
           },
           "?cleanup_period": {
             "#": "The cleanup period is how often the routine(s) in charge of optimizing the memory dedicated will go iterate all counters looking for outdated TTL and remove them. A low value keeps the memory slightly decreasing, but as a trade-off, it will increase the CPU dedicated to achieving this optimization. This is an advanced micro-optimization setting that should be used with caution.\n\nSee: https://www.krakend.io/docs/endpoints/rate-limit/",
-            "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+            "@": "$_psub_1_"
           },
           "?cleanup_threads": {
             "#": "These are the number of routines that search for and remove outdated rate limit counters. The more routine(s) you add, the faster the memory optimization is completed, but the more CPU it will consume. Generally speaking, a single thread is more than enough because the delete operation is very fast, even with a large number of counters. This is an advanced micro-optimization setting that you should use with caution.\n\nSee: https://www.krakend.io/docs/endpoints/rate-limit/",
@@ -3255,7 +3228,7 @@
           },
           "?every": {
             "#": "Time period in which the maximum rates operate. For instance, if you set an `every` of `10m` and a rate of `5`, you are allowing 5 requests every ten minutes.\n\nSee: https://www.krakend.io/docs/endpoints/rate-limit/",
-            "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+            "@": "$_psub_1_"
           },
           "?key": {
             "#": "Available when using `client_max_rate` and you have set a `strategy` equal to `header` or `param`. It makes no sense in other contexts. For `header` it is the header name containing the user identification (e.g., `Authorization` on tokens, or `X-Original-Forwarded-For` for IPs). When they contain a list of space-separated IPs, it will take the IP from the client that hit the first trusted proxy. For `param` it is the name of the placeholder used in the endpoint, like `id_user` for an endpoint `/user/{id_user}`.\n\nSee: https://www.krakend.io/docs/endpoints/rate-limit/",
@@ -3286,7 +3259,7 @@
           },
           "?cleanup_period": {
             "#": "The cleanup period is how often the routine(s) in charge of optimizing the memory dedicated will go iterate all counters looking for outdated TTL and remove them. A low value keeps the memory slightly decreasing, but as a trade-off, it will increase the CPU dedicated to achieving this optimization. This is an advanced micro-optimization setting that should be used with caution.\n\nSee: https://www.krakend.io/docs/endpoints/rate-limit/",
-            "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+            "@": "$_psub_1_"
           },
           "?cleanup_threads": {
             "#": "These are the number of routines that search for and remove outdated rate limit counters. The more routine(s) you add, the faster the memory optimization is completed, but the more CPU it will consume. Generally speaking, a single thread is more than enough because the delete operation is very fast, even with a large number of counters. This is an advanced micro-optimization setting that you should use with caution.\n\nSee: https://www.krakend.io/docs/endpoints/rate-limit/",
@@ -3298,7 +3271,7 @@
           },
           "?every": {
             "#": "Time period in which the maximum rates operate. For instance, if you set an `every` of `10m` and a rate of `5`, you are allowing 5 requests every ten minutes.\n\nSee: https://www.krakend.io/docs/endpoints/rate-limit/",
-            "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+            "@": "$_psub_1_"
           },
           "?key": {
             "#": "Available when using `client_max_rate` and you have set a `strategy` equal to `header` or `param`. It makes no sense in other contexts. For `header` it is the header name containing the user identification (e.g., `Authorization` on tokens, or `X-Original-Forwarded-For` for IPs). When they contain a list of space-separated IPs, it will take the IP from the client that hit the first trusted proxy. For `param` it is the name of the placeholder used in the endpoint, like `id_user` for an endpoint `/user/{id_user}`.\n\nSee: https://www.krakend.io/docs/endpoints/rate-limit/",
@@ -3430,7 +3403,6 @@
         "#": "Defines the set of paths that are removed from the logging.\n\nSee: https://www.krakend.io/docs/service-settings/router-options/",
         "@": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": ""
           }
         ]
@@ -3552,7 +3524,7 @@
       },
       "?max_age": {
         "#": "For how long the response can be cached. For zero values the `Access-Control-Max-Age` header is not set.\n\nSee: https://www.krakend.io/docs/service-settings/cors/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "?options_passthrough": {
         "#": "Instructs preflight to let other potential next handlers to process the OPTIONS method. Turn this on when you set the [`auto_opts` flag in the router to `true`](https://www.krakend.io/docs/service-settings/router-options/#auto_options).\n\nSee: https://www.krakend.io/docs/service-settings/cors/",
@@ -3577,7 +3549,6 @@
         "@": true
       },
       "?browser_xss_filter": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       },
       "?content_security_policy": {
@@ -3640,6 +3611,7 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/security/policies.json": {
+      "#": "The policies engine allows you to write custom sets of policies that are validated during requests, responses, or token validation.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
       "&": [
         {
           "|": [
@@ -3663,7 +3635,6 @@
                   "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
                   "@": [
                     {
-                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                       "@": ""
                     }
                   ]
@@ -3691,7 +3662,6 @@
                   "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
                   "@": [
                     {
-                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                       "@": ""
                     }
                   ]
@@ -3719,7 +3689,6 @@
                   "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
                   "@": [
                     {
-                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                       "@": ""
                     }
                   ]
@@ -3746,7 +3715,6 @@
                   "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
                   "@": [
                     {
-                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                       "@": ""
                     }
                   ]
@@ -3774,7 +3742,6 @@
                   "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
                   "@": [
                     {
-                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                       "@": ""
                     }
                   ]
@@ -3802,7 +3769,6 @@
                   "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
                   "@": [
                     {
-                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                       "@": ""
                     }
                   ]
@@ -3844,7 +3810,6 @@
                   "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
                   "@": [
                     {
-                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                       "@": ""
                     }
                   ]
@@ -3872,7 +3837,6 @@
                   "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
                   "@": [
                     {
-                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                       "@": ""
                     }
                   ]
@@ -3885,7 +3849,6 @@
                   "#": "An array with all the policies to evaluate. Each policy is represented as a string\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
                   "@": [
                     {
-                      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
                       "@": ""
                     }
                   ]
@@ -3894,10 +3857,7 @@
             }
           ]
         },
-        {
-          "#": "The policies engine allows you to write custom sets of policies that are validated during requests, responses, or token validation.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "https://www.krakend.io/schema/v2.7/server/static-filesystem.json": {
@@ -3923,6 +3883,7 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/server/virtualhost.json": {
+      "#": "Enterprise only. The Virtual Host server allows you to run different configurations of KrakenD endpoints based on the host accessing the server.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
       "&": [
         {
           "^": [
@@ -3960,14 +3921,10 @@
             }
           ]
         },
-        {
-          "#": "Enterprise only. The Virtual Host server allows you to run different configurations of KrakenD endpoints based on the host accessing the server.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "https://www.krakend.io/schema/v2.7/service_extra_config.json": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "/^[@$_#]/": "$ANY",
       "?auth/api-keys": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1api-keys.json",
       "?auth/basic": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1basic.json",
@@ -3997,7 +3954,6 @@
           "@": true
         },
         "?allow_headers": {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": [
             "$ANY"
           ]
@@ -4032,13 +3988,12 @@
         },
         "?max_age": {
           "#": "For how long the response can be cached.\n\nSee: https://www.krakend.io/docs/service-settings/cors/",
-          "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+          "@": "$_psub_1_"
         },
         "_allow_origins": {
           "#": "An array with all the origins allowed, examples of values are https://example.com, or * (any origin).\n\nSee: https://www.krakend.io/docs/service-settings/cors/",
           "@": [
             {
-              "#": "JSON Model generated from a JSON Schema with json-schema-utils",
               "@": ""
             }
           ]
@@ -4096,7 +4051,7 @@
       },
       "_ttl": {
         "#": "TTL against Influx.\n\nSee: https://www.krakend.io/docs/telemetry/influxdb-native/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       }
     },
     "https://www.krakend.io/schema/v2.7/telemetry/logging.json": {
@@ -4150,7 +4105,6 @@
       "#": "Enables logstash when the extra_config \"telemetry/logging\" is also present.\n\nSee: https://www.krakend.io/docs/logging/logstash/",
       "/^[@$_#]/": "$ANY",
       "_enabled": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "@": true
       }
     },
@@ -4163,7 +4117,7 @@
       },
       "?collection_time": {
         "#": "The time window to consolidate collected metrics. Metrics are updated in their internal counters all the time, but the `/__stats/` endpoint, or the Influx reporter, won't see them updated until this window completes.\n\nSee: https://www.krakend.io/docs/telemetry/extended-metrics/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "?endpoint_disabled": {
         "#": "When true do not publish the /__stats/ endpoint. Metrics won't be accessible via the endpoint but still collected (and you can send them to Influx for instance).\n\nSee: https://www.krakend.io/docs/telemetry/extended-metrics/",
@@ -4362,7 +4316,7 @@
             },
             "?timeout": {
               "#": "The maximum time you will wait for InfluxDB to respond.\n\nSee: https://www.krakend.io/docs/telemetry/influxdb/",
-              "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+              "@": "$_psub_1_"
             },
             "?username": {
               "#": "The influxdb username to access the database\n\nSee: https://www.krakend.io/docs/telemetry/influxdb/",
@@ -4378,6 +4332,7 @@
             }
           },
           "?jaeger": {
+            "#": "Submit spans to a Jaeger Collector (HTTP) with `endpoint` or to a Jaeger Agent (UDP) with `agent_endpoint`. \n\nSee https://www.krakend.io/docs/telemetry/jaeger/",
             "&": [
               {
                 "^": [
@@ -4419,10 +4374,7 @@
                   }
                 ]
               },
-              {
-                "#": "Submit spans to a Jaeger Collector (HTTP) with `endpoint` or to a Jaeger Agent (UDP) with `agent_endpoint`. \n\nSee https://www.krakend.io/docs/telemetry/jaeger/",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?logger": {
@@ -4454,7 +4406,7 @@
             },
             "?reconnection": {
               "#": "The reconnection time\n\nSee: https://www.krakend.io/docs/telemetry/ocagent/",
-              "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+              "@": "$_psub_1_"
             },
             "_address": {
               "#": "The address of your Azure Monitor collector.\n\nSee: https://www.krakend.io/docs/telemetry/ocagent/",
@@ -4510,6 +4462,7 @@
             }
           },
           "?xray": {
+            "#": "AWS X-Ray is a service offered by Amazon that provides an end-to-end view of requests as they travel through your application, and shows a map of your application's underlying components.",
             "&": [
               {
                 "^": [
@@ -4559,10 +4512,7 @@
                   }
                 ]
               },
-              {
-                "#": "AWS X-Ray is a service offered by Amazon that provides an end-to-end view of requests as they travel through your application, and shows a map of your application's underlying components.",
-                "@": "$ANY"
-              }
+              "$ANY"
             ]
           },
           "?zipkin": {
@@ -4965,10 +4915,10 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/timeunits.json": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "@": "$ANY"
     },
     "https://www.krakend.io/schema/v2.7/tls.json": {
+      "#": "Enabling TLS for HTTPS and HTTP/2.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
       "&": [
         {
           "|": [
@@ -5144,10 +5094,7 @@
             }
           ]
         },
-        {
-          "#": "Enabling TLS for HTTPS and HTTP/2.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
-          "@": "$ANY"
-        }
+        "$ANY"
       ]
     },
     "https://www.krakend.io/schema/v2.7/validation/cel.json": {
@@ -5155,7 +5102,6 @@
       ">=": 1,
       "@": [
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "/^[@$_#]/": "$ANY",
           "_check_expr": {
             "#": "The expression that evaluates as a boolean, you can write here any conditional. If the result of the expression is `true`, the execution continues. See in the docs how to use additional variables to retrieve data from requests, responses, and tokens.\n\nSee: https://www.krakend.io/docs/endpoints/common-expression-language-cel/",
@@ -5194,7 +5140,6 @@
         "#": "Defines which input headers are allowed to pass to the backend. Notice that you need to declare the `input_headers` at the endpoint level too.\n\nSee: https://www.krakend.io/docs/enterprise/websockets/",
         "@": [
           {
-            "#": "JSON Model generated from a JSON Schema with json-schema-utils",
             "@": ""
           }
         ]
@@ -5213,11 +5158,11 @@
       },
       "?ping_period": {
         "#": "Sets the time between pings checking the health of the system.\n\nSee: https://www.krakend.io/docs/enterprise/websockets/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "?pong_wait": {
         "#": "Sets the maximum time KrakenD will until the pong times out.\n\nSee: https://www.krakend.io/docs/enterprise/websockets/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "?read_buffer_size": {
         "#": "Connections buffer network input and output to reduce the number of system calls when reading messages. You can set the maximum buffer size for reading in bytes.\n\nSee: https://www.krakend.io/docs/enterprise/websockets/",
@@ -5229,7 +5174,7 @@
       },
       "?timeout": {
         "#": "Sets the read timeout for the backend. After a read has timed out, the websocket connection is terminated and KrakenD will try to reconnect according the `backoff_strategy`. Minimum accepted time is one minute. This flag only applies when you use ' enable_direct_communication`.\n\nSee: https://www.krakend.io/docs/enterprise/websockets/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "?write_buffer_size": {
         "#": "Connections buffer network input and output to reduce the number of system calls when writing messages. You can set the maximum buffer size for writing in bytes.\n\nSee: https://www.krakend.io/docs/enterprise/websockets/",
@@ -5237,11 +5182,10 @@
       },
       "?write_wait": {
         "#": "Sets the maximum time KrakenD will wait until the write times out.\n\nSee: https://www.krakend.io/docs/enterprise/websockets/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       }
     },
     "https://www.krakend.io/schema/v2.7/workflow.json": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "/^[@$_#]/": "$ANY",
       "?concurrent_calls": {
         "#": "The concurrent requests are an excellent technique to improve the response times and decrease error rates by requesting in parallel the same information multiple times. Yes, you make the same request to several backends instead of asking to just one. When the first backend returns the information, the remaining requests are canceled.\n\nSee: https://www.krakend.io/docs/endpoints/concurrent-requests/",
@@ -5271,7 +5215,7 @@
       },
       "?timeout": {
         "#": "The duration you write in the timeout represents the **whole duration of the pipe**, so it counts the time all your backends take to respond and the processing of all the components involved in the endpoint (the request, fetching data, manipulation, etc.). By default the timeout is taken from the parent endpoint, if redefined **make sure that is smaller than the endpoint's**",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+        "@": "$_psub_1_"
       },
       "_backend": {
         "#": "List of all the [backend objects](https://www.krakend.io/docs/backends/) called within this workflow. Each backend can initiate another workflow if needed.",
@@ -5286,7 +5230,6 @@
       }
     },
     "https://www.krakend.io/schema/v2.7/workflow_extra_config.json": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "/^[@$_#]/": "$ANY",
       "?modifier/jmespath": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1jmespath.json",
       "?modifier/lua-proxy": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1lua.json",
@@ -5294,7 +5237,6 @@
       "?modifier/response-body-generator": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1body-generator.json",
       "?plugin/req-resp-modifier": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1req-resp-modifier.json",
       "?proxy": {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         "/^[@$_#]/": "$ANY",
         "?combiner": {
           "#": "For custom builds of KrakenD only",
@@ -5339,7 +5281,7 @@
   "?async_agent": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1async_agent.json",
   "?cache_ttl": {
     "#": "Sets a default `Cache-Control: public, max-age=%d` header to all endpoints where `%d` is the conversion to seconds of any duration you write, indicating for how long the client (or CDN) can cache the content of the request. You can override this value per endpoint, but setting an endpoint to 0 will use the default value instead. Notice that KrakenD does not cache the content with this parameter, but tells the client how to do it. Defaults to `0s` (no cache). **For KrakenD cache, see [backend caching](https://www.krakend.io/docs/backends/caching/)**.",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?client_tls": {
     "#": "Allows to set specific transport settings when using TLS in your upstream services. See [TLS Client](https://www.krakend.io/docs/service-settings/tls/) for more settings",
@@ -5351,15 +5293,15 @@
   },
   "?dialer_fallback_delay": {
     "#": "Specifies the length of time to wait before spawning a RFC 6555 Fast Fallback connection. If zero, a default delay of 300ms is used.\n\nSee: https://www.krakend.io/docs/service-settings/http-transport-settings/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?dialer_keep_alive": {
     "#": "The interval between keep-alive probes for an active network connection. If zero, keep-alive probes are sent with a default value (currently 15 seconds), if supported by the protocol and operating system. Network protocols or operating systems that do not support keep-alives ignore this field. If negative, keep-alive probes are disabled.\n\nSee: https://www.krakend.io/docs/service-settings/http-transport-settings/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?dialer_timeout": {
     "#": "The timeout of the dial function for creating connections.The default is no timeout. With or without a timeout, the operating system may impose its own earlier timeout.\n\nSee: https://www.krakend.io/docs/service-settings/http-transport-settings/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?disable_compression": {
     "#": "When true prevents requesting compression with an `Accept-Encoding: gzip` request header when the Request contains no existing Accept-Encoding value. If the Transport requests gzip on its own and gets a gzipped response, it's transparently decoded. However, if the user explicitly requested gzip it is not automatically uncompressed.\n\nSee: https://www.krakend.io/docs/service-settings/http-transport-settings/",
@@ -5375,7 +5317,7 @@
   },
   "?dns_cache_ttl": {
     "#": "Sets the maximum time KrakenD can store the results of a query to the configured Service Discovery returning the available hosts list. For values under `1s` this setting is ignored.\n\nSee: https://www.krakend.io/docs/backends/service-discovery/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?echo_endpoint": {
     "#": "Enables the `/__echo/` endpoint for this configuration, that returns information about the incoming request. When using /__echo as a backend you can check the actual headers and content a backend receives after all the zero-trust filtering.",
@@ -5389,7 +5331,7 @@
   },
   "?expect_continue_timeout": {
     "#": "If non-zero, specifies the amount of time to wait for a server's first response headers after fully writing the request headers if the request has an `Expect: 100-continue` header. Zero means no timeout and causes the body to be sent immediately, without waiting for the server to approve. This time does not include the time to send the request header.\n\nSee: https://www.krakend.io/docs/service-settings/http-transport-settings/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?extra_config": {
     "#": "The optional configuration that extends the core functionality of the gateway is specified here. The `extra_config` at this level enables service components, meaning that they apply globally to all endpoints or activity.",
@@ -5403,11 +5345,11 @@
   },
   "?idle_connection_timeout": {
     "#": "The maximum number of idle (keep-alive) connections across all hosts. Zero means no limit.\n\nSee: https://www.krakend.io/docs/service-settings/http-transport-settings/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?idle_timeout": {
     "#": "The maximum amount of time to wait for the next request when keep-alives are enabled. If `idle_timeout` is zero, the value of `read_timeout` is used. If both are zero, there is no timeout.\n\nSee: https://www.krakend.io/docs/service-settings/http-server-settings/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?listen_ip": {
     "#": "The IP address that KrakenD listens to in IPv4 or IPv6. An empty string, or no declaration at all means listening on all interfaces. The inclusion of `::` is meant for IPv6 format only (**this is not the port**). Examples of valid addresses are `192.0.2.1` (IPv4), `2001:db8::68` (IPv6). The values `::` and `0.0.0.0` listen to all addresses and both are valid for IPv4 and IPv6 simultaneously.",
@@ -5461,15 +5403,15 @@
   },
   "?read_header_timeout": {
     "#": "The amount of time allowed to read request headers. The connection's read deadline is reset after reading the headers and the Handler can decide what is considered too slow for the body.\n\nSee: https://www.krakend.io/docs/service-settings/http-server-settings/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?read_timeout": {
     "#": "Is the maximum duration for reading the entire request, including the body. Because `read_timeout` does not let Handlers make per-request decisions on each request body's acceptable deadline or upload rate, most users will prefer to use `read_header_timeout`. It is valid to use them both.\n\nSee: https://www.krakend.io/docs/service-settings/http-server-settings/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?response_header_timeout": {
     "#": "If non-zero, specifies the amount of time to wait for a server's response headers after fully writing the request (including its body, if any). This time does not include the time to read the response body.\n\nSee: https://www.krakend.io/docs/service-settings/http-transport-settings/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?sequential_start": {
     "#": "A sequential start registers all async agents in order, allowing you to have the starting logs in sequential order. A non-sequential start is much faster, but logs are harder to follow.\n\nSee: https://www.krakend.io/docs/service-settings/http-server-settings/",
@@ -5477,7 +5419,7 @@
   },
   "?timeout": {
     "#": "Defines a default timeout for all endpoints. Can be overriden per endpoint.\n\nSee: https://www.krakend.io/docs/service-settings/http-transport-settings/#global-timeout",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "?tls": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1tls.json",
   "?use_h2c": {
@@ -5486,7 +5428,7 @@
   },
   "?write_timeout": {
     "#": "Maximum duration before timing out writes of the response.\n\nSee: https://www.krakend.io/docs/service-settings/http-server-settings/",
-    "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json/$defs/timeunit"
+    "@": "$_psub_1_"
   },
   "_version": {
     "#": "The syntax version tells KrakenD how to read this configuration. This is not the KrakenD version. Each KrakenD version is linked to a syntax version, and since KrakenD v2.0 the version must be `3`",

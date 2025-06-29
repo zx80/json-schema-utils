@@ -96,16 +96,20 @@
           {
             "|": [
               "",
-              [
-                {
-                  "#": "The name of the plugin.",
-                  "@": ""
-                },
-                {
-                  "": "$ANY",
-                  "#": "The options of the plugin."
-                }
-              ]
+              {
+                ">=": 0,
+                "@": [
+                  {
+                    "#": "The name of the plugin.",
+                    "@": ""
+                  },
+                  {
+                    "": "$ANY",
+                    "#": "The options of the plugin."
+                  },
+                  "$ANY"
+                ]
+              }
             ]
           }
         ]
@@ -116,16 +120,20 @@
           {
             "|": [
               "",
-              [
-                {
-                  "#": "The name of the preset.",
-                  "@": ""
-                },
-                {
-                  "": "$ANY",
-                  "#": "The options of the preset."
-                }
-              ]
+              {
+                ">=": 0,
+                "@": [
+                  {
+                    "#": "The name of the preset.",
+                    "@": ""
+                  },
+                  {
+                    "": "$ANY",
+                    "#": "The options of the preset."
+                  },
+                  "$ANY"
+                ]
+              }
             ]
           }
         ]

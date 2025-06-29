@@ -46,7 +46,6 @@
       ]
     },
     "configTypeDeclaration": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?default": "$ANY",
       "?description": "",
       "?items": "$configItemsType",
@@ -55,7 +54,6 @@
       "?value": "$ANY"
     },
     "pluginOptions": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "?version": {
         "#": "Version of the plugin, if not set, will match any version the engine requests.",
         "@": ""
@@ -70,7 +68,6 @@
       }
     },
     "simpleConfigType": {
-      "#": "JSON Model generated from a JSON Schema with json-schema-utils",
       "|": [
         "_string",
         "_integer",
@@ -254,22 +251,18 @@
     "@": ""
   },
   "_runtime": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "^": [
       {
-        "#": "JSON Model generated from a JSON Schema with json-schema-utils",
         ">=": 1,
         "@": ""
       },
       {
         "?name": {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           ">=": 1,
           "@": ""
         },
         "?options": {
-          "": "$ANY",
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+          "": "$ANY"
         }
       }
     ]

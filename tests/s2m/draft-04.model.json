@@ -10,7 +10,6 @@
       "&": [
         "$positiveInteger",
         {
-          "#": "JSON Model generated from a JSON Schema with json-schema-utils",
           "@": "$ANY"
         }
       ]
@@ -42,14 +41,12 @@
   },
   "?$schema": "",
   "?additionalItems": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "|": [
       true,
       "$#"
     ]
   },
   "?additionalProperties": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "|": [
       true,
       "$#"
@@ -59,8 +56,7 @@
   "?anyOf": "$schemaArray",
   "?default": "$ANY",
   "?definitions": {
-    "": "$#",
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+    "": "$#"
   },
   "?dependencies": {
     "": {
@@ -79,17 +75,14 @@
     ]
   },
   "?exclusiveMaximum": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "@": true
   },
   "?exclusiveMinimum": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "@": true
   },
   "?format": "",
   "?id": "",
   "?items": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "|": [
       "$#",
       "$schemaArray"
@@ -111,12 +104,10 @@
   "?oneOf": "$schemaArray",
   "?pattern": "$REGEX",
   "?patternProperties": {
-    "": "$#",
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+    "": "$#"
   },
   "?properties": {
-    "": "$#",
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils"
+    "": "$#"
   },
   "?required": "$stringArray",
   "?title": "",
@@ -133,7 +124,6 @@
     ]
   },
   "?uniqueItems": {
-    "#": "JSON Model generated from a JSON Schema with json-schema-utils",
     "@": true
   }
 }

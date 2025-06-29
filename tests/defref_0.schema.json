@@ -1,0 +1,26 @@
+{
+  "$comment": "test moving defs, ids and ugly references",
+  "$defs": {
+    "A": { "const": "a" },
+    "https://geojson.org/geo": { "const": "b" }
+  },
+  "type": "object",
+  "properties": {
+    "A": { "$ref": "#/$defs/A" },
+    "B": { "$ref": "#/$defs/https%3A~1~1geojson.org~1geo" },
+    "X": {
+      "$id": "https://comics.net/",
+      "$defs": {
+        "https://wtf.org/char": { "const": "c" },
+        "I": { "const": "i" }
+      },
+      "properties": {
+        "J": { "$ref": "#/$defs/I" },
+        "K": { "$ref": "#/$defs/https%3A~1~1wtf.org~1char" }
+      }
+    },
+    "A2": { "$ref": "#/properties/A" },
+    "I2": { "$ref": "#/properties/X/$defs/I" },
+    "C": { "$ref": "#/properties/X/$defs/https%3A~1~1wtf.org~1char" }
+  }
+}

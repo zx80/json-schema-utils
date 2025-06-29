@@ -1,4 +1,5 @@
 {
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
   "<": 100,
   ">=": 0,
   "@": -1.0
