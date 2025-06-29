@@ -1889,9 +1889,7 @@
           "?pattern": "$REGEX",
           "?patternProperties": {
             "": "$_id_0_",
-            "$REGEX": {
-              "$ref": "#/definitions/_id_0_"
-            }
+            "$REGEX": "$_id_0_"
           },
           "?properties": {
             "": "$_id_0_"
@@ -5470,10 +5468,10 @@
         "@": ""
       }
     },
-    "http://json-schema.org/draft-07/schema": {
+    "http%3A~1~1json-schema.org~1draft-07~1schema": {
       "@": "$_id_0_"
     },
-    "https://adaptivecards.io/schemas/adaptive-card.json": {
+    "https%3A~1~1adaptivecards.io~1schemas~1adaptive-card.json": {
       "@": "$_id_1_"
     },
     "i18n_key_string": {

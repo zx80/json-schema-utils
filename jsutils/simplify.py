@@ -476,7 +476,7 @@ def scopeDefs(schema: JsonSchema):
     def mvRef(rschema, path):
         if isinstance(rschema, dict) and "$ref" in rschema:
             dest = rschema["$ref"]
-            log.info(f"found {dest} at {path}")
+            # log.debug(f"found {dest} at {path}")
             if dest.startswith("#/") and dest not in moved:
                 dpath = dest[2:].split("/")
                 if len(dpath) != 2 or dpath[0] != defn:
@@ -498,7 +498,7 @@ def scopeDefs(schema: JsonSchema):
                     name = f"_psub_{_SUBCOUNT}_"
                     _SUBCOUNT += 1
                     ndest = f"#/{defn}/{name}"
-                    log.info(f"moving {dest} to {ndest}")
+                    # log.info(f"moving {dest} to {ndest}")
                     schema[defn][name] = copy.deepcopy(jdest)
                     rschema["$ref"] = ndest
                     moved[dest] = ndest  # for other identical references

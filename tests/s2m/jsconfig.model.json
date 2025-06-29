@@ -1,7 +1,6 @@
 {
   "#": "JSON Model generated from a JSON Schema with json-schema-utils",
   "$": {
-    "//": "$ANY",
     "buildOptionsDefinition": {
       "": "$ANY",
       "?buildOptions": {
@@ -816,7 +815,8 @@
           "@": ""
         }
       }
-    }
+    },
+    "~1~1": "$ANY"
   },
   "&": [
     "$compilerOptionsDefinition",

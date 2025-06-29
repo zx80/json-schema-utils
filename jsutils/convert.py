@@ -3,6 +3,7 @@ import re
 import copy
 import logging
 from .utils import only, has
+from urllib.parse import quote
 
 type JsonPath = list[str|int]
 

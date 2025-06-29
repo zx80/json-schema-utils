@@ -9,55 +9,7 @@
       "#": "The amount of time you want to assign followed by its unit (e.g.: `2s`, `200ms`). Valid time units are: ns, us, (or \u00b5s), ms, s, m, h.",
       "@": "/^[0-9]+(ns|ms|us|\u00b5s|s|m|h)$/"
     },
-    "https://www.krakend.io/schema/v2.7/async/amqp.json": {
-      "#": "The Async AMQP component enables the AMQP driver for the Async functionality.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-      "/^[@$_#]/": "$ANY",
-      "?auto_ack": {
-        "#": "When KrakenD retrieves the messages, regardless of the success or failure of the operation, it marks them as ACK. When auto ACK is not used, only successful backend responses do the ACK, and failing messages are requeued. Defaults to `false`.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": true
-      },
-      "?delete": {
-        "#": "When `true`, AMQP deletes the queue when there are no remaining connections. This option is **not recommended** in most of the scenarios. If for instance, the connectivity between KrakenD and AMQP is lost for whatever reason and it's the only client, AMQP will delete the queue no matter the number of messages there are inside, and when KrakenD gets the connection again the queue won't exist and future connections will recreate it again.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": true
-      },
-      "?durable": {
-        "#": "Durable queues will survive server restarts and remain when there are no remaining consumers or bindings. Most of the times `true` is recommended, but depends on the use case.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": true
-      },
-      "?exclusive": {
-        "#": "When `true`, AMQP will allow **a single KrakenD client** to access the queue. This option is **not recommended** in environments where the gateway needs high availability and you have several instances running.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": true
-      },
-      "?no_local": {
-        "#": "The no_local flag is not supported by RabbitMQ.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": true
-      },
-      "?no_wait": {
-        "#": "When true, do not wait for the server to confirm the request and immediately begin deliveries. If it is not possible to consume, a channel exception will be raised and the channel will be closed.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": true
-      },
-      "?prefetch_count": {
-        "#": "The number of messages you want to prefetch prior to consume them.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": -1
-      },
-      "?prefetch_size": {
-        "#": "The number of bytes you want to use to prefetch messages.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": -1
-      },
-      "_exchange": {
-        "#": "The entity name where messages are retrieved (it will be created, or it must have a **topic** type if already exists).\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": ""
-      },
-      "_host": {
-        "#": "The connection string, ends in slash. E.g: `amqp://user:password@host:5672/`.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": ""
-      },
-      "_name": {
-        "#": "The queue name.\n\nSee: https://www.krakend.io/docs/async/amqp/",
-        "@": ""
-      }
-    },
-    "https://www.krakend.io/schema/v2.7/async_agent.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1async_agent.json": {
       "#": "Async agents are routines listening to queues or PubSub systems that react to new events and push data to your backends. Through async agents, you can start a lot of consumers to process your events autonomously.\n\nSee: https://www.krakend.io/docs/async/",
       "@": [
         {
@@ -136,7 +88,55 @@
         }
       ]
     },
-    "https://www.krakend.io/schema/v2.7/auth/api-keys.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1async~1amqp.json": {
+      "#": "The Async AMQP component enables the AMQP driver for the Async functionality.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+      "/^[@$_#]/": "$ANY",
+      "?auto_ack": {
+        "#": "When KrakenD retrieves the messages, regardless of the success or failure of the operation, it marks them as ACK. When auto ACK is not used, only successful backend responses do the ACK, and failing messages are requeued. Defaults to `false`.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": true
+      },
+      "?delete": {
+        "#": "When `true`, AMQP deletes the queue when there are no remaining connections. This option is **not recommended** in most of the scenarios. If for instance, the connectivity between KrakenD and AMQP is lost for whatever reason and it's the only client, AMQP will delete the queue no matter the number of messages there are inside, and when KrakenD gets the connection again the queue won't exist and future connections will recreate it again.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": true
+      },
+      "?durable": {
+        "#": "Durable queues will survive server restarts and remain when there are no remaining consumers or bindings. Most of the times `true` is recommended, but depends on the use case.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": true
+      },
+      "?exclusive": {
+        "#": "When `true`, AMQP will allow **a single KrakenD client** to access the queue. This option is **not recommended** in environments where the gateway needs high availability and you have several instances running.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": true
+      },
+      "?no_local": {
+        "#": "The no_local flag is not supported by RabbitMQ.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": true
+      },
+      "?no_wait": {
+        "#": "When true, do not wait for the server to confirm the request and immediately begin deliveries. If it is not possible to consume, a channel exception will be raised and the channel will be closed.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": true
+      },
+      "?prefetch_count": {
+        "#": "The number of messages you want to prefetch prior to consume them.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": -1
+      },
+      "?prefetch_size": {
+        "#": "The number of bytes you want to use to prefetch messages.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": -1
+      },
+      "_exchange": {
+        "#": "The entity name where messages are retrieved (it will be created, or it must have a **topic** type if already exists).\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": ""
+      },
+      "_host": {
+        "#": "The connection string, ends in slash. E.g: `amqp://user:password@host:5672/`.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": ""
+      },
+      "_name": {
+        "#": "The queue name.\n\nSee: https://www.krakend.io/docs/async/amqp/",
+        "@": ""
+      }
+    },
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1api-keys.json": {
       "#": "Enterprise only. Enables a Role-Based Access Control (RBAC) mechanism by reading the `Authorization` header of incoming requests.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/api-keys/",
       "/^[@$_#]/": "$ANY",
       "?hash": {
@@ -186,7 +186,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/auth/basic.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1basic.json": {
       "#": "Enterprise only. The Basic Authentication component protects the access to selected endpoints using basic username and password credentials.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/basic-authentication/",
       "/^[@$_#]/": "$ANY",
       "?htpasswd_path": {
@@ -199,7 +199,7 @@
         "/(.*)/": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/auth/client-credentials.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1client-credentials.json": {
       "#": "2-legged OAuth2 flow: Request to your authorization server an access token to reach protected resources.\n\nSee: https://www.krakend.io/docs/authorization/client-credentials/",
       "/^[@$_#]/": "$ANY",
       "?endpoint_params": {
@@ -223,7 +223,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/auth/gcp.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1gcp.json": {
       "#": "Enterprise only. Enables GCP authentication between KrakenD and Google Cloud service account.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/gcp/",
       "&": [
         {
@@ -287,7 +287,7 @@
         "$ANY"
       ]
     },
-    "https://www.krakend.io/schema/v2.7/auth/jose.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1jose.json": {
       "#": "Enables global configurations for the HTTP client responsible of downloading and caching the JWK URLs for token validation and signing.",
       "/^[@$_#]/": "$ANY",
       "_shared_cache_duration": {
@@ -295,7 +295,7 @@
         "@": -1
       }
     },
-    "https://www.krakend.io/schema/v2.7/auth/ntlm.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1ntlm.json": {
       "#": "Enterprise only. Enables NTLM authentication between KrakenD and a Microsoft server such as Dynamics.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/ntlm/",
       "/^[@$_#]/": "$ANY",
       "_password": {
@@ -307,7 +307,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/auth/revoker.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1revoker.json": {
       "#": "The API Gateway authorizes users that provide valid tokens according to your criteria, but at some point, you might want to change your mind and decide to revoke JWT tokens that are still valid.",
       "/^[@$_#]/": "$ANY",
       "?revoke_server_api_key": {
@@ -360,7 +360,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/auth/signer.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1signer.json": {
       "#": "creates a wrapper for your login endpoint that signs with your secret key the selected fields of the backend payload right before returning the content to the end-user.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
       "&": [
         {
@@ -570,7 +570,7 @@
         "$ANY"
       ]
     },
-    "https://www.krakend.io/schema/v2.7/auth/validator.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1validator.json": {
       "#": "Protect endpoints from public usage by validating JWT tokens generated by any industry-standard OpenID Connect (OIDC) integration.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
       "&": [
         {
@@ -920,7 +920,7 @@
         "$ANY"
       ]
     },
-    "https://www.krakend.io/schema/v2.7/backend.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend.json": {
       "#": "A backend object is an array of all the services that an endpoint connects to. It defines the list of hostnames that connects to and the URL to send or receive the data.",
       "/^[@$_#]/": "$ANY",
       "?allow": {
@@ -1023,7 +1023,78 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/backend/amqp/consumer.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend_extra_config.json": {
+      "/^[@$_#]/": "$ANY",
+      "?auth/client-credentials": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1client-credentials.json",
+      "?auth/gcp": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1gcp.json",
+      "?auth/ntlm": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1ntlm.json",
+      "?backend/amqp/consumer": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1amqp~1consumer.json",
+      "?backend/amqp/producer": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1amqp~1producer.json",
+      "?backend/graphql": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1graphql.json",
+      "?backend/grpc": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1grpc.json",
+      "?backend/http": {
+        "^": [
+          {
+            "": "$ANY",
+            "?return_error_code": {
+              "#": "Returns the HTTP status code of the backend (when there is only one). The headers are not returned.\n\nSee: https://www.krakend.io/docs/backends/detailed-errors/",
+              "@": true
+            },
+            "_return_error_details": {
+              "#": "Returns to the client details of a failing request.\n\nSee: https://www.krakend.io/docs/backends/detailed-errors/",
+              "@": ""
+            }
+          },
+          {
+            "": "$ANY",
+            "?return_error_details": {
+              "#": "Returns to the client details of a failing request.\n\nSee: https://www.krakend.io/docs/backends/detailed-errors/",
+              "@": ""
+            },
+            "_return_error_code": {
+              "#": "Returns the HTTP status code of the backend (when there is only one). The headers are not returned.\n\nSee: https://www.krakend.io/docs/backends/detailed-errors/",
+              "@": true
+            }
+          }
+        ]
+      },
+      "?backend/http/client": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1http_client.json",
+      "?backend/lambda": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1lambda.json",
+      "?backend/pubsub/publisher": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1pubsub~1publisher.json",
+      "?backend/pubsub/subscriber": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1pubsub~1subscriber.json",
+      "?backend/soap": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1soap.json",
+      "?backend/static-filesystem": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1static-filesystem.json",
+      "?modifier/body-generator": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1body-generator.json",
+      "?modifier/jmespath": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1jmespath.json",
+      "?modifier/lua-backend": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1lua.json",
+      "?modifier/martian": {
+        "#": "Transform requests and responses through a simple DSL definition in the configuration file.\n\nSee: https://www.krakend.io/docs/backends/martian/",
+        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1martian.json"
+      },
+      "?modifier/request-body-generator": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1body-generator.json",
+      "?modifier/response-body-generator": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1body-generator.json",
+      "?plugin/http-client": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1http-client.json",
+      "?plugin/req-resp-modifier": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1req-resp-modifier.json",
+      "?proxy": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1proxy.json",
+      "?qos/circuit-breaker": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1qos~1circuit-breaker.json",
+      "?qos/http-cache": {
+        "#": "Enable in-memory caching for backend responses for as long as its Cache-Control header permits.\n\nSee: https://www.krakend.io/docs/backends/caching/",
+        "/^[@$_#]/": "$ANY",
+        "?shared": {
+          "#": "The `shared` cache makes that different backend definitions with this flag enabled can reuse the cache. When the `shared` flag is missing or set to false, the backend uses its own cache private context.\n\nSee: https://www.krakend.io/docs/backends/detailed-errors/",
+          "@": true
+        }
+      },
+      "?qos/ratelimit/proxy": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1qos~1ratelimit~1proxy.json",
+      "?security/policies": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1security~1policies.json",
+      "?telemetry/opentelemetry": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1opentelemetry-backend.json",
+      "?validation/cel": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1validation~1cel.json",
+      "?workflow": {
+        "#": "Enterprise only. A whole new endpoint that is executed within this backend context.",
+        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1workflow.json"
+      }
+    },
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1amqp~1consumer.json": {
       "#": "The AMQP component allows to send and receive messages to and from a queue through the API Gateway.\n\nSee: https://www.krakend.io/docs/backends/amqp-consumer/",
       "/^[@$_#]/": "$ANY",
       "?auto_ack": {
@@ -1083,7 +1154,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/backend/amqp/producer.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1amqp~1producer.json": {
       "#": "Send messages to a queue through the API Gateway.\n\nSee: https://www.krakend.io/docs/backends/amqp-producer/",
       "/^[@$_#]/": "$ANY",
       "?backoff_strategy": {
@@ -1161,7 +1232,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/backend/graphql.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1graphql.json": {
       "#": "Convert REST endpoints to GraphQL calls (adapter/transformer)",
       "&": [
         {
@@ -1221,7 +1292,7 @@
         "$ANY"
       ]
     },
-    "https://www.krakend.io/schema/v2.7/backend/grpc.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1grpc.json": {
       "#": "Enterprise only. Handles the communication with a backend using gRPC, after having defined the protocol buffer definitions.\n\nSee: https://www.krakend.io/docs/backends/grpc/",
       "/^[@$_#]/": "$ANY",
       "?client_tls": {
@@ -1279,7 +1350,7 @@
         "@": true
       }
     },
-    "https://www.krakend.io/schema/v2.7/backend/http_client.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1http_client.json": {
       "#": "Enterprise only. Allows you to set the different HTTP client options with the backend, like TLS, no redirect or connect via a proxy.\n\nSee: https://www.krakend.io/docs/enterprise/backends/http-client/",
       "/^[@$_#]/": "$ANY",
       "?client_tls": {
@@ -1295,7 +1366,7 @@
         "@": "$ANY"
       }
     },
-    "https://www.krakend.io/schema/v2.7/backend/lambda.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1lambda.json": {
       "#": "Invoke Amazon Lambda functions on a KrakenD endpoint call.\n\nSee: https://www.krakend.io/docs/backends/lambda/",
       "/^[@$_#]/": "$ANY",
       "?endpoint": {
@@ -1319,7 +1390,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/backend/pubsub/publisher.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1pubsub~1publisher.json": {
       "#": "Publishes to a topic using the desired driver.\n\nSee: https://www.krakend.io/docs/backends/pubsub/",
       "/^[@$_#]/": "$ANY",
       "_topic_url": {
@@ -1327,7 +1398,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/backend/pubsub/subscriber.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1pubsub~1subscriber.json": {
       "#": "Subscribes a backend using the desired driver.\n\nSee: https://www.krakend.io/docs/backends/pubsub/",
       "/^[@$_#]/": "$ANY",
       "_subscription_url": {
@@ -1335,7 +1406,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/backend/soap.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1soap.json": {
       "#": "Enterprise only. Build and modify requests to communicate with SOAP services.\n\nSee: https://www.krakend.io/docs/backends/soap/",
       "&": [
         {
@@ -1381,7 +1452,7 @@
         "$ANY"
       ]
     },
-    "https://www.krakend.io/schema/v2.7/backend/static-filesystem.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1static-filesystem.json": {
       "#": "Enterprise only. Allows you to fetch and serve static content from the disk instead of a remote server, and you can use it to mock data.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/serve-static-content/",
       "/^[@$_#]/": "$ANY",
       "?directory_listing": {
@@ -1393,78 +1464,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/backend_extra_config.json": {
-      "/^[@$_#]/": "$ANY",
-      "?auth/client-credentials": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1client-credentials.json",
-      "?auth/gcp": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1gcp.json",
-      "?auth/ntlm": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1ntlm.json",
-      "?backend/amqp/consumer": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1amqp~1consumer.json",
-      "?backend/amqp/producer": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1amqp~1producer.json",
-      "?backend/graphql": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1graphql.json",
-      "?backend/grpc": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1grpc.json",
-      "?backend/http": {
-        "^": [
-          {
-            "": "$ANY",
-            "?return_error_code": {
-              "#": "Returns the HTTP status code of the backend (when there is only one). The headers are not returned.\n\nSee: https://www.krakend.io/docs/backends/detailed-errors/",
-              "@": true
-            },
-            "_return_error_details": {
-              "#": "Returns to the client details of a failing request.\n\nSee: https://www.krakend.io/docs/backends/detailed-errors/",
-              "@": ""
-            }
-          },
-          {
-            "": "$ANY",
-            "?return_error_details": {
-              "#": "Returns to the client details of a failing request.\n\nSee: https://www.krakend.io/docs/backends/detailed-errors/",
-              "@": ""
-            },
-            "_return_error_code": {
-              "#": "Returns the HTTP status code of the backend (when there is only one). The headers are not returned.\n\nSee: https://www.krakend.io/docs/backends/detailed-errors/",
-              "@": true
-            }
-          }
-        ]
-      },
-      "?backend/http/client": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1http_client.json",
-      "?backend/lambda": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1lambda.json",
-      "?backend/pubsub/publisher": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1pubsub~1publisher.json",
-      "?backend/pubsub/subscriber": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1pubsub~1subscriber.json",
-      "?backend/soap": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1soap.json",
-      "?backend/static-filesystem": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1backend~1static-filesystem.json",
-      "?modifier/body-generator": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1body-generator.json",
-      "?modifier/jmespath": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1jmespath.json",
-      "?modifier/lua-backend": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1lua.json",
-      "?modifier/martian": {
-        "#": "Transform requests and responses through a simple DSL definition in the configuration file.\n\nSee: https://www.krakend.io/docs/backends/martian/",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1martian.json"
-      },
-      "?modifier/request-body-generator": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1body-generator.json",
-      "?modifier/response-body-generator": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1body-generator.json",
-      "?plugin/http-client": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1http-client.json",
-      "?plugin/req-resp-modifier": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1req-resp-modifier.json",
-      "?proxy": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1proxy.json",
-      "?qos/circuit-breaker": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1qos~1circuit-breaker.json",
-      "?qos/http-cache": {
-        "#": "Enable in-memory caching for backend responses for as long as its Cache-Control header permits.\n\nSee: https://www.krakend.io/docs/backends/caching/",
-        "/^[@$_#]/": "$ANY",
-        "?shared": {
-          "#": "The `shared` cache makes that different backend definitions with this flag enabled can reuse the cache. When the `shared` flag is missing or set to false, the backend uses its own cache private context.\n\nSee: https://www.krakend.io/docs/backends/detailed-errors/",
-          "@": true
-        }
-      },
-      "?qos/ratelimit/proxy": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1qos~1ratelimit~1proxy.json",
-      "?security/policies": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1security~1policies.json",
-      "?telemetry/opentelemetry": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1opentelemetry-backend.json",
-      "?validation/cel": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1validation~1cel.json",
-      "?workflow": {
-        "#": "Enterprise only. A whole new endpoint that is executed within this backend context.",
-        "@": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1workflow.json"
-      }
-    },
-    "https://www.krakend.io/schema/v2.7/client_tls.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1client_tls.json": {
       "#": "TLS options to connect to upstream services.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
       "/^[@$_#]/": "$ANY",
       "?allow_insecure_connections": {
@@ -1538,7 +1538,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/documentation/openapi.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1documentation~1openapi.json": {
       "#": "Enterprise only. Generates OpenAPI documentation automatically through `krakend openapi export` command.\n\nSee: https://www.krakend.io/docs/enterprise/developer/openapi/",
       "/^[@$_#]/": "$ANY",
       "?audience": {
@@ -1774,7 +1774,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/endpoint.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1endpoint.json": {
       "/^[@$_#]/": "$ANY",
       "?cache_ttl": {
         "#": "Sets or overrides the cache headers to inform for how long the client or CDN can cache the request to this endpoint. Setting this value to a zero-value will use the `cache_ttl` of the service if any. Related: [caching backend responses](https://www.krakend.io/docs/backends/caching/).",
@@ -1846,7 +1846,7 @@
         "@": "/^\\/[^\\*\\?\\&\\%]*(\\/\\*)?$/"
       }
     },
-    "https://www.krakend.io/schema/v2.7/endpoint_extra_config.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1endpoint_extra_config.json": {
       "/^[@$_#]/": "$ANY",
       "?auth/api-keys": {
         "#": "Enterprise only. Validates that users of this endpoint pass a valid API-key containing one of the declared roles.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/api-keys/",
@@ -1933,7 +1933,7 @@
       },
       "?websocket": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1websocket.json"
     },
-    "https://www.krakend.io/schema/v2.7/grpc.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1grpc.json": {
       "#": "Enterprise only. gRPC server integration",
       "/^[@$_#]/": "$ANY",
       "?server": {
@@ -2009,7 +2009,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/modifier/body-generator.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1body-generator.json": {
       "#": "Enterprise only. Crafts the body/payload using a templating system.\n\nSee: https://www.krakend.io/backends/body-generator/",
       "&": [
         {
@@ -2055,7 +2055,7 @@
         "$ANY"
       ]
     },
-    "https://www.krakend.io/schema/v2.7/modifier/jmespath.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1jmespath.json": {
       "#": "The JMESPath query language allows you to select, slice, filter, map, project, flatten, sort, and all sorts of operations on data.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/jmespath/",
       "/^[@$_#]/": "$ANY",
       "_expr": {
@@ -2063,7 +2063,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/modifier/lua.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1lua.json": {
       "#": "Scripting with Lua is an additional choice to extend your business logic, and is compatible with the rest of options such as CEL, Martian, or other Go plugins and middlewares.\n\nSee: https://www.krakend.io/docs/endpoints/lua/",
       "/^[@$_#]/": "$ANY",
       "?allow_open_libs": {
@@ -2097,7 +2097,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/modifier/martian.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1martian.json": {
       "#": "The Martian component allows you to modify requests and responses with static data through a simple DSL definition in the configuration file.\n\nSee: https://www.krakend.io/docs/endpoints/martian/",
       "<=": 1,
       "@": {
@@ -2836,7 +2836,7 @@
         }
       }
     },
-    "https://www.krakend.io/schema/v2.7/modifier/response-headers.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1response-headers.json": {
       "#": "Enterprise only. Allows you to transform response headers declaratively.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/response-headers-modifier/",
       ">=": 1,
       "@": {
@@ -2882,7 +2882,7 @@
         }
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/content-replacer.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1content-replacer.json": {
       "#": "Enterprise only. The content replacer plugin allows you to modify the response of your services by doing literal replacements or more sophisticated replacements with regular expressions.\n\nSee: See: https://www.krakend.io/docs/enterprise/endpoints/content-replacer/",
       ">=": 1,
       "@": {
@@ -2903,7 +2903,7 @@
         }
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/geoip.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1geoip.json": {
       "#": "Enterprise only. The GeoIP integration allows you load Maxmind's GeoIP2 City database (payment and free versions) and enrich all KrakenD calls to your backends with geo data.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/geoip/",
       "/^[@$_#]/": "$ANY",
       "_citydb_path": {
@@ -2911,14 +2911,14 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/http-client.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1http-client.json": {
       "": "$ANY",
       "?name": {
         "#": "The name of the plugin to load. Only one plugin is supported per backend.\n\nSee: https://www.krakend.io/docs/extending/injecting-plugins/",
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/http-server.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1http-server.json": {
       "": "$ANY",
       "?geoip": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1geoip.json",
       "?ip-filter": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1ip-filter.json",
@@ -2935,7 +2935,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/ip-filter.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1ip-filter.json": {
       "#": "Enterprise only. The IP filtering plugin allows you to restrict the traffic to your API gateway based on the IP address. It works in two different modes (allow or deny) where you define the list of IPs (CIDR blocks) that are authorized to use the API, or that are denied from using the API.\n\nSee: https://www.krakend.io/docs/enterprise/throttling/ipfilter/",
       "/^[@$_#]/": "$ANY",
       "?client_ip_headers": {
@@ -2961,7 +2961,7 @@
         "@": true
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/jwk-aggregator.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1jwk-aggregator.json": {
       "#": "Enterprise only. The JWK aggregator plugin allows KrakenD to validate tokens issued by multiple Identity Providers.\n\nSee: https://www.krakend.io/docs/enterprise/authentication/multiple-identity-providers/",
       "/^[@$_#]/": "$ANY",
       "?cache": {
@@ -2979,7 +2979,7 @@
         "@": -1
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/redis-ratelimit.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1redis-ratelimit.json": {
       "#": "Enterprise only. The global rate limit functionality enables a Redis database store to centralize all KrakenD node counters. Instead of having each KrakenD node count its hits, the counters are global and stored in the database.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/global-rate-limit/",
       "/^[@$_#]/": "$ANY",
       "?tokenizer_field": {
@@ -3015,7 +3015,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/req-resp-modifier.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1req-resp-modifier.json": {
       "": "$ANY",
       "?content-replacer": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1content-replacer.json",
       "?ip-filter": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1ip-filter.json",
@@ -3027,7 +3027,7 @@
       },
       "?response-schema-validator": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1response-schema-validator.json"
     },
-    "https://www.krakend.io/schema/v2.7/plugin/response-schema-validator.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1response-schema-validator.json": {
       "#": "Enterprise only. The response schema validator plugin adds a schema validation before the gateway returns the response to the end-user or before it\u2019s merged in the endpoint with the rest of the backends.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/response-schema-validator/",
       "/^[@$_#]/": "$ANY",
       "?error": {
@@ -3047,7 +3047,7 @@
         "#": "Write your JSON schema directly in this field, with any number of fields or validations you need.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/response-schema-validator/"
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/static-filesystem.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1static-filesystem.json": {
       "#": "Enterprise only. Allows you to fetch and serve static content in two different use cases. When the plugin is used as an http server handler, the static content is for your end-users, giving them CSS, JS, images, or JSON files, to name a few examples. On the other side, when the plugin is used as an http client executor, the KrakenD endpoints use static content as if it were a backend.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/serve-static-content/",
       "/^[@$_#]/": "$ANY",
       "?skip": {
@@ -3065,7 +3065,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/url-rewrite.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1url-rewrite.json": {
       "#": "Enterprise only. Allows you to declare additional URLs other than the ones defined under the endpoints configuration, used as aliases of existing endpoints.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/url-rewrite/",
       "&": [
         {
@@ -3103,7 +3103,7 @@
         "$ANY"
       ]
     },
-    "https://www.krakend.io/schema/v2.7/plugin/virtualhost.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1virtualhost.json": {
       "#": "Enterprise only. The Virtual Host plugin allows you to run different configurations of KrakenD endpoints based on the host accessing the server.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
       "/^[@$_#]/": "$ANY",
       "_hosts": {
@@ -3113,7 +3113,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/plugin/wildcard.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1plugin~1wildcard.json": {
       "#": "Enterprise only. Enables wildcard processing of requests without declaring all endpoint subresrouces.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/wildcard/",
       "/^[@$_#]/": "$ANY",
       "_endpoints": {
@@ -3121,7 +3121,7 @@
         "#": "The key of the map is the KrakenD endpoint that receives all the wildcard traffic. The value is an array with all the user paths that match this wildcard (you don't need to declare the subresources).\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/wildcard/"
       }
     },
-    "https://www.krakend.io/schema/v2.7/proxy.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1proxy.json": {
       "/^[@$_#]/": "$ANY",
       "?decompress_gzip": {
         "#": "Enterprise Only. Decompresses any Gzipped content before sending it to the backend when the `Content-Encoding` has `gzip` in the first position. You can also set this value globally at the [service level](/docs/enterprise/service-settings/router-options/#max_payload).\n\nSee: https://www.krakend.io/docs/service-settings/router-options/",
@@ -3140,7 +3140,7 @@
         "@": true
       }
     },
-    "https://www.krakend.io/schema/v2.7/proxy/flatmap.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1proxy~1flatmap.json": {
       "#": "The flatmap middleware allows you to manipulate collections (or arrays, or lists, you name it) from the backend response. While the basic manipulation operations allow you to work directly with objects, the collections require a different approach: the flatmap component.\n\nSee: https://www.krakend.io/docs/backend/flatmap/",
       "@": [
         {
@@ -3162,7 +3162,7 @@
         }
       ]
     },
-    "https://www.krakend.io/schema/v2.7/qos/circuit-breaker.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1qos~1circuit-breaker.json": {
       "#": "The circuit breaker prevents sending more traffic to a failing backend.\n\nSee: https://www.krakend.io/docs/backends/circuit-breaker/",
       "/^[@$_#]/": "$ANY",
       "?log_status_change": {
@@ -3186,7 +3186,7 @@
         "@": -1
       }
     },
-    "https://www.krakend.io/schema/v2.7/qos/ratelimit/proxy.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1qos~1ratelimit~1proxy.json": {
       "#": "Restrict the rate of requests KrakenD makes to your backends.\n\nSee: https://www.krakend.io/docs/backends/rate-limit/",
       "/^[@$_#]/": "$ANY",
       "?every": {
@@ -3202,7 +3202,7 @@
         "@": -1.0
       }
     },
-    "https://www.krakend.io/schema/v2.7/qos/ratelimit/router.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1qos~1ratelimit~1router.json": {
       "|": [
         {
           "": "$ANY",
@@ -3300,7 +3300,7 @@
         }
       ]
     },
-    "https://www.krakend.io/schema/v2.7/qos/ratelimit/tiered.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1qos~1ratelimit~1tiered.json": {
       "": "$ANY",
       "#": "Enterprise Only. Apply ratelimit based on tier match.",
       "_tier_key": {
@@ -3332,7 +3332,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/router.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1router.json": {
       "#": "The optional router configuration allows you to set global flags that change the way KrakenD processes the requests at the router layer.\n\nSee: https://www.krakend.io/docs/service-settings/router-options/",
       "/^[@$_#]/": "$ANY",
       "?app_engine": {
@@ -3440,7 +3440,7 @@
         "@": true
       }
     },
-    "https://www.krakend.io/schema/v2.7/security/bot-detector.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1security~1bot-detector.json": {
       "#": "The bot detector module checks incoming connections to the gateway to determine if a bot made them, helping you detect and reject bots carrying out scraping, content theft, and form spam.\n\nSee: https://www.krakend.io/docs/throttling/botdetector/",
       ">=": 1,
       "@": {
@@ -3473,7 +3473,7 @@
         }
       }
     },
-    "https://www.krakend.io/schema/v2.7/security/cors.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1security~1cors.json": {
       "#": "Security through HTTP headers, including HSTS, HPKP, MIME-Sniffing prevention, Clickjacking protection, and others.\n\nSee: https://www.krakend.io/docs/service-settings/security/",
       "/^[@$_#]/": "$ANY",
       "?allow_credentials": {
@@ -3535,7 +3535,7 @@
         "@": -1
       }
     },
-    "https://www.krakend.io/schema/v2.7/security/http.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1security~1http.json": {
       "#": "Security through HTTP headers, including HSTS, HPKP, MIME-Sniffing prevention, Clickjacking protection, and others.\n\nSee: https://www.krakend.io/docs/service-settings/security/",
       "/^[@$_#]/": "$ANY",
       "?allowed_hosts": {
@@ -3610,7 +3610,7 @@
         "@": -1
       }
     },
-    "https://www.krakend.io/schema/v2.7/security/policies.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1security~1policies.json": {
       "#": "The policies engine allows you to write custom sets of policies that are validated during requests, responses, or token validation.\n\nSee: https://www.krakend.io/docs/enterprise/security-policies/",
       "&": [
         {
@@ -3860,7 +3860,7 @@
         "$ANY"
       ]
     },
-    "https://www.krakend.io/schema/v2.7/server/static-filesystem.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1server~1static-filesystem.json": {
       "#": "Enterprise only. Allows you to fetch and serve static content by registering a static web server for a set of defined paths (the prefixes).\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/serve-static-content/",
       "/^[@$_#]/": "$ANY",
       "?directory_listing": {
@@ -3882,7 +3882,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/server/virtualhost.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1server~1virtualhost.json": {
       "#": "Enterprise only. The Virtual Host server allows you to run different configurations of KrakenD endpoints based on the host accessing the server.\n\nSee: https://www.krakend.io/docs/enterprise/service-settings/virtual-hosts/",
       "&": [
         {
@@ -3924,7 +3924,7 @@
         "$ANY"
       ]
     },
-    "https://www.krakend.io/schema/v2.7/service_extra_config.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1service_extra_config.json": {
       "/^[@$_#]/": "$ANY",
       "?auth/api-keys": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1api-keys.json",
       "?auth/basic": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1auth~1basic.json",
@@ -4013,7 +4013,7 @@
       "?telemetry/opentelemetry": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1opentelemetry.json",
       "?telemetry/opentelemetry-security": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1opentelemetry-security.json"
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/gelf.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1gelf.json": {
       "#": "Send structured events in GELF format to your Graylog Cluster.\n\nSee: https://www.krakend.io/docs/logging/graylog-gelf/",
       "/^[@$_#]/": "$ANY",
       "_address": {
@@ -4025,7 +4025,7 @@
         "@": true
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/influx.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1influx.json": {
       "#": "Enables the extended logging capabilities.\n\nSee: https://www.krakend.io/docs/telemetry/influxdb-native/",
       "/^[@$_#]/": "$ANY",
       "?buffer_size": {
@@ -4054,7 +4054,7 @@
         "@": "$_psub_1_"
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/logging.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1logging.json": {
       "#": "Enables the extended logging capabilities.\n\nSee: https://www.krakend.io/docs/logging/",
       "/^[@$_#]/": "$ANY",
       "?custom_format": {
@@ -4101,14 +4101,14 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/logstash.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1logstash.json": {
       "#": "Enables logstash when the extra_config \"telemetry/logging\" is also present.\n\nSee: https://www.krakend.io/docs/logging/logstash/",
       "/^[@$_#]/": "$ANY",
       "_enabled": {
         "@": true
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/metrics.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1metrics.json": {
       "#": "Collects extended metrics to push to InfluxDB or expose them in the /__stats/ endpoint.\n\nSee: https://www.krakend.io/docs/telemetry/extended-metrics/",
       "/^[@$_#]/": "$ANY",
       "?backend_disabled": {
@@ -4136,7 +4136,7 @@
         "@": true
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/moesif.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1moesif.json": {
       "#": "The Moesif integration helps you understand and monetize API usage with a robust analytics and billing platform.\n\nSee: https://www.krakend.io/docs/enterprise/governance/moesif/",
       "/^[@$_#]/": "$ANY",
       "?batch_size": {
@@ -4221,7 +4221,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/newrelic.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1newrelic.json": {
       "#": "The New Relic integration lets you push KrakenD metrics and distributed traces to your New Relic dashboard. It uses internally the official New Relic SDK and brings its features to your APM dashboard.\n\nSee: https://www.krakend.io/docs/enterprise/telemetry/newrelic/",
       "/^[@$_#]/": "$ANY",
       "?debug": {
@@ -4239,7 +4239,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/opencensus.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1opencensus.json": {
       "#": "Enables the extended logging capabilities.\n\nSee: https://www.krakend.io/docs/telemetry/opencensus/",
       "/^[@$_#]/": "$ANY",
       "?enabled_layers": {
@@ -4530,7 +4530,7 @@
         }
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/opentelemetry-backend.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1opentelemetry-backend.json": {
       "#": "Enterprise only. Overrides metrics and traces declared by the OpenTelemetry service.\n\nSee: https://www.krakend.io/docs/telemetry/opentelemetry-by-endpoint/",
       "/^[@$_#]/": "$ANY",
       "?backend": {
@@ -4564,7 +4564,7 @@
         }
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/opentelemetry-endpoint.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1opentelemetry-endpoint.json": {
       "#": "Enterprise only. Overrides metrics and traces declared by the OpenTelemetry service.\n\nSee: https://www.krakend.io/docs/telemetry/opentelemetry-by-endpoint/",
       "/^[@$_#]/": "$ANY",
       "?exporters_override": {
@@ -4606,7 +4606,7 @@
         }
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/opentelemetry-security.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1opentelemetry-security.json": {
       "#": "Enables the security layer needed to use OpenTelemetry through the Internet, like pushing data to a SaaS provider.\n\nSee: https://www.krakend.io/docs/telemetry/opentelemetry-security/",
       "/^[@$_#]/": "$ANY",
       "_otlp": {
@@ -4631,7 +4631,7 @@
         ]
       }
     },
-    "https://www.krakend.io/schema/v2.7/telemetry/opentelemetry.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1telemetry~1opentelemetry.json": {
       "#": "Enables metrics and traces using OpenTelemetry.\n\nSee: https://www.krakend.io/docs/telemetry/opentelemetry/",
       "/^[@$_#]/": "$ANY",
       "?layers": {
@@ -4914,10 +4914,10 @@
         }
       }
     },
-    "https://www.krakend.io/schema/v2.7/timeunits.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1timeunits.json": {
       "@": "$ANY"
     },
-    "https://www.krakend.io/schema/v2.7/tls.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1tls.json": {
       "#": "Enabling TLS for HTTPS and HTTP/2.\n\nSee: https://www.krakend.io/docs/service-settings/tls/",
       "&": [
         {
@@ -5097,7 +5097,7 @@
         "$ANY"
       ]
     },
-    "https://www.krakend.io/schema/v2.7/validation/cel.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1validation~1cel.json": {
       "#": "The Common Expression Language (CEL) middleware enables expression evaluation, when an expression returns false, KrakenD does not return the content as the condition has failed. Otherwise, if all expressions returned true, the content is served.\n\nSee: https://www.krakend.io/docs/endpoints/common-expression-language-cel/",
       ">=": 1,
       "@": [
@@ -5110,7 +5110,7 @@
         }
       ]
     },
-    "https://www.krakend.io/schema/v2.7/websocket.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1websocket.json": {
       "#": "Enterprise only. Enables websocket communication.\n\nSee: https://www.krakend.io/docs/enterprise/websockets/",
       "/^[@$_#]/": "$ANY",
       "?backoff_strategy": {
@@ -5185,7 +5185,7 @@
         "@": "$_psub_1_"
       }
     },
-    "https://www.krakend.io/schema/v2.7/workflow.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1workflow.json": {
       "/^[@$_#]/": "$ANY",
       "?concurrent_calls": {
         "#": "The concurrent requests are an excellent technique to improve the response times and decrease error rates by requesting in parallel the same information multiple times. Yes, you make the same request to several backends instead of asking to just one. When the first backend returns the information, the remaining requests are canceled.\n\nSee: https://www.krakend.io/docs/endpoints/concurrent-requests/",
@@ -5229,7 +5229,7 @@
         "@": ""
       }
     },
-    "https://www.krakend.io/schema/v2.7/workflow_extra_config.json": {
+    "https%3A~1~1www.krakend.io~1schema~1v2.7~1workflow_extra_config.json": {
       "/^[@$_#]/": "$ANY",
       "?modifier/jmespath": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1jmespath.json",
       "?modifier/lua-proxy": "$https%3A~1~1www.krakend.io~1schema~1v2.7~1modifier~1lua.json",
