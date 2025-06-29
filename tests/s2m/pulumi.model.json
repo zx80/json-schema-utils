@@ -3,47 +3,14 @@
   "#": "A schema for Pulumi project files.",
   "$": {
     "configItemsType": {
-      "&": [
-        {
-          "": "$ANY",
-          "?items": "$configItemsType",
-          "_type": {
-            "^": [
-              "$simpleConfigType",
-              "$configItemsType"
-            ]
-          }
-        },
-        {
-          "|": [
-            {
-              "&": [
-                {
-                  "": "$ANY",
-                  "?type": "_array"
-                },
-                {
-                  "": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "^": [
-                    "$ANY",
-                    {
-                      "": "$ANY",
-                      "?type": "_array"
-                    }
-                  ]
-                },
-                "$ANY"
-              ]
-            }
-          ]
-        }
-      ]
+      "": "$ANY",
+      "?items": "$configItemsType",
+      "_type": {
+        "^": [
+          "$simpleConfigType",
+          "$configItemsType"
+        ]
+      }
     },
     "configTypeDeclaration": {
       "?default": "$ANY",
