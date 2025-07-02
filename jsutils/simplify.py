@@ -341,7 +341,7 @@ def simplifySchema(schema: JsonSchema, url: str):
                         "properties" not in schema and "patternProperties" not in schema:
                     pn = schema["propertyNames"]
                     ap = schema["additionalProperties"]
-                    if only(pn, "pattern", "type", *_IGNORABLE):
+                    if "pattern" in pn and only(pn, "pattern", "type", *_IGNORABLE):
                         log.info(f"switching propertyNames and additionalProperties to patternProperties at {lpath}")
                         del schema["propertyNames"]
                         del schema["additionalProperties"]
