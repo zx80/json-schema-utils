@@ -348,6 +348,9 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
             schema["type"] = "array"
 
     # translate if/then/else to and/xor/not
+    # TODO move/replicate in simplify?
+    # NOTE this induces some code expansion
+    # NOTE generated structures may be simplified later
     if "then" in schema or "else" in schema:
         if "if" not in schema:
             # no if => then/else are ignored (10.2.2)
