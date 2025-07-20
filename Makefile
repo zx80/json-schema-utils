@@ -4,7 +4,7 @@ SHELL   = /bin/bash
 .PHONY: clean
 clean:
 	$(RM) *~
-	$(RM) -r jsutils/__pycache__
+	$(RM) -r jsutils/__pycache__ dist/
 
 .PHONY: clean.dev
 clean.dev: clean
@@ -60,3 +60,17 @@ check.simpler: venv
 check.stats: venv
 	source venv/bin/activate
 	$(MAKE) -C tests stats
+
+#
+# publication on pypi
+#
+# pip install -e .[dist]
+# make publish
+# twine upload dist/*
+#
+.PHONY: publish
+publish:
+	source venv/bin/activate
+	python -m build
+	twine check dist/*
+	echo "# twine upload dist/*"

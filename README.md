@@ -4,11 +4,14 @@ Random utilities to analyze and manipulate JSON Schema.
 
 ## Installation
 
-Install latest version with `pip` directly from github:
+Install latest version with `pip` from PyPI or from GitHub:
 
 ```sh
 python -m venv venv
 source venv/bin/activate
+# from PyPI:
+pip install json_schema_utils
+# OR from latest sources:
 pip install git+https://github.com/zx80/json-schema-utils.git
 ```
 
