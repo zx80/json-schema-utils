@@ -2,8 +2,8 @@ from typing import Any
 import re
 import copy
 import logging
-from .utils import only, has
-from urllib.parse import quote
+from .utils import only
+from urllib.parse import quote, unquote
 
 type JsonPath = list[str|int]
 
@@ -198,14 +198,12 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
 # identifiers
 CURRENT_SCHEMA: str|None = None
 IDS: dict[str, dict[str, Any]] = {}
-SCHEMA = None
 EXPLICIT_TYPE: bool = False
 
 
 def reset():
     global CURRENT_SCHEMA, IDS
     CURRENT_SCHEMA = None
-    SCHEMA = None
     IDS = {}
 
 
@@ -266,7 +264,7 @@ def allOfLayer(schema: dict, operator: str):
     if "type" in schema and isinstance(schema["type"], str) and isinstance(schemas, list):
         t = schema["type"]
         for s in schemas:
-            if isinstance(s, dict) and not "type" in s:
+            if isinstance(s, dict) and "type" not in s:
                 s["type"] = t
     nschema["allOf"] = [{operator: schemas}, schema]
     return nschema
@@ -596,7 +594,7 @@ def schema2model(schema, path: JsonPath = [], strict: bool = True, is_root: bool
                     schema["minLength"] == schema["maxLength"]:
                 ival = schema["minLength"]
                 assert isinstance(ival, int), f"int length at [{spath}]"
-                contraint["="] = ival
+                constraints["="] = ival
             else:
                 if "minLength" in schema:
                     minlen = schema["minLength"]

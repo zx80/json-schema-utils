@@ -300,28 +300,28 @@ def jsu_pretty():
 GH = "https://raw.githubusercontent.com"
 SS = "https://json.schemastore.org"
 # JM = f"{GH}/clairey-zx81/json-model/main/models"
-JM = f"https://json-model.org/models"
+JM = "https://json-model.org/models"
 
 # Schema $id/id to Model URL
 ID2MODEL: dict[str, tuple[str, str]] = {
     # JSON Schema drafts
-    f"http://json-schema.org/draft-04/schema": (
+    "http://json-schema.org/draft-04/schema": (
         f"{JM}/json-schema-draft-04.model.json",
         f"{JM}/json-schema-draft-04-fuzzy.model.json",
     ),
-    f"http://json-schema.org/draft-06/schema": (
+    "http://json-schema.org/draft-06/schema": (
         f"{JM}/json-schema-draft-06.model.json",
         f"{JM}/json-schema-draft-06-fuzzy.model.json",
     ),
-    f"http://json-schema.org/draft-07/schema": (
+    "http://json-schema.org/draft-07/schema": (
         f"{JM}/json-schema-draft-07.model.json",
         f"{JM}/json-schema-draft-07-fuzzy.model.json",
     ),
-    f"https://json-schema.org/draft/2019-09/schema": (
+    "https://json-schema.org/draft/2019-09/schema": (
         f"{JM}/json-schema-draft-2019-09.model.json",
         f"{JM}/json-schema-draft-2019-09-fuzzy.model.json",
     ),
-    f"https://json-schema.org/draft/2020-12/schema": (
+    "https://json-schema.org/draft/2020-12/schema": (
         f"{JM}/json-schema-draft-2020-12.model.json",
         f"{JM}/json-schema-draft-2020-12-fuzzy.model.json",
     ),
@@ -330,7 +330,7 @@ ID2MODEL: dict[str, tuple[str, str]] = {
         f"{JM}/ansiblelint-meta.model.json",
         f"{JM}/ansiblelint-meta.model.json",
     ),
-    f"https://geojson.org/schema/GeoJSON.json": (
+    "https://geojson.org/schema/GeoJSON.json": (
         f"{JM}/geo.model.json",
         f"{JM}/geo.model.json",
     ),
@@ -338,7 +338,7 @@ ID2MODEL: dict[str, tuple[str, str]] = {
         f"{JM}/lazygit.model.json",
         f"{JM}/lazygit.model.json",
     ),
-    f"https://spec.openapis.org/oas/3.1/schema/2022-10-07": (
+    "https://spec.openapis.org/oas/3.1/schema/2022-10-07": (
         f"{JM}/openapi-311.model.json",
         f"{JM}/openapi-311.model.json",  # TODO fuzzy
     )

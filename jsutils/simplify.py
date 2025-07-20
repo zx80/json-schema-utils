@@ -3,7 +3,7 @@
 # import urllib
 from typing import Any
 import copy
-from .utils import JsonSchema, log, JSUError, only, has
+from .utils import JsonSchema, log, JSUError, only
 from .recurse import recurseSchema
 from .inline import mergeProperty
 
