@@ -197,13 +197,15 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
 # identifiers
 CURRENT_SCHEMA: str|None = None
+SCHEMA: str|None = None
 IDS: dict[str, dict[str, Any]] = {}
 EXPLICIT_TYPE: bool = False
 
 
 def reset():
-    global CURRENT_SCHEMA, IDS
+    global CURRENT_SCHEMA, IDS, SCHEMA
     CURRENT_SCHEMA = None
+    SCHEMA = None
     IDS = {}
 
 

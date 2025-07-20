@@ -16,7 +16,7 @@ from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
 
-__version__ = pkg_version("JsonSchemaUtils")
+__version__ = pkg_version("json_schema_utils")
 
 def ap_common(ap, with_json=True):
     ap.add_argument("--version", action="store_true", help="show version")

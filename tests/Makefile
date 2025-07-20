@@ -37,6 +37,9 @@ inline:
 	$(RM) $(F.inline)
 	$(MAKE) $(F.inline)
 
+defref_0.inline.json:
+	touch $@
+
 %.inline.json: %.schema.json
 	jsu-inline -m "file:// ." -m ":// ." $< > $@
 

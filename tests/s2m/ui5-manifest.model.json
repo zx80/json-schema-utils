@@ -5130,14 +5130,17 @@
           "/^[a-zA-Z0-9_\\-]+$/"
         ]
       },
-      "_customType": "$NONE",
+      "_customType": {
+        "#": "Represents a custom data source type flag. So the type can be any string if its true, and only enum values if false",
+        "@": "=true"
+      },
       "_uri": {
         "#": "Represents the uri of the data source, should always be given in lower case",
         "@": ""
       }
     },
     "dataSourceEnum": {
-      "?customType": "$NONE",
+      "?customType": "=false",
       "?settings": {
         "#": "Represents data source type specific attributes (key, value pairs)",
         "@": "$setting"
@@ -8640,11 +8643,17 @@
             "": "$ANY",
             "?rootView": "$rootView_def_flexEnabled",
             "?routing": "$routing_flexEnabled",
-            "_flexEnabled": "$NONE"
+            "_flexEnabled": {
+              "#": "Represents an Indicator whether an app is flex enabled",
+              "@": "=true"
+            }
           },
           {
             "": "$ANY",
-            "?flexEnabled": "$NONE",
+            "?flexEnabled": {
+              "#": "Represents an Indicator whether an app is flex enabled",
+              "@": "=false"
+            },
             "?rootView": "$rootView_def",
             "?routing": "$routing"
           }
