@@ -122,6 +122,8 @@ PER_TYPE = {
     "combi": [ "allOf", "anyOf", "oneOf", "if", "then", "else", "not" ],
 }
 
+IGNORABLE = { kw for kw in PER_TYPE["meta"] }
+
 PROP_TO_TYPE: dict[str, str] = {}
 for t, props in PER_TYPE.items():
     for prop in props:
@@ -886,6 +888,15 @@ def _json_schema_stats_rec(
                            f"ignored un-required if props: {" ".join(sorted(unreqprops))}", lpath)
     elif "then" in jdata or "else" in jdata:
         collectErr(collection, "cond error", "then/else no if", path)
+
+    #
+    # $ref on draft 7 and prior tells to ignore all adjacent keywords!
+    #
+    # https://json-schema.org/draft-07/draft-handrews-json-schema-01#rfc.section.8.3
+    # _All other properties in a "$ref" object MUST be ignored._
+    if "$ref" in jdata and 0 < collection["<version>"] <= 7:
+        if not set(jdata.keys()).issubset(IGNORABLE | {"$ref"}):
+            collectErr(collection, "ignore error", "adjacent keywords next to $ref", path)
 
     # scan all properties
     for prop, val in jdata.items():
