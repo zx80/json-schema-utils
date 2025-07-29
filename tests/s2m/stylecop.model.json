@@ -124,14 +124,12 @@
         "@": true
       },
       "?allowedHungarianPrefixes": {
-        "!": true,
         "#": "Allowed Hungarian notation prefixes.",
         "@": [
           "/^[a-z]{1,2}$/"
         ]
       },
       "?allowedNamespaceComponents": {
-        "!": true,
         "#": "Allowed namespace components, such as ones beginning with a lowercase letter.",
         "@": [
           ""

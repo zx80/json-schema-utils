@@ -354,12 +354,15 @@ def jsu_model():
     from .convert import schema2model
 
     ap = argparse.ArgumentParser()
+    arg = ap.add_argument
     ap_common(ap)
-    ap.add_argument("--id", action="store_true", default=False, help="enable $id lookup")
-    ap.add_argument("--no-id", dest="id", action="store_false", help="disable $id lookup")
-    ap.add_argument("--strict", action="store_true", default=True, help="reject doubtful schemas")
-    ap.add_argument("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
-    ap.add_argument("schemas", nargs="*", help="schemas to process")
+    arg("--id", action="store_true", default=False, help="enable $id lookup")
+    arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
+    arg("--strict", action="store_true", default=True, help="reject doubtful schemas")
+    arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
+    arg("--fix", "-F", action="store_true", default=True, help="fix common schema issues")
+    arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")
+    arg("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
@@ -386,7 +389,7 @@ def jsu_model():
                     log.info(f"using predefined model for {sid}")
                     model = f"${ID2MODEL[sid][0 if args.strict else 1]}"
             if model is None:
-                model = schema2model(schema, strict=args.strict)
+                model = schema2model(schema, strict=args.strict, fix=args.fix)
         except Exception as e:
             log.error(e, exc_info=args.debug)
             errors += 1
