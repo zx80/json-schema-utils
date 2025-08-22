@@ -169,7 +169,7 @@ def jsu_check():
     try:
         if args.engine == "jschon":
             import jschon
-            jschon.create_catalog(args.version)
+            jschon.create_catalog(args.draft)
             schema = jschon.JSONSchema(jschema)
 
             def check(data):
