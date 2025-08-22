@@ -164,7 +164,7 @@ def jsu_check():
 
     # be nice
     if isinstance(jschema, dict) and "$schema" not in jschema:
-        jschema["$schema"] = f"https://json-schema.org/draft/{args.version}/schema"
+        jschema["$schema"] = f"https://json-schema.org/draft/{args.draft}/schema"
 
     try:
         if args.engine == "jschon":
