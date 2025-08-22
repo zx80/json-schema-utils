@@ -84,7 +84,7 @@ def numberConstraints(schema):
     return constraints
 
 
-def buildModel(model, constraints: dict, defs: dict, sharp: dict, is_root = False):
+def buildModel(model, constraints: dict, defs: dict, sharp: dict, is_root: bool = False):
     if constraints or sharp or defs:
 
         if constraints:
@@ -125,7 +125,7 @@ SPLITS = {
     "array": ["minItems", "maxItems", "uniqueItems", "items", "prefixItems", "contains",
               "minContains", "maxContains"],
     "object": ["properties", "required", "additionalProperties", "minProperties", "maxProperties",
-                "patternProperties", "propertyNames"],
+               "patternProperties", "propertyNames"],
 }
 
 SPLIT = {}
@@ -197,7 +197,7 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
 # identifiers
 CURRENT_SCHEMA: str|None = None
-SCHEMA: str|None = None
+SCHEMA = None
 IDS: dict[str, dict[str, Any]] = {}
 EXPLICIT_TYPE: bool = False
 
@@ -273,7 +273,7 @@ def allOfLayer(schema: dict, operator: str):
 
 # TODO handle a global defs so as to be able to create new ones
 def schema2model(schema, path: JsonPath = [],
-        strict: bool = True, fix: bool = True, is_root: bool = True):
+                 strict: bool = True, fix: bool = True, is_root: bool = True):
     """Convert a JSON schema to a JSON model assuming a 2020-12 semantics."""
 
     global CURRENT_SCHEMA, SCHEMA
@@ -322,7 +322,7 @@ def schema2model(schema, path: JsonPath = [],
             # provide a local converted version as well? not enough??
             defs[encoded] = schema2model(val, path + [dname, name], strict, fix, False)
         # special root handling
-        IDS[""] = "$#"
+        IDS[dname][""] = "$#"
 
     # FIXME cleanup OpenAPI extentions "x-*", nullable
     for prop in list(schema.keys()):
@@ -466,7 +466,7 @@ def schema2model(schema, path: JsonPath = [],
         assert isinstance(choices, list), f"oneOf list at [{spath}]"
         if only(schema, "oneOf", *IGNORE):
             model = {"^": [schema2model(s, path + ["oneOf", i], strict, fix, False)
-                        for i, s in enumerate(choices)]}
+                         for i, s in enumerate(choices)]}
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # try building an "allOf" layer
             log.warning(f"keyword oneOf intermixed with other keywords at [{spath}]")
@@ -534,7 +534,8 @@ def schema2model(schema, path: JsonPath = [],
                 if names and names[0] in ("$defs", "definitions"):
                     val = IDS
                     for name in names:
-                        assert name in val, f"following path in {ref}: missing {name} ({IDS}) at [{spath}]"
+                        assert name in val, \
+                            f"following path in {ref}: missing {name} ({IDS}) at [{spath}]"
                         val = val[name]
                 else:  # arbitrary path
                     val = SCHEMA
@@ -619,7 +620,7 @@ def schema2model(schema, path: JsonPath = [],
         elif ts == "number":
             doubt(only(schema, "type", "format", "multipleOf", "minimum", "maximum",
                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE),
-                        f"number properties at [{spath}]", strict)
+                  f"number properties at [{spath}]", strict)
             model = "$NUMBER" if EXPLICIT_TYPE else -1.0
             if "format" in schema:
                 fmt = schema["format"]
@@ -641,7 +642,7 @@ def schema2model(schema, path: JsonPath = [],
         elif ts == "integer":
             doubt(only(schema, "type", "format", "multipleOf", "minimum", "maximum",
                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE),
-                        f"integer properties at [{spath}]", strict)
+                  f"integer properties at [{spath}]", strict)
             model = "$INTEGER" if EXPLICIT_TYPE else -1
             # OpenAPI
             if "format" in schema:
@@ -695,7 +696,7 @@ def schema2model(schema, path: JsonPath = [],
             doubt(only(schema, "type", "prefixItems", "items",
                        "contains", "minContains", "maxContains",
                        "minItems", "maxItems", "uniqueItems", *IGNORE),
-                       f"array properties at [{spath}]", strict)
+                  f"array properties at [{spath}]", strict)
 
             # build model
             constraints = {}
@@ -734,11 +735,13 @@ def schema2model(schema, path: JsonPath = [],
                     if isinstance(schema["items"], bool):
                         assert not constraints, f"not implemented yet at [{spath}]"
                         if not schema["items"]:
-                            return buildModel(model, {">=": 0, "<=": len(model)}, defs, sharp, is_root)
+                            return buildModel(model, {">=": 0, "<=": len(model)},
+                                              defs, sharp, is_root)
                         else:
                             assert False, f"not implemented yet at [{spath}]"
                     # items is a type
-                    model.append(schema2model(schema["items"], path + ["items"], strict, fix, False))
+                    model.append(schema2model(schema["items"], path + ["items"],
+                                              strict, fix, False))
                     if not constraints:
                         constraints[">="] = len(model) - 1
                     return buildModel(model, constraints, defs, sharp, is_root)
@@ -793,7 +796,6 @@ def schema2model(schema, path: JsonPath = [],
             if "discriminator" in schema:
                 log.warning(f"ignoring discriminator at [{spath}]")
                 del schema["discriminator"]
-
 
             if fix:
                 # common misplacements
@@ -878,7 +880,8 @@ def schema2model(schema, path: JsonPath = [],
                             model[""] = "$ANY"
                         # else nothing else is allowed
                     elif isinstance(ap, dict):
-                        model[""] = schema2model(ap, path + ["additionalProperties"], strict, fix, False)
+                        model[""] = schema2model(ap, path + ["additionalProperties"],
+                                                 strict, fix, False)
                     else:
                         assert False, f"not implemented yet at [{spath}]"
                 else:
@@ -888,7 +891,7 @@ def schema2model(schema, path: JsonPath = [],
                 # "additionalProperties" without "properties" or "patternProperties"
                 doubt(only(schema, "type", "additionalProperties", "maxProperties", "minProperties",
                            "properties", "patternProperties", *IGNORE),
-                           f"add prop props at [{spath}]", strict)
+                      f"add prop props at [{spath}]", strict)
                 if "properties" not in schema and "additionalProperties" not in schema and strict:
                     assert False, "additionalProperties without properties or patternProperties"
                 ap = schema["additionalProperties"]
@@ -897,7 +900,8 @@ def schema2model(schema, path: JsonPath = [],
                         model[""] = "$ANY"
                     # else nothing else is allowed
                 elif isinstance(ap, dict):
-                    model[""] = schema2model(ap, path + ["additionalProperties"], strict, fix, False)
+                    model[""] = schema2model(ap, path + ["additionalProperties"],
+                                             strict, fix, False)
                 else:
                     assert False, f"not implemented yet at [{spath}]"
 

@@ -39,7 +39,7 @@ check.ruff: venv
 .PHONY: check.flake8
 check.flake8: venv
 	source venv/bin/activate
-	flake8 --ignore=$(IGNORE),W504 --max-line-length=100 jsutils
+	flake8 --ignore=$(IGNORE),E128,E131,W504 --max-line-length=100 jsutils
 
 .PHONY: check.pyright
 check.pyright: venv

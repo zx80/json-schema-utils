@@ -297,6 +297,7 @@ def jsu_pretty():
         schema = json.load(open(fn) if fn != "-" else sys.stdin)
         print(json_dumps(schema, args))
 
+
 GH = "https://raw.githubusercontent.com"
 SS = "https://json.schemastore.org"
 # JM = f"{GH}/clairey-zx81/json-model/main/models"

@@ -84,6 +84,7 @@ def _typeCompat(t: str, v: Any) -> bool:
             (t == "array" and isinstance(v, (list, tuple))) or
             (t == "object" and isinstance(v, dict)))
 
+
 _IGNORABLE = (
     # core
     "$schema", "$id", "$comment", "$vocabulary", "$anchor", "$dynamicAnchor",
@@ -131,6 +132,7 @@ def simplifySchema(schema: JsonSchema, url: str):
     # FIXME check that there is only one dynamicAnchor of this name?!
     dynroot: str|None = None
     if isinstance(schema, dict) and "$dynamicAnchor" in schema:
+        assert isinstance(schema["$dynamicAnchor"], str)
         dynroot = schema["$dynamicAnchor"]
         del schema["$dynamicAnchor"]
 
@@ -216,6 +218,7 @@ def simplifySchema(schema: JsonSchema, url: str):
         for kw in ("then", "else"):
             if kw in schema:
                 subs = schema[kw]
+                assert isinstance(subs, dict)
                 compat = True
                 for k, v in subs.items():
                     if k in _IGNORABLE:
@@ -225,6 +228,7 @@ def simplifySchema(schema: JsonSchema, url: str):
                     elif k in schema:
                         # special case, check for inclusion
                         if k == "required":
+                            assert "required" in schema and isinstance(schema["required"], list)
                             assert isinstance(v, list)  # and str
                             for n in v:
                                 if n not in schema["required"]:
@@ -248,6 +252,7 @@ def simplifySchema(schema: JsonSchema, url: str):
         # simplify condition if possible
         if "if" in schema:
             cond = schema["if"]
+            assert isinstance(cond, dict)
             if "not" in cond and only(cond, "not", *_IGNORABLE):
                 log.info("simplifying if not")
                 schema["if"] = cond["not"]
@@ -340,11 +345,14 @@ def simplifySchema(schema: JsonSchema, url: str):
                 if "propertyNames" in schema and "additionalProperties" in schema and \
                         "properties" not in schema and "patternProperties" not in schema:
                     pn = schema["propertyNames"]
+                    assert isinstance(pn, dict)
                     ap = schema["additionalProperties"]
                     if "pattern" in pn and only(pn, "pattern", "type", *_IGNORABLE):
-                        log.info(f"switching propertyNames and additionalProperties to patternProperties at {lpath}")
+                        log.info("switching propertyNames and additionalProperties to "
+                                 f"patternProperties at {lpath}")
                         del schema["propertyNames"]
                         del schema["additionalProperties"]
+                        assert isinstance(pn["pattern"], str)
                         schema["patternProperties"] = { pn["pattern"]: ap }
 
         # const/enum
@@ -370,10 +378,12 @@ def simplifySchema(schema: JsonSchema, url: str):
 
     return recurseSchema(schema, url, rwt=rwtSimpler)
 
+
 #
 # move definitions at the root and resolve ids
 #
 from urllib.parse import quote, unquote
+
 
 def _defId(schema) -> tuple[str|None, str|None]:
     """return name of definitions and id properties."""
@@ -387,21 +397,27 @@ def _defId(schema) -> tuple[str|None, str|None]:
           None
     return (defn, idn)
 
+
 _SUBCOUNT: int = 0
 
 # TODO handle arbitrary path references
 
 def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
-                  moved: dict[str, str], ids: dict[str, str], delete: list[tuple[Any, str]],
+                  moved: dict[str, str], ids: dict[str, str],
+                  delete: list[tuple[Any, str, str|None, str|None, str|None]],
                   path: list[str|int] = []):
 
     log.debug(f"handing $ids/$defs at {path}")
 
     global _SUBCOUNT
     defn, idn = _defId(schema)
-
     if defn is None:
         return
+
+    assert isinstance(schema, dict)
+    assert isinstance(defn, str)
+    sdefs = schema[defn]
+    assert isinstance(sdefs, dict)
 
     if path and defn and not idn:
         # nested definitions, move them up
@@ -409,7 +425,10 @@ def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
         prefix = f"_defs_{_SUBCOUNT}_"
         _SUBCOUNT += 1
 
-        for name, sschema in schema[defn].items():
+        for name, sschema in sdefs.items():
+
+            assert isinstance(sschema, dict)
+
             # FIXME name may be quite ugly… eg a full URL
             if "/" not in name:  # reuse name if simple
                 new_name = prefix + name
@@ -419,7 +438,7 @@ def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
                 _SUBCOUNT += 1
                 old_name = quote(name).replace("~", "~0").replace("/", "~1")
             npath = rootdef + "/" + new_name
-            opath = f"#/{'/'.join(path)}/{defn}/{old_name}"
+            opath = f"#/{'/'.join(path)}/{defn}/{old_name}"  # type: ignore
             sschema["$comment"] = f"origin: {opath}"
             moved[opath] = npath
             defs[new_name] = sschema
@@ -468,9 +487,10 @@ def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
         recurseSchema(schema, "", rwt=rwtRef)
 
         # move local definitions as global
-        for name, sschem in schema[defn].items():
+        for name, sschem in sdefs.items():
             pname = prefix + name
             assert pname not in defs
+            assert isinstance(sschem, (bool, dict))
             defs[pname] = sschem
 
         # we need to keep the schema in place for handling arbitrary url
@@ -499,6 +519,7 @@ def scopeDefs(schema: JsonSchema):
         return
 
     # ensure definitions root
+    assert isinstance(schema, dict)
     defn, idn = _defId(schema)
 
     if defn is None:
@@ -509,10 +530,10 @@ def scopeDefs(schema: JsonSchema):
     rootdef, moved, ids, delete = f"#/{defn}", {}, {}, []
 
     for s, p in todo_ids:
-        _scopeSubDefs(s, schema[defn], rootdef, moved, ids, delete, p)
+        _scopeSubDefs(s, schema[defn], rootdef, moved, ids, delete, p)  # type: ignore
 
     for s, p in todo_defs:
-        _scopeSubDefs(s, schema[defn], rootdef, moved, ids, delete, p)
+        _scopeSubDefs(s, schema[defn], rootdef, moved, ids, delete, p)  # type: ignore
 
     # move arbitrary references
     def mvRef(rschema, path):
@@ -529,7 +550,7 @@ def scopeDefs(schema: JsonSchema):
                             # hmmm
                             if segment in jdest:
                                 jdest = jdest[segment]
-                            elif "~" in segment  or "%" in segment:
+                            elif "~" in segment or "%" in segment:
                                 segment = unquote(segment).replace("~1", "/").replace("~0", "~")
                                 jdest = jdest[segment]
                         elif isinstance(jdest, list):
@@ -541,7 +562,7 @@ def scopeDefs(schema: JsonSchema):
                     _SUBCOUNT += 1
                     ndest = f"#/{defn}/{name}"
                     # log.info(f"moving {dest} to {ndest}")
-                    schema[defn][name] = copy.deepcopy(jdest)
+                    schema[defn][name] = copy.deepcopy(jdest)  # type: ignore
                     rschema["$ref"] = ndest
                     moved[dest] = ndest  # for other identical references
                 # TODO also rename ugly references?
@@ -574,7 +595,7 @@ def scopeDefs(schema: JsonSchema):
         del j[n]
         if prefix is not None:
             # move whole id-ed object as global as well, replaced with a ref
-            schema[defn][prefix] = { p: s for p, s in j.items() }
+            schema[defn][prefix] = { p: s for p, s in j.items() }  # type: ignore
             j.clear()
             j["$comment"] = f"{sid} moved as $def"
             j["$ref"] = dest
