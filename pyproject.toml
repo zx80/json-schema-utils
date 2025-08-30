@@ -8,7 +8,7 @@ exclude = ["tests*"]
 
 [project]
 name = "json_schema_utils"
-version = "0.8.2"
+version = "0.8.3"
 authors = [ { name = "Fabien Coelho" }, { name = "Claire Yannou-Medrala" } ]
 description = "JSON Schema Utils"
 readme = "README.md"
