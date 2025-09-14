@@ -10,6 +10,18 @@ type JsonPath = list[str|int]
 log = logging.getLogger("convert")
 # log.setLevel(logging.DEBUG)
 
+def tname(v) -> str:
+    return (
+        "null" if v is None else
+        "bool" if isinstance(v, bool) else
+        "int"  if isinstance(v, int) else
+        "number" if isinstance(v, float) else
+        "string" if isinstance(v, str) else
+        "array" if isinstance(v, list) else
+        "object" if isinstance(v, dict) else
+        "UNKNOWN"
+    )
+
 #
 # BEST EFFORT SCHEMA TO MODEL CONVERSION
 #
@@ -820,15 +832,15 @@ def schema2model(schema, path: JsonPath = [],
             if "minProperties" in schema and "maxProperties" in schema and \
                     schema["minProperties"] == schema["maxProperties"]:
                 ival = schema["maxProperties"]
-                assert isinstance(ival, int), f"int # props at [{spath}]"
+                assert isinstance(ival, int), f"int # props at [{spath}] ({tname(ival)})"
             else:
                 if "minProperties" in schema:
                     mini = schema["minProperties"]
-                    assert type(mini) is int, f"int min props at [{spath}]"
+                    assert type(mini) is int, f"int min props at [{spath}] ({tname(mini)})"
                     constraints[">="] = mini
                 if "maxProperties" in schema:
                     maxi = schema["maxProperties"]
-                    assert type(maxi) is int, f"int max props at [{spath}]"
+                    assert type(maxi) is int, f"int max props at [{spath}] ({tname(maxi)})"
                     constraints["<="] = maxi
 
             if "patternProperties" in schema:
