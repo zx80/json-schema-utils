@@ -10,8 +10,8 @@ from importlib.metadata import version as pkg_version
 logging.basicConfig()
 
 from .schemas import Schemas
-from .utils import log, JSUError
-from .recurse import hasDirectRef
+from .utils import log, JSUError, JsonSchema
+from .recurse import hasDirectRef, recurseSchema
 from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
@@ -342,9 +342,37 @@ ID2MODEL: dict[str, tuple[str, str]] = {
     "https://spec.openapis.org/oas/3.1/schema/2022-10-07": (
         f"{JM}/openapi-311.model.json",
         f"{JM}/openapi-311.model.json",  # TODO fuzzy
+    ),
+    "sha3:58df1e36909f3f8033f4da3e9a6179f3d3e53c51501d7f14a557e34ecef988e1": (
+        f"{JM}/cypress.model.json",
+        f"{JM}/cypress.model.json",
     )
-    # Cypress configuration, no id, f"{JM}/cypress.model.json"
 }
+
+# generate an id
+def schema2id(schema: JsonSchema) -> str:
+
+    # copy
+    schema = copy.deepcopy(schema)
+
+    # cleanup non essential stuff
+    def nocomment(schema: JsonSchema, _: list[str]) -> bool:
+        if isinstance(schema, dict):
+            for p in ("$comment", "title", "description", "default",
+                      "examples", "readOnly", "writeOnly", "deprecated"):
+                if p in schema:
+                    del schema[p]
+            return True
+        return False
+
+    recurseSchema(schema, None, flt=nocomment)
+
+    # hash serialized json
+    serial = json.dumps(schema, sort_keys=True)
+    shid = "sha3:" + hashlib.sha3_256(serial.encode("UTF-8")).hexdigest()
+
+    log.info(f"schema id: {shid}")
+    return shid
 
 # add ~# versions
 for k in list(ID2MODEL.keys()):
@@ -386,7 +414,7 @@ def jsu_model():
             if args.id and isinstance(schema, dict):
                 sid = (schema["$id"] if "$id" in schema else
                        schema["id"] if "id" in schema else
-                       None)
+                       schema2id(schema))
                 if sid in ID2MODEL:
                     log.info(f"using predefined model for {sid}")
                     model = f"${ID2MODEL[sid][0 if args.strict else 1]}"
