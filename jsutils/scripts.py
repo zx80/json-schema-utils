@@ -343,6 +343,7 @@ ID2MODEL: dict[str, tuple[str, str]] = {
         f"{JM}/openapi-311.model.json",
         f"{JM}/openapi-311.model.json",  # TODO fuzzy
     )
+    # Cypress configuration, no id, f"{JM}/cypress.model.json"
 }
 
 # add ~# versions
