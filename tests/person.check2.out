@@ -1,1 +1,65 @@
-person.schema.json: SCHEMA ERROR (Unrecognized version False)
+person.0.true.json: PASS
+person.1.true.json: PASS
+person.2.true.json: PASS
+person.3.false.json: FAIL
+person.4.false.json: FAIL
+person.5.false.json: FAIL
+person.6.false.json: FAIL
+ERROR:JSU:{
+  "errors": [
+    {
+      "absoluteKeywordLocation": "urn:uuid:<uuid>#/required",
+      "error": "The object is missing required properties ['name', 'age']",
+      "instanceLocation": "",
+      "keywordLocation": "/required"
+    }
+  ],
+  "valid": false
+}
+ERROR:JSU:{
+  "errors": [
+    {
+      "absoluteKeywordLocation": "urn:uuid:<uuid>#/properties",
+      "error": "Properties ['name'] are invalid",
+      "instanceLocation": "",
+      "keywordLocation": "/properties"
+    },
+    {
+      "absoluteKeywordLocation": "urn:uuid:<uuid>#/properties/name/pattern",
+      "error": "The text must match the regular expression \".\"",
+      "instanceLocation": "/name",
+      "keywordLocation": "/properties/name/pattern"
+    }
+  ],
+  "valid": false
+}
+ERROR:JSU:{
+  "errors": [
+    {
+      "absoluteKeywordLocation": "urn:uuid:<uuid>#/properties",
+      "error": "Properties ['age'] are invalid",
+      "instanceLocation": "",
+      "keywordLocation": "/properties"
+    },
+    {
+      "absoluteKeywordLocation": "urn:uuid:<uuid>#/properties/age/minimum",
+      "error": "The value may not be less than 0",
+      "instanceLocation": "/age",
+      "keywordLocation": "/properties/age/minimum"
+    }
+  ],
+  "valid": false
+}
+ERROR:JSU:{
+  "errors": [
+    {
+      "absoluteKeywordLocation": "urn:uuid:<uuid>#/additionalProperties",
+      "error": [
+        "no-such-property"
+      ],
+      "instanceLocation": "",
+      "keywordLocation": "/additionalProperties"
+    }
+  ],
+  "valid": false
+}

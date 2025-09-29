@@ -365,7 +365,7 @@ def schema2id(schema: JsonSchema) -> str:
             return True
         return False
 
-    recurseSchema(schema, None, flt=nocomment)
+    recurseSchema(schema, "", flt=nocomment)
 
     # hash serialized json
     serial = json.dumps(schema, sort_keys=True)

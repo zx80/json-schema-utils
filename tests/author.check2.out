@@ -1,1 +1,35 @@
-author.schema.json: SCHEMA ERROR (Unrecognized version False)
+author.0.true.json: PASS
+author.1.true.json: PASS
+author.2.true.json: PASS
+author.3.false.json: FAIL
+ERROR:JSU:{
+  "errors": [
+    {
+      "absoluteKeywordLocation": "urn:uuid:<uuid>#/properties",
+      "error": "Properties ['nom', 'org'] are invalid",
+      "instanceLocation": "",
+      "keywordLocation": "/properties"
+    },
+    {
+      "absoluteKeywordLocation": "urn:uuid:<uuid>#/properties/nom/pattern",
+      "error": "The text must match the regular expression \".\"",
+      "instanceLocation": "/nom",
+      "keywordLocation": "/properties/nom/pattern"
+    },
+    {
+      "absoluteKeywordLocation": "urn:uuid:<uuid>#/properties/org/type",
+      "error": "The instance must be of type \"string\"",
+      "instanceLocation": "/org",
+      "keywordLocation": "/properties/org/type"
+    },
+    {
+      "absoluteKeywordLocation": "urn:uuid:<uuid>#/additionalProperties",
+      "error": [
+        "#"
+      ],
+      "instanceLocation": "",
+      "keywordLocation": "/additionalProperties"
+    }
+  ],
+  "valid": false
+}
