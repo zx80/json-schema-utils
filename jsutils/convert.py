@@ -97,7 +97,10 @@ def numberConstraints(schema):
 
 
 def buildModel(model, constraints: dict, defs: dict, sharp: dict, is_root: bool = False):
+    """Build a model."""
+
     if constraints or sharp or defs:
+        # we want to force a JSON object
 
         if constraints:
             m = {"@": model, **constraints}
@@ -113,9 +116,15 @@ def buildModel(model, constraints: dict, defs: dict, sharp: dict, is_root: bool 
         if is_root and "#" not in m:
             m["#"] = "JSON Model generated from a JSON Schema with json-schema-utils"
         return m
+
     else:
         if is_root and isinstance(model, dict) and "#" not in model:
             model["#"] = "JSON Model generated from a JSON Schema with json-schema-utils"
+
+        # we can simplify
+        while isinstance(model, dict) and len(model) == 1 and "@" in model:
+            model = model["@"]
+
         return model
 
 
