@@ -454,7 +454,7 @@
     },
     "DictionaryId": {
       "#": "This is the name of a dictionary.\n\nName Format:\n- Must contain at least 1 number or letter.\n- Spaces are allowed.\n- Leading and trailing space will be removed.\n- Names ARE case-sensitive.\n- Must not contain `*`, `!`, `;`, `,`, `{`, `}`, `[`, `]`, `~`.",
-      "@": "/^(?=[^!*,;{}[\\]~\\n]+$)(?=(.*\\w)).+$/"
+      "@": "/^[^!*,;{}[\\]~\\n]*\\w[^!*,;{}[\\]~\\n]*$/"
     },
     "DictionaryInformation": {
       "#": "Use by dictionary authors to help improve the quality of suggestions given from the dictionary.\n\nAdded with `v5.16.0`.",
@@ -505,7 +505,7 @@
     },
     "DictionaryNegRef": {
       "#": "This a negative reference to a named dictionary.\n\nIt is used to exclude or include a dictionary by name.\n\nThe reference starts with 1 or more `!`.\n- `!<dictionary_name>` - Used to exclude the dictionary matching `<dictionary_name>`.\n- `!!<dictionary_name>` - Used to re-include a dictionary matching `<dictionary_name>`.    Overrides `!<dictionary_name>`.\n- `!!!<dictionary_name>` - Used to exclude a dictionary matching `<dictionary_name>`.    Overrides `!!<dictionary_name>`.",
-      "@": "/^(?=!+[^!*,;{}[\\]~\\n]+$)(?=(.*\\w)).+$/"
+      "@": "/^!+[^!*,;{}[\\]~\\n]*\\w[^!*,;{}[\\]~\\n]*$/"
     },
     "DictionaryPath": {
       "#": "A File System Path to a dictionary file.",

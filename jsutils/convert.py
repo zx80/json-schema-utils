@@ -291,6 +291,15 @@ def allOfLayer(schema: dict, operator: str):
     nschema["allOf"] = [{operator: schemas}, schema]
     return nschema
 
+# (STRANGE) PATTERNS
+# manually simplify some patterns for re2 compatibility
+# TODO implement some automatic simplifications?
+PATTERN: dict[str, str] = {
+    # cspell
+    "^(?=[^!*,;{}[\\]~\\n]+$)(?=(.*\\w)).+$": "^[^!*,;{}[\\]~\\n]*\\w[^!*,;{}[\\]~\\n]*$",
+    "^(?=!+[^!*,;{}[\\]~\\n]+$)(?=(.*\\w)).+$": "^!+[^!*,;{}[\\]~\\n]*\\w[^!*,;{}[\\]~\\n]*$"
+}
+
 
 # TODO handle a global defs so as to be able to create new ones
 def schema2model(schema, path: JsonPath = [],
@@ -612,6 +621,7 @@ def schema2model(schema, path: JsonPath = [],
                     model = {"|": [esc(v) for v in ve]}
             if "pattern" in schema:
                 pattern = schema["pattern"]
+                pattern = PATTERN.get(pattern, pattern)
                 assert isinstance(pattern, str), f"string pattern at [{spath}]"
                 assert model in ("", "$STRING"), f"string pattern for string at [{spath}]"
                 model = f"/{pattern}/"
