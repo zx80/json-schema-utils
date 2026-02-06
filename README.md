@@ -110,6 +110,7 @@ see [JSON Model HOWTO](https://json-model.org/#/HOWTO).
 
 ## TODO
 
+- add a bowtie script based on `jsu-compile`
 - stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)
   to reduce false positive errors/warnings.
