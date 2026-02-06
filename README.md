@@ -1,6 +1,6 @@
 # JSON Schema Utils
 
-Random utilities to analyze and manipulate JSON Schema.
+Random utilities to analyze, manipulate, simplify, convert or compile JSON Schema.
 
 ## Installation
 
@@ -15,6 +15,8 @@ source venv/bin/activate
 pip install json_schema_utils
 # OR from latest sources:
 pip install git+https://github.com/zx80/json-schema-utils.git
+# in order to compile schemas, you may need the "compile" dependency
+pip install json_schema_utils[compile]
 ```
 
 ## Inline Schema References
@@ -88,13 +90,25 @@ by Claire Yannou-Medrala and Fabien Coelho:
 jsu-model test/foo.schema.json
 ```
 
+## JSON Schema Compiler
+
+Convert the input schema and generate C, JS, Python, Java, Perl or even PL/pgSQL code
+using the [JSON Model Compiler](https://json-model.org/) as a backend.
+
+```sh
+# generate a python script
+jsu-compile some.schema.json -o some.py
+# run the script to validate values
+./some.py val1.json val2.json
+```
+
+The generated code (here the `some.py` Python script) needs some runtime which
+is installed with the compiler python module.
+Other languages require specific runtimes, which are available in the
+`docker.io/zx80/jmc` container image, or can be installed independently,
+see [JSON Model HOWTO](https://json-model.org/#/HOWTO).
+
 ## TODO
-
-- compile: `jsu-compile` wrapper around `jsu-simpler`, `jsu-model` and `jmc`.
-
-  ```sh
-  jsu-compile --jsu --options schema --jmc --options and jmc arguments
-  ```
 
 - stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)

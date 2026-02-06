@@ -16,7 +16,7 @@ dev: venv
 venv:
 	python -m venv venv
 	source venv/bin/activate
-	pip install -e .[dev]
+	pip install -e .[dev,compile]
 
 .PHONY: check
 check: check.inline check.simpler check.src check.tests

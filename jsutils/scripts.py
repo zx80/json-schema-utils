@@ -5,6 +5,8 @@ import json
 import hashlib
 import logging
 import argparse
+import tempfile
+import subprocess
 from importlib.metadata import version as pkg_version
 
 logging.basicConfig()
@@ -15,6 +17,7 @@ from .recurse import hasDirectRef, recurseSchema
 from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
+from .convert import schema2model
 
 __version__ = pkg_version("json_schema_utils")
 
@@ -381,8 +384,6 @@ for k in list(ID2MODEL.keys()):
 
 def jsu_model():
 
-    from .convert import schema2model
-
     ap = argparse.ArgumentParser()
     arg = ap.add_argument
     ap_common(ap)
@@ -427,3 +428,61 @@ def jsu_model():
         print(json.dumps(model, sort_keys=args.sort_keys, indent=args.indent))
 
     sys.exit(1 if errors else 0)
+
+def jsu_compile():
+
+    ap = argparse.ArgumentParser()
+    arg = ap.add_argument
+    ap_common(ap)
+    arg("--id", action="store_true", default=False, help="enable $id lookup")
+    arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
+    arg("--strict", action="store_true", default=True, help="reject doubtful schemas")
+    arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
+    arg("--fix", "-F", action="store_true", default=True, help="fix common schema issues")
+    arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")
+    arg("schema", default="-", help="schema to process")
+    arg("others", nargs="*", help="other arguments for jmc backend")
+    args = ap.parse_args()
+
+    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+
+    if args.version:
+        print(__version__)
+        sys.exit(0)
+
+    # initial schema
+    schema = json.load(open(args.schema) if args.schema != "-" else sys.stdin)
+
+    model = None
+    if args.id and isinstance(schema, dict):
+        sid = (schema["$id"] if "$id" in schema else
+               schema["id"] if "id" in schema else
+               schema2id(schema))
+        if sid in ID2MODEL:
+            log.info(f"using predefined model for {sid}")
+            model = f"${ID2MODEL[sid][0 if args.strict else 1]}"
+        # else unknown id, proceed
+    if model is None:
+        try:
+            # simplify schema
+            if isinstance(schema, dict):
+                scopeDefs(schema)
+                schema = simplifySchema(schema, schema.get("$id", "."))
+            # then convert to model
+            model = schema2model(schema, strict=args.strict, fix=args.fix)
+        except Exception as e:
+            log.error(f"schema to model conversion for {args.schema} failed")
+            log.error(e, exc_info=args.debug)
+            sys.exit(1) # conversion failed
+
+    with tempfile.NamedTemporaryFile(suffix=".model.json", delete_on_close=False) as tmp:
+        fmodel = tmp.name
+        tmp.write(json.dumps(model, sort_keys=args.sort_keys, indent=args.indent).encode("UTF8"))
+        tmp.flush()
+
+    # launch jmc
+    done = subprocess.run(["jmc", "--model", fmodel] + args.others)
+
+    if done.returncode:
+        log.error(f"backend jmc process return code: {done.returncode}")
+    sys.exit(done.returncode)

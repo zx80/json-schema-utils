@@ -8,7 +8,7 @@ exclude = ["tests*"]
 
 [project]
 name = "json_schema_utils"
-version = "0.8.6"
+version = "0.9.0"
 authors = [ { name = "Fabien Coelho" }, { name = "Claire Yannou-Medrala" } ]
 description = "JSON Schema Utils"
 readme = "README.md"
@@ -20,6 +20,7 @@ dependencies = [ "requests", "jschon", "jsonschema[format]" ]
 [project.optional-dependencies]
 dev = [ "ruff", "flake8", "pyright" ]
 dist = [ "build", "twine", "wheel" ]
+compile = [ "json-model-compiler" ]
 
 [project.scripts]
 jsu-inline = "jsutils:jsu_inline"
@@ -28,6 +29,7 @@ jsu-check = "jsutils:jsu_check"
 jsu-stats = "jsutils:jsu_stats"
 jsu-pretty = "jsutils:jsu_pretty"
 jsu-model = "jsutils:jsu_model"
+jsu-compile = "jsutils:jsu_compile"
 
 [project.urls]
 repository = "https://github.com/zx80/json-schema-utils"
