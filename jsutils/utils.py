@@ -6,9 +6,26 @@ log = logging.getLogger("JSU")
 
 # simplistic typing
 type Jsonable = None|bool|int|float|str|list[Jsonable]|dict[str, Jsonable]
-JsonSchema = dict[str, Jsonable]|bool
-FilterFun = Callable[[JsonSchema, list[str]], bool]
-RewriteFun = Callable[[JsonSchema, list[str]], JsonSchema]
+type JsonSchema = dict[str, Jsonable]|bool
+type FilterFun = Callable[[JsonSchema, list[str]], bool]
+type RewriteFun = Callable[[JsonSchema, list[str]], JsonSchema]
+type JsonPath = tuple[str|int]
+
+# keywords specific to a type
+TYPED_KEYWORDS: dict[str, list[str]] = {
+    "number": ["minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf"],
+    "string": ["minLength", "maxLength", "pattern"],
+    "array": ["minItems", "maxItems", "uniqueItems", "items", "prefixItems", "contains",
+              "minContains", "maxContains"],
+    "object": ["properties", "required", "additionalProperties", "minProperties", "maxProperties",
+               "patternProperties", "propertyNames"],
+}
+
+KEYWORD_TYPE: dict[str, str] = {}
+
+for k in TYPED_KEYWORDS.keys():
+    for n in TYPED_KEYWORDS[k]:
+        KEYWORD_TYPE[n] = k
 
 
 class JSUError(BaseException):
