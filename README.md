@@ -15,8 +15,6 @@ source venv/bin/activate
 pip install json_schema_utils
 # OR from latest sources:
 pip install git+https://github.com/zx80/json-schema-utils.git
-# in order to compile schemas, you may need the "compile" dependency
-pip install json_schema_utils[compile]
 ```
 
 ## Inline Schema References
@@ -47,13 +45,18 @@ jsu-simpler tests/*.schema.json
 
 ## Check JSON Values against a Schema
 
-Check a JSON values match a given schema using either
-[jsonschema](https://github.com/python-jsonschema/jsonschema) or
-[jschon](https://github.com/marksparkza/jschon) implementations.
+Check a JSON values match a given schema using
+`jmc` ([jsu-compile](https://github.com/zx80/json-schema-utils) with
+[jmc](https://json-model.org/) dynamic Python backend),
+[`jsonschema`](https://github.com/python-jsonschema/jsonschema) or
+[`jschon`](https://github.com/marksparkza/jschon)
+implementations.
 
 ```sh
 jsu-check tests/foo.schema.json tests/foo.*.value.json
 ```
+
+Note: the corresponding external dependencies must be installed.
 
 ## JSON Schema Stats and Issues
 
@@ -110,8 +113,8 @@ see [JSON Model HOWTO](https://json-model.org/#/HOWTO).
 
 ## TODO
 
-- add evaluator option through `jmc`
-- add a bowtie script based on `jsu-compile`
+- check/compile: add `--loose` option? relevant default value?
+- add a bowtie script based on `jsu-compile` or `jsu-check`
 - stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)
   to reduce false positive errors/warnings.

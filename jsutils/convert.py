@@ -2,8 +2,12 @@ from typing import Any
 import re
 import copy
 import logging
-from .utils import only
+from .utils import only, JsonSchema
 from urllib.parse import quote, unquote
+import hashlib
+
+# wrapper may use a simplification step
+from .simplify import simplifySchema, scopeDefs
 
 type JsonPath = list[str|int]
 
@@ -982,3 +986,114 @@ def schema2model(schema, path: JsonPath = [],
     else:
         # empty schema
         return buildModel("$ANY", {}, defs, sharp, is_root)
+
+# where to find schemas and models
+GH = "https://raw.githubusercontent.com"
+SS = "https://json.schemastore.org"
+# JM = f"{GH}/clairey-zx81/json-model/main/models"
+JM = "https://json-model.org/models"
+
+# Schema $id/id to Model URL
+ID2MODEL: dict[str, tuple[str, str]] = {
+    # JSON Schema drafts
+    "http://json-schema.org/draft-04/schema": (
+        f"{JM}/json-schema-draft-04.model.json",
+        f"{JM}/json-schema-draft-04-fuzzy.model.json",
+    ),
+    "http://json-schema.org/draft-06/schema": (
+        f"{JM}/json-schema-draft-06.model.json",
+        f"{JM}/json-schema-draft-06-fuzzy.model.json",
+    ),
+    "http://json-schema.org/draft-07/schema": (
+        f"{JM}/json-schema-draft-07.model.json",
+        f"{JM}/json-schema-draft-07-fuzzy.model.json",
+    ),
+    "https://json-schema.org/draft/2019-09/schema": (
+        f"{JM}/json-schema-draft-2019-09.model.json",
+        f"{JM}/json-schema-draft-2019-09-fuzzy.model.json",
+    ),
+    "https://json-schema.org/draft/2020-12/schema": (
+        f"{JM}/json-schema-draft-2020-12.model.json",
+        f"{JM}/json-schema-draft-2020-12-fuzzy.model.json",
+    ),
+    # Miscellaneous models
+    f"{GH}/ansible/ansible-lint/main/src/ansiblelint/schemas/meta.json": (
+        f"{JM}/ansiblelint-meta.model.json",
+        f"{JM}/ansiblelint-meta.model.json",
+    ),
+    "https://geojson.org/schema/GeoJSON.json": (
+        f"{JM}/geo.model.json",
+        f"{JM}/geo.model.json",
+    ),
+    f"{SS}/lazygit.json": (
+        f"{JM}/lazygit.model.json",
+        f"{JM}/lazygit.model.json",
+    ),
+    "https://spec.openapis.org/oas/3.1/schema/2022-10-07": (
+        f"{JM}/openapi-311.model.json",
+        f"{JM}/openapi-311.model.json",  # TODO fuzzy
+    ),
+    "sha3:58df1e36909f3f8033f4da3e9a6179f3d3e53c51501d7f14a557e34ecef988e1": (
+        f"{JM}/cypress.model.json",
+        f"{JM}/cypress.model.json",
+    )
+}
+
+# add ~# versions
+for k in list(ID2MODEL.keys()):
+    if k.endswith("/schema"):
+        ID2MODEL[k + "#"] = ID2MODEL[k]
+
+def schema2id(schema: JsonSchema, keep_format: bool = True) -> str:
+    """Generate a (probably) unique Id for a schema structure."""
+
+    # copy
+    schema = copy.deepcopy(schema)
+
+    # cleanup non essential stuff
+    def nocomment(schema: JsonSchema, _: list[str]) -> bool:
+        if isinstance(schema, dict):
+            for p in ("$comment", "title", "description", "default",
+                      "examples", "readOnly", "writeOnly", "deprecated"):
+                if p in schema:
+                    del schema[p]
+            if not keep_format and "format" in schema:
+                del schema["format"]
+            return True
+        return False
+
+    recurseSchema(schema, "", flt=nocomment)
+
+    # hash serialized json
+    serial = json.dumps(schema, sort_keys=True)
+    shid = "sha3:" + hashlib.sha3_256(serial.encode("UTF-8")).hexdigest()
+
+    log.info(f"schema id: {shid}")
+    return shid
+
+def schema_to_model(schema: JsonSchema, schema_name: str,
+                    simpler: bool = False, fix: bool = True,
+                    use_id: bool = False, strict: bool = True):
+    """Convert a JSON Schema to a JSON Model."""
+    model = None
+    if use_id and isinstance(schema, dict):
+        sid = (schema["$id"] if "$id" in schema else
+               schema["id"] if "id" in schema else
+               schema2id(schema))
+        if sid in ID2MODEL:
+            log.info(f"using predefined model for {sid}")
+            model = f"${ID2MODEL[sid][0 if strict else 1]}"
+        # else unknown id, proceed
+    if model is None:
+        try:
+            # optional schema simplification step
+            if simpler and isinstance(schema, dict):
+                log.debug("simplifying schema")
+                scopeDefs(schema)
+                schema = simplifySchema(schema, schema.get("$id", "."))
+            # then actually convert to model
+            model = schema2model(schema, strict=strict, fix=fix)
+        except Exception as e:
+            log.error(f"schema to model conversion for {schema_name} failed: {e}")
+            raise e
+    return model

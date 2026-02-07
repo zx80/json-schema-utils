@@ -17,7 +17,7 @@ from .recurse import hasDirectRef, recurseSchema
 from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
-from .convert import schema2model
+from .convert import schema_to_model
 
 __version__ = pkg_version("json_schema_utils")
 
@@ -128,8 +128,8 @@ def jsu_check():
     ap = argparse.ArgumentParser()
     ap_common(ap)
     ap.add_argument("--draft", "-D", default="2020-12", help="JSON Schema draft")
-    ap.add_argument("--engine", "-e", choices=["jsonschema", "jschon"], default="jsonschema",
-                    help="select JSON Schema implementation")
+    ap.add_argument("--engine", "-e", choices=["jmc", "jsonschema", "jschon"], default="jmc",
+                    help="select JSON Schema implementation, default is 'jmc'")
     ap.add_argument("--force", action="store_true", help="accept any JSON as a schema")
     ap.add_argument("--test", "-t", action="store_true", help="test vector mode")
     ap.add_argument("schema", type=str, help="JSON Schema")
@@ -156,6 +156,7 @@ def jsu_check():
     if not isinstance(jschema, (bool, dict)):
         print(f"{args.schema}: SCHEMA TYPE ERROR")
         sys.exit(3)
+
     if isinstance(jschema, dict) and not (SCHEMA_KEYS & jschema.keys()):
         if args.force:
             log.warning(f"{args.schema}: json probably not a schema")
@@ -170,6 +171,7 @@ def jsu_check():
         jschema["$schema"] = f"https://json-schema.org/draft/{args.draft}/schema"
 
     try:
+
         if args.engine == "jschon":
             import jschon
             jschon.create_catalog(args.draft)
@@ -178,7 +180,8 @@ def jsu_check():
             def check(data):
                 res = schema.evaluate(jschon.JSON(data))
                 return { "passed": res.passed, "errors": res.output("basic") }
-        else:
+
+        elif args.engine == "jsonschema":
             import jsonschema
             schema = jsonschema.Draft202012Validator(
                 jschema, format_checker=jsonschema.FormatChecker())
@@ -187,10 +190,20 @@ def jsu_check():
                 errors = list(e.message for e in schema.iter_errors(data))
                 return { "passed": len(errors) == 0, "errors": errors }
 
+        elif args.engine == "jmc":
+            import json_model
+            jmodel = schema_to_model(jschema, args.schema)
+            checker = json_model.model_checker_from_json(jmodel)
+
+            def check(data):
+                errors = []
+                ok = checker(data, "", errors)
+                return { "passed": ok, "errors": None if ok else errors}
+
     except Exception as e:
         if args.debug:
             log.error(e, exc_info=not args.quiet)
-        print(f"{args.schema}: SCHEMA ERROR ({e})")
+        print(f"{args.schema}: SCHEMA COMPILATION ERROR ({e})")
         sys.exit(5)
 
     def check_data(name: str, data, expect: bool|None) -> bool:
@@ -300,88 +313,6 @@ def jsu_pretty():
         schema = json.load(open(fn) if fn != "-" else sys.stdin)
         print(json_dumps(schema, args))
 
-
-GH = "https://raw.githubusercontent.com"
-SS = "https://json.schemastore.org"
-# JM = f"{GH}/clairey-zx81/json-model/main/models"
-JM = "https://json-model.org/models"
-
-# Schema $id/id to Model URL
-ID2MODEL: dict[str, tuple[str, str]] = {
-    # JSON Schema drafts
-    "http://json-schema.org/draft-04/schema": (
-        f"{JM}/json-schema-draft-04.model.json",
-        f"{JM}/json-schema-draft-04-fuzzy.model.json",
-    ),
-    "http://json-schema.org/draft-06/schema": (
-        f"{JM}/json-schema-draft-06.model.json",
-        f"{JM}/json-schema-draft-06-fuzzy.model.json",
-    ),
-    "http://json-schema.org/draft-07/schema": (
-        f"{JM}/json-schema-draft-07.model.json",
-        f"{JM}/json-schema-draft-07-fuzzy.model.json",
-    ),
-    "https://json-schema.org/draft/2019-09/schema": (
-        f"{JM}/json-schema-draft-2019-09.model.json",
-        f"{JM}/json-schema-draft-2019-09-fuzzy.model.json",
-    ),
-    "https://json-schema.org/draft/2020-12/schema": (
-        f"{JM}/json-schema-draft-2020-12.model.json",
-        f"{JM}/json-schema-draft-2020-12-fuzzy.model.json",
-    ),
-    # Miscellaneous models
-    f"{GH}/ansible/ansible-lint/main/src/ansiblelint/schemas/meta.json": (
-        f"{JM}/ansiblelint-meta.model.json",
-        f"{JM}/ansiblelint-meta.model.json",
-    ),
-    "https://geojson.org/schema/GeoJSON.json": (
-        f"{JM}/geo.model.json",
-        f"{JM}/geo.model.json",
-    ),
-    f"{SS}/lazygit.json": (
-        f"{JM}/lazygit.model.json",
-        f"{JM}/lazygit.model.json",
-    ),
-    "https://spec.openapis.org/oas/3.1/schema/2022-10-07": (
-        f"{JM}/openapi-311.model.json",
-        f"{JM}/openapi-311.model.json",  # TODO fuzzy
-    ),
-    "sha3:58df1e36909f3f8033f4da3e9a6179f3d3e53c51501d7f14a557e34ecef988e1": (
-        f"{JM}/cypress.model.json",
-        f"{JM}/cypress.model.json",
-    )
-}
-
-# generate an id
-def schema2id(schema: JsonSchema) -> str:
-
-    # copy
-    schema = copy.deepcopy(schema)
-
-    # cleanup non essential stuff
-    def nocomment(schema: JsonSchema, _: list[str]) -> bool:
-        if isinstance(schema, dict):
-            for p in ("$comment", "title", "description", "default",
-                      "examples", "readOnly", "writeOnly", "deprecated"):
-                if p in schema:
-                    del schema[p]
-            return True
-        return False
-
-    recurseSchema(schema, "", flt=nocomment)
-
-    # hash serialized json
-    serial = json.dumps(schema, sort_keys=True)
-    shid = "sha3:" + hashlib.sha3_256(serial.encode("UTF-8")).hexdigest()
-
-    log.info(f"schema id: {shid}")
-    return shid
-
-# add ~# versions
-for k in list(ID2MODEL.keys()):
-    if k.endswith("/schema"):
-        ID2MODEL[k + "#"] = ID2MODEL[k]
-
 def jsu_model():
 
     ap = argparse.ArgumentParser()
@@ -411,16 +342,10 @@ def jsu_model():
         log.debug(f"considering: {fn}")
         try:
             schema = json.load(open(fn) if fn != "-" else sys.stdin)
-            model = None
-            if args.id and isinstance(schema, dict):
-                sid = (schema["$id"] if "$id" in schema else
-                       schema["id"] if "id" in schema else
-                       schema2id(schema))
-                if sid in ID2MODEL:
-                    log.info(f"using predefined model for {sid}")
-                    model = f"${ID2MODEL[sid][0 if args.strict else 1]}"
-            if model is None:
-                model = schema2model(schema, strict=args.strict, fix=args.fix)
+            model = schema_to_model(
+                schema, fn,
+                use_id=args.id, strict=args.strict, fix=args.fix, simpler=False,
+            )
         except Exception as e:
             log.error(e, exc_info=args.debug)
             errors += 1
@@ -450,30 +375,19 @@ def jsu_compile():
         print(__version__)
         sys.exit(0)
 
-    # initial schema
-    schema = json.load(open(args.schema) if args.schema != "-" else sys.stdin)
-
+    # intermediate model
     model = None
-    if args.id and isinstance(schema, dict):
-        sid = (schema["$id"] if "$id" in schema else
-               schema["id"] if "id" in schema else
-               schema2id(schema))
-        if sid in ID2MODEL:
-            log.info(f"using predefined model for {sid}")
-            model = f"${ID2MODEL[sid][0 if args.strict else 1]}"
-        # else unknown id, proceed
-    if model is None:
-        try:
-            # simplify schema
-            if isinstance(schema, dict):
-                scopeDefs(schema)
-                schema = simplifySchema(schema, schema.get("$id", "."))
-            # then convert to model
-            model = schema2model(schema, strict=args.strict, fix=args.fix)
-        except Exception as e:
-            log.error(f"schema to model conversion for {args.schema} failed")
-            log.error(e, exc_info=args.debug)
-            sys.exit(1) # conversion failed
+
+    try:
+        schema = json.load(open(args.schema) if args.schema != "-" else sys.stdin)
+        model = schema_to_model(
+            schema, args.schema,
+            use_id=args.id, strict=args.strict, fix=args.fix, simpler=True
+        )
+    except Exception as e:
+        log.error(f"schema to model conversion for {args.schema} failed")
+        log.error(e, exc_info=args.debug)
+        sys.exit(1) # conversion failed
 
     # TODO
     # - use standard input with jmc?

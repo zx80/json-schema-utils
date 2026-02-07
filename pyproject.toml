@@ -15,12 +15,11 @@ readme = "README.md"
 requires-python = ">=3.12"
 license = "CC0-1.0"
 classifiers = [ "Topic :: Software Development" ]
-dependencies = [ "requests", "jschon", "jsonschema[format]" ]
+dependencies = [ "requests", "jschon", "jsonschema[format]", "json-model-compiler" ]
 
 [project.optional-dependencies]
 dev = [ "ruff", "flake8", "pyright" ]
 dist = [ "build", "twine", "wheel" ]
-compile = [ "json-model-compiler" ]
 
 [project.scripts]
 jsu-inline = "jsutils:jsu_inline"
