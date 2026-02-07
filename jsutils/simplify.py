@@ -164,6 +164,22 @@ def simplifySchema(schema: JsonSchema, url: str):
                     del schema["$dynamicRef"]
                     schema["$ref"] = "#"
 
+        # minimum (val >= M) + exclusiveMinimum (val > M)
+        if "minimum" in schema and "exclusiveMinimum" in schema:
+            inmini, exmini = schema["minimum"], schema["exclusiveMinimum"]
+            if inmini > exmini:
+                del schema["exclusiveMinimum"]
+            else:  # exmini >= inmini
+                del schema["minimum"]
+
+        # maximum + exclusiveMaximum
+        if "maximum" in schema and "exclusiveMaximum" in schema:
+            inmaxi, exmaxi = schema["maximum"], schema["exclusiveMaximum"]
+            if inmaxi < exmaxi:
+                del schema["exclusiveMaximum"]
+            else:  # exmaxi <= inmaxi
+                del schema["maximum"]
+
         # TODO anyOf/oneOf/allOf of length 0?
         # anyOf/oneOf/allOf of length 1
         for prop in ("anyOf", "oneOf", "allOf"):
