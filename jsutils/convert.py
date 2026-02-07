@@ -307,8 +307,9 @@ PATTERN: dict[str, str] = {
 
 # TODO handle a global defs so as to be able to create new ones
 def schema2model(schema, path: JsonPath = [],
-                 strict: bool = True, fix: bool = True, is_root: bool = True):
-    """Convert a JSON schema to a JSON model assuming a 2020-12 semantics."""
+                 strict: bool = True, fix: bool = True, is_root: bool = True,
+                 resilient: bool = False):
+    """Convert a JSON schema to a JSON model assuming a more or less a 2020-12 semantics."""
 
     global CURRENT_SCHEMA, SCHEMA
 
@@ -337,7 +338,7 @@ def schema2model(schema, path: JsonPath = [],
             sharp[prop] = schema[prop]
 
     # handle defs
-    # FIXME should delay conversion...
+    # FIXME should probably delay conversion...
     defs = {}
     if "$defs" in schema or "definitions" in schema:
         dname = "$defs" if "$defs" in schema else "definitions"
@@ -1073,7 +1074,8 @@ def schema2id(schema: JsonSchema, keep_format: bool = True) -> str:
 
 def schema_to_model(schema: JsonSchema, schema_name: str,
                     simpler: bool = False, fix: bool = True,
-                    use_id: bool = False, strict: bool = True):
+                    use_id: bool = False, strict: bool = True,
+                    resilient: bool = False):
     """Convert a JSON Schema to a JSON Model."""
     model = None
     if use_id and isinstance(schema, dict):
@@ -1092,8 +1094,11 @@ def schema_to_model(schema: JsonSchema, schema_name: str,
                 scopeDefs(schema)
                 schema = simplifySchema(schema, schema.get("$id", "."))
             # then actually convert to model
-            model = schema2model(schema, strict=strict, fix=fix)
-        except Exception as e:
+            model = schema2model(schema, strict=strict, fix=fix, resilient=resilient)
+        except BaseException as e:
             log.error(f"schema to model conversion for {schema_name} failed: {e}")
+            if resilient:
+                model = "$ANY"
+                sys.exit(1)
             raise e
     return model

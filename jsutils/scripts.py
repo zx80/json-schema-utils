@@ -450,7 +450,11 @@ def jsu_runner():
     arg = ap.add_argument
     ap_common(ap)
     arg("--dump", default=False, action="store_true", help="show generated model as debug")
-    arg("--no-dump", action="store_false", help="do not show generated model as debug")
+    arg("--no-dump", dest="dump", action="store_false", help="do not show generated model as debug")
+    arg("--resilient", default=False, action="store_true",
+        help="enable model conversion resilience")
+    arg("--no-resilient", dest="resilient", default=False, action="store_true",
+        help="disnable model conversion resilience")
     arg("cases", nargs="*", help="test cases to process")
     args = ap.parse_args()
 
@@ -497,7 +501,8 @@ def jsu_runner():
 
                 try:
                     # TODO set options
-                    model = schema_to_model(case["schema"], scase, strict=False, fix=False)
+                    model = schema_to_model(case["schema"], scase, strict=False, fix=False,
+                                            resilient=args.resilient)
                     if args.dump:
                         log.debug(f"model: {model}")
                     checker = json_model.model_checker_from_json(model)
