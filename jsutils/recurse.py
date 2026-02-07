@@ -1,3 +1,4 @@
+from typing import Any
 from .utils import JsonSchema, log, FilterFun, RewriteFun
 
 
@@ -6,7 +7,10 @@ def _recurseSchema(
         url: str,
         path: list[str],
         flt: FilterFun,
-        rwt: RewriteFun) -> JsonSchema:
+        rwt: RewriteFun,
+        # TODO context?
+    ) -> JsonSchema:
+    """Recurse on a JSON Schema."""
 
     log.debug(f"recuring at {path}")
 
