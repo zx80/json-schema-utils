@@ -1,8 +1,9 @@
 from typing import Any
 import copy
 from urllib.parse import urlsplit
+import math
 
-from .utils import JsonSchema, JSUError, log
+from .utils import JsonSchema, JSUError, log, KEYWORD_TYPE
 from .schemas import Schemas
 from .recurse import recurseSchema
 
@@ -19,6 +20,16 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     assert isinstance(schema, dict)  # pyright helper
 
     # log.debug(f"merging {prop} in {schema}")
+
+    # if the type is known and singular, incompatible props can be dropped!
+    stype: str|None = None
+    if "type" in schema and isinstance(schema["type"], str):
+        stype = schema["type"]
+        if stype == "integer":
+            stype = "number"
+        if prop in KEYWORD_TYPE and KEYWORD_TYPE[prop] != stype:
+            log.info(f"skipping adding {prop} to incompatible {stype} schema")
+            return schema
 
     # then object
     if prop in ("$defs"):  # ignore
@@ -94,12 +105,64 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             schema[prop] = value
     # FIXME: what about "else"?
     # TODO extend list of supported validations?
+    elif prop == "multipleOf":
+        # switch to int
+        if isinstance(value, float) and value == int(value):
+            value = int(value)
+        if prop in schema:
+            ival = schema[prop]
+            if isinstance(ival, float) and ival == int(ival):
+                ival = int(ival)
+            if ival == value:
+                schema[prop] = value  # may switch to int in passing
+            elif type(ival) is int and type(value) is int:
+                schema[prop] = math.lcm(ival, value)
+            else:
+                raise JSUError(f"cannot merge prop {prop} distinct values")
+        else:
+            schema[prop] = value
+    elif prop in ("minimum", "exclusiveMinimum"):
+        if prop in schema:
+            schema[prop] = max(schema[prop], value)
+        else:
+            schema[prop] = value
+    elif prop in ("maximum", "exclusiveMaximum"):
+        if prop in schema:
+            schema[prop] = min(schema[prop], value)
+        else:
+            schema[prop] = value
+    elif prop in ("minLength", "minProperties", "minItems", "minContains"):
+        if isinstance(value, float):
+            assert value == int(value), "integer min length spec"
+            value = int(value)
+        assert type(value) is int, "integer min length spec"
+        if prop in schema:
+            ival = schema[prop]
+            if isinstance(ival, float):
+                assert ival == int(ival), "integer min length spec"
+                ival = int(ival)
+            assert type(ival) is int, "integer min length spec"
+            schema[prop] = max(value, ival)
+        else:
+            schema[prop] = value
+    elif prop in ("maxLength", "maxProperties", "maxItems", "maxContains"):
+        if isinstance(value, float):
+            assert value == int(value), "integer max length spec"
+            value = int(value)
+        assert type(value) is int, "integer max length spec"
+        if prop in schema:
+            ival = schema[prop]
+            if isinstance(ival, float):
+                assert ival == int(ival), "integer max length spec"
+                ival = int(ival)
+            assert type(ival) is int, "integer max length spec"
+            schema[prop] = min(value, ival)
+        else:
+            schema[prop] = value
+    # TODO
+    # - $ref pattern with allOf?
     elif prop in ("type", "$ref", "pattern",
-                  "additionalProperties", "additionalItems", "items",
-                  "minLength", "maxLength", "minProperties", "maxProperties",
-                  "minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum",
-                  "minItems", "maxItems", "minContains", "maxContains", "multipleOf",
-                  "uniqueItems"):
+                  "additionalProperties", "additionalItems", "items", "uniqueItems"):
         # allow identical values only (for now)
         if prop in schema:
             if schema[prop] == value:
