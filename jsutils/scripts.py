@@ -475,14 +475,25 @@ def jsu_compile():
             log.error(e, exc_info=args.debug)
             sys.exit(1) # conversion failed
 
-    with tempfile.NamedTemporaryFile(suffix=".model.json", delete_on_close=False) as tmp:
-        fmodel = tmp.name
-        tmp.write(json.dumps(model, sort_keys=args.sort_keys, indent=args.indent).encode("UTF8"))
+    # TODO
+    # - use standard input with jmc?
+    # - skip command and call jmc internal machinery directly in some cases?
+
+    # compile intermediate model through a temporary file
+    with tempfile.NamedTemporaryFile(suffix=".model.json") as tmp:
+
+        smodel = json.dumps(model, sort_keys=args.sort_keys, indent=args.indent)
+
+        if args.debug:
+            log.debug(f"intermediate model: {smodel}")
+
+        tmp.write(smodel.encode("UTF8"))
         tmp.flush()
 
-    # launch jmc
-    done = subprocess.run(["jmc", "--model", fmodel] + args.others)
+        # launch jmc
+        done = subprocess.run(["jmc", "--model", tmp.name, "--no-predef"] + args.others)
 
-    if done.returncode:
-        log.error(f"backend jmc process return code: {done.returncode}")
-    sys.exit(done.returncode)
+        # exit status
+        if done.returncode:
+            log.error(f"backend jmc process return code: {done.returncode}")
+        sys.exit(done.returncode)
