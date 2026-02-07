@@ -3,7 +3,7 @@
 # import urllib
 from typing import Any
 import copy
-from .utils import JsonSchema, log, JSUError, only
+from .utils import JsonSchema, SchemaPath, log, JSUError, only
 from .recurse import recurseSchema
 from .inline import mergeProperty
 
@@ -136,9 +136,9 @@ def simplifySchema(schema: JsonSchema, url: str):
         dynroot = schema["$dynamicAnchor"]
         del schema["$dynamicAnchor"]
 
-    def rwtSimpler(schema: JsonSchema, path: list[str]) -> JsonSchema:
+    def rwtSimpler(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
 
-        lpath = ".".join(path) if path else "."
+        lpath = ".".join(str(s) for s in path) if path else "."
 
         if isinstance(schema, bool):
             return schema
@@ -167,6 +167,7 @@ def simplifySchema(schema: JsonSchema, url: str):
         # minimum (val >= M) + exclusiveMinimum (val > M)
         if "minimum" in schema and "exclusiveMinimum" in schema:
             inmini, exmini = schema["minimum"], schema["exclusiveMinimum"]
+            assert isinstance(inmini, (int, float)) and isinstance(exmini, (int, float))
             if inmini > exmini:
                 del schema["exclusiveMinimum"]
             else:  # exmini >= inmini
@@ -175,6 +176,7 @@ def simplifySchema(schema: JsonSchema, url: str):
         # maximum + exclusiveMaximum
         if "maximum" in schema and "exclusiveMaximum" in schema:
             inmaxi, exmaxi = schema["maximum"], schema["exclusiveMaximum"]
+            assert isinstance(inmaxi, (int, float)) and isinstance(exmaxi, (int, float))
             if inmaxi < exmaxi:
                 del schema["exclusiveMaximum"]
             else:  # exmaxi <= inmaxi
@@ -418,6 +420,10 @@ _SUBCOUNT: int = 0
 
 # TODO handle arbitrary path references
 
+def _sPath(path: SchemaPath):
+    return "/".join(s if isinstance(s, str) else f"{s[0]}/{s[1]}" for s in path)
+        
+
 def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
                   moved: dict[str, str], ids: dict[str, str],
                   delete: list[tuple[Any, str, str|None, str|None, str|None]],
@@ -454,7 +460,7 @@ def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
                 _SUBCOUNT += 1
                 old_name = quote(name).replace("~", "~0").replace("/", "~1")
             npath = rootdef + "/" + new_name
-            opath = f"#/{'/'.join(path)}/{defn}/{old_name}"  # type: ignore
+            opath = f"#/{_sPath(path)}/{defn}/{old_name}"  # type: ignore
             sschema["$comment"] = f"origin: {opath}"
             moved[opath] = npath
             defs[new_name] = sschema

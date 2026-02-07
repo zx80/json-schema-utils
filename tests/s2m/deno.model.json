@@ -315,7 +315,6 @@
       "?exclude": {
         "!": true,
         "#": "List of rule names that will be excluded from configured tag sets. If the same rule is in `include` it will be run.",
-        ">=": 0,
         "@": [
           ""
         ]
@@ -323,7 +322,6 @@
       "?include": {
         "!": true,
         "#": "List of rule names that will be run. Even if the same rule is in `exclude` it will be run.",
-        ">=": 0,
         "@": [
           ""
         ]
@@ -331,7 +329,6 @@
       "?tags": {
         "!": true,
         "#": "List of tag names that will be run. Empty list disables all tags and will only use rules from `include`.",
-        ">=": 0,
         "@": [
           ""
         ]

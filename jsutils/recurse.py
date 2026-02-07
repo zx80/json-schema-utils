@@ -1,11 +1,16 @@
 from typing import Any
-from .utils import JsonSchema, log, FilterFun, RewriteFun
+from .utils import JsonSchema, SchemaPath, FilterFun, RewriteFun, log
 
+def goFlt(_s: JsonSchema, _p: SchemaPath) -> bool:
+    return True
+
+def noRwt(schema: JsonSchema, _p: SchemaPath) -> JsonSchema:
+    return schema
 
 def _recurseSchema(
         schema: JsonSchema,
         url: str,
-        path: list[str],
+        path: SchemaPath,
         flt: FilterFun,
         rwt: RewriteFun,
         # TODO context?
@@ -27,7 +32,7 @@ def _recurseSchema(
         if prop in schema:
             subs = schema[prop]
             assert isinstance(subs, list)
-            schema[prop] = [ _recurseSchema(s, url, path + [prop, str(i)], flt, rwt)  # type: ignore
+            schema[prop] = [ _recurseSchema(s, url, path + ((prop, i),), flt, rwt)  # type: ignore
                              for i, s in enumerate(subs) ]
 
     # direct schemas
@@ -37,11 +42,11 @@ def _recurseSchema(
         if prop in schema:
             # handle old items ~ prefixItems
             if prop == "items" and isinstance(schema["items"], list):
-                schema[prop] = [ _recurseSchema(s, url, path + [prop, str(i)], flt, rwt)
+                schema[prop] = [ _recurseSchema(s, url, path + ((prop, i),), flt, rwt)
                     for i, s in enumerate(schema[prop]) ]  # type: ignore
             else:  # standard case
                 schema[prop] = _recurseSchema(schema[prop],  # type: ignore
-                                              url, path + [prop], flt, rwt)
+                                              url, path + (prop,), flt, rwt)
 
     # handle values as schemas
     def recValue(schema, *propnames):
@@ -50,7 +55,7 @@ def _recurseSchema(
                 props = schema[prop]
                 assert isinstance(props, dict)
                 for p, s in list(props.items()):
-                    props[p] = _recurseSchema(s, url, path + [prop, p], flt, rwt)
+                    props[p] = _recurseSchema(s, url, path + ((prop, p), ), flt, rwt)
 
     recValue(schema, "properties", "dependentSchemas", "patternProperties")
 
@@ -75,7 +80,7 @@ def recurseSchema(schema: JsonSchema, url: str,
     :param flt: filter (top-down) function, whether to keep recursing.
     :param rwt: rewrite (bottom-up) function.
     """
-    return _recurseSchema(schema, url, [], flt, rwt)
+    return _recurseSchema(schema, url, (), flt, rwt)
 
 
 def hasDirectRef(schema, url):
@@ -83,7 +88,7 @@ def hasDirectRef(schema, url):
 
     some_ref: bool = False
 
-    def fltHasRef(schema: JsonSchema, path: list[str]) -> bool:
+    def fltHasRef(schema: JsonSchema, path: SchemaPath) -> bool:
         nonlocal some_ref
         if "$defs" not in path and isinstance(schema, dict) and "$ref" in schema:
             some_ref = True

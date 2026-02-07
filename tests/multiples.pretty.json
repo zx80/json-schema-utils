@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "allOf": [
+    {
+      "multipleOf": 2
+    }
+  ],
+  "anyOf": [
+    {
+      "multipleOf": 3
+    }
+  ],
+  "multipleOf": 7,
+  "oneOf": [
+    {
+      "multipleOf": 5
+    }
+  ]
+}

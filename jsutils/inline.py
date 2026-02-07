@@ -3,7 +3,7 @@ import copy
 from urllib.parse import urlsplit
 import math
 
-from .utils import JsonSchema, JSUError, log, KEYWORD_TYPE
+from .utils import JsonSchema, SchemaPath, JSUError, log, KEYWORD_TYPE
 from .schemas import Schemas
 from .recurse import recurseSchema
 
@@ -238,10 +238,10 @@ def _url(ref):
 def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
     """Recursively inline $ref in schema, which is modified."""
 
-    def rwtRef(schema: JsonSchema, path: list[str]) -> JsonSchema:
+    def rwtRef(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
 
         # recursion avoidance (FIXME insufficient)
-        spath = "/".join(path)
+        spath = "/".join(str(s) for s in path)
         skips = {url + "#" + spath, url + "#/" + spath, url + "#./" + spath}
 
         while isinstance(schema, dict) and "$ref" in schema:

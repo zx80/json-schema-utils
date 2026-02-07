@@ -7,9 +7,11 @@ log = logging.getLogger("JSU")
 # simplistic typing
 type Jsonable = None|bool|int|float|str|list[Jsonable]|dict[str, Jsonable]
 type JsonSchema = dict[str, Jsonable]|bool
-type FilterFun = Callable[[JsonSchema, list[str]], bool]
-type RewriteFun = Callable[[JsonSchema, list[str]], JsonSchema]
-type JsonPath = tuple[str|int]
+# type JsonPath = tuple[str|int, ...]
+type SchemaPathSegment = str|tuple[str, str]|tuple[str, int]
+type SchemaPath = tuple[SchemaPathSegment, ...]
+type FilterFun = Callable[[JsonSchema, SchemaPath], bool]
+type RewriteFun = Callable[[JsonSchema, SchemaPath], JsonSchema]
 
 # keywords specific to a type
 TYPED_KEYWORDS: dict[str, list[str]] = {

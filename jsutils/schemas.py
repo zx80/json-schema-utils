@@ -3,7 +3,7 @@ import os.path
 from urllib.parse import urlsplit
 import json
 import requests
-from .utils import JsonSchema, JSUError, log
+from .utils import JsonSchema, SchemaPath, JSUError, log
 from .recurse import recurseSchema
 
 ProcessFun = Callable[[JsonSchema, str], JsonSchema]
@@ -37,7 +37,7 @@ def _fullURL(schema: JsonSchema, url: str) -> JsonSchema:
     """
 
     # we need full references to avoid ambiguities on inline!
-    def fullref(schema: JsonSchema, _path: list[str]) -> JsonSchema:
+    def fullref(schema: JsonSchema, _path: SchemaPath) -> JsonSchema:
         if isinstance(schema, dict) and "$ref" in schema:
             ref = schema["$ref"]
             assert isinstance(ref, str)

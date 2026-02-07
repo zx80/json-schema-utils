@@ -551,6 +551,6 @@ def jsu_runner():
     # final report
     print(f"files={n_args} cases={n_cases} tests={n_tests} errors={n_errors}")
     if n_tests > 0:
-        print(f"correct tests: {n_tests_passed} ({100.0 * n_tests_passed /n_tests :.1f}%)")
+        print(f"correct tests: {n_tests_passed} ({100.0 * n_tests_passed / n_tests:.1f}%)")
     if n_cases > 0:
-        print(f"correct cases: {n_cases_passed} ({100.0 * n_cases_passed /n_cases :.1f}%)")
+        print(f"correct cases: {n_cases_passed} ({100.0 * n_cases_passed / n_cases:.1f}%)")

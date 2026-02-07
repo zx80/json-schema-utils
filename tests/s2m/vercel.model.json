@@ -26,7 +26,6 @@
     "?env": {
       "#": "An object containing the deployment's environment variable names and values to be passed to Builds. Secrets can be referenced by prefixing the value with `@`",
       "<=": 100,
-      ">=": 0,
       "@": {
         "/.+/": {
           "<=": 65536,
@@ -49,7 +48,6 @@
   "?builds": {
     "#": "A list of build descriptions whose src references valid source files.",
     "<=": 128,
-    ">=": 0,
     "@": [
       {
         "?config": {
@@ -106,7 +104,6 @@
   "?env": {
     "#": "An object containing the deployment's environment variable names and values. Secrets can be referenced by prefixing the value with `@`",
     "<=": 100,
-    ">=": 0,
     "@": {
       "/.+/": {
         "<=": 65536,
@@ -365,7 +362,6 @@
     "?dangerouslyAllowSVG": true,
     "?domains": {
       "<=": 50,
-      ">=": 0,
       "@": [
         {
           "<=": 256,
@@ -395,7 +391,6 @@
     },
     "?remotePatterns": {
       "<=": 50,
-      ">=": 0,
       "@": [
         {
           "?pathname": {

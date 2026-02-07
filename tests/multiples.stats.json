@@ -1,0 +1,68 @@
+{
+  "$schema": 1,
+  "$schema=https://json-schema.org/draft/2020-12/schema": 1,
+  "*-array-boolean-integer-null-number-object-string/combi-meta-number": 1,
+  "*-array-boolean-integer-null-number-object-string/number": 3,
+  "<$schema>": "https://json-schema.org/draft/2020-12/schema",
+  "<bad-root>": false,
+  "<errors>": [
+    [
+      "missing type declaration",
+      "{'number'}",
+      "$"
+    ],
+    [
+      "missing type declaration",
+      "{'number'}",
+      "$.allOf[0]"
+    ],
+    [
+      "missing type declaration",
+      "{'number'}",
+      "$.anyOf[0]"
+    ],
+    [
+      "missing type declaration",
+      "{'number'}",
+      "$.oneOf[0]"
+    ]
+  ],
+  "<explicit-schema>": true,
+  "<file-hash>": "f9879f43fbd949f80f85",
+  "<input-file>": "multiples.schema.json",
+  "<json-metrics>": {
+    "array": 3,
+    "bool": 0,
+    "float": 0,
+    "int": 4,
+    "items": 3,
+    "null": 0,
+    "object": 4,
+    "props": 8,
+    "string": 9
+  },
+  "<normed-hash>": "0d14c80391cd839824cf",
+  "<schema-prop>": true,
+  "<version-path>": "$",
+  "<version>": 9,
+  "<versions>": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "allOf": 1,
+  "allOf-count": 1,
+  "allOf-one": 1,
+  "anyOf": 1,
+  "anyOf-count": 1,
+  "anyOf-one": 1,
+  "multipleOf": 4,
+  "oneOf": 1,
+  "oneOf-count": 1,
+  "oneOf-one": 1
+}
