@@ -355,7 +355,7 @@ def schema2model(schema, path: JsonPath = [],
             # keep json schema for handling $ref #
             IDS[dname][encoded] = val
             # provide a local converted version as well? not enough??
-            defs[encoded] = schema2model(val, path + [dname, name], strict, fix, False)
+            defs[encoded] = schema2model(val, path + [dname, name], strict, fix, False, resilient)
         # special root handling
         IDS[dname][""] = "$#"
 
@@ -374,13 +374,20 @@ def schema2model(schema, path: JsonPath = [],
             del schema["nullable"]
 
     # FIX missing type in some cases
-    if "type" not in schema:
+    if fix and "type" not in schema:
         if "properties" in schema or "required" in schema or "additionalProperties" in schema:
             schema["type"] = "object"
         elif "pattern" in schema or "maxLength" in schema or "minLength" in schema:
             schema["type"] = "string"
         elif "items" in schema or "minItems" in schema or "maxItems" in schema:
             schema["type"] = "array"
+
+    if resilient and "type" not in schema:
+        schema["type"] = ["null", "boolean", "number", "string", "array", "object"]
+        if strict:
+            schema["type"].append("integer")
+
+        # TODO restrict type list based on other constraints?
 
     # translate if/then/else to and/xor/not
     # TODO move/replicate in simplify?
@@ -500,36 +507,36 @@ def schema2model(schema, path: JsonPath = [],
         choices = schema["oneOf"]
         assert isinstance(choices, list), f"oneOf list at [{spath}]"
         if only(schema, "oneOf", *IGNORE):
-            model = {"^": [schema2model(s, path + ["oneOf", i], strict, fix, False)
+            model = {"^": [schema2model(s, path + ["oneOf", i], strict, fix, False, resilient)
                          for i, s in enumerate(choices)]}
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # try building an "allOf" layer
             log.warning(f"keyword oneOf intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "oneOf")
-            return schema2model(ao, path + ["oneOf"], strict, fix, False)
+            return schema2model(ao, path + ["oneOf"], strict, fix, False, resilient)
     elif "anyOf" in schema:
         choices = schema["anyOf"]
         assert isinstance(choices, (list, tuple)), f"anyOf list at [{spath}]"
         if only(schema, "anyOf", *IGNORE):
-            model = {"|": [schema2model(s, path + ["anyOf", i], strict, fix, False)
+            model = {"|": [schema2model(s, path + ["anyOf", i], strict, fix, False, resilient)
                         for i, s in enumerate(choices)]}
             return buildModel(model, {}, defs, sharp, is_root)
         else:
             log.warning(f"keyword anyOf intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "anyOf")
-            return schema2model(ao, path + ["anyOf"], strict, fix, False)
+            return schema2model(ao, path + ["anyOf"], strict, fix, False, resilient)
     elif "allOf" in schema:
         # NOTE types should be compatible to avoid an empty match
         choices = schema["allOf"]
         assert isinstance(choices, (list, tuple)), f"allOf list at [{spath}]"
         if only(schema, "allOf", *IGNORE):
-            model = {"&": [schema2model(s, path + ["allOf", i], strict, fix, False)
+            model = {"&": [schema2model(s, path + ["allOf", i], strict, fix, False, resilient)
                         for i, s in enumerate(choices)]}
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # build another allOf layer
             log.warning(f"keyword allOf intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "allOf")
-            return schema2model(ao, path + ["allOf"], strict, fix, False)
+            return schema2model(ao, path + ["allOf"], strict, fix, False, resilient)
     elif "not" in schema:
         val = schema["not"]
         assert isinstance(val, dict), "not object at [{spath}]"
@@ -537,12 +544,12 @@ def schema2model(schema, path: JsonPath = [],
             if len(val) == 0:
                 model = "$NONE"
             else:
-                model = {"^": ["$ANY", schema2model(val, path + ["not"], strict, fix, False)]}
+                model = {"^": ["$ANY", schema2model(val, path + ["not"], strict, fix, False, resilient)]}
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # add a allOf layer
             log.warning(f"keyword not intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "not")
-            return schema2model(ao, path + ["not"], strict, fix, False)
+            return schema2model(ao, path + ["not"], strict, fix, False, resilient)
 
     # handle simpler schemas
     if "$ref" in schema:
@@ -579,13 +586,13 @@ def schema2model(schema, path: JsonPath = [],
                             name = unquote(name).replace("~1", "/").replace("~0", "~")
                         assert name in val, f"following path in {ref}: missing {name} at [{spath}]"
                         val = val[name]
-                model = schema2model(val, path + ["$ref"], strict, fix, False)
+                model = schema2model(val, path + ["$ref"], strict, fix, False, resilient)
                 return buildModel(model, {}, defs, sharp, is_root)
             else:
                 assert False, f"$ref handling not implemented: {ref}"
         else:
             log.warning(f"$ref intermixed with other keywords at [{spath}]")
-            return schema2model(allOfLayer(schema, "$ref"), path, strict, fix, False)
+            return schema2model(allOfLayer(schema, "$ref"), path, strict, fix, False, resilient)
 
     elif "type" in schema:
         ts = schema["type"]
@@ -595,7 +602,7 @@ def schema2model(schema, path: JsonPath = [],
             return buildModel(
                 {
                     "|": [
-                        schema2model(v, path + ["typeS"], strict, fix, False)
+                        schema2model(v, path + ["typeS"], strict, fix, False, resilient)
                             for v in schemas.values()
                     ]
                 }, {}, defs, sharp, is_root)
@@ -739,17 +746,40 @@ def schema2model(schema, path: JsonPath = [],
             if "minItems" in schema and "maxItems" in schema and \
                     schema["minItems"] == schema["maxItems"]:
                 ival = schema["minItems"]
+                if type(ival) is float:
+                    assert ival == int(ival), "int array length spec at [{spath}]"
+                    ival = int(ival)
                 assert isinstance(ival, int)
-                constraints["="] = ival
+                if ival > 0:
+                    constraints["="] = ival
+                elif ival == 0:
+                    return buildModel([], {}, defs, sharp, is_root)
+                else:
+                    return buildModel("$NONE", {}, defs, sharp, is_root)
             else:
                 if "minItems" in schema:
                     mini = schema["minItems"]
+                    if type(mini) is float:
+                        assert mini == int(mini), "int array length spec at [{spath}]"
+                        mini = int(mini)
                     assert type(mini) is int, f"int min items at [{spath}]"
-                    constraints[">="] = mini
+                    assert mini >= 0, "positive min items as [{spath}]"
+                    if mini > 0:
+                        constraints[">="] = mini
+                    # otherwise nothing to check
                 if "maxItems" in schema:
                     maxi = schema["maxItems"]
+                    if type(maxi) is float:
+                        assert maxi == int(maxi), "int array length spec at [{spath}]"
+                        maxi = int(maxi)
                     assert type(maxi) is int, f"int max items at [{spath}]"
-                    constraints["<="] = maxi
+                    assert maxi >= 0, "positive max items as [{spath}]"
+                    if maxi == 0:
+                        constraints["="] = maxi
+                        if ">=" in constraints:
+                            del constraints[">="]
+                    else:
+                        constraints["<="] = maxi
             if "uniqueItems" in schema:
                 unique = schema["uniqueItems"]
                 assert isinstance(unique, bool), f"boolean unique at [{spath}]"
@@ -763,21 +793,21 @@ def schema2model(schema, path: JsonPath = [],
                 vpi = schema["prefixItems"]
                 assert isinstance(vpi, list), f"list prefixItems at [{spath}]"
                 model = [
-                    schema2model(s, path + ["prefixItems", i], strict, fix, False)
+                    schema2model(s, path + ["prefixItems", i], strict, fix, False, resilient)
                         for i, s in enumerate(vpi)
                 ]
                 if "items" in schema:
                     # cas prefixItems + items
                     if isinstance(schema["items"], bool):
-                        assert not constraints, f"not implemented yet at [{spath}]"
+                        assert resilient or not constraints, f"not implemented yet at [{spath}]"
                         if not schema["items"]:
                             return buildModel(model, {">=": 0, "<=": len(model)},
                                               defs, sharp, is_root)
                         else:
-                            assert False, f"not implemented yet at [{spath}]"
+                            assert resilient, f"not implemented yet at [{spath}]"
                     # items is a type
                     model.append(schema2model(schema["items"], path + ["items"],
-                                              strict, fix, False))
+                                              strict, fix, False, resilient))
                     if not constraints:
                         constraints[">="] = len(model) - 1
                     return buildModel(model, constraints, defs, sharp, is_root)
@@ -793,7 +823,7 @@ def schema2model(schema, path: JsonPath = [],
                 if isinstance(sitems, list):
                     # OLD JSON Schema prefixItems…
                     array = [
-                        schema2model(s, path + ["items", i], strict, fix, False)
+                        schema2model(s, path + ["items", i], strict, fix, False, resilient)
                             for i, s in enumerate(sitems)
                     ]
                     if strict:
@@ -803,7 +833,7 @@ def schema2model(schema, path: JsonPath = [],
                         return { "@": array, ">=": 0 }
                 else:
                     assert isinstance(sitems, (dict, bool)), f"valid schema at [{spath}]"
-                    model = [schema2model(schema["items"], path + ["items"], strict, fix, False)]
+                    model = [schema2model(schema["items"], path + ["items"], strict, fix, False, resilient)]
                     return buildModel(model, constraints, defs, sharp, is_root)
             elif "contains" in schema:
                 # NO contains/items mixing yet
@@ -812,7 +842,7 @@ def schema2model(schema, path: JsonPath = [],
                 # NOTE contains is not really supported in jm v2, or rather as an extension
                 model = {
                     "@": ["$ANY"],
-                    ".in": schema2model(schema["contains"], path + ["contains"], strict, fix, False)
+                    ".in": schema2model(schema["contains"], path + ["contains"], strict, fix, False, resilient)
                 }
                 if "minContains" in schema:
                     mini = schema["minContains"]
@@ -860,25 +890,38 @@ def schema2model(schema, path: JsonPath = [],
             else:
                 if "minProperties" in schema:
                     mini = schema["minProperties"]
+                    if type(mini) is float:
+                        assert mini == int(mini), f"int prop length at [{spath}]"
+                        mini = int(mini)
                     assert type(mini) is int, f"int min props at [{spath}] ({tname(mini)})"
-                    constraints[">="] = mini
+                    if mini > 0:
+                        constraints[">="] = mini
+                    # else ignore
                 if "maxProperties" in schema:
                     maxi = schema["maxProperties"]
+                    if type(maxi) is float:
+                        assert maxi == int(maxi), f"int prop length at [{spath}]"
+                        maxi = int(maxi)
                     assert type(maxi) is int, f"int max props at [{spath}] ({tname(maxi)})"
-                    constraints["<="] = maxi
+                    if maxi > 0:
+                        constraints["<="] = maxi
+                    else:
+                        constraints["="] = maxi
+                        if ">=" in constraints:
+                            del constraints[">="]
 
             if "patternProperties" in schema:
                 pats = schema["patternProperties"]
                 assert isinstance(pats, dict), f"dict pattern props at [{spath}]"
                 for pp in sorted(pats.keys()):
                     model[f"/{pp}/"] = \
-                        schema2model(pats[pp], path + ["patternProperties", pp], strict, fix, False)
+                        schema2model(pats[pp], path + ["patternProperties", pp], strict, fix, False, resilient)
 
             if "propertyNames" in schema:
                 # does not seem very useful?
                 pnames = schema["propertyNames"]
                 if "additionalProperties" in schema:
-                    target = schema2model(schema["additionalProperties"], path, strict, fix, False)
+                    target = schema2model(schema["additionalProperties"], path, strict, fix, False, resilient)
                 else:
                     target = "$ANY"
 
@@ -905,10 +948,10 @@ def schema2model(schema, path: JsonPath = [],
                 for k, v in props.items():
                     if k in required:
                         model[f"_{k}"] = \
-                            schema2model(v, path + ["properties", f"_{k}"], strict, fix, False)
+                            schema2model(v, path + ["properties", f"_{k}"], strict, fix, False, resilient)
                     else:
                         model[f"?{k}"] = \
-                            schema2model(v, path + ["properties", f"?{k}"], strict, fix, False)
+                            schema2model(v, path + ["properties", f"?{k}"], strict, fix, False, resilient)
                 if "additionalProperties" in schema:
                     ap = schema["additionalProperties"]
                     if isinstance(ap, bool):
@@ -917,7 +960,7 @@ def schema2model(schema, path: JsonPath = [],
                         # else nothing else is allowed
                     elif isinstance(ap, dict):
                         model[""] = schema2model(ap, path + ["additionalProperties"],
-                                                 strict, fix, False)
+                                                 strict, fix, False, resilient)
                     else:
                         assert False, f"not implemented yet at [{spath}]"
                 else:
@@ -937,7 +980,7 @@ def schema2model(schema, path: JsonPath = [],
                     # else nothing else is allowed
                 elif isinstance(ap, dict):
                     model[""] = schema2model(ap, path + ["additionalProperties"],
-                                             strict, fix, False)
+                                             strict, fix, False, resilient)
                 else:
                     assert False, f"not implemented yet at [{spath}]"
 
@@ -1099,6 +1142,5 @@ def schema_to_model(schema: JsonSchema, schema_name: str,
             log.error(f"schema to model conversion for {schema_name} failed: {e}")
             if resilient:
                 model = "$ANY"
-                sys.exit(1)
             raise e
     return model

@@ -21,19 +21,16 @@ from .convert import schema_to_model
 
 __version__ = pkg_version("json_schema_utils")
 
-def ap_common(ap, with_json=True):
-    ap.add_argument("--version", action="store_true", help="show version")
-    ap.add_argument("--debug", "-d", action="store_true", help="debug mode")
-    ap.add_argument("--quiet", "-q", action="store_true", help="quiet mode")
+def ap_common(arg, with_json=True):
+    arg("--version", action="store_true", help="show version")
+    arg("--debug", "-d", action="store_true", help="debug mode")
+    arg("--quiet", "-q", action="store_true", help="quiet mode")
     if with_json:
-        ap.add_argument("--indent", "-i", type=int, default=2, help="json indentation")
-        ap.add_argument("--sort-keys", "-s", default=True,
-                        action="store_true", help="json sort keys")
-        ap.add_argument("--no-sort-keys", "-ns", dest="sort_keys",
-                        action="store_false", help="json sort keys")
-        ap.add_argument("--ascii", action="store_true", default=False, help="json ensure ascii")
-        ap.add_argument("--no-ascii", dest="ascii", action="store_false",
-                        help="no json ensure ascii")
+        arg("--indent", "-i", type=int, default=2, help="json indentation")
+        arg("--sort-keys", "-s", default=True, action="store_true", help="json sort keys")
+        arg("--no-sort-keys", "-ns", dest="sort_keys", action="store_false", help="json sort keys")
+        arg("--ascii", action="store_true", default=False, help="json ensure ascii")
+        arg("--no-ascii", dest="ascii", action="store_false", help="no json ensure ascii")
 
 
 def json_dumps(j: Any, args):
@@ -54,10 +51,11 @@ def jsu_inline():
         prog="jsu-inline",
         description="Inline references in a JSON Schema",
     )
-    ap_common(ap)
-    ap.add_argument("--map", "-m", action="append", help="url local mapping")
-    ap.add_argument("--auto", "-a", action="store_true", help="automatic url mapping")
-    ap.add_argument("schemas", nargs="*", help="schemas to inline")
+    arg = ap.add_argument
+    ap_common(arg)
+    arg("--map", "-m", action="append", help="url local mapping")
+    arg("--auto", "-a", action="store_true", help="automatic url mapping")
+    arg("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
@@ -108,8 +106,9 @@ def jsu_simpler():
         prog="jsu-simpler",
         description="Simplify JSON Schema while preserving its semantics",
     )
-    ap_common(ap)
-    ap.add_argument("schemas", nargs="*", help="schemas to simplify")
+    arg = ap.add_argument
+    ap_common(arg)
+    arg("schemas", nargs="*", help="schemas to simplify")
     args = ap.parse_args()
 
     if not args.schemas:
@@ -135,16 +134,19 @@ def jsu_check():
         prog="jsu-check",
         description="Check JSON values against a JSON Schema using various implementations",
     )
-    ap_common(ap)
-    ap.add_argument("--draft", "-D", default="2020-12", help="JSON Schema draft")
-    ap.add_argument("--engine", "-e", choices=["jmc", "jsonschema", "jschon"], default="jmc",
-                    help="select JSON Schema implementation, default is 'jmc'")
-    ap.add_argument("--force", action="store_true", help="accept any JSON as a schema")
-    ap.add_argument("--pass-through", action="store_true", default=False,
-                    help="revert to pass through on compilation error")
-    ap.add_argument("--test", "-t", action="store_true", help="test vector mode")
-    ap.add_argument("schema", type=str, help="JSON Schema")
-    ap.add_argument("values", nargs="*", help="values to match against schema")
+    arg = ap.add_argument
+    ap_common(arg)
+    arg("--draft", "-D", default="2020-12", help="JSON Schema draft")
+    arg("--engine", "-e", choices=["jmc", "jsonschema", "jschon"], default="jmc",
+        help="select JSON Schema implementation, default is 'jmc'")
+    arg("--force", action="store_true", help="accept any JSON as a schema")
+    arg("--resilient", default=False, action="store_true", help="be cool, try harder")
+    arg("--no-resilient", dest="resilient", action="store_false", help="not cool")
+    arg("--pass-through", action="store_true", default=False,
+        help="revert to pass through on compilation error")
+    arg("--test", "-t", action="store_true", help="test vector mode")
+    arg("schema", type=str, help="JSON Schema")
+    arg("values", nargs="*", help="values to match against schema")
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
@@ -276,8 +278,9 @@ def jsu_stats():
         prog="jsu-stats",
         description="Lint a JSON Schema",
     )
-    ap_common(ap)
-    ap.add_argument("schemas", nargs="*", help="JSON Schema to analyze")
+    arg = ap.add_argument
+    ap_common(arg)
+    arg("schemas", nargs="*", help="JSON Schema to analyze")
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
@@ -322,8 +325,9 @@ def jsu_pretty():
         prog="jsu-pretty",
         description="Prettyprint JSON Schema",
     )
-    ap_common(ap)
-    ap.add_argument("schemas", nargs="*", help="schemas to inline")
+    arg = ap.add_argument
+    ap_common(arg)
+    arg("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
@@ -343,13 +347,15 @@ def jsu_model():
         description="Convert JSON Schema to JSON Model",
     )
     arg = ap.add_argument
-    ap_common(ap)
+    ap_common(arg)
     arg("--id", action="store_true", default=False, help="enable $id lookup")
     arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
     arg("--strict", action="store_true", default=True, help="reject doubtful schemas")
     arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
     arg("--fix", "-F", action="store_true", default=True, help="fix common schema issues")
     arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")
+    arg("--resilient", default=False, action="store_true", help="be cool, try harder")
+    arg("--no-resilient", dest="resilient", action="store_false", help="not cool")
     arg("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args()
 
@@ -371,6 +377,7 @@ def jsu_model():
             model = schema_to_model(
                 schema, fn,
                 use_id=args.id, strict=args.strict, fix=args.fix, simpler=False,
+                resilient=args.resilient,
             )
         except Exception as e:
             log.error(e, exc_info=args.debug)
@@ -387,13 +394,15 @@ def jsu_compile():
         description="Compile JSON Schema: generate checkers in various languages",
     )
     arg = ap.add_argument
-    ap_common(ap)
+    ap_common(arg)
     arg("--id", action="store_true", default=False, help="enable $id lookup")
     arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
     arg("--strict", action="store_true", default=True, help="reject doubtful schemas")
     arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
     arg("--fix", "-F", action="store_true", default=True, help="fix common schema issues")
     arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")
+    arg("--resilient", default=False, action="store_true", help="be cool, try harder")
+    arg("--no-resilient", dest="resilient", action="store_false", help="not cool")
     arg("schema", default="-", help="schema to process")
     arg("others", nargs="*", help="jmc backend options and arguments")
     args = ap.parse_args()
@@ -411,7 +420,8 @@ def jsu_compile():
         schema = json.load(open(args.schema) if args.schema != "-" else sys.stdin)
         model = schema_to_model(
             schema, args.schema,
-            use_id=args.id, strict=args.strict, fix=args.fix, simpler=True
+            use_id=args.id, strict=args.strict, fix=args.fix, simpler=True,
+            resilient=args.resilient,
         )
     except Exception as e:
         log.error(f"schema to model conversion for {args.schema} failed")
@@ -448,9 +458,11 @@ def jsu_runner():
         description="Test runner for JSON Schema Test Suite",
     )
     arg = ap.add_argument
-    ap_common(ap)
+    ap_common(arg)
     arg("--dump", default=False, action="store_true", help="show generated model as debug")
     arg("--no-dump", dest="dump", action="store_false", help="do not show generated model as debug")
+    arg("--strict", action="store_true", default=False, help="reject doubtful schemas")
+    arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
     arg("--resilient", default=False, action="store_true",
         help="enable model conversion resilience")
     arg("--no-resilient", dest="resilient", default=False, action="store_true",
@@ -501,11 +513,11 @@ def jsu_runner():
 
                 try:
                     # TODO set options
-                    model = schema_to_model(case["schema"], scase, strict=False, fix=False,
+                    model = schema_to_model(case["schema"], scase, strict=args.strict, fix=False,
                                             resilient=args.resilient)
                     if args.dump:
                         log.debug(f"model: {model}")
-                    checker = json_model.model_checker_from_json(model)
+                    checker = json_model.model_checker_from_json(model, loose_int=True, loose_float=True)
                     n_tests_ok = 0
 
                     for it, test in enumerate(case["tests"]):
