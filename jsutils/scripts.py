@@ -131,6 +131,8 @@ def jsu_check():
     ap.add_argument("--engine", "-e", choices=["jmc", "jsonschema", "jschon"], default="jmc",
                     help="select JSON Schema implementation, default is 'jmc'")
     ap.add_argument("--force", action="store_true", help="accept any JSON as a schema")
+    ap.add_argument("--pass-through", action="store_true", default=False,
+                    help="revert to pass through on compilation error")
     ap.add_argument("--test", "-t", action="store_true", help="test vector mode")
     ap.add_argument("schema", type=str, help="JSON Schema")
     ap.add_argument("values", nargs="*", help="values to match against schema")
@@ -203,8 +205,14 @@ def jsu_check():
     except Exception as e:
         if args.debug:
             log.error(e, exc_info=not args.quiet)
-        print(f"{args.schema}: SCHEMA COMPILATION ERROR ({e})")
-        sys.exit(5)
+        if args.pass_though:
+            log.error(f"{args.schema}: SCHEMA COMPILATION ERROR ({e})")
+        else:
+            print(f"{args.schema}: SCHEMA COMPILATION ERROR ({e})")
+            sys.exit(5)
+
+        def check(data):
+            return { "passed": True, "errors": "unchecked value is accepted" }
 
     def check_data(name: str, data, expect: bool|None) -> bool:
         res = check(data)
