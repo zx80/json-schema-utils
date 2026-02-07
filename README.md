@@ -113,8 +113,8 @@ see [JSON Model HOWTO](https://json-model.org/#/HOWTO).
 
 ## TODO
 
+- improve model conversion resilience by ignoring unexpected stuff
 - check/compile: add `--loose` option? relevant default value?
-- add a bowtie script based on `jsu-compile` or `jsu-check`
 - stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)
   to reduce false positive errors/warnings.

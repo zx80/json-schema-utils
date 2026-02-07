@@ -50,7 +50,10 @@ def rm_suffix(s, *suffixes):
 def jsu_inline():
     """Inline command entry point."""
 
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(
+        prog="jsu-inline",
+        description="Inline references in a JSON Schema",
+    )
     ap_common(ap)
     ap.add_argument("--map", "-m", action="append", help="url local mapping")
     ap.add_argument("--auto", "-a", action="store_true", help="automatic url mapping")
@@ -101,7 +104,10 @@ def jsu_inline():
 
 def jsu_simpler():
 
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(
+        prog="jsu-simpler",
+        description="Simplify JSON Schema while preserving its semantics",
+    )
     ap_common(ap)
     ap.add_argument("schemas", nargs="*", help="schemas to simplify")
     args = ap.parse_args()
@@ -125,7 +131,10 @@ def jsu_check():
 
     from .stats import SCHEMA_KEYS
 
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(
+        prog="jsu-check",
+        description="Check JSON values against a JSON Schema using various implementations",
+    )
     ap_common(ap)
     ap.add_argument("--draft", "-D", default="2020-12", help="JSON Schema draft")
     ap.add_argument("--engine", "-e", choices=["jmc", "jsonschema", "jschon"], default="jmc",
@@ -263,7 +272,10 @@ def shash(s: str):
 
 def jsu_stats():
 
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(
+        prog="jsu-stats",
+        description="Lint a JSON Schema",
+    )
     ap_common(ap)
     ap.add_argument("schemas", nargs="*", help="JSON Schema to analyze")
     args = ap.parse_args()
@@ -306,7 +318,10 @@ def jsu_stats():
 
 def jsu_pretty():
 
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(
+        prog="jsu-pretty",
+        description="Prettyprint JSON Schema",
+    )
     ap_common(ap)
     ap.add_argument("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
@@ -323,7 +338,10 @@ def jsu_pretty():
 
 def jsu_model():
 
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(
+        prog="jsu-model",
+        description="Convert JSON Schema to JSON Model",
+    )
     arg = ap.add_argument
     ap_common(ap)
     arg("--id", action="store_true", default=False, help="enable $id lookup")
@@ -364,7 +382,10 @@ def jsu_model():
 
 def jsu_compile():
 
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(
+        prog="jsu-compile",
+        description="Compile JSON Schema: generate checkers in various languages",
+    )
     arg = ap.add_argument
     ap_common(ap)
     arg("--id", action="store_true", default=False, help="enable $id lookup")
@@ -374,7 +395,7 @@ def jsu_compile():
     arg("--fix", "-F", action="store_true", default=True, help="fix common schema issues")
     arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")
     arg("schema", default="-", help="schema to process")
-    arg("others", nargs="*", help="other arguments for jmc backend")
+    arg("others", nargs="*", help="jmc backend options and arguments")
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
@@ -419,3 +440,100 @@ def jsu_compile():
         if done.returncode:
             log.error(f"backend jmc process return code: {done.returncode}")
         sys.exit(done.returncode)
+
+def jsu_runner():
+
+    ap = argparse.ArgumentParser(
+        prog="jsu-test-runner",
+        description="Test runner for JSON Schema Test Suite",
+    )
+    arg = ap.add_argument
+    ap_common(ap)
+    arg("--dump", default=False, action="store_true", help="show generated model as debug")
+    arg("--no-dump", action="store_false", help="do not show generated model as debug")
+    arg("cases", nargs="*", help="test cases to process")
+    args = ap.parse_args()
+
+    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+
+    import json_model
+
+    CASES_MODEL = [
+        {
+            "description": "",
+            "?specification": [ {"?core": "", "?quote": ""} ],
+            "schema": "$ANY",
+            "tests": [
+                {
+                    "description": "",
+                    "data": "$ANY",
+                    "valid": True
+                }
+            ]
+        }
+    ]
+
+    check_cases = json_model.model_checker_from_json(CASES_MODEL)
+
+    # stats counters
+    n_args, n_cases, n_cases_passed, n_tests, n_tests_passed, n_errors = 0, 0, 0, 0, 0, 0
+
+    for fname in args.cases:
+        n_args += 1
+        try:
+            # load and sanity check
+            cases = json.loads(open(fname).read())
+            assert check_cases(cases)
+
+            for ic, case in enumerate(cases):
+
+                scase = f"{fname}[{ic}]"
+
+                n_cases += 1
+                n_tests += len(case["tests"])
+                description = case["description"]
+
+                log.info(f"considering {scase}: {description}")
+
+                try:
+                    # TODO set options
+                    model = schema_to_model(case["schema"], scase, strict=False, fix=False)
+                    if args.dump:
+                        log.debug(f"model: {model}")
+                    checker = json_model.model_checker_from_json(model)
+                    n_tests_ok = 0
+
+                    for it, test in enumerate(case["tests"]):
+                        try:
+                            if checker(test["data"]) == test["valid"]:
+                                n_tests_passed += 1
+                                n_tests_ok += 1
+                            else:
+                                log.warning(f"unexpected result on {scase}[{it}]: {test['description']}")
+                        except BaseException as e:
+                            n_errors += 1
+                            if args.debug:
+                                log.error(e, exc_info=args.debug)
+                            log.error(f"case {description}/{test['description']}: FAILED")
+
+                    if n_tests_ok == len(case["tests"]):
+                        n_cases_passed += 1
+
+                except BaseException as e:
+                    n_errors += 1
+                    if args.debug:
+                        log.error(e, exc_info=args.debug)
+                    log.error(f"case {scase} ({description}): FAILED")
+
+        except BaseException as e:
+            n_errors += 1
+            if args.debug:
+                log.error(e, exc_info=args.debug)
+            log.error(f"cases {fname}: FAILED")
+
+    # final report
+    print(f"files={n_args} cases={n_cases} tests={n_tests} errors={n_errors}")
+    if n_tests > 0:
+        print(f"correct tests: {n_tests_passed} ({100.0 * n_tests_passed /n_tests :.1f}%)")
+    if n_cases > 0:
+        print(f"correct cases: {n_cases_passed} ({100.0 * n_cases_passed /n_cases :.1f}%)")
