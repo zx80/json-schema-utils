@@ -545,11 +545,21 @@ def jsu_runner():
                                             resilient=args.resilient)
                     if args.dump:
                         log.debug(f"model: {model}")
-                    checker = json_model.model_checker_from_json(
-                        model, loose_int=True, loose_float=True, predef=False,
-                    )
-                    n_tests_ok = 0
 
+                    checker: callable
+                    try:
+                        checker = json_model.model_checker_from_json(
+                            model, loose_int=True, loose_float=True, predef=False,
+                        )
+                    except BaseException as e:
+                        n_errors += 1
+                        log.error(f"jmc compilation failed: {e}")
+                        if not args.resilient:
+                            raise
+                        log.warning("using default true checker for case {scase} (resilient mode)")
+                        checker = lambda _: True
+
+                    n_tests_ok = 0
                     for it, test in enumerate(case["tests"]):
                         try:
                             if checker(test["data"]) == test["valid"]:
@@ -576,7 +586,7 @@ def jsu_runner():
             n_errors += 1
             if args.debug:
                 log.error(e, exc_info=args.debug)
-            log.error(f"cases {fname}: FAILED")
+            log.error(f"cases {fname}: BAD case file {e}")
 
     # final report
     report = f"files={n_args} cases={n_cases} tests={n_tests} errors={n_errors} pass:"
