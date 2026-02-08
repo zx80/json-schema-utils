@@ -100,7 +100,7 @@ using the [JSON Model Compiler](https://json-model.org/) as a backend.
 
 ```sh
 # generate a python script
-jsu-compile some.schema.json -o some.py
+jsu-compile some.schema.json -- -o some.py
 # run the script to validate values
 ./some.py val1.json val2.json
 ```
