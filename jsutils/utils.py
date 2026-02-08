@@ -34,7 +34,7 @@ class JSUError(BaseException):
     pass
 
 
-def only(schema, *props):
+def only(schema, *props) -> bool:
     """Tell whether schema only contains these props."""
     assert isinstance(schema, dict)
     ok = set(schema.keys()).issubset(set(props))
@@ -42,6 +42,12 @@ def only(schema, *props):
         ttype = schema.get("type", "<>")
         log.debug(f"BAD SCHEMA {ttype}: {list(schema.keys())} {props}")
     return ok
+
+def used_props(schema, *props) -> set[str]:
+    """Return occuring properties among props."""
+    assert isinstance(schema, dict)
+    return set(props) & schema.keys()
+
 
 def has(schema, *props):
     """Tell whether schema has any of these props."""

@@ -18,6 +18,7 @@ from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
 from .convert import schema_to_model
+from .restruct import computeTypes
 
 __version__ = pkg_version("json_schema_utils")
 
@@ -109,6 +110,10 @@ def jsu_simpler():
     arg = ap.add_argument
     ap_common(arg)
     arg("schemas", nargs="*", help="schemas to simplify")
+    arg("--type", default=False, action="store_true",
+        help="type schema before simplification")
+    arg("--no-type", dest="type", action="store_false",
+        help="do not type schema before simplification")
     args = ap.parse_args()
 
     if not args.schemas:
@@ -119,6 +124,8 @@ def jsu_simpler():
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
         schema = json.load(open(fn) if fn != "-" else sys.stdin)
+        if args.type:
+            schema = computeTypes(schema)
         if isinstance(schema, dict):
             scopeDefs(schema)
             schema = simplifySchema(schema, schema.get("$id", "."))
@@ -142,6 +149,8 @@ def jsu_check():
     arg("--force", action="store_true", help="accept any JSON as a schema")
     arg("--resilient", default=False, action="store_true", help="be cool, try harder")
     arg("--no-resilient", dest="resilient", action="store_false", help="not cool")
+    arg("--predef", default=True, action="store_true", help="check formats")
+    arg("--no-predef", dest="predef", action="store_false", help="do not check formats")
     arg("--pass-through", action="store_true", default=False,
         help="revert to pass through on compilation error")
     arg("--test", "-t", action="store_true", help="test vector mode")
@@ -205,8 +214,9 @@ def jsu_check():
 
         elif args.engine == "jmc":
             import json_model
-            jmodel = schema_to_model(jschema, args.schema)
-            checker = json_model.model_checker_from_json(jmodel)
+            # TODO safest options?
+            jmodel = schema_to_model(jschema, args.schema, simpler=True, typer=True)
+            checker = json_model.model_checker_from_json(jmodel, predef=args.predef)
 
             def check(data):
                 errors = []
@@ -216,7 +226,7 @@ def jsu_check():
     except Exception as e:
         if args.debug:
             log.error(e, exc_info=not args.quiet)
-        if args.pass_though:
+        if args.pass_through:
             log.error(f"{args.schema}: SCHEMA COMPILATION ERROR ({e})")
         else:
             print(f"{args.schema}: SCHEMA COMPILATION ERROR ({e})")
@@ -356,6 +366,10 @@ def jsu_model():
     arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")
     arg("--resilient", default=False, action="store_true", help="be cool, try harder")
     arg("--no-resilient", dest="resilient", action="store_false", help="not cool")
+    arg("--type", default=True, action="store_true", help="type schema before conversion")
+    arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
+    arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
+    arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
     arg("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args()
 
@@ -376,8 +390,8 @@ def jsu_model():
             schema = json.load(open(fn) if fn != "-" else sys.stdin)
             model = schema_to_model(
                 schema, fn,
-                use_id=args.id, strict=args.strict, fix=args.fix, simpler=False,
-                resilient=args.resilient,
+                use_id=args.id, strict=args.strict, fix=args.fix,
+                simpler=args.simple, typer=args.type, resilient=args.resilient,
             )
         except Exception as e:
             log.error(e, exc_info=args.debug)
@@ -403,6 +417,10 @@ def jsu_compile():
     arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")
     arg("--resilient", default=False, action="store_true", help="be cool, try harder")
     arg("--no-resilient", dest="resilient", action="store_false", help="not cool")
+    arg("--type", default=True, action="store_true", help="type schema before conversion")
+    arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
+    arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
+    arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
     arg("schema", default="-", help="schema to process")
     arg("others", nargs="*", help="jmc backend options and arguments")
     args = ap.parse_args()
@@ -420,8 +438,8 @@ def jsu_compile():
         schema = json.load(open(args.schema) if args.schema != "-" else sys.stdin)
         model = schema_to_model(
             schema, args.schema,
-            use_id=args.id, strict=args.strict, fix=args.fix, simpler=True,
-            resilient=args.resilient,
+            use_id=args.id, strict=args.strict, fix=args.fix,
+            typer=args.type, simpler=args.simple, resilient=args.resilient,
         )
     except Exception as e:
         log.error(f"schema to model conversion for {args.schema} failed")
@@ -461,6 +479,10 @@ def jsu_runner():
     ap_common(arg)
     arg("--dump", default=False, action="store_true", help="show generated model as debug")
     arg("--no-dump", dest="dump", action="store_false", help="do not show generated model as debug")
+    arg("--type", default=True, action="store_true", help="type schema before conversion")
+    arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
+    arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
+    arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
     arg("--strict", action="store_true", default=False, help="reject doubtful schemas")
     arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
     arg("--resilient", default=False, action="store_true",
@@ -477,15 +499,17 @@ def jsu_runner():
     CASES_MODEL = [
         {
             "description": "",
-            "?specification": [ {"?core": "", "?quote": ""} ],
             "schema": "$ANY",
             "tests": [
                 {
                     "description": "",
                     "data": "$ANY",
-                    "valid": True
+                    "valid": True,
+                    "?comment": ""
                 }
-            ]
+            ],
+            "?specification": [ {"?core": "", "?quote": ""} ],
+            "?comment": ""
         }
     ]
 
@@ -512,12 +536,14 @@ def jsu_runner():
                 log.info(f"considering {scase}: {description}")
 
                 try:
-                    # TODO set options
                     model = schema_to_model(case["schema"], scase, strict=args.strict, fix=False,
+                                            typer=args.type, simpler=args.simple,
                                             resilient=args.resilient)
                     if args.dump:
                         log.debug(f"model: {model}")
-                    checker = json_model.model_checker_from_json(model, loose_int=True, loose_float=True)
+                    checker = json_model.model_checker_from_json(
+                        model, loose_int=True, loose_float=True, predef=False,
+                    )
                     n_tests_ok = 0
 
                     for it, test in enumerate(case["tests"]):
@@ -549,8 +575,7 @@ def jsu_runner():
             log.error(f"cases {fname}: FAILED")
 
     # final report
-    print(f"files={n_args} cases={n_cases} tests={n_tests} errors={n_errors}")
-    if n_tests > 0:
-        print(f"correct tests: {n_tests_passed} ({100.0 * n_tests_passed / n_tests:.1f}%)")
-    if n_cases > 0:
-        print(f"correct cases: {n_cases_passed} ({100.0 * n_cases_passed / n_cases:.1f}%)")
+    report = f"files={n_args} cases={n_cases} tests={n_tests} errors={n_errors} pass:"
+    report += f" cases={n_cases_passed} ({100.0 * n_cases_passed / max(n_cases, 1):.1f}%)"
+    report += f" tests={n_tests_passed} ({100.0 * n_tests_passed / max(n_tests, 1):.1f}%)"
+    print(report)

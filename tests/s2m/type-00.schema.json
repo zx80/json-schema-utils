@@ -1,0 +1,7 @@
+{
+  "allOf": [
+    { "type": "string" },
+    { "maxLength": 10 },
+    { "pattern": "AA" }
+  ]
+}

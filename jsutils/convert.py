@@ -11,6 +11,7 @@ from .recurse import recurseSchema
 
 # wrapper may use a simplification step
 from .simplify import simplifySchema, scopeDefs
+from .restruct import computeTypes
 
 log = logging.getLogger("convert")
 # log.setLevel(logging.DEBUG)
@@ -204,8 +205,14 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
                     schemas["object"]["enum"].append(v)
                 # else just ignore incompatible value…
         elif prop in KEYWORD_TYPE:
-            assert KEYWORD_TYPE[prop] in types
+            ptype = KEYWORD_TYPE[prop]
+            assert ptype in types
             schemas[KEYWORD_TYPE[prop]][prop] = val
+            # Argh, we may have to duplicated stuff between int/float
+            if ptype == "number" and "integer" in types:
+                schemas["integer"][prop] = copy.deepcopy(val)
+            elif ptype == "integer" and "number" in types:
+                schemas["number"][prop] = copy.deepcopy(val)
         else:
             assert False, f"cannot map {prop} to a type"
     # log.debug(f"splitted: {schemas}")
@@ -631,17 +638,31 @@ def schema2model(schema, path: SchemaPath = (),
             if "minLength" in schema and "maxLength" in schema and \
                     schema["minLength"] == schema["maxLength"]:
                 ival = schema["minLength"]
-                assert isinstance(ival, int), f"int length at [{spath}]"
+                if isinstance(ival, float):
+                    assert ival == int(ival), f"int length spec at [{spath}]"
+                    ival = int(ival)
+                assert type(ival) is int and ival >= 0, f"pos int length at [{spath}]"
                 constraints["="] = ival
             else:
                 if "minLength" in schema:
                     minlen = schema["minLength"]
-                    assert isinstance(minlen, int), f"int min length at [{spath}]"
-                    constraints[">="] = minlen
+                    if isinstance(minlen, float):
+                        assert minlen == int(minlen), f"int min length spec at [{spath}]"
+                        minlen = int(minlen)
+                    assert type(minlen) is int and minlen >= 0, f"pos int min length at [{spath}]"
+                    if minlen > 0:
+                        constraints[">="] = minlen
+                    # else ignore
                 if "maxLength" in schema:
                     maxlen = schema["maxLength"]
-                    assert isinstance(maxlen, int), f"int max length at [{spath}]"
-                    constraints["<="] = maxlen
+                    if isinstance(maxlen, float):
+                        assert maxlen == int(maxlen), f"int max length spec at [{spath}]"
+                        maxlen = int(maxlen)
+                    assert type(maxlen) is int and maxlen >= 0, f"int max length at [{spath}]"
+                    if maxlen > 0:
+                        constraints["<="] = maxlen
+                    else:
+                        constraints["="] = maxlen
             # if "contentMediaType" in schema:
             #     val = schema["contentMediaType"]
             #     assert isinstance(val, str), path
@@ -1107,7 +1128,7 @@ def schema2id(schema: JsonSchema, keep_format: bool = True) -> str:
     return shid
 
 def schema_to_model(schema: JsonSchema, schema_name: str,
-                    simpler: bool = False, fix: bool = True,
+                    typer: bool = False, simpler: bool = False, fix: bool = True,
                     use_id: bool = False, strict: bool = True,
                     resilient: bool = False):
     """Convert a JSON Schema to a JSON Model."""
@@ -1123,6 +1144,9 @@ def schema_to_model(schema: JsonSchema, schema_name: str,
     if model is None:
         try:
             # optional schema simplification step
+            if typer and isinstance(schema, dict):
+                log.debug("typing schema")
+                schema = computeTypes(schema)
             if simpler and isinstance(schema, dict):
                 log.debug("simplifying schema")
                 scopeDefs(schema)

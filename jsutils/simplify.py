@@ -182,6 +182,8 @@ def simplifySchema(schema: JsonSchema, url: str):
             else:  # exmaxi <= inmaxi
                 del schema["maximum"]
 
+        # TODO allOf with some inclusions { "&": [ "", "/.../" ] }
+
         # TODO anyOf/oneOf/allOf of length 0?
         # anyOf/oneOf/allOf of length 1
         for prop in ("anyOf", "oneOf", "allOf"):
