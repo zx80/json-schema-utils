@@ -257,6 +257,10 @@ def updateTypes(schema: JsonSchema, path: SchemaPath):
         else:
             log.warning(f"undefined anchor {name} used at {path}")
 
+    # derive type from then/else if they may be executed
+    if "if" in schema and "then" in schema and "else" in schema:
+        types &= _types[path + ("then",)] | _types[path + ("else",)]
+
     # "if" is a pain, we cannot know easily whether we are inside, so we push down for here
     # let's ignore then/else for now?
     if "if" in schema and isinstance(schema["if"], dict):

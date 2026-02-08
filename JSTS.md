@@ -23,7 +23,7 @@ JMC (back) version: `2.0b37`
 - `/exclusiveMaximum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
 - `/exclusiveMinimum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
 - `/format.json`: cases=19 tests=133 errors=0 pass: cases=19 (100.0%) tests=133 (100.0%)
-- `/if-then-else.json`: cases=12 tests=30 errors=2 pass: cases=9 (75.0%) tests=25 (83.3%)
+- `/if-then-else.json`: cases=12 tests=30 errors=2 pass: cases=10 (83.3%) tests=26 (86.7%)
 - `/infinite-loop-detection.json`: cases=1 tests=2 errors=0 pass: cases=1 (100.0%) tests=2 (100.0%)
 - `/items.json`: cases=10 tests=29 errors=0 pass: cases=10 (100.0%) tests=29 (100.0%)
 - `/maxContains.json`: cases=4 tests=12 errors=1 pass: cases=2 (50.0%) tests=8 (66.7%)
@@ -52,7 +52,7 @@ JMC (back) version: `2.0b37`
 - `/unevaluatedProperties.json`: cases=42 tests=125 errors=36 pass: cases=1 (2.4%) tests=14 (11.2%)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=4 (66.7%) tests=63 (91.3%)
 - `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%)
-- summary: files=46 cases=377 tests=1277 errors=150 pass: cases=200 (53.1%) tests=858 (67.2%)
+- summary: files=46 cases=377 tests=1277 errors=150 pass: cases=201 (53.3%) tests=859 (67.3%)
 
 ## Results for _draft2019-09_
 
@@ -73,7 +73,7 @@ JMC (back) version: `2.0b37`
 - `/exclusiveMaximum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
 - `/exclusiveMinimum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
 - `/format.json`: cases=19 tests=114 errors=0 pass: cases=19 (100.0%) tests=114 (100.0%)
-- `/if-then-else.json`: cases=12 tests=30 errors=2 pass: cases=9 (75.0%) tests=25 (83.3%)
+- `/if-then-else.json`: cases=12 tests=30 errors=2 pass: cases=10 (83.3%) tests=26 (86.7%)
 - `/infinite-loop-detection.json`: cases=1 tests=2 errors=0 pass: cases=1 (100.0%) tests=2 (100.0%)
 - `/items.json`: cases=9 tests=28 errors=1 pass: cases=8 (88.9%) tests=24 (85.7%)
 - `/maxContains.json`: cases=4 tests=12 errors=1 pass: cases=2 (50.0%) tests=8 (66.7%)
@@ -99,7 +99,7 @@ JMC (back) version: `2.0b37`
 - `/required.json`: cases=5 tests=18 errors=1 pass: cases=4 (80.0%) tests=17 (94.4%)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%)
 - `/unevaluatedItems.json`: cases=26 tests=56 errors=20 pass: cases=0 (0.0%) tests=8 (14.3%)
-- `/unevaluatedProperties.json`: cases=41 tests=123 errors=11 pass: cases=8 (19.5%) tests=48 (39.0%)
+- `/unevaluatedProperties.json`: cases=41 tests=123 errors=11 pass: cases=7 (17.1%) tests=47 (38.2%)
 - `/uniqueItems.json`: cases=6 tests=69 errors=2 pass: cases=3 (50.0%) tests=55 (79.7%)
 - `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%)
 - summary: files=46 cases=367 tests=1240 errors=125 pass: cases=202 (55.0%) tests=849 (68.5%)
@@ -120,7 +120,7 @@ JMC (back) version: `2.0b37`
 - `/exclusiveMaximum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
 - `/exclusiveMinimum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
 - `/format.json`: cases=17 tests=102 errors=0 pass: cases=17 (100.0%) tests=102 (100.0%)
-- `/if-then-else.json`: cases=12 tests=30 errors=2 pass: cases=9 (75.0%) tests=25 (83.3%)
+- `/if-then-else.json`: cases=12 tests=30 errors=2 pass: cases=10 (83.3%) tests=26 (86.7%)
 - `/infinite-loop-detection.json`: cases=1 tests=2 errors=0 pass: cases=1 (100.0%) tests=2 (100.0%)
 - `/items.json`: cases=9 tests=28 errors=1 pass: cases=8 (88.9%) tests=24 (85.7%)
 - `/maximum.json`: cases=2 tests=8 errors=0 pass: cases=2 (100.0%) tests=8 (100.0%)
@@ -143,7 +143,7 @@ JMC (back) version: `2.0b37`
 - `/required.json`: cases=5 tests=18 errors=1 pass: cases=4 (80.0%) tests=17 (94.4%)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%)
 - `/uniqueItems.json`: cases=6 tests=69 errors=2 pass: cases=3 (50.0%) tests=55 (79.7%)
-- summary: files=37 cases=257 tests=922 errors=67 pass: cases=182 (70.8%) tests=743 (80.6%)
+- summary: files=37 cases=257 tests=922 errors=67 pass: cases=183 (71.2%) tests=744 (80.7%)
 
 ## Results for _draft6_
 
@@ -266,7 +266,7 @@ JMC (back) version: `2.0b37`
 - `/enum.json`: cases=14 tests=45 errors=0 pass: cases=14 (100.0%) tests=45 (100.0%)
 - `/exclusiveMaximum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
 - `/exclusiveMinimum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
-- `/if-then-else.json`: cases=10 tests=26 errors=0 pass: cases=9 (90.0%) tests=25 (96.2%)
+- `/if-then-else.json`: cases=10 tests=26 errors=0 pass: cases=10 (100.0%) tests=26 (100.0%)
 - `/infinite-loop-detection.json`: cases=1 tests=2 errors=0 pass: cases=1 (100.0%) tests=2 (100.0%)
 - `/items.json`: cases=10 tests=29 errors=0 pass: cases=10 (100.0%) tests=29 (100.0%)
 - `/maxContains.json`: cases=4 tests=12 errors=1 pass: cases=2 (50.0%) tests=8 (66.7%)
@@ -292,7 +292,7 @@ JMC (back) version: `2.0b37`
 - `/required.json`: cases=5 tests=18 errors=1 pass: cases=4 (80.0%) tests=17 (94.4%)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%)
 - `/unevaluatedItems.json`: cases=29 tests=71 errors=22 pass: cases=1 (3.4%) tests=11 (15.5%)
-- `/unevaluatedProperties.json`: cases=41 tests=123 errors=11 pass: cases=8 (19.5%) tests=48 (39.0%)
+- `/unevaluatedProperties.json`: cases=41 tests=123 errors=11 pass: cases=7 (17.1%) tests=47 (38.2%)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=4 (66.7%) tests=63 (91.3%)
 - summary: files=44 cases=342 tests=1111 errors=113 pass: cases=187 (54.7%) tests=758 (68.2%)
 
@@ -315,7 +315,7 @@ JMC (back) version: `2.0b37`
 - `/exclusiveMaximum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
 - `/exclusiveMinimum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
 - `/format.json`: cases=19 tests=133 errors=0 pass: cases=19 (100.0%) tests=133 (100.0%)
-- `/if-then-else.json`: cases=12 tests=30 errors=2 pass: cases=9 (75.0%) tests=25 (83.3%)
+- `/if-then-else.json`: cases=12 tests=30 errors=2 pass: cases=10 (83.3%) tests=26 (86.7%)
 - `/infinite-loop-detection.json`: cases=1 tests=2 errors=0 pass: cases=1 (100.0%) tests=2 (100.0%)
 - `/items.json`: cases=10 tests=29 errors=0 pass: cases=10 (100.0%) tests=29 (100.0%)
 - `/maxContains.json`: cases=4 tests=12 errors=1 pass: cases=2 (50.0%) tests=8 (66.7%)
@@ -344,5 +344,5 @@ JMC (back) version: `2.0b37`
 - `/unevaluatedProperties.json`: cases=42 tests=125 errors=36 pass: cases=1 (2.4%) tests=14 (11.2%)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=4 (66.7%) tests=63 (91.3%)
 - `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%)
-- summary: files=46 cases=377 tests=1277 errors=150 pass: cases=200 (53.1%) tests=858 (67.2%)
+- summary: files=46 cases=377 tests=1277 errors=150 pass: cases=201 (53.3%) tests=859 (67.3%)
 
