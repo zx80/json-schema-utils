@@ -238,6 +238,8 @@ def simplifySchema(schema: JsonSchema, url: str):
         for kw in ("then", "else"):
             if kw in schema:
                 subs = schema[kw]
+                if isinstance(subs, bool):
+                    continue
                 assert isinstance(subs, dict)
                 compat = True
                 for k, v in subs.items():

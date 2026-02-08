@@ -39,8 +39,10 @@ for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 latest ; d
 
   # and summary
   echo -n "- summary: "
-  jsu-test-runner --resilient ${test_dir}/*.json 2> /dev/null | tail -1
-  echo "." >&2
+  summary=$(jsu-test-runner --resilient ${test_dir}/*.json 2> /dev/null | tail -1)
+  echo $summary
+  percent=${summary##* }
+  echo ". $percent" >&2
 
   echo
 done
