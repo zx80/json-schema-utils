@@ -272,8 +272,20 @@ def simplifySchema(schema: JsonSchema, url: str):
         # simplify condition if possible
         if "if" in schema:
             cond = schema["if"]
-            assert isinstance(cond, dict)
-            if "not" in cond and only(cond, "not", *_IGNORABLE):
+            if isinstance(cond, bool):
+                if cond and "else" in schema:
+                    del schema["else"]
+                    if "then" not in schema:
+                        del schema["if"]
+                if not cond and "then" in schema:
+                    if "else" in schema:
+                        schema["if"] = True
+                        schema["then"] = schema["else"]
+                        del schema["else"]
+                    else:
+                        del schema["then"]
+                        del schema["if"]
+            elif "not" in cond and only(cond, "not", *_IGNORABLE):
                 log.info("simplifying if not")
                 schema["if"] = cond["not"]
                 sthen = schema.get("then", None)
