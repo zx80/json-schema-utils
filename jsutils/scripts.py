@@ -151,6 +151,8 @@ def jsu_check():
     arg("--no-resilient", dest="resilient", action="store_false", help="not cool")
     arg("--predef", default=True, action="store_true", help="check formats")
     arg("--no-predef", dest="predef", action="store_false", help="do not check formats")
+    arg("--extend", default=True, action="store_true", help="use jmc extensions")
+    arg("--no-extend", dest="extend", action="store_false", help="do not use jmc extensions")
     arg("--pass-through", action="store_true", default=False,
         help="revert to pass through on compilation error")
     arg("--test", "-t", action="store_true", help="test vector mode")
@@ -216,7 +218,7 @@ def jsu_check():
             import json_model
             # TODO safest options?
             jmodel = schema_to_model(jschema, args.schema, simpler=True, typer=True)
-            checker = json_model.model_checker_from_json(jmodel, predef=args.predef)
+            checker = json_model.model_checker_from_json(jmodel, predef=args.predef, extend=args.extend)
 
             def check(data):
                 errors = []
@@ -462,7 +464,7 @@ def jsu_compile():
         tmp.flush()
 
         # launch jmc
-        done = subprocess.run(["jmc", "--model", tmp.name, "--no-predef"] + args.others)
+        done = subprocess.run(["jmc", "--model", tmp.name, "--no-predef", "--extend"] + args.others)
 
         # exit status
         if done.returncode:
@@ -549,7 +551,7 @@ def jsu_runner():
                     checker: callable
                     try:
                         checker = json_model.model_checker_from_json(
-                            model, loose_int=True, loose_float=True, predef=False,
+                            model, loose_int=True, loose_float=True, predef=False, extend=True,
                         )
                     except BaseException as e:
                         n_errors += 1
