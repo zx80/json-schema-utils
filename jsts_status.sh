@@ -32,7 +32,7 @@ for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 latest ; d
   # per case
   for file in ${test_dir}/*.json ; do
     test=${file#$test_dir}
-    echo -n "- case \`$test\`: "
+    echo -n "- \`$test\`: "
     jsu-test-runner --resilient $file 2> /dev/null | tail -1 | sed -e 's/files=1 //'
     echo -n "." >&2
   done
