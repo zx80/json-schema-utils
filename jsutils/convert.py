@@ -537,10 +537,16 @@ def schema2model(schema, path: SchemaPath = (),
             return schema2model(ao, path + ("allOf", ), strict, fix, False, resilient)
     elif "not" in schema:
         val = schema["not"]
-        assert isinstance(val, dict), "not object at [{spath}]"
-        if only(schema, "not", *IGNORE):
+        if isinstance(val, bool):
+            if val:
+                model = "$NONE"
+                return model
+            else:  # ignore "not: false"
+                del schema["not"]
+        elif only(schema, "not", *IGNORE):
             if len(val) == 0:
                 model = "$NONE"
+                return model
             else:
                 model = {"^": ["$ANY", schema2model(val, path + ("not", ), strict, fix, False, resilient)]}
             return buildModel(model, {}, defs, sharp, is_root)

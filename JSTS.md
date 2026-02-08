@@ -37,7 +37,7 @@ JMC version: `2.0b37`
 - case `/minLength.json`: cases=2 tests=7 errors=0 pass: cases=2 (100.0%) tests=7 (100.0%)
 - case `/minProperties.json`: cases=2 tests=8 errors=0 pass: cases=2 (100.0%) tests=8 (100.0%)
 - case `/multipleOf.json`: cases=5 tests=10 errors=5 pass: cases=1 (20.0%) tests=6 (60.0%)
-- case `/not.json`: cases=9 tests=40 errors=2 pass: cases=6 (66.7%) tests=21 (52.5%)
+- case `/not.json`: cases=9 tests=40 errors=0 pass: cases=8 (88.9%) tests=39 (97.5%)
 - case `/oneOf.json`: cases=11 tests=27 errors=0 pass: cases=11 (100.0%) tests=27 (100.0%)
 - case `/pattern.json`: cases=2 tests=9 errors=0 pass: cases=1 (50.0%) tests=8 (88.9%)
 - case `/patternProperties.json`: cases=5 tests=23 errors=0 pass: cases=4 (80.0%) tests=22 (95.7%)
@@ -52,7 +52,7 @@ JMC version: `2.0b37`
 - case `/unevaluatedProperties.json`: cases=42 tests=125 errors=36 pass: cases=1 (2.4%) tests=14 (11.2%)
 - case `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=4 (66.7%) tests=63 (91.3%)
 - case `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%)
-- summary: files=46 cases=377 tests=1277 errors=175 pass: cases=183 (48.5%) tests=793 (62.1%)
+- summary: files=46 cases=377 tests=1277 errors=173 pass: cases=185 (49.1%) tests=811 (63.5%)
 
 ## Results for _draft2019-09_
 
@@ -87,7 +87,7 @@ JMC version: `2.0b37`
 - case `/minLength.json`: cases=2 tests=7 errors=0 pass: cases=2 (100.0%) tests=7 (100.0%)
 - case `/minProperties.json`: cases=2 tests=8 errors=0 pass: cases=2 (100.0%) tests=8 (100.0%)
 - case `/multipleOf.json`: cases=5 tests=10 errors=5 pass: cases=1 (20.0%) tests=6 (60.0%)
-- case `/not.json`: cases=9 tests=40 errors=2 pass: cases=6 (66.7%) tests=21 (52.5%)
+- case `/not.json`: cases=9 tests=40 errors=0 pass: cases=8 (88.9%) tests=39 (97.5%)
 - case `/oneOf.json`: cases=11 tests=27 errors=0 pass: cases=11 (100.0%) tests=27 (100.0%)
 - case `/pattern.json`: cases=2 tests=9 errors=0 pass: cases=1 (50.0%) tests=8 (88.9%)
 - case `/patternProperties.json`: cases=5 tests=23 errors=0 pass: cases=4 (80.0%) tests=22 (95.7%)
@@ -102,7 +102,7 @@ JMC version: `2.0b37`
 - case `/unevaluatedProperties.json`: cases=41 tests=123 errors=12 pass: cases=8 (19.5%) tests=44 (35.8%)
 - case `/uniqueItems.json`: cases=6 tests=69 errors=2 pass: cases=3 (50.0%) tests=55 (79.7%)
 - case `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%)
-- summary: files=46 cases=367 tests=1240 errors=149 pass: cases=185 (50.4%) tests=782 (63.1%)
+- summary: files=46 cases=367 tests=1240 errors=147 pass: cases=187 (51.0%) tests=800 (64.5%)
 
 ## Results for _draft7_
 
@@ -132,7 +132,7 @@ JMC version: `2.0b37`
 - case `/minLength.json`: cases=2 tests=7 errors=0 pass: cases=2 (100.0%) tests=7 (100.0%)
 - case `/minProperties.json`: cases=2 tests=8 errors=0 pass: cases=2 (100.0%) tests=8 (100.0%)
 - case `/multipleOf.json`: cases=5 tests=10 errors=5 pass: cases=1 (20.0%) tests=6 (60.0%)
-- case `/not.json`: cases=8 tests=38 errors=2 pass: cases=6 (75.0%) tests=20 (52.6%)
+- case `/not.json`: cases=8 tests=38 errors=0 pass: cases=8 (100.0%) tests=38 (100.0%)
 - case `/oneOf.json`: cases=11 tests=27 errors=0 pass: cases=11 (100.0%) tests=27 (100.0%)
 - case `/pattern.json`: cases=2 tests=9 errors=0 pass: cases=1 (50.0%) tests=8 (88.9%)
 - case `/patternProperties.json`: cases=5 tests=23 errors=0 pass: cases=4 (80.0%) tests=22 (95.7%)
@@ -143,7 +143,7 @@ JMC version: `2.0b37`
 - case `/required.json`: cases=5 tests=18 errors=1 pass: cases=4 (80.0%) tests=17 (94.4%)
 - case `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%)
 - case `/uniqueItems.json`: cases=6 tests=69 errors=2 pass: cases=3 (50.0%) tests=55 (79.7%)
-- summary: files=37 cases=257 tests=922 errors=82 pass: cases=169 (65.8%) tests=693 (75.2%)
+- summary: files=37 cases=257 tests=922 errors=80 pass: cases=171 (66.5%) tests=711 (77.1%)
 
 ## Results for _draft6_
 
@@ -172,7 +172,7 @@ JMC version: `2.0b37`
 - case `/minLength.json`: cases=2 tests=7 errors=0 pass: cases=2 (100.0%) tests=7 (100.0%)
 - case `/minProperties.json`: cases=2 tests=8 errors=0 pass: cases=2 (100.0%) tests=8 (100.0%)
 - case `/multipleOf.json`: cases=5 tests=10 errors=5 pass: cases=1 (20.0%) tests=6 (60.0%)
-- case `/not.json`: cases=8 tests=38 errors=2 pass: cases=6 (75.0%) tests=20 (52.6%)
+- case `/not.json`: cases=8 tests=38 errors=0 pass: cases=8 (100.0%) tests=38 (100.0%)
 - case `/oneOf.json`: cases=11 tests=27 errors=0 pass: cases=11 (100.0%) tests=27 (100.0%)
 - case `/pattern.json`: cases=2 tests=9 errors=0 pass: cases=1 (50.0%) tests=8 (88.9%)
 - case `/patternProperties.json`: cases=5 tests=23 errors=0 pass: cases=4 (80.0%) tests=22 (95.7%)
@@ -183,7 +183,7 @@ JMC version: `2.0b37`
 - case `/required.json`: cases=5 tests=18 errors=1 pass: cases=4 (80.0%) tests=17 (94.4%)
 - case `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%)
 - case `/uniqueItems.json`: cases=6 tests=69 errors=2 pass: cases=3 (50.0%) tests=55 (79.7%)
-- summary: files=36 cases=232 tests=834 errors=71 pass: cases=156 (67.2%) tests=627 (75.2%)
+- summary: files=36 cases=232 tests=834 errors=69 pass: cases=158 (68.1%) tests=645 (77.3%)
 
 ## Results for _draft4_
 
@@ -280,7 +280,7 @@ JMC version: `2.0b37`
 - case `/minLength.json`: cases=2 tests=7 errors=0 pass: cases=2 (100.0%) tests=7 (100.0%)
 - case `/minProperties.json`: cases=2 tests=8 errors=0 pass: cases=2 (100.0%) tests=8 (100.0%)
 - case `/multipleOf.json`: cases=5 tests=10 errors=5 pass: cases=1 (20.0%) tests=6 (60.0%)
-- case `/not.json`: cases=9 tests=40 errors=2 pass: cases=6 (66.7%) tests=21 (52.5%)
+- case `/not.json`: cases=9 tests=40 errors=0 pass: cases=8 (88.9%) tests=39 (97.5%)
 - case `/oneOf.json`: cases=11 tests=27 errors=0 pass: cases=11 (100.0%) tests=27 (100.0%)
 - case `/pattern.json`: cases=2 tests=9 errors=0 pass: cases=1 (50.0%) tests=8 (88.9%)
 - case `/patternProperties.json`: cases=5 tests=23 errors=0 pass: cases=4 (80.0%) tests=22 (95.7%)
@@ -294,7 +294,7 @@ JMC version: `2.0b37`
 - case `/unevaluatedItems.json`: cases=29 tests=71 errors=22 pass: cases=1 (3.4%) tests=11 (15.5%)
 - case `/unevaluatedProperties.json`: cases=41 tests=123 errors=12 pass: cases=8 (19.5%) tests=44 (35.8%)
 - case `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=4 (66.7%) tests=63 (91.3%)
-- summary: files=44 cases=342 tests=1111 errors=138 pass: cases=170 (49.7%) tests=690 (62.1%)
+- summary: files=44 cases=342 tests=1111 errors=136 pass: cases=172 (50.3%) tests=708 (63.7%)
 
 ## Results for _latest_
 
@@ -329,7 +329,7 @@ JMC version: `2.0b37`
 - case `/minLength.json`: cases=2 tests=7 errors=0 pass: cases=2 (100.0%) tests=7 (100.0%)
 - case `/minProperties.json`: cases=2 tests=8 errors=0 pass: cases=2 (100.0%) tests=8 (100.0%)
 - case `/multipleOf.json`: cases=5 tests=10 errors=5 pass: cases=1 (20.0%) tests=6 (60.0%)
-- case `/not.json`: cases=9 tests=40 errors=2 pass: cases=6 (66.7%) tests=21 (52.5%)
+- case `/not.json`: cases=9 tests=40 errors=0 pass: cases=8 (88.9%) tests=39 (97.5%)
 - case `/oneOf.json`: cases=11 tests=27 errors=0 pass: cases=11 (100.0%) tests=27 (100.0%)
 - case `/pattern.json`: cases=2 tests=9 errors=0 pass: cases=1 (50.0%) tests=8 (88.9%)
 - case `/patternProperties.json`: cases=5 tests=23 errors=0 pass: cases=4 (80.0%) tests=22 (95.7%)
@@ -344,5 +344,5 @@ JMC version: `2.0b37`
 - case `/unevaluatedProperties.json`: cases=42 tests=125 errors=36 pass: cases=1 (2.4%) tests=14 (11.2%)
 - case `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=4 (66.7%) tests=63 (91.3%)
 - case `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%)
-- summary: files=46 cases=377 tests=1277 errors=175 pass: cases=183 (48.5%) tests=793 (62.1%)
+- summary: files=46 cases=377 tests=1277 errors=173 pass: cases=185 (49.1%) tests=811 (63.5%)
 
