@@ -245,7 +245,7 @@ def updateTypes(schema: JsonSchema, path: SchemaPath):
             if name.startswith(prefix):
                 name = name[len(prefix):]
                 break
-        types &= _types.get(((defs, name),))  # type: ignore
+        types &= _types.get(((defs, name),), ALL)  # type: ignore
 
     if "$dynamicRef" in schema:
         name = schema["$dynamicRef"]
