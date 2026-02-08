@@ -126,8 +126,12 @@ def typeFlt(schema: JsonSchema, path: SchemaPath) -> bool:
         # collect direct type hints from type, const and enum
         types: Types = ALL
 
+        # hmmm?!
+        if path and path[-1] == "propertyNames":
+            types &= STRING
+
         if "const" in schema:
-            types = val2type(schema["const"])
+            types &= val2type(schema["const"])
 
         if "type" in schema:
             stype = schema["type"]

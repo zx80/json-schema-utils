@@ -440,10 +440,12 @@ def _sPath(path: SchemaPath):
     return "/".join(s if isinstance(s, str) else f"{s[0]}/{s[1]}" for s in path)
         
 
-def _scopeSubDefs(schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
-                  moved: dict[str, str], ids: dict[str, str],
-                  delete: list[tuple[Any, str, str|None, str|None, str|None]],
-                  path: list[str|int] = []):
+def _scopeSubDefs(
+        schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
+        moved: dict[str, str], ids: dict[str, str],
+        delete: list[tuple[Any, str, str|None, str|None, str|None]],
+        path: list[str|int] = []
+    ):
 
     log.debug(f"handing $ids/$defs at {path}")
 

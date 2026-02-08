@@ -267,3 +267,79 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
         return schema
 
     return recurseSchema(schema, url, rwt=rwtRef)
+
+
+def resolveExternalRefs(schema: JsonSchema) -> JsonSchema:
+    """Resolution of external schema references."""
+
+    # TODO use local cache
+    # TODO add some arbitrary limit
+
+    if isinstance(schema, bool):
+        return schema
+    assert isinstance(schema, dict)
+
+    defs = "definitions" if "definitions" in schema else "$defs"
+    if defs not in schema:
+        schema[defs] = {}
+    else:
+        assert isinstance(schema[defs], dict)
+
+    # url -> name
+    resolved: dict[str, str] = {}
+    externs: int = 0
+
+    import requests
+
+    def rwtExtRef(local: JsonSchema, _: SchemaPath) -> JsonSchema:
+
+        nonlocal externs
+
+        if isinstance(local, dict) and "$ref" in local:
+            dest = local["$ref"]
+            assert isinstance(dest, str)
+            if dest.startswith("http://") or dest.startswith("https://"):
+                if "#" not in dest:
+                    url, path = dest, None
+                else:
+                    url, path = dest.split("#", 1)
+            else:
+                # TODO external files
+                return local
+            if url in resolved:
+                name = resolved[url]
+            else:
+                res = requests.get(url)
+                # find next available name
+                while (name := f"_extern_{externs}_") in schema[defs]:
+                    externs += 1
+                # FIXME delay changes?
+                schema[defs][name] = res.json()
+                resolved[url] = name
+
+            # update external reference to local destination
+            dest = f"#/{defs}/{name}"
+            if path is not None:
+                dest += "#" + path
+
+            local["$ref"] = dest
+
+        return local
+
+    # initial recursion
+    schema = recurseSchema(schema, ".", rwt=rwtExtRef)
+
+    # recurse in downloaded stuff
+    recursed: set[str] = set()
+    changed = True
+
+    while changed:
+        changed = False
+        for name in list(sorted(schema[defs].keys())):
+            if name in recursed:
+                continue
+            changed = True
+            recursed.add(name)
+            schema[defs][name] = recurseSchema(schema[defs][name], f"#/{defs}/{name}", rwt=rwtExtRef)
+
+    return schema

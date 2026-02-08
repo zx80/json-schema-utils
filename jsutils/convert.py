@@ -10,6 +10,7 @@ from .utils import only, JsonSchema, SchemaPath, SchemaPathSegment, TYPED_KEYWOR
 from .recurse import recurseSchema
 
 # wrapper may use a simplification step
+from .inline import resolveExternalRefs
 from .simplify import simplifySchema, scopeDefs
 from .restruct import computeTypes
 
@@ -948,7 +949,7 @@ def schema2model(schema, path: SchemaPath = (),
                     f"props for prop names at [{spath}]"
                 # if given a type, it must be string
                 if "type" in pnames:
-                    assert pnames["type"] == "string", f"prop name is string at [{spath}]"
+                    assert pnames["type"] == "string", f"unexpected prop name type {pnames['type']} at [{spath}]"
                 if "pattern" in pnames:
                     pat = pnames["pattern"]
                     assert isinstance(pat, str), f"pattern is string at [{spath}]"
@@ -1135,7 +1136,7 @@ def schema2id(schema: JsonSchema, keep_format: bool = True) -> str:
 
 def schema_to_model(schema: JsonSchema, schema_name: str,
                     typer: bool = False, simpler: bool = False, fix: bool = True,
-                    use_id: bool = False, strict: bool = True,
+                    use_id: bool = False, strict: bool = True, resolve: bool = True,
                     resilient: bool = False):
     """Convert a JSON Schema to a JSON Model."""
     model = None
@@ -1149,7 +1150,8 @@ def schema_to_model(schema: JsonSchema, schema_name: str,
         # else unknown id, proceed
     if model is None:
         try:
-            # optional schema simplification step
+            if resolve and isinstance(schema, dict):
+                schema = resolveExternalRefs(schema)
             if typer and isinstance(schema, dict):
                 log.debug("typing schema")
                 schema = computeTypes(schema)
