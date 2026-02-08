@@ -494,6 +494,10 @@ def jsu_runner():
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
+    if args.version:
+        print(__version__)
+        sys.exit(0)
+
     import json_model
 
     CASES_MODEL = [
