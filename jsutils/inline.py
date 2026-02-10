@@ -1,7 +1,10 @@
 from typing import Any
 import copy
-from urllib.parse import urlsplit
 import math
+import re
+from urllib.parse import urlsplit, urljoin
+import requests
+import hashlib
 
 from .utils import JsonSchema, SchemaPath, JSUError, log, KEYWORD_TYPE
 from .schemas import Schemas
@@ -268,12 +271,17 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
 
     return recurseSchema(schema, url, rwt=rwtRef)
 
+def resolveExternalRefs(
+            schema: JsonSchema, *,
+            url: str|None = None,
+            cache: str|None = None,
+        ) -> JsonSchema:
+    """Resolution of external schema references.
 
-def resolveExternalRefs(schema: JsonSchema) -> JsonSchema:
-    """Resolution of external schema references."""
-
-    # TODO use local cache
-    # TODO add some arbitrary limit
+    JSON Schema schema is updated with external references ($ref with url values)
+    pointing to local definitions.
+    """
+    # NOTE this should be finite because the same url should point to the already allocated def
 
     if isinstance(schema, bool):
         return schema
@@ -285,51 +293,106 @@ def resolveExternalRefs(schema: JsonSchema) -> JsonSchema:
     else:
         assert isinstance(schema[defs], dict)
 
-    # url -> name
+    sid = "id" if "id" in schema else "$id"
+    if sid in schema:
+        assert isinstance(schema[sid], str), "schema {sid} must be a string"
+        if url and schema[sid] != url:
+            log.warning(f"inconsistent {sid}: {schema[sid]} vs {url}")
+
+    # url -> local name
     resolved: dict[str, str] = {}
     externs: int = 0
+    urls: list[str|None] = [ url ]
 
-    import requests
+    # keep track of current $id to resolve relative urls
+    def fltExtRef(local: JsonSchema, _: SchemaPath) -> bool:
+        if isinstance(local, dict):
+            sid = "id" if "id" in local else "$id"
+            if sid in local:
+                urls.append(local[sid])
+        return True
 
+    # rewrite remote refs as local definitions
     def rwtExtRef(local: JsonSchema, _: SchemaPath) -> JsonSchema:
 
         nonlocal externs
 
-        if isinstance(local, dict) and "$ref" in local:
+        # shortcut
+        if isinstance(local, bool):
+            return local
+        assert isinstance(local, dict)
+
+        # handle a $ref
+        # TODO ref
+        if "$ref" in local:
             dest = local["$ref"]
             assert isinstance(dest, str)
-            if dest.startswith("http://") or dest.startswith("https://"):
+            log.info(f"$ref: {dest} ({urls})")
+            url, path = None, None
+            # FIXME handle ".#"?
+            if re.match("[^#]", dest) and not re.match("(https?|file)://", dest):  # relative URL
+                dest = urljoin(urls[-1], dest)
+            if re.match("(https?|file)://", dest):  # http URL
                 if "#" not in dest:
                     url, path = dest, None
                 else:
                     url, path = dest.split("#", 1)
-            else:
-                # TODO external files
-                return local
-            if url in resolved:
-                name = resolved[url]
-            else:
-                res = requests.get(url)
-                # find next available name
-                while (name := f"_extern_{externs}_") in schema[defs]:
-                    externs += 1
-                # FIXME delay changes?
-                schema[defs][name] = res.json()
-                resolved[url] = name
 
-            # update external reference to local destination
-            dest = f"#/{defs}/{name}"
-            if path is not None:
-                dest += "#" + path
+            log.info(f"## url={url} path={path}")
 
-            local["$ref"] = dest
+            if url is not None:
+
+                # retrieve local name
+                if url in resolved:
+                    name = resolved[url]
+                else:
+                    if cache:
+                        uh = hashlib.sha3_256(url.encode()).hexdigest()
+                        fn = f"{cache}/{uh}.json"
+                    else:
+                        fn = None
+                    js, loaded, cached = None, False, False
+                    if fn:
+                        try:
+                            with open(fn) as f:
+                                js = json.read(f)
+                            loaded, cached = True, True
+                            log.info(f"# loaded from cache: {url}")
+                        except Exception as e:
+                            log.debug(f"# not found in cache: {url}")
+                    if not loaded:
+                        res = requests.get(url)
+                        log.info(f"# loaded from net: {url}")
+                        js, loaded = res.json(), True
+                    if cache and not cached:  # store in cache
+                        with open(fn, "w") as f:
+                            f.write(res.text)
+
+                    # find next available name
+                    while (name := f"_extern_{externs}_") in schema[defs]:
+                        externs += 1
+
+                    # FIXME delay changes?
+                    schema[defs][name] = res.json()
+                    resolved[url] = name
+
+                # update external reference to local destination
+                dest = f"#/{defs}/{name}"
+                if path:
+                    dest += path
+                local["$ref"] = dest
+
+        # pop current url
+        sid = "id" if id in local else "$id"
+        if sid in local:
+            urls.pop()
 
         return local
 
     # initial recursion
-    schema = recurseSchema(schema, ".", rwt=rwtExtRef)
+    schema = recurseSchema(schema, ".", flt=fltExtRef, rwt=rwtExtRef)
 
-    # recurse in downloaded stuff
+    # recurse in new names
     recursed: set[str] = set()
     changed = True
 
@@ -340,6 +403,12 @@ def resolveExternalRefs(schema: JsonSchema) -> JsonSchema:
                 continue
             changed = True
             recursed.add(name)
-            schema[defs][name] = recurseSchema(schema[defs][name], f"#/{defs}/{name}", rwt=rwtExtRef)
+            schema[defs][name] = recurseSchema(
+                schema[defs][name], f"#/{defs}/{name}", flt=fltExtRef, rwt=rwtExtRef
+            )
+
+    # remove defs if empty
+    if not schema[defs]:
+        del schema[defs]
 
     return schema

@@ -144,7 +144,7 @@ def buildModel(model, constraints: dict, defs: dict, sharp: dict, is_root: bool 
 
 META_KEYS = [
     "title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly", "id",
-    "$schema", "$id", "$comment", "$dynamicAnchor",
+    "$schema", "$id", "$comment", "$dynamicAnchor", "$dynamicRef",
     # OLD?
     "context", "notes",
     # extensions and strange stuff?
@@ -945,8 +945,8 @@ def schema2model(schema, path: SchemaPath = (),
                     target = "$ANY"
 
                 # TODO for other cases, we could create a new reference
-                assert only(pnames, "pattern", "type", "format", *IGNORE), \
-                    f"props for prop names at [{spath}]"
+                if not only(pnames, "pattern", "type", "format", *IGNORE):
+                    log.warning(f"props for prop names at [{spath}]")
                 # if given a type, it must be string
                 if "type" in pnames:
                     assert pnames["type"] == "string", f"unexpected prop name type {pnames['type']} at [{spath}]"
