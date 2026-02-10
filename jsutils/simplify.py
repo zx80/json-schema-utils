@@ -13,10 +13,14 @@ TYPED_PROPS: dict[str, set[str]] = {
     # format: not in theory, quite often in practice
     "string": {"minLength", "maxLength", "pattern"},
     "number": {"minimum", "exclusiveMinimum", "maximum", "exclusiveMaximum", "multipleOf"},
-    "object": {"additionalProperties", "unevaluatedProperties", "propertyNames", "required",
-               "properties", "minProperties", "maxProperties", "patternProperties"},
-    "array": {"items", "minItems", "maxItems", "prefixItems", "contains", "minContains",
-              "maxContains", "unevaluatedItems", "additionalItems"},
+    "object": {
+        "additionalProperties", "unevaluatedProperties", "propertyNames", "required",
+        "properties", "minProperties", "maxProperties", "patternProperties", "dependencies"
+     },
+    "array": {
+        "items", "minItems", "maxItems", "prefixItems", "contains", "minContains",
+        "maxContains", "unevaluatedItems", "additionalItems"
+    },
     "boolean": set(),
     "null": set()
 }
@@ -107,6 +111,50 @@ def _ignored(schema: JsonSchema) -> JsonSchema:
 def same(s1: JsonSchema, s2: JsonSchema) -> bool:
     return _ignored(s1) == _ignored(s2)
 
+# a property presence in the object triggers other validations
+# {
+#   "type": "object",
+#   "dependencies": {
+#     -- schema form: if foo appears then schema must validate
+#     "foo": {
+#       ...
+#     },
+#     -- list form: if bla appears, all liste names are required
+#     "bla": [ "xxx", "yyy" ]
+#   }
+# }
+def noDependencies(schema: JsonSchema, path: SchemaPath):
+    """Remove "dependencies" in place."""
+    assert isinstance(schema, dict) and "dependencies" in schema
+    deps = schema["dependencies"]
+    del schema["dependencies"]
+    assert isinstance(deps, dict)
+    allOf = [ copy.copy(schema) ]
+    schema.clear()
+    for key, val in deps.items():
+        if isinstance(val, list):
+            allOf.append({
+                "if": {
+                    "type": "object",
+                    "required": [ key ]
+                 },
+                "then": {
+                    "type": "object",
+                    "required": val
+                }
+            })
+        else:
+            assert isinstance(val, dict) or isinstance(val, bool)
+            allOf.append({
+                "if": {
+                    "type": "object",
+                    "required": [ key ],
+                },
+                "then": val
+            })
+
+    schema["allOf"] = allOf
+
 def simplifySchema(schema: JsonSchema, url: str):
     """Simplify a JSON Schema with various rules."""
 
@@ -135,6 +183,11 @@ def simplifySchema(schema: JsonSchema, url: str):
         assert isinstance(schema["$dynamicAnchor"], str)
         dynroot = schema["$dynamicAnchor"]
         del schema["$dynamicAnchor"]
+
+    def fltSimpler(schema: JsonSchema, path: SchemaPath) -> bool:
+        if isinstance(schema, dict) and "dependencies" in schema:
+            noDependencies(schema, path)
+        return True
 
     def rwtSimpler(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
 
@@ -410,7 +463,7 @@ def simplifySchema(schema: JsonSchema, url: str):
 
         return schema
 
-    return recurseSchema(schema, url, rwt=rwtSimpler)
+    return recurseSchema(schema, url, flt=fltSimpler, rwt=rwtSimpler)
 
 
 #
@@ -438,7 +491,6 @@ _SUBCOUNT: int = 0
 
 def _sPath(path: SchemaPath):
     return "/".join(s if isinstance(s, str) else f"{s[0]}/{s[1]}" for s in path)
-        
 
 def _scopeSubDefs(
         schema: JsonSchema, defs: dict[str, JsonSchema], rootdef: str,
