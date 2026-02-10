@@ -1137,7 +1137,7 @@ def schema2id(schema: JsonSchema, keep_format: bool = True) -> str:
 def schema_to_model(schema: JsonSchema, schema_name: str,
                     typer: bool = False, simpler: bool = False, fix: bool = True,
                     use_id: bool = False, strict: bool = True, resolve: bool = True,
-                    resilient: bool = False):
+                    resilient: bool = False, cache: str|None = None):
     """Convert a JSON Schema to a JSON Model."""
     model = None
     if use_id and isinstance(schema, dict):
@@ -1151,7 +1151,7 @@ def schema_to_model(schema: JsonSchema, schema_name: str,
     if model is None:
         try:
             if resolve and isinstance(schema, dict):
-                schema = resolveExternalRefs(schema)
+                schema = resolveExternalRefs(schema, cache=cache)
             if typer and isinstance(schema, dict):
                 log.debug("typing schema")
                 schema = computeTypes(schema)

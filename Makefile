@@ -4,7 +4,7 @@ SHELL   = /bin/bash
 .PHONY: clean
 clean:
 	$(RM) *~
-	$(RM) -r jsutils/__pycache__ dist/ build/
+	$(RM) -r jsutils/__pycache__ dist/ build/ .cache/
 
 .PHONY: clean.dev
 clean.dev: clean

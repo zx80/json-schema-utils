@@ -5,6 +5,7 @@ import re
 from urllib.parse import urlsplit, urljoin
 import requests
 import hashlib
+import json
 
 from .utils import JsonSchema, SchemaPath, JSUError, log, KEYWORD_TYPE
 from .schemas import Schemas
@@ -327,7 +328,7 @@ def resolveExternalRefs(
         if "$ref" in local:
             dest = local["$ref"]
             assert isinstance(dest, str)
-            log.info(f"$ref: {dest} ({urls})")
+            log.debug(f"$ref: {dest} ({urls})")
             url, path = None, None
             # FIXME handle ".#"?
             if re.match("[^#]", dest) and not re.match("(https?|file)://", dest):  # relative URL
@@ -337,8 +338,6 @@ def resolveExternalRefs(
                     url, path = dest, None
                 else:
                     url, path = dest.split("#", 1)
-
-            log.info(f"## url={url} path={path}")
 
             if url is not None:
 
@@ -355,11 +354,11 @@ def resolveExternalRefs(
                     if fn:
                         try:
                             with open(fn) as f:
-                                js = json.read(f)
+                                js = json.load(f)
                             loaded, cached = True, True
                             log.info(f"# loaded from cache: {url}")
                         except Exception as e:
-                            log.debug(f"# not found in cache: {url}")
+                            log.debug(f"# not found in cache: {url} ({e})")
                     if not loaded:
                         res = requests.get(url)
                         log.info(f"# loaded from net: {url}")
@@ -373,7 +372,7 @@ def resolveExternalRefs(
                         externs += 1
 
                     # FIXME delay changes?
-                    schema[defs][name] = res.json()
+                    schema[defs][name] = js
                     resolved[url] = name
 
                 # update external reference to local destination

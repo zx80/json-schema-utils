@@ -362,6 +362,7 @@ def jsu_model():
     ap_common(arg)
     arg("--id", action="store_true", default=False, help="enable $id lookup")
     arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
+    arg("--cache", type=str, default=None, help="cache directory")
     arg("--strict", action="store_true", default=True, help="reject doubtful schemas")
     arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
     arg("--fix", "-F", action="store_true", default=True, help="fix common schema issues")
@@ -413,6 +414,7 @@ def jsu_compile():
     ap_common(arg)
     arg("--id", action="store_true", default=False, help="enable $id lookup")
     arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
+    arg("--cache", type=str, default=None, help="cache directory")
     arg("--strict", action="store_true", default=True, help="reject doubtful schemas")
     arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
     arg("--fix", "-F", action="store_true", default=True, help="fix common schema issues")
@@ -442,6 +444,7 @@ def jsu_compile():
             schema, args.schema,
             use_id=args.id, strict=args.strict, fix=args.fix,
             typer=args.type, simpler=args.simple, resilient=args.resilient,
+            cache=args.cache,
         )
     except Exception as e:
         log.error(f"schema to model conversion for {args.schema} failed")
@@ -479,6 +482,7 @@ def jsu_runner():
     )
     arg = ap.add_argument
     ap_common(arg)
+    arg("--cache", type=str, default=None, help="cache directory")
     arg("--dump", default=False, action="store_true", help="show generated model as debug")
     arg("--no-dump", dest="dump", action="store_false", help="do not show generated model as debug")
     arg("--type", default=True, action="store_true", help="type schema before conversion")
@@ -542,9 +546,11 @@ def jsu_runner():
                 log.info(f"considering {scase}: {description}")
 
                 try:
-                    model = schema_to_model(case["schema"], scase, strict=args.strict, fix=False,
-                                            typer=args.type, simpler=args.simple,
-                                            resilient=args.resilient)
+                    model = schema_to_model(
+                        case["schema"], scase, strict=args.strict, fix=False,
+                        typer=args.type, simpler=args.simple,
+                        resilient=args.resilient, cache=args.cache,
+                    )
                     if args.dump:
                         log.debug(f"model: {model}")
 
