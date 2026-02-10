@@ -16,7 +16,7 @@ JMC (back) version: `2.0b37`
 - `/content.json`: cases=4 tests=18 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
 - `/default.json`: cases=3 tests=7 errors=0 pass: cases=3 (100.0%) tests=7 (100.0%)
 - `/defs.json`: cases=1 tests=2 errors=0 pass: cases=0 (0.0%) tests=1 (50.0%)
-- `/dependentRequired.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
+- `/dependentRequired.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%)
 - `/dependentSchemas.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
 - `/dynamicRef.json`: cases=21 tests=44 errors=18 pass: cases=0 (0.0%) tests=3 (6.8%)
 - `/enum.json`: cases=14 tests=45 errors=0 pass: cases=14 (100.0%) tests=45 (100.0%)
@@ -52,7 +52,7 @@ JMC (back) version: `2.0b37`
 - `/unevaluatedProperties.json`: cases=42 tests=125 errors=36 pass: cases=1 (2.4%) tests=14 (11.2%)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=4 (66.7%) tests=63 (91.3%)
 - `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%)
-- summary: files=46 cases=377 tests=1277 errors=138 pass: cases=207 (54.9%) tests=883 (69.1%)
+- summary: files=46 cases=377 tests=1277 errors=134 pass: cases=211 (56.0%) tests=903 (70.7%)
 
 ## Results for _draft2019-09_
 
@@ -67,7 +67,7 @@ JMC (back) version: `2.0b37`
 - `/content.json`: cases=4 tests=18 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
 - `/default.json`: cases=3 tests=7 errors=0 pass: cases=3 (100.0%) tests=7 (100.0%)
 - `/defs.json`: cases=1 tests=2 errors=1 pass: cases=0 (0.0%) tests=0 (0.0%)
-- `/dependentRequired.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
+- `/dependentRequired.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%)
 - `/dependentSchemas.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
 - `/enum.json`: cases=14 tests=45 errors=0 pass: cases=14 (100.0%) tests=45 (100.0%)
 - `/exclusiveMaximum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%)
@@ -102,7 +102,7 @@ JMC (back) version: `2.0b37`
 - `/unevaluatedProperties.json`: cases=41 tests=123 errors=11 pass: cases=7 (17.1%) tests=47 (38.2%)
 - `/uniqueItems.json`: cases=6 tests=69 errors=2 pass: cases=3 (50.0%) tests=55 (79.7%)
 - `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%)
-- summary: files=46 cases=367 tests=1240 errors=117 pass: cases=207 (56.4%) tests=868 (70.0%)
+- summary: files=46 cases=367 tests=1240 errors=113 pass: cases=211 (57.5%) tests=888 (71.6%)
 
 ## Results for _draft7_
 
@@ -260,7 +260,7 @@ JMC (back) version: `2.0b37`
 - `/content.json`: cases=4 tests=18 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
 - `/default.json`: cases=3 tests=7 errors=0 pass: cases=3 (100.0%) tests=7 (100.0%)
 - `/defs.json`: cases=1 tests=2 errors=1 pass: cases=0 (0.0%) tests=0 (0.0%)
-- `/dependentRequired.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
+- `/dependentRequired.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%)
 - `/dependentSchemas.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
 - `/dynamicRef.json`: cases=12 tests=27 errors=11 pass: cases=0 (0.0%) tests=1 (3.7%)
 - `/enum.json`: cases=14 tests=45 errors=0 pass: cases=14 (100.0%) tests=45 (100.0%)
@@ -294,7 +294,7 @@ JMC (back) version: `2.0b37`
 - `/unevaluatedItems.json`: cases=29 tests=71 errors=22 pass: cases=1 (3.4%) tests=11 (15.5%)
 - `/unevaluatedProperties.json`: cases=41 tests=123 errors=11 pass: cases=7 (17.1%) tests=47 (38.2%)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=4 (66.7%) tests=63 (91.3%)
-- summary: files=44 cases=342 tests=1111 errors=109 pass: cases=189 (55.3%) tests=766 (68.9%)
+- summary: files=44 cases=342 tests=1111 errors=105 pass: cases=193 (56.4%) tests=786 (70.7%)
 
 ## Results for _latest_
 
@@ -308,7 +308,7 @@ JMC (back) version: `2.0b37`
 - `/content.json`: cases=4 tests=18 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
 - `/default.json`: cases=3 tests=7 errors=0 pass: cases=3 (100.0%) tests=7 (100.0%)
 - `/defs.json`: cases=1 tests=2 errors=0 pass: cases=0 (0.0%) tests=1 (50.0%)
-- `/dependentRequired.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
+- `/dependentRequired.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%)
 - `/dependentSchemas.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%)
 - `/dynamicRef.json`: cases=21 tests=44 errors=18 pass: cases=0 (0.0%) tests=3 (6.8%)
 - `/enum.json`: cases=14 tests=45 errors=0 pass: cases=14 (100.0%) tests=45 (100.0%)
@@ -344,5 +344,5 @@ JMC (back) version: `2.0b37`
 - `/unevaluatedProperties.json`: cases=42 tests=125 errors=36 pass: cases=1 (2.4%) tests=14 (11.2%)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=4 (66.7%) tests=63 (91.3%)
 - `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%)
-- summary: files=46 cases=377 tests=1277 errors=138 pass: cases=207 (54.9%) tests=883 (69.1%)
+- summary: files=46 cases=377 tests=1277 errors=134 pass: cases=211 (56.0%) tests=903 (70.7%)
 

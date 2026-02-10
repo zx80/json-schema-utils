@@ -125,14 +125,24 @@ def same(s1: JsonSchema, s2: JsonSchema) -> bool:
 # }
 def noDependencies(schema: JsonSchema, path: SchemaPath):
     """Remove "dependencies" in place."""
-    assert isinstance(schema, dict) and "dependencies" in schema
-    deps = schema["dependencies"]
-    del schema["dependencies"]
-    assert isinstance(deps, dict)
+    assert isinstance(schema, dict)
+    if "dependencies" in schema:
+        deps = schema["dependencies"]
+        del schema["dependencies"]
+        list_ok, schema_ok = True, True
+    elif "dependentRequired" in schema:
+        deps = schema["dependentRequired"]
+        del schema["dependentRequired"]
+        list_ok, schema_ok = True, False
+    elif "dependentSchema" in schema:
+        deps = schema["dependentSchema"]
+        del schema["dependentSchema"]
+        list_ok, schema_ok = False, True
     allOf = [ copy.copy(schema) ]
     schema.clear()
     for key, val in deps.items():
         if isinstance(val, list):
+            assert list_ok
             allOf.append({
                 "if": {
                     "type": "object",
@@ -144,7 +154,7 @@ def noDependencies(schema: JsonSchema, path: SchemaPath):
                 }
             })
         else:
-            assert isinstance(val, dict) or isinstance(val, bool)
+            assert schema_ok and isinstance(val, (dict, bool))
             allOf.append({
                 "if": {
                     "type": "object",
@@ -185,7 +195,10 @@ def simplifySchema(schema: JsonSchema, url: str):
         del schema["$dynamicAnchor"]
 
     def fltSimpler(schema: JsonSchema, path: SchemaPath) -> bool:
-        if isinstance(schema, dict) and "dependencies" in schema:
+        if isinstance(schema, dict) and (
+                "dependencies" in schema or  # <= 7
+                "dependentRequired" in schema or "dependentSchema" in schema  # >= 8
+            ):
             noDependencies(schema, path)
         return True
 
