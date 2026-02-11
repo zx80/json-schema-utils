@@ -126,6 +126,7 @@ def same(s1: JsonSchema, s2: JsonSchema) -> bool:
 def noDependencies(schema: JsonSchema, path: SchemaPath):
     """Remove "dependencies" in place."""
     assert isinstance(schema, dict)
+    # get dependency stuff
     if "dependencies" in schema:
         deps = schema["dependencies"]
         del schema["dependencies"]
@@ -138,12 +139,19 @@ def noDependencies(schema: JsonSchema, path: SchemaPath):
         deps = schema["dependentSchema"]
         del schema["dependentSchema"]
         list_ok, schema_ok = False, True
-    allOf = [ copy.copy(schema) ]
-    schema.clear()
+    assert isinstance(deps, dict)
+    # transfer significant props to the copy
+    subschema: JsonSchema = {}
+    for k, v in list(schema.items()):
+        if k not in _IGNORABLE:
+            subschema[k] = schema[k]
+            del schema[k]
+    allOf = [ subschema ]
+    # process dependencies
     for key, val in deps.items():
         if isinstance(val, list):
             assert list_ok
-            allOf.append({
+            dep = {
                 "if": {
                     "type": "object",
                     "required": [ key ]
@@ -152,17 +160,18 @@ def noDependencies(schema: JsonSchema, path: SchemaPath):
                     "type": "object",
                     "required": val
                 }
-            })
+            }
         else:
             assert schema_ok and isinstance(val, (dict, bool))
-            allOf.append({
+            dep = {
                 "if": {
                     "type": "object",
                     "required": [ key ],
                 },
                 "then": val
-            })
-
+            }
+        allOf.append(dep)
+    # set root allof
     schema["allOf"] = allOf
 
 def simplifySchema(schema: JsonSchema, url: str):
