@@ -258,8 +258,8 @@ def simplifySchema(schema: JsonSchema, url: str):
                 del schema["maximum"]
 
         # TODO allOf with some inclusions { "&": [ "", "/.../" ] }
+        # TODO anyOf/oneOf/allOf of length 0? are they already dropped?
 
-        # TODO anyOf/oneOf/allOf of length 0?
         # anyOf/oneOf/allOf of length 1
         for prop in ("anyOf", "oneOf", "allOf"):
             if (isinstance(schema, dict) and prop in schema and
@@ -267,8 +267,14 @@ def simplifySchema(schema: JsonSchema, url: str):
                 try:
                     nschema = copy.deepcopy(schema)
                     sub = schema[prop][0]  # pyright: ignore
-                    for p, v in sub.items():  # pyright: ignore
-                        nschema = mergeProperty(nschema, p, v)
+                    if isinstance(sub, bool):
+                        if sub:
+                            nschema = schema
+                        else:
+                            nschema = False
+                    else:
+                        for p, v in sub.items():  # pyright: ignore
+                            nschema = mergeProperty(nschema, p, v)
                     # success!
                     schema = nschema
                     if isinstance(schema, dict):
