@@ -347,8 +347,8 @@ def schema2model(schema, path: SchemaPath = (),
         assert isinstance(_defs, dict)
         for name, val in _defs.items():
             log.info(f"registering {dname}/{name} at [{spath}]")
-            # if name is ugly, $ref are encoded, we encode here as well
-            if "/" in name or "%" in name:
+            # if name is ugly, $ref are encoded, we need to encode here as well
+            if "/" in name or "%" in name or "~" in name:
                 encoded = quote(name).replace("~", "~0").replace("/", "~1")
             else:
                 encoded = name
@@ -581,6 +581,8 @@ def schema2model(schema, path: SchemaPath = (),
                 if names and names[0] in ("$defs", "definitions"):
                     val = IDS
                     for name in names:
+                        if "~0" in name or "~1" in name or "%" in name:
+                            name = unquote(name).replace("~1", "/").replace("~0", "~")
                         assert name in val, \
                             f"following path in {ref}: missing {name} ({IDS}) at [{spath}]"
                         val = val[name]
@@ -589,8 +591,14 @@ def schema2model(schema, path: SchemaPath = (),
                     for name in names:
                         if "~0" in name or "~1" in name or "%" in name:
                             name = unquote(name).replace("~1", "/").replace("~0", "~")
-                        assert name in val, f"following path in {ref}: missing {name} at [{spath}]"
-                        val = val[name]
+                        if isinstance(val, dict):
+                            assert name in val, \
+                                f"following path in {ref}: expecting property {name} at [{spath}]"
+                            val = val[name]
+                        elif isinstance(val, list):
+                            assert re.match(r"\d+$", name), \
+                                "following path in {ref}: not an array index for {name} at [{spath}]"
+                            val = val[int(name)]
                 model = schema2model(val, path + ("$ref", ), strict, fix, False, resilient)
                 return buildModel(model, {}, defs, sharp, is_root)
             else:
@@ -1163,11 +1171,15 @@ def schema2id(schema: JsonSchema, keep_format: bool = True) -> str:
     log.info(f"schema id: {shid}")
     return shid
 
-def schema_to_model(schema: JsonSchema, schema_name: str,
-                    typer: bool = False, simpler: bool = False, fix: bool = True,
-                    use_id: bool = False, strict: bool = True, resolve: bool = True,
-                    resilient: bool = False, cache: str|None = None):
+def schema_to_model(
+            schema: JsonSchema, schema_name: str,
+            typer: bool = False, simpler: bool = False, fix: bool = True,
+            use_id: bool = False, strict: bool = True, resolve: bool = True,
+            resilient: bool = False, cache: str|None = None,
+            mapping: dict[str, str] = {},
+        ):
     """Convert a JSON Schema to a JSON Model."""
+    reset()
     model = None
     if use_id and isinstance(schema, dict):
         sid = (schema["$id"] if "$id" in schema else
@@ -1180,7 +1192,7 @@ def schema_to_model(schema: JsonSchema, schema_name: str,
     if model is None:
         try:
             if resolve and isinstance(schema, dict):
-                schema = resolveExternalRefs(schema, cache=cache)
+                schema = resolveExternalRefs(schema, cache=cache, mapping=mapping)
             if typer and isinstance(schema, dict):
                 log.debug("typing schema")
                 schema = computeTypes(schema)

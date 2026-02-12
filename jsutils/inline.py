@@ -272,17 +272,28 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
 
     return recurseSchema(schema, url, rwt=rwtRef)
 
+# convert a schema path to a working reference
+def _sp2ref(path: SchemaPath) -> str:
+    # FIXME what about ~ / % chars?
+    return "#" + "/".join("/".join(str(x) for x in s) if isinstance(s, tuple) else str(s) for s in path)
+
+is_abs_url = re.compile(r"(https?|file)://").match
+
 def resolveExternalRefs(
             schema: JsonSchema, *,
             url: str|None = None,
             cache: str|None = None,
+            mapping: dict[str, str] = {},
         ) -> JsonSchema:
     """Resolution of external schema references.
 
     JSON Schema schema is updated with external references ($ref with url values)
     pointing to local definitions.
+
     """
     # NOTE this should be finite because the same url should point to the already allocated def
+    # FIXME this should probably require a two-pass recursion, first to collect local defs ($ids),
+    # second to resolve what needs be.
 
     if isinstance(schema, bool):
         return schema
@@ -306,11 +317,16 @@ def resolveExternalRefs(
     urls: list[str|None] = [ url ]
 
     # keep track of current $id to resolve relative urls
-    def fltExtRef(local: JsonSchema, _: SchemaPath) -> bool:
+    def fltExtRef(local: JsonSchema, p: SchemaPath) -> bool:
         if isinstance(local, dict):
             sid = "id" if "id" in local else "$id"
             if sid in local:
-                urls.append(local[sid])
+                url = local[sid]
+                if not is_abs_url(url):
+                    url = urljoin(urls[-1], url)
+                urls.append(url)
+                # BTW this may be a resolution in passing!
+                resolved[url] = _sp2ref(p)
         return True
 
     # rewrite remote refs as local definitions
@@ -328,16 +344,33 @@ def resolveExternalRefs(
         if "$ref" in local:
             dest = local["$ref"]
             assert isinstance(dest, str)
-            log.debug(f"$ref: {dest} ({urls})")
-            url, path = None, None
+            log.debug(f"$ref: {dest} ({urls}/{resolved})")
+
             # FIXME handle ".#"?
-            if re.match("[^#]", dest) and not re.match("(https?|file)://", dest):  # relative URL
-                dest = urljoin(urls[-1], dest)
-            if re.match("(https?|file)://", dest):  # http URL
-                if "#" not in dest:
-                    url, path = dest, None
-                else:
+            if re.match("[^#]", dest) and not is_abs_url(dest):  # relative URL
+                # this is kind of strange, if there is a $id it is for subschemas only,
+                # not for here, so we have to skip it ?!
+                idx = -2 if "$id" in local or "id" in local else -1
+                dest = urljoin(urls[idx], dest)
+
+            # local url mapping for some JSTS tests
+            if mapping:
+                for src, dst in mapping.items():
+                    if dest.startswith(src):
+                        init_dest = dest
+                        dest = dst + dest[len(src):]
+                        log.warning(f"remapping {init_dest} to {dest}")
+                        break
+
+            if is_abs_url(dest):
+                if "#" in dest:
                     url, path = dest.split("#", 1)
+                else:
+                    url, path = dest, None
+            else:
+                url, path = None, None
+
+            # log.debug(f"$ref: url={url} path={path} dest={dest}")
 
             if url is not None:
 
@@ -389,7 +422,7 @@ def resolveExternalRefs(
         return local
 
     # initial recursion
-    schema = recurseSchema(schema, ".", flt=fltExtRef, rwt=rwtExtRef)
+    schema = recurseSchema(schema, ".", flt=fltExtRef, rwt=rwtExtRef, def_first=True)
 
     # recurse in new names
     recursed: set[str] = set()
@@ -403,7 +436,8 @@ def resolveExternalRefs(
             changed = True
             recursed.add(name)
             schema[defs][name] = recurseSchema(
-                schema[defs][name], f"#/{defs}/{name}", flt=fltExtRef, rwt=rwtExtRef
+                schema[defs][name], f"#/{defs}/{name}",
+                flt=fltExtRef, rwt=rwtExtRef, def_first = True,
             )
 
     # remove defs if empty

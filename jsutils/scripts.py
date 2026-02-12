@@ -491,6 +491,7 @@ def jsu_runner():
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
     arg("--strict", action="store_true", default=False, help="reject doubtful schemas")
     arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
+    arg("--map", "-m", nargs="*", help="url mappings 'source dest'")
     arg("--resilient", default=False, action="store_true",
         help="enable model conversion resilience")
     arg("--no-resilient", dest="resilient", default=False, action="store_true",
@@ -503,6 +504,14 @@ def jsu_runner():
     if args.version:
         print(__version__)
         sys.exit(0)
+
+    mapping = {}
+    if args.map:
+        for m in args.map:
+            src, dst = m.split(" ", 1)
+            mapping[src] = dst
+        if args.debug:
+            log.info(f"url mapping: {mapping}")
 
     import json_model
 
@@ -549,7 +558,7 @@ def jsu_runner():
                     model = schema_to_model(
                         case["schema"], scase, strict=args.strict, fix=False,
                         typer=args.type, simpler=args.simple,
-                        resilient=args.resilient, cache=args.cache,
+                        resilient=args.resilient, cache=args.cache, mapping=mapping,
                     )
                     if args.dump:
                         log.debug(f"model: {model}")
