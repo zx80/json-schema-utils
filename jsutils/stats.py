@@ -1127,7 +1127,14 @@ def _json_schema_stats_rec(
             if "items" in jdata and not isinstance(jdata["items"], list):
                 collectErr(collection, "ignore keywork", "additionalItems with items array", lpath)
 
-            # TODO sanity checks around
+        elif prop == "prefixItems":
+            # 9 / 10.3.1.1 §1
+            if not isinstance(val, list):
+                collectErr(collection, "unexpected type", typeof(val), lpath)
+            if len(val) == 0:
+                collectErr(collection, "unexpected empty list", "prefixItems", lpath)
+
+            # TODO more sanity checks around
             # prefixItems / items / additionaItems / unevaluatedItems / contains
 
         elif prop == "required":
