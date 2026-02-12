@@ -755,8 +755,8 @@ def schema2model(schema, path: SchemaPath = (),
                         del schema[kw]
 
             # sanity check
-            doubt(only(schema, "type", "prefixItems", "items",
-                       "contains", "minContains", "maxContains",
+            doubt(only(schema, "type", "prefixItems", "items", "additionalItems",
+                       "contains", "minContains", "maxContains", "unexpectedItems",
                        "minItems", "maxItems", "uniqueItems", *IGNORE),
                   f"array properties at [{spath}]", strict)
 
@@ -804,11 +804,49 @@ def schema2model(schema, path: SchemaPath = (),
                 assert isinstance(unique, bool), f"boolean unique at [{spath}]"
                 if unique:
                     constraints["!"] = True
+
+            # up to 7:
+            # - items: schema = array of schema
+            #   - additionalItems = MUST BE IGNORED
+            # - items: list[schema] = tuple of schemas
+            #   - additionalItems: schema = remainder
+            if "unevaluatedItems" in schema:
+                log.warning(f"TODO handle unevaluatedItems")
+                # quick approximate fix in one case
+                # TODO move to simplify?
+                if "additionalItems" not in schema:
+                    schema["additionalItems"] = schema["unevaluatedItems"]
+                    del schema["unevaluatedItems"]
+
+            # change <= 8 syntax to >= 9 to streamline translation in the next block
+            if "additionalItems" in schema:
+                assert "prefixItems" not in schema  # <= 8 vs > 8
+                if "items" in schema:
+                    items = schema["items"]
+                    if isinstance(items, list):
+                        schema["prefixItems"] = items
+                        schema["items"] = schema["additionalItems"]
+                    else:
+                        # TODO add to simplify
+                        log.warning(f"ignoring additionalItems because items is a schema")
+                        assert isinstance(items, (bool, dict))
+                else:
+                    schema["items"] = schema["additionalItems"]
+                del schema["additionalItems"]
+            elif "items" in schema and isinstance(schema["items"], list):
+                assert "prefixItems" not in schema
+                schema["prefixItems"] = schema["items"]
+                del schema["items"]
+
+            # from 8:
+            # - prefixItems: array[schema] = tuple
+            # - items: schema = remainder
+            # - unevaluatedItems: schema = try again if it fails
             if "prefixItems" in schema:
                 doubt(only(schema, "type", "prefixItems", "items", "minItems", "maxItems",
                            "uniqueItems", *IGNORE),
                       f"array props with prefixItems at [{spath}]", strict)
-                # tuple
+                # var-tuple
                 vpi = schema["prefixItems"]
                 assert isinstance(vpi, list), f"list prefixItems at [{spath}]"
                 model = [
@@ -816,44 +854,35 @@ def schema2model(schema, path: SchemaPath = (),
                         for i, s in enumerate(vpi)
                 ]
                 if "items" in schema:
-                    # cas prefixItems + items
+                    # prefixItems + items means extensions
                     if isinstance(schema["items"], bool):
-                        assert resilient or not constraints, f"not implemented yet at [{spath}]"
-                        if not schema["items"]:
-                            return buildModel(model, {">=": 0, "<=": len(model)},
-                                              defs, sharp, is_root)
-                        else:
-                            assert resilient, f"not implemented yet at [{spath}]"
-                    # items is a type
+                        if schema["items"]:
+                            if ">=" not in constraints:
+                                constraints[">="] = 0
+                            model.append("$ANY")
+                        else:  # no extensions allowed
+                            if ">=" not in schema:
+                                constraints[">="] = 0
+                            if "<=" not in schema or constraints["<="] > len(model):
+                                constraints["<="] = len(model)
+                            return buildModel(model, constraints, defs, sharp, is_root)
+                    # items is a schema
+                    if ">=" not in constraints:
+                        constraints[">="] = 0
                     model.append(schema2model(schema["items"], path + ("items", ),
                                               strict, fix, False, resilient))
-                    if not constraints:
-                        constraints[">="] = len(model) - 1
                     return buildModel(model, constraints, defs, sharp, is_root)
                 else:
+                    if ">=" not in constraints:
+                        constraints[">="] = 0
                     model.append("$ANY")
-                    if not constraints:
-                        constraints[">="] = len(model) - 1
                     return buildModel(model, constraints, defs, sharp, is_root)
             elif "items" in schema:
+                # items without prefixItems
                 doubt(only(schema, "type", "items", "minItems", "maxItems", "uniqueItems",
                            *IGNORE), f"array props with items at [{spath}]", strict)
-                sitems = schema["items"]
-                if isinstance(sitems, list):
-                    # OLD JSON Schema prefixItems…
-                    array = [
-                        schema2model(s, path + (("items", i), ), strict, fix, False, resilient)
-                            for i, s in enumerate(sitems)
-                    ]
-                    if strict:
-                        return array
-                    else:  # trigger varlen tuple…
-                        array.append("$ANY")
-                        return { "@": array, ">=": 0 }
-                else:
-                    assert isinstance(sitems, (dict, bool)), f"valid schema at [{spath}]"
-                    model = [schema2model(schema["items"], path + ("items", ), strict, fix, False, resilient)]
-                    return buildModel(model, constraints, defs, sharp, is_root)
+                model = [schema2model(schema["items"], path + ("items", ), strict, fix, False, resilient)]
+                return buildModel(model, constraints, defs, sharp, is_root)
             elif "contains" in schema:
                 # NO contains/items mixing yet
                 assert only(schema, "type", "contains", "minContains", "maxContains",

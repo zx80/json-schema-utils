@@ -18,9 +18,9 @@ TYPED_KEYWORDS: dict[str, list[str]] = {
     "number": ["minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf"],
     "string": ["minLength", "maxLength", "pattern"],
     "array": ["minItems", "maxItems", "uniqueItems", "items", "prefixItems", "contains",
-              "minContains", "maxContains"],
+              "minContains", "maxContains", "additionalItems", "unevaluatedItems"],
     "object": ["properties", "required", "additionalProperties", "minProperties", "maxProperties",
-               "patternProperties", "propertyNames"],
+               "patternProperties", "propertyNames", "unevaluatedProperties"],
 }
 
 KEYWORD_TYPE: dict[str, str] = {}
