@@ -597,7 +597,8 @@ def jsu_runner():
             log.error(f"cases {fname}: BAD case file {e}")
 
     # final report
+    n_tests_failed = n_tests - n_tests_passed
     report = f"files={n_args} cases={n_cases} tests={n_tests} errors={n_errors} pass:"
     report += f" cases={n_cases_passed} ({100.0 * n_cases_passed / max(n_cases, 1):.1f}%)"
-    report += f" tests={n_tests_passed} ({100.0 * n_tests_passed / max(n_tests, 1):.1f}%)"
+    report += f" tests={n_tests_passed} ({100.0 * n_tests_passed / max(n_tests, 1):.1f}%, {n_tests_failed} fails)"
     print(report)
