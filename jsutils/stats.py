@@ -1117,11 +1117,18 @@ def _json_schema_stats_rec(
             else:
                 collection["additionalProperties=false"] += 1
 
-        elif prop == "additionalItems" and isinstance(val, bool):
-            if val:
-                collection["additionalItems=true"] += 1
-            else:
-                collection["additionalItems=false"] += 1
+        elif prop == "additionalItems":
+            if isinstance(val, bool):
+                if val:
+                    collection["additionalItems=true"] += 1
+                else:
+                    collection["additionalItems=false"] += 1
+            # draft 7 6.4.2 §4, draft 8 9.3.1.2 §3
+            if "items" in jdata and not isinstance(jdata["items"], list):
+                collectErr(collection, "ignore keywork", "additionalItems with items array", lpath)
+
+            # TODO sanity checks around
+            # prefixItems / items / additionaItems / unevaluatedItems / contains
 
         elif prop == "required":
             if collection["<version>"] >= 4 and isinstance(val, bool):
