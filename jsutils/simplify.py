@@ -135,9 +135,9 @@ def noDependencies(schema: JsonSchema, path: SchemaPath):
         deps = schema["dependentRequired"]
         del schema["dependentRequired"]
         list_ok, schema_ok = True, False
-    elif "dependentSchema" in schema:
-        deps = schema["dependentSchema"]
-        del schema["dependentSchema"]
+    elif "dependentSchemas" in schema:
+        deps = schema["dependentSchemas"]
+        del schema["dependentSchemas"]
         list_ok, schema_ok = False, True
     assert isinstance(deps, dict)
     # transfer significant props to the copy
@@ -206,7 +206,7 @@ def simplifySchema(schema: JsonSchema, url: str):
     def fltSimpler(schema: JsonSchema, path: SchemaPath) -> bool:
         if isinstance(schema, dict) and (
                 "dependencies" in schema or  # <= 7
-                "dependentRequired" in schema or "dependentSchema" in schema  # >= 8
+                "dependentRequired" in schema or "dependentSchemas" in schema  # >= 8
             ):
             noDependencies(schema, path)
         return True

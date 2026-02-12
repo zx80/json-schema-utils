@@ -6,7 +6,7 @@ JMC (back) version: `2.0b37`
 
 ## Results for _draft2020-12_
 
-- `/additionalProperties.json`: cases=9 tests=21 errors=1 pass: cases=7 (77.8%) tests=17 (81.0%, 4 fails)
+- `/additionalProperties.json`: cases=9 tests=21 errors=0 pass: cases=8 (88.9%) tests=20 (95.2%, 1 fails)
 - `/allOf.json`: cases=12 tests=30 errors=0 pass: cases=12 (100.0%) tests=30 (100.0%, 0 fails)
 - `/anchor.json`: cases=4 tests=8 errors=2 pass: cases=0 (0.0%) tests=2 (25.0%, 6 fails)
 - `/anyOf.json`: cases=8 tests=18 errors=0 pass: cases=8 (100.0%) tests=18 (100.0%, 0 fails)
@@ -17,7 +17,7 @@ JMC (back) version: `2.0b37`
 - `/default.json`: cases=3 tests=7 errors=0 pass: cases=3 (100.0%) tests=7 (100.0%, 0 fails)
 - `/defs.json`: cases=1 tests=2 errors=0 pass: cases=0 (0.0%) tests=1 (50.0%, 1 fails)
 - `/dependentRequired.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%, 0 fails)
-- `/dependentSchemas.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%, 20 fails)
+- `/dependentSchemas.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%, 0 fails)
 - `/dynamicRef.json`: cases=21 tests=44 errors=14 pass: cases=1 (4.8%) tests=10 (22.7%, 34 fails)
 - `/enum.json`: cases=14 tests=45 errors=0 pass: cases=14 (100.0%) tests=45 (100.0%, 0 fails)
 - `/exclusiveMaximum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%, 0 fails)
@@ -49,15 +49,15 @@ JMC (back) version: `2.0b37`
 - `/required.json`: cases=5 tests=18 errors=0 pass: cases=5 (100.0%) tests=18 (100.0%, 0 fails)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: cases=29 tests=71 errors=9 pass: cases=11 (37.9%) tests=42 (59.2%, 29 fails)
-- `/unevaluatedProperties.json`: cases=42 tests=125 errors=2 pass: cases=10 (23.8%) tests=79 (63.2%, 46 fails)
+- `/unevaluatedProperties.json`: cases=42 tests=125 errors=0 pass: cases=10 (23.8%) tests=81 (64.8%, 44 fails)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=6 (100.0%) tests=69 (100.0%, 0 fails)
 - `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%, 1 fails)
-- summary: files=46 cases=377 tests=1277 errors=75 pass: cases=241 (63.9%) tests=1034 (81.0%, 243 fails)
+- summary: files=46 cases=377 tests=1277 errors=68 pass: cases=246 (65.3%) tests=1059 (82.9%, 218 fails)
 
 ## Results for _draft2019-09_
 
 - `/additionalItems.json`: cases=10 tests=19 errors=0 pass: cases=9 (90.0%) tests=18 (94.7%, 1 fails)
-- `/additionalProperties.json`: cases=9 tests=21 errors=1 pass: cases=7 (77.8%) tests=17 (81.0%, 4 fails)
+- `/additionalProperties.json`: cases=9 tests=21 errors=0 pass: cases=8 (88.9%) tests=20 (95.2%, 1 fails)
 - `/allOf.json`: cases=12 tests=30 errors=0 pass: cases=12 (100.0%) tests=30 (100.0%, 0 fails)
 - `/anchor.json`: cases=4 tests=8 errors=2 pass: cases=0 (0.0%) tests=2 (25.0%, 6 fails)
 - `/anyOf.json`: cases=8 tests=18 errors=0 pass: cases=8 (100.0%) tests=18 (100.0%, 0 fails)
@@ -68,7 +68,7 @@ JMC (back) version: `2.0b37`
 - `/default.json`: cases=3 tests=7 errors=0 pass: cases=3 (100.0%) tests=7 (100.0%, 0 fails)
 - `/defs.json`: cases=1 tests=2 errors=1 pass: cases=0 (0.0%) tests=0 (0.0%, 2 fails)
 - `/dependentRequired.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%, 0 fails)
-- `/dependentSchemas.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%, 20 fails)
+- `/dependentSchemas.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%, 0 fails)
 - `/enum.json`: cases=14 tests=45 errors=0 pass: cases=14 (100.0%) tests=45 (100.0%, 0 fails)
 - `/exclusiveMaximum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%, 0 fails)
 - `/exclusiveMinimum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%, 0 fails)
@@ -99,10 +99,10 @@ JMC (back) version: `2.0b37`
 - `/required.json`: cases=5 tests=18 errors=0 pass: cases=5 (100.0%) tests=18 (100.0%, 0 fails)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: cases=26 tests=56 errors=1 pass: cases=15 (57.7%) tests=42 (75.0%, 14 fails)
-- `/unevaluatedProperties.json`: cases=41 tests=123 errors=2 pass: cases=9 (22.0%) tests=77 (62.6%, 46 fails)
+- `/unevaluatedProperties.json`: cases=41 tests=123 errors=1 pass: cases=9 (22.0%) tests=78 (63.4%, 45 fails)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=6 (100.0%) tests=69 (100.0%, 0 fails)
 - `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%, 1 fails)
-- summary: files=46 cases=367 tests=1240 errors=65 pass: cases=246 (67.0%) tests=1006 (81.1%, 234 fails)
+- summary: files=46 cases=367 tests=1240 errors=59 pass: cases=251 (68.4%) tests=1030 (83.1%, 210 fails)
 
 ## Results for _draft7_
 
@@ -250,7 +250,7 @@ JMC (back) version: `2.0b37`
 
 ## Results for _v1_
 
-- `/additionalProperties.json`: cases=9 tests=21 errors=1 pass: cases=7 (77.8%) tests=17 (81.0%, 4 fails)
+- `/additionalProperties.json`: cases=9 tests=21 errors=0 pass: cases=8 (88.9%) tests=20 (95.2%, 1 fails)
 - `/allOf.json`: cases=12 tests=30 errors=0 pass: cases=12 (100.0%) tests=30 (100.0%, 0 fails)
 - `/anchor.json`: cases=4 tests=8 errors=2 pass: cases=0 (0.0%) tests=2 (25.0%, 6 fails)
 - `/anyOf.json`: cases=8 tests=18 errors=0 pass: cases=8 (100.0%) tests=18 (100.0%, 0 fails)
@@ -261,7 +261,7 @@ JMC (back) version: `2.0b37`
 - `/default.json`: cases=3 tests=7 errors=0 pass: cases=3 (100.0%) tests=7 (100.0%, 0 fails)
 - `/defs.json`: cases=1 tests=2 errors=1 pass: cases=0 (0.0%) tests=0 (0.0%, 2 fails)
 - `/dependentRequired.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%, 0 fails)
-- `/dependentSchemas.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%, 20 fails)
+- `/dependentSchemas.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%, 0 fails)
 - `/dynamicRef.json`: cases=12 tests=27 errors=10 pass: cases=1 (8.3%) tests=3 (11.1%, 24 fails)
 - `/enum.json`: cases=14 tests=45 errors=0 pass: cases=14 (100.0%) tests=45 (100.0%, 0 fails)
 - `/exclusiveMaximum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%, 0 fails)
@@ -292,13 +292,13 @@ JMC (back) version: `2.0b37`
 - `/required.json`: cases=5 tests=18 errors=0 pass: cases=5 (100.0%) tests=18 (100.0%, 0 fails)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: cases=29 tests=71 errors=9 pass: cases=11 (37.9%) tests=42 (59.2%, 29 fails)
-- `/unevaluatedProperties.json`: cases=41 tests=123 errors=2 pass: cases=9 (22.0%) tests=77 (62.6%, 46 fails)
+- `/unevaluatedProperties.json`: cases=41 tests=123 errors=1 pass: cases=9 (22.0%) tests=78 (63.4%, 45 fails)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=6 (100.0%) tests=69 (100.0%, 0 fails)
-- summary: files=44 cases=342 tests=1111 errors=74 pass: cases=216 (63.2%) tests=877 (78.9%, 234 fails)
+- summary: files=44 cases=342 tests=1111 errors=68 pass: cases=221 (64.6%) tests=901 (81.1%, 210 fails)
 
 ## Results for _latest_
 
-- `/additionalProperties.json`: cases=9 tests=21 errors=1 pass: cases=7 (77.8%) tests=17 (81.0%, 4 fails)
+- `/additionalProperties.json`: cases=9 tests=21 errors=0 pass: cases=8 (88.9%) tests=20 (95.2%, 1 fails)
 - `/allOf.json`: cases=12 tests=30 errors=0 pass: cases=12 (100.0%) tests=30 (100.0%, 0 fails)
 - `/anchor.json`: cases=4 tests=8 errors=2 pass: cases=0 (0.0%) tests=2 (25.0%, 6 fails)
 - `/anyOf.json`: cases=8 tests=18 errors=0 pass: cases=8 (100.0%) tests=18 (100.0%, 0 fails)
@@ -309,7 +309,7 @@ JMC (back) version: `2.0b37`
 - `/default.json`: cases=3 tests=7 errors=0 pass: cases=3 (100.0%) tests=7 (100.0%, 0 fails)
 - `/defs.json`: cases=1 tests=2 errors=0 pass: cases=0 (0.0%) tests=1 (50.0%, 1 fails)
 - `/dependentRequired.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%, 0 fails)
-- `/dependentSchemas.json`: cases=4 tests=20 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%, 20 fails)
+- `/dependentSchemas.json`: cases=4 tests=20 errors=0 pass: cases=4 (100.0%) tests=20 (100.0%, 0 fails)
 - `/dynamicRef.json`: cases=21 tests=44 errors=14 pass: cases=1 (4.8%) tests=10 (22.7%, 34 fails)
 - `/enum.json`: cases=14 tests=45 errors=0 pass: cases=14 (100.0%) tests=45 (100.0%, 0 fails)
 - `/exclusiveMaximum.json`: cases=1 tests=4 errors=0 pass: cases=1 (100.0%) tests=4 (100.0%, 0 fails)
@@ -341,8 +341,8 @@ JMC (back) version: `2.0b37`
 - `/required.json`: cases=5 tests=18 errors=0 pass: cases=5 (100.0%) tests=18 (100.0%, 0 fails)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: cases=29 tests=71 errors=9 pass: cases=11 (37.9%) tests=42 (59.2%, 29 fails)
-- `/unevaluatedProperties.json`: cases=42 tests=125 errors=2 pass: cases=10 (23.8%) tests=79 (63.2%, 46 fails)
+- `/unevaluatedProperties.json`: cases=42 tests=125 errors=0 pass: cases=10 (23.8%) tests=81 (64.8%, 44 fails)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=6 (100.0%) tests=69 (100.0%, 0 fails)
 - `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%, 1 fails)
-- summary: files=46 cases=377 tests=1277 errors=75 pass: cases=241 (63.9%) tests=1034 (81.0%, 243 fails)
+- summary: files=46 cases=377 tests=1277 errors=68 pass: cases=246 (65.3%) tests=1059 (82.9%, 218 fails)
 
