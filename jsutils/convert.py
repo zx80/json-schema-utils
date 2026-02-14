@@ -1175,7 +1175,7 @@ def schema_to_model(
             schema: JsonSchema, schema_name: str,
             typer: bool = False, simpler: bool = False, fix: bool = True,
             use_id: bool = False, strict: bool = True, resolve: bool = True,
-            resilient: bool = False, cache: str|None = None,
+            resilient: bool = False, cache: str|None = None, version: int|None = None,
             mapping: dict[str, str] = {},
         ):
     """Convert a JSON Schema to a JSON Model."""
@@ -1201,7 +1201,7 @@ def schema_to_model(
                 scopeDefs(schema)
                 url = schema.get("$id", ".")
                 assert isinstance(url, str)
-                schema = simplifySchema(schema, url)
+                schema = simplifySchema(schema, url, sversion=version)
             # then actually convert to model
             model = schema2model(schema, strict=strict, fix=fix, resilient=resilient)
         except BaseException as e:

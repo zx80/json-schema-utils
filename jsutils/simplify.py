@@ -111,7 +111,7 @@ def _ignored(schema: JsonSchema) -> JsonSchema:
 def same(s1: JsonSchema, s2: JsonSchema) -> bool:
     return _ignored(s1) == _ignored(s2)
 
-# a property presence in the object triggers other validations
+# a property presence in the object triggers other validations, eg versions 7/8
 # {
 #   "type": "object",
 #   "dependencies": {
@@ -123,6 +123,8 @@ def same(s1: JsonSchema, s2: JsonSchema) -> bool:
 #     "bla": [ "xxx", "yyy" ]
 #   }
 # }
+# in later versions this is changed to dependentSchemas (schemas) and dependentRequired (list)
+# it is translated as an if/then.
 def noDependencies(schema: JsonSchema, path: SchemaPath):
     """Remove "dependencies" in place."""
     assert isinstance(schema, dict)
@@ -174,7 +176,7 @@ def noDependencies(schema: JsonSchema, path: SchemaPath):
     # set root allof
     schema["allOf"] = allOf
 
-def simplifySchema(schema: JsonSchema, url: str):
+def simplifySchema(schema: JsonSchema, url: str, sversion: int|None = None):
     """Simplify a JSON Schema with various rules."""
 
     # schema version for $ref aggressive pruning
@@ -190,9 +192,12 @@ def simplifySchema(schema: JsonSchema, url: str):
             3 if "draft-03" in ds else \
             2 if "draft-02" in ds else \
             1 if "draft-01" in ds else \
-            9
+            sversion or 9
     else:
-        version = 9  # 2020-12
+        version = sversion or 9  # 2020-12
+
+    if sversion and version != sversion:
+        log.error(f"incompatible versions, {sversion} set but schema is {version}")
 
     # TODO more generic dynamicAnchor removal
     # TODO anchor removal?

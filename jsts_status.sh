@@ -21,10 +21,21 @@ echo "JSU (front) version: \`$(jsu-test-runner --version)\`"
 echo "JMC (back) version: \`$(jmc --version)\`"
 echo
 
+jsu_runner="jsu-test-runner --resilient"
+
 for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 latest ; do
   echo "## Results for _${draft}_"
   echo
   echo -n "$draft: " >&2
+
+  jsu_opts=""
+  case $draft in
+    draft7) jsu_opts+=" --schema-version 7" ;;
+    draft6) jsu_opts+=" --schema-version 6" ;;
+    draft4) jsu_opts+=" --schema-version 4" ;;
+    draft3) jsu_opts+=" --schema-version 3" ;;
+    *) ;;
+  esac
 
   test_dir="${root_dir}/tests/${draft}"
   test -d "$test_dir" || err 2 "no such case directory: $test_dir"
@@ -33,13 +44,13 @@ for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 latest ; d
   for file in ${test_dir}/*.json ; do
     test=${file#$test_dir}
     echo -n "- \`$test\`: "
-    jsu-test-runner --resilient $file 2> /dev/null | tail -1 | sed -e 's/files=1 //'
+    $jsu_runner $jsu_opts $file 2> /dev/null | tail -1 | sed -e 's/files=1 //'
     echo -n "." >&2
   done
 
   # and summary
   echo -n "- summary: "
-  summary=$(jsu-test-runner --resilient ${test_dir}/*.json 2> /dev/null | tail -1)
+  summary=$($jsu_runner $jsu_opts ${test_dir}/*.json 2> /dev/null | tail -1)
   echo $summary
   percent="(${summary##* \(}"
   echo ". $percent" >&2

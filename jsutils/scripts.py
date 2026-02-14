@@ -373,6 +373,7 @@ def jsu_model():
     arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
     arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
+    arg("--schema-version", "-V", dest="sversion", type=int, default=None, help="set JSON Schema version")
     arg("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args()
 
@@ -425,6 +426,7 @@ def jsu_compile():
     arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
     arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
+    arg("--schema-version", "-V", dest="sversion", type=int, default=None, help="set JSON Schema version")
     arg("schema", default="-", help="schema to process")
     arg("others", nargs="*", help="jmc backend options and arguments")
     args = ap.parse_args()
@@ -444,7 +446,7 @@ def jsu_compile():
             schema, args.schema,
             use_id=args.id, strict=args.strict, fix=args.fix,
             typer=args.type, simpler=args.simple, resilient=args.resilient,
-            cache=args.cache,
+            cache=args.cache, version=args.sversion,
         )
     except Exception as e:
         log.error(f"schema to model conversion for {args.schema} failed")
@@ -492,6 +494,7 @@ def jsu_runner():
     arg("--strict", action="store_true", default=False, help="reject doubtful schemas")
     arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
     arg("--map", "-m", nargs="*", help="url mappings 'source dest'")
+    arg("--schema-version", "-V", dest="sversion", type=int, default=None, help="set JSON Schema version")
     arg("--resilient", default=False, action="store_true",
         help="enable model conversion resilience")
     arg("--no-resilient", dest="resilient", default=False, action="store_true",
@@ -557,7 +560,7 @@ def jsu_runner():
                 try:
                     model = schema_to_model(
                         case["schema"], scase, strict=args.strict, fix=False,
-                        typer=args.type, simpler=args.simple,
+                        typer=args.type, simpler=args.simple, version=args.sversion,
                         resilient=args.resilient, cache=args.cache, mapping=mapping,
                     )
                     if args.dump:

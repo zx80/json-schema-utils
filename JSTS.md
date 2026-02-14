@@ -1,6 +1,6 @@
 # JSON Schema Test Suite Report
 
-JSTS version: `32fa6e2872a94fd933560d49e6ab87c6d06f8135`
+JSTS version: `bce6a47cc3751095abeed567f22b4c91f809337a`
 JSU (front) version: `0.9.0`
 JMC (back) version: `2.0b37`
 
@@ -99,10 +99,10 @@ JMC (back) version: `2.0b37`
 - `/required.json`: cases=5 tests=18 errors=0 pass: cases=5 (100.0%) tests=18 (100.0%, 0 fails)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: cases=26 tests=56 errors=1 pass: cases=15 (57.7%) tests=42 (75.0%, 14 fails)
-- `/unevaluatedProperties.json`: cases=41 tests=123 errors=1 pass: cases=9 (22.0%) tests=78 (63.4%, 45 fails)
+- `/unevaluatedProperties.json`: cases=42 tests=125 errors=1 pass: cases=10 (23.8%) tests=80 (64.0%, 45 fails)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=6 (100.0%) tests=69 (100.0%, 0 fails)
 - `/vocabulary.json`: cases=2 tests=5 errors=0 pass: cases=1 (50.0%) tests=4 (80.0%, 1 fails)
-- summary: files=46 cases=367 tests=1240 errors=59 pass: cases=251 (68.4%) tests=1030 (83.1%, 210 fails)
+- summary: files=46 cases=368 tests=1242 errors=59 pass: cases=252 (68.5%) tests=1032 (83.1%, 210 fails)
 
 ## Results for _draft7_
 
@@ -138,12 +138,12 @@ JMC (back) version: `2.0b37`
 - `/patternProperties.json`: cases=5 tests=23 errors=0 pass: cases=4 (80.0%) tests=22 (95.7%, 1 fails)
 - `/properties.json`: cases=6 tests=28 errors=0 pass: cases=5 (83.3%) tests=27 (96.4%, 1 fails)
 - `/propertyNames.json`: cases=6 tests=20 errors=2 pass: cases=1 (16.7%) tests=13 (65.0%, 7 fails)
-- `/ref.json`: cases=35 tests=78 errors=12 pass: cases=21 (60.0%) tests=53 (67.9%, 25 fails)
+- `/ref.json`: cases=35 tests=78 errors=12 pass: cases=22 (62.9%) tests=54 (69.2%, 24 fails)
 - `/refRemote.json`: cases=11 tests=23 errors=11 pass: cases=0 (0.0%) tests=0 (0.0%, 23 fails)
 - `/required.json`: cases=5 tests=18 errors=0 pass: cases=5 (100.0%) tests=18 (100.0%, 0 fails)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%, 0 fails)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=6 (100.0%) tests=69 (100.0%, 0 fails)
-- summary: files=37 cases=257 tests=922 errors=31 pass: cases=216 (84.0%) tests=854 (92.6%, 68 fails)
+- summary: files=37 cases=257 tests=922 errors=31 pass: cases=217 (84.4%) tests=855 (92.7%, 67 fails)
 
 ## Results for _draft6_
 
@@ -178,12 +178,12 @@ JMC (back) version: `2.0b37`
 - `/patternProperties.json`: cases=5 tests=23 errors=0 pass: cases=4 (80.0%) tests=22 (95.7%, 1 fails)
 - `/properties.json`: cases=6 tests=28 errors=0 pass: cases=5 (83.3%) tests=27 (96.4%, 1 fails)
 - `/propertyNames.json`: cases=6 tests=20 errors=2 pass: cases=1 (16.7%) tests=13 (65.0%, 7 fails)
-- `/ref.json`: cases=31 tests=70 errors=9 pass: cases=20 (64.5%) tests=51 (72.9%, 19 fails)
+- `/ref.json`: cases=31 tests=70 errors=9 pass: cases=21 (67.7%) tests=52 (74.3%, 18 fails)
 - `/refRemote.json`: cases=11 tests=23 errors=11 pass: cases=0 (0.0%) tests=0 (0.0%, 23 fails)
 - `/required.json`: cases=5 tests=18 errors=0 pass: cases=5 (100.0%) tests=18 (100.0%, 0 fails)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%, 0 fails)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=6 (100.0%) tests=69 (100.0%, 0 fails)
-- summary: files=36 cases=232 tests=834 errors=27 pass: cases=195 (84.1%) tests=773 (92.7%, 61 fails)
+- summary: files=36 cases=232 tests=834 errors=27 pass: cases=196 (84.5%) tests=774 (92.8%, 60 fails)
 
 ## Results for _draft4_
 
@@ -212,12 +212,12 @@ JMC (back) version: `2.0b37`
 - `/pattern.json`: cases=2 tests=9 errors=0 pass: cases=2 (100.0%) tests=9 (100.0%, 0 fails)
 - `/patternProperties.json`: cases=4 tests=18 errors=0 pass: cases=3 (75.0%) tests=17 (94.4%, 1 fails)
 - `/properties.json`: cases=5 tests=24 errors=0 pass: cases=4 (80.0%) tests=23 (95.8%, 1 fails)
-- `/ref.json`: cases=19 tests=45 errors=4 pass: cases=13 (68.4%) tests=37 (82.2%, 8 fails)
+- `/ref.json`: cases=19 tests=45 errors=4 pass: cases=14 (73.7%) tests=38 (84.4%, 7 fails)
 - `/refRemote.json`: cases=8 tests=17 errors=8 pass: cases=0 (0.0%) tests=0 (0.0%, 17 fails)
 - `/required.json`: cases=4 tests=17 errors=0 pass: cases=4 (100.0%) tests=17 (100.0%, 0 fails)
 - `/type.json`: cases=11 tests=79 errors=0 pass: cases=11 (100.0%) tests=79 (100.0%, 0 fails)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=6 (100.0%) tests=69 (100.0%, 0 fails)
-- summary: files=30 cases=160 tests=615 errors=15 pass: cases=137 (85.6%) tests=576 (93.7%, 39 fails)
+- summary: files=30 cases=160 tests=615 errors=15 pass: cases=138 (86.2%) tests=577 (93.8%, 38 fails)
 
 ## Results for _draft3_
 
@@ -241,12 +241,12 @@ JMC (back) version: `2.0b37`
 - `/pattern.json`: cases=2 tests=9 errors=0 pass: cases=2 (100.0%) tests=9 (100.0%, 0 fails)
 - `/patternProperties.json`: cases=4 tests=17 errors=0 pass: cases=3 (75.0%) tests=16 (94.1%, 1 fails)
 - `/properties.json`: cases=3 tests=15 errors=0 pass: cases=2 (66.7%) tests=14 (93.3%, 1 fails)
-- `/ref.json`: cases=10 tests=27 errors=2 pass: cases=7 (70.0%) tests=22 (81.5%, 5 fails)
+- `/ref.json`: cases=10 tests=27 errors=2 pass: cases=8 (80.0%) tests=23 (85.2%, 4 fails)
 - `/refRemote.json`: cases=4 tests=8 errors=4 pass: cases=0 (0.0%) tests=0 (0.0%, 8 fails)
 - `/required.json`: cases=3 tests=4 errors=2 pass: cases=1 (33.3%) tests=1 (25.0%, 3 fails)
 - `/type.json`: cases=12 tests=80 errors=3 pass: cases=9 (75.0%) tests=67 (83.8%, 13 fails)
 - `/uniqueItems.json`: cases=6 tests=62 errors=0 pass: cases=6 (100.0%) tests=62 (100.0%, 0 fails)
-- summary: files=25 cases=104 tests=434 errors=25 pass: cases=73 (70.2%) tests=356 (82.0%, 78 fails)
+- summary: files=25 cases=104 tests=434 errors=25 pass: cases=74 (71.2%) tests=357 (82.3%, 77 fails)
 
 ## Results for _v1_
 
@@ -292,9 +292,9 @@ JMC (back) version: `2.0b37`
 - `/required.json`: cases=5 tests=18 errors=0 pass: cases=5 (100.0%) tests=18 (100.0%, 0 fails)
 - `/type.json`: cases=11 tests=80 errors=0 pass: cases=11 (100.0%) tests=80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: cases=29 tests=71 errors=9 pass: cases=11 (37.9%) tests=42 (59.2%, 29 fails)
-- `/unevaluatedProperties.json`: cases=41 tests=123 errors=1 pass: cases=9 (22.0%) tests=78 (63.4%, 45 fails)
+- `/unevaluatedProperties.json`: cases=42 tests=125 errors=1 pass: cases=10 (23.8%) tests=80 (64.0%, 45 fails)
 - `/uniqueItems.json`: cases=6 tests=69 errors=0 pass: cases=6 (100.0%) tests=69 (100.0%, 0 fails)
-- summary: files=44 cases=342 tests=1111 errors=68 pass: cases=221 (64.6%) tests=901 (81.1%, 210 fails)
+- summary: files=44 cases=343 tests=1113 errors=68 pass: cases=222 (64.7%) tests=903 (81.1%, 210 fails)
 
 ## Results for _latest_
 
