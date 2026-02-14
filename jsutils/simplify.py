@@ -229,6 +229,7 @@ def simplifySchema(schema: JsonSchema, url: str, sversion: int|None = None):
             # https://json-schema.org/draft-07/draft-handrews-json-schema-01#rfc.section.8.3
             keep = { p: v for p, v in schema.items() if p in _IGNORABLE or p == "$ref" }
             if len(keep) != len(schema):
+                # FIXME spurious warning on "type" added by an ealier phase
                 log.warning(f"dropping all props adjacent to $ref on old schemas at {path}")
             return keep
 
