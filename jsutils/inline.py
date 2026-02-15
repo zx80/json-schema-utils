@@ -6,10 +6,14 @@ from urllib.parse import urlsplit, urljoin
 import requests
 import hashlib
 import json
+import logging
 
-from .utils import JsonSchema, SchemaPath, JSUError, log, KEYWORD_TYPE
+from .utils import JsonSchema, SchemaPath, JSUError, KEYWORD_TYPE, is_abs_url, schemapath_to_urlpath
 from .schemas import Schemas
 from .recurse import recurseSchema
+
+log = logging.getLogger("inline")
+log.setLevel(logging.INFO)
 
 # TODO fix recursion handling
 
@@ -272,24 +276,18 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
 
     return recurseSchema(schema, url, rwt=rwtRef)
 
-# convert a schema path to a working reference
-def _sp2ref(path: SchemaPath) -> str:
-    # FIXME what about ~ / % chars?
-    return "#" + "/".join("/".join(str(x) for x in s) if isinstance(s, tuple) else str(s) for s in path)
-
-is_abs_url = re.compile(r"(https?|file)://").match
-
 def resolveExternalRefs(
             schema: JsonSchema, *,
             url: str|None = None,
             cache: str|None = None,
             mapping: dict[str, str] = {},
+            version: int|None = None,
+            level: int = logging.INFO,
         ) -> JsonSchema:
     """Resolution of external schema references.
 
     JSON Schema schema is updated with external references ($ref with url values)
     pointing to local definitions.
-
     """
     # NOTE this should be finite because the same url should point to the already allocated def
     # FIXME this should probably require a two-pass recursion, first to collect local defs ($ids),
@@ -299,7 +297,13 @@ def resolveExternalRefs(
         return schema
     assert isinstance(schema, dict)
 
-    defs = "definitions" if "definitions" in schema else "$defs"
+    log.setLevel(level)
+    log.debug(f"resolve ext in: {schema}")
+
+    defs = ("$defs" if "$defs" in schema  else
+            "definitions" if "definitions" in schema else
+            "$defs" if version and version >= 8 else
+            "definitions")
     if defs not in schema:
         schema[defs] = {}
     else:
@@ -313,7 +317,9 @@ def resolveExternalRefs(
 
     # url -> local name
     resolved: dict[str, str] = {}
+    # counter when creating new names
     externs: int = 0
+    # url $id stack
     urls: list[str|None] = [ url ]
 
     # keep track of current $id to resolve relative urls
@@ -322,11 +328,12 @@ def resolveExternalRefs(
             sid = "id" if "id" in local else "$id"
             if sid in local:
                 url = local[sid]
+                assert isinstance(url, str)
                 if not is_abs_url(url):
                     url = urljoin(urls[-1], url)
                 urls.append(url)
-                # BTW this may be a resolution in passing!
-                resolved[url] = _sp2ref(p)
+                # BTW this may be a local resolution in passing!
+                resolved[url] = "#/" + schemapath_to_urlpath(p)
         return True
 
     # rewrite remote refs as local definitions
@@ -344,7 +351,7 @@ def resolveExternalRefs(
         if "$ref" in local:
             dest = local["$ref"]
             assert isinstance(dest, str)
-            log.debug(f"$ref: {dest} ({urls}/{resolved})")
+            log.debug(f"$ref={dest} ({urls}/{resolved})")
 
             # FIXME handle ".#"?
             if re.match("[^#]", dest) and not is_abs_url(dest):  # relative URL
@@ -352,7 +359,16 @@ def resolveExternalRefs(
                 # not for here, so we have to skip it ?!
                 idx = -2 if "$id" in local or "id" in local else -1
                 dest = urljoin(urls[idx], dest)
+                # log.debug(f"join: {local['$ref']} -> {dest}")
+        else:
+            dest = None
 
+        # use existing resolutions
+        if not dest:
+            pass
+        elif dest in resolved:
+            local["$ref"] = resolved[dest]
+        else:
             # local url mapping for some JSTS tests
             if mapping:
                 for src, dst in mapping.items():
@@ -374,10 +390,9 @@ def resolveExternalRefs(
 
             if url is not None:
 
-                # retrieve local name
-                if url in resolved:
+                if url in resolved:  # retrieve local name or path
                     name = resolved[url]
-                else:
+                else:  # or create one
                     if cache:
                         uh = hashlib.sha3_256(url.encode()).hexdigest()
                         fn = f"{cache}/{uh}.json"
@@ -409,7 +424,10 @@ def resolveExternalRefs(
                     resolved[url] = name
 
                 # update external reference to local destination
-                dest = f"#/{defs}/{name}"
+                if name and name[0] == "#":  # this is a local path
+                    dest = "#"  # FIXME probably not always right
+                else:
+                    dest = f"#/{defs}/{name}"
                 if path:
                     dest += path
                 local["$ref"] = dest
@@ -421,7 +439,9 @@ def resolveExternalRefs(
 
         return local
 
-    # initial recursion
+    # first pass to populate resolved
+    schema = recurseSchema(schema, ".", flt=fltExtRef, def_first=True)
+    # then actual $ref rewriting
     schema = recurseSchema(schema, ".", flt=fltExtRef, rwt=rwtExtRef, def_first=True)
 
     # recurse in new names
@@ -435,6 +455,7 @@ def resolveExternalRefs(
                 continue
             changed = True
             recursed.add(name)
+            recurseSchema(schema, ".", flt=fltExtRef, def_first=True)
             schema[defs][name] = recurseSchema(
                 schema[defs][name], f"#/{defs}/{name}",
                 flt=fltExtRef, rwt=rwtExtRef, def_first = True,
@@ -443,5 +464,7 @@ def resolveExternalRefs(
     # remove defs if empty
     if not schema[defs]:
         del schema[defs]
+
+    log.debug(f"resolve ext out: {schema}")
 
     return schema

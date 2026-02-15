@@ -396,6 +396,8 @@ def jsu_model():
                 schema, fn,
                 use_id=args.id, strict=args.strict, fix=args.fix,
                 simpler=args.simple, typer=args.type, resilient=args.resilient,
+                version=args.sversion,
+                level=logging.DEBUG if args.debug else logging.INFO,
             )
         except Exception as e:
             log.error(e, exc_info=args.debug)
@@ -447,6 +449,7 @@ def jsu_compile():
             use_id=args.id, strict=args.strict, fix=args.fix,
             typer=args.type, simpler=args.simple, resilient=args.resilient,
             cache=args.cache, version=args.sversion,
+            level=logging.DEBUG if args.debug else logging.INFO,
         )
     except Exception as e:
         log.error(f"schema to model conversion for {args.schema} failed")
@@ -562,6 +565,7 @@ def jsu_runner():
                         case["schema"], scase, strict=args.strict, fix=False,
                         typer=args.type, simpler=args.simple, version=args.sversion,
                         resilient=args.resilient, cache=args.cache, mapping=mapping,
+                        level = logging.DEBUG if args.debug else logging.INFO,
                     )
                     if args.dump:
                         log.debug(f"model: {model}")

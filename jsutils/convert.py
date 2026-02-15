@@ -2,12 +2,12 @@ from typing import Any
 import re
 import copy
 import logging
-from urllib.parse import quote, unquote
 import hashlib
 import json
 
-from .utils import only, JsonSchema, SchemaPath, SchemaPathSegment, TYPED_KEYWORDS, KEYWORD_TYPE
-from .recurse import recurseSchema
+from .utils import only, JsonSchema, SchemaPath, SchemaPathSegment, decode_url, schemapath_to_urlpath, is_abs_url
+from .utils import TYPED_KEYWORDS, KEYWORD_TYPE
+from .recurse import recurseSchema, log as rec_log
 
 # wrapper may use a simplification step
 from .inline import resolveExternalRefs
@@ -15,7 +15,7 @@ from .simplify import simplifySchema, scopeDefs
 from .restruct import computeTypes
 
 log = logging.getLogger("convert")
-# log.setLevel(logging.DEBUG)
+log.setLevel(logging.DEBUG)
 
 def tname(v) -> str:
     return (
@@ -220,19 +220,32 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return schemas
 
 
-# identifiers
+# global identifiers
+# TODO use a cleaner context for that!
 CURRENT_SCHEMA: str|None = None
 SCHEMA = None
 IDS: dict[str, dict[str, Any]] = {}
+RENAMES: dict[str, str] = {}
+N_RENAMES: int = 0
 EXPLICIT_TYPE: bool = False
 
+# "#foo" -> "#/path/to/foo/id"
+ID_TO_PATH: dict[str, str] = {}
 
 def reset():
-    global CURRENT_SCHEMA, IDS, SCHEMA
-    CURRENT_SCHEMA = None
-    SCHEMA = None
-    IDS = {}
+    """Reset global stuff."""
+    global CURRENT_SCHEMA, SCHEMA, IDS, RENAMES, N_RENAMES, IDS_STACK
+    CURRENT_SCHEMA, SCHEMA = None, None
+    IDS, ID_TO_PATH, RENAMES, N_RENAMES = {}, {}, {}, 0
 
+def get_new_name() -> str:
+    """Get an unused name."""
+    global N_RENAMES
+    while True:
+        name = f"_name_{N_RENAMES}_"
+        N_RENAMES += 1
+        if name not in IDS:
+            return name
 
 _FMT2MODEL = {
     "password": "$STRING",  # OpenAPI
@@ -306,9 +319,15 @@ PATTERN: dict[str, str] = {
 
 
 # TODO handle a global defs so as to be able to create new ones
-def schema2model(schema, path: SchemaPath = (),
-                 strict: bool = True, fix: bool = True, is_root: bool = True,
-                 resilient: bool = False):
+def schema2model(
+            schema,
+            url: str = ".",
+            path: SchemaPath = (),
+            strict: bool = True,
+            fix: bool = True,
+            is_root: bool = True,
+            resilient: bool = False,
+        ):
     """Convert a JSON schema to a JSON model assuming a more or less a 2020-12 semantics."""
 
     global CURRENT_SCHEMA, SCHEMA
@@ -337,25 +356,49 @@ def schema2model(schema, path: SchemaPath = (),
         if prop in schema:
             sharp[prop] = schema[prop]
 
-    # handle defs
-    # FIXME should probably delay conversion...
+    # handle some $id
+    lid = schema["$id"] if "$id" in schema else schema["id"] if "id" in schema else None
+    if lid:
+        # FIXME uniqueness?
+        if re.match("#[^/]*$", lid):
+            if lid in ID_TO_PATH:
+                log.warning(f"overwriting {lid} at {path}")
+            ID_TO_PATH[lid] = "#/" + schemapath_to_urlpath(path)
+            ID_TO_PATH[url + lid] = ID_TO_PATH[lid]
+        if not is_abs_url(lid):
+            lid = None
+        # TODO compute current url!
+        log.debug(f"$id: {lid} {ID_TO_PATH}")
+
+    #
+    # Handle local definitions
+    #
+    # NOTE JS definitions as str, but references are url encoded with further changes for / and ~
+    # we need a clear str-for-str correspondance when translating to a model.
+    # beware that some chars may or may not be encoded, eg:
+    # { "$defs": { "foo\"bla": true }, "allOf": [ { "$ref": "#foo\"bla", "$ref": "#foo%22bla" } ] }
+    #
+    # FIXME root only?
     defs = {}
-    if "$defs" in schema or "definitions" in schema:
-        dname = "$defs" if "$defs" in schema else "definitions"
+    dname = "$defs" if "$defs" in schema else "definitions"
+    if dname in schema:
+        # FIXME push?
         IDS[dname] = {}
         _defs = schema[dname]
         assert isinstance(_defs, dict)
         for name, val in _defs.items():
             log.info(f"registering {dname}/{name} at [{spath}]")
-            # if name is ugly, $ref are encoded, we need to encode here as well
-            if "/" in name or "%" in name or "~" in name:
-                encoded = quote(name).replace("~", "~0").replace("/", "~1")
-            else:
-                encoded = name
-            # keep json schema for handling $ref #
-            IDS[dname][encoded] = val
+            if name == "" or "/" in name or "%" in name or "~" in name or "\"" in name:
+                # if name is ugly, $ref are encoded…
+                new_name = get_new_name()
+            else:  # keep as is
+                new_name = name
+            # keep track of renamed definitions
+            RENAMES[name] = new_name
+            # keep json schema for handling $ref with a local path (eg "#/$defs/foo")
+            IDS[dname][name] = val
             # provide a local converted version as well? not enough??
-            defs[encoded] = schema2model(val, path + ((dname, name),), strict, fix, False, resilient)
+            defs[new_name] = schema2model(val, lid or url, path + ((dname, name),), strict, fix, False, resilient)
         # special root handling
         IDS[dname][""] = "$#"
 
@@ -506,36 +549,36 @@ def schema2model(schema, path: SchemaPath = (),
         choices = schema["oneOf"]
         assert isinstance(choices, list), f"oneOf list at [{spath}]"
         if only(schema, "oneOf", *IGNORE):
-            model = {"^": [schema2model(s, path + (("oneOf", i), ), strict, fix, False, resilient)
+            model = {"^": [schema2model(s, lid or url, path + (("oneOf", i), ), strict, fix, False, resilient)
                          for i, s in enumerate(choices)]}
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # try building an "allOf" layer
             log.warning(f"keyword oneOf intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "oneOf")
-            return schema2model(ao, path + ("oneOf",), strict, fix, False, resilient)
+            return schema2model(ao, lid or url, path + ("oneOf",), strict, fix, False, resilient)
     elif "anyOf" in schema:
         choices = schema["anyOf"]
         assert isinstance(choices, (list, tuple)), f"anyOf list at [{spath}]"
         if only(schema, "anyOf", *IGNORE):
-            model = {"|": [schema2model(s, path + (("anyOf", i), ), strict, fix, False, resilient)
+            model = {"|": [schema2model(s, lid or url, path + (("anyOf", i), ), strict, fix, False, resilient)
                         for i, s in enumerate(choices)]}
             return buildModel(model, {}, defs, sharp, is_root)
         else:
             log.warning(f"keyword anyOf intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "anyOf")
-            return schema2model(ao, path + ("anyOf",), strict, fix, False, resilient)
+            return schema2model(ao, lid or url, path + ("anyOf",), strict, fix, False, resilient)
     elif "allOf" in schema:
         # NOTE types should be compatible to avoid an empty match
         choices = schema["allOf"]
         assert isinstance(choices, (list, tuple)), f"allOf list at [{spath}]"
         if only(schema, "allOf", *IGNORE):
-            model = {"&": [schema2model(s, path + (("allOf", i), ), strict, fix, False, resilient)
+            model = {"&": [schema2model(s, lid or url, path + (("allOf", i), ), strict, fix, False, resilient)
                         for i, s in enumerate(choices)]}
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # build another allOf layer
             log.warning(f"keyword allOf intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "allOf")
-            return schema2model(ao, path + ("allOf", ), strict, fix, False, resilient)
+            return schema2model(ao, lid or url, path + ("allOf", ), strict, fix, False, resilient)
     elif "not" in schema:
         val = schema["not"]
         if isinstance(val, bool):
@@ -549,20 +592,26 @@ def schema2model(schema, path: SchemaPath = (),
                 model = "$NONE"
                 return model
             else:
-                model = {"^": ["$ANY", schema2model(val, path + ("not", ), strict, fix, False, resilient)]}
+                model = {"^": ["$ANY", schema2model(val, lid or url, path + ("not", ), strict, fix, False, resilient)]}
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # add a allOf layer
             log.warning(f"keyword not intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "not")
-            return schema2model(ao, path + ("not", ), strict, fix, False, resilient)
+            return schema2model(ao, lid or url, path + ("not", ), strict, fix, False, resilient)
 
     # handle simpler schemas
+    # TODO "ref" for older versions?
     if "$ref" in schema:
         if only(schema, "$ref", *IGNORE):
             ref = schema["$ref"]
             assert isinstance(ref, str) and len(ref) > 0
+            log.debug(f"$ref: {ref}")
             if ref in ("#/", "#"):
                 return "$#"
+
+            # found a reference to an $id
+            if ref in ID_TO_PATH:
+                ref = ID_TO_PATH[ref]
 
             name = None
             if ref.startswith("#/$defs/") and only(schema, "$ref", *IGNORE):
@@ -570,8 +619,15 @@ def schema2model(schema, path: SchemaPath = (),
                 name = ref[8:]
             elif ref.startswith("#/definitions/") and only(schema, "$ref", *IGNORE):
                 name = ref[14:]
+
+            # shortcut for simple names which match an existing definition
             if name is not None and "/" not in name:
-                return buildModel("$" + name, {}, defs, sharp, is_root)
+                uname = decode_url(name)
+                if uname not in RENAMES:
+                    log.warning(f"reference to {name} seems hidden")
+                else:
+                    uname = RENAMES[uname]
+                return buildModel("$" + uname, {}, defs, sharp, is_root)
 
             # else we have to navigate…
             # FIXME should be useless? should have been simplified?
@@ -581,31 +637,29 @@ def schema2model(schema, path: SchemaPath = (),
                 if names and names[0] in ("$defs", "definitions"):
                     val = IDS
                     for name in names:
-                        if "~0" in name or "~1" in name or "%" in name:
-                            name = unquote(name).replace("~1", "/").replace("~0", "~")
-                        assert name in val, \
+                        uname = decode_url(name)
+                        assert uname in val, \
                             f"following path in {ref}: missing {name} ({IDS}) at [{spath}]"
-                        val = val[name]
-                else:  # arbitrary path
+                        val = val[uname]
+                else:  # handle arbitrary path
                     val = SCHEMA
                     for name in names:
-                        if "~0" in name or "~1" in name or "%" in name:
-                            name = unquote(name).replace("~1", "/").replace("~0", "~")
+                        uname = decode_url(name)
                         if isinstance(val, dict):
-                            assert name in val, \
+                            assert uname in val, \
                                 f"following path in {ref}: expecting property {name} at [{spath}]"
-                            val = val[name]
+                            val = val[uname]
                         elif isinstance(val, list):
-                            assert re.match(r"\d+$", name), \
+                            assert re.match(r"\d+$", uname), \
                                 "following path in {ref}: not an array index for {name} at [{spath}]"
-                            val = val[int(name)]
-                model = schema2model(val, path + ("$ref", ), strict, fix, False, resilient)
+                            val = val[int(uname)]
+                model = schema2model(val, lid or url, path + ("$ref", ), strict, fix, False, resilient)
                 return buildModel(model, {}, defs, sharp, is_root)
             else:
                 assert False, f"$ref handling not implemented: {ref}"
         else:
             log.warning(f"$ref intermixed with other keywords at [{spath}]")
-            return schema2model(allOfLayer(schema, "$ref"), path, strict, fix, False, resilient)
+            return schema2model(allOfLayer(schema, "$ref"), lid or url, path, strict, fix, False, resilient)
 
     elif "type" in schema:
         ts = schema["type"]
@@ -615,7 +669,7 @@ def schema2model(schema, path: SchemaPath = (),
             return buildModel(
                 {
                     "|": [
-                        schema2model(v, path + (("|", i), ), strict, fix, False, resilient)
+                        schema2model(v, lid or url, path + (("|", i), ), strict, fix, False, resilient)
                             for i, v in enumerate(schemas.values())
                     ]
                 }, {}, defs, sharp, is_root)
@@ -858,7 +912,7 @@ def schema2model(schema, path: SchemaPath = (),
                 vpi = schema["prefixItems"]
                 assert isinstance(vpi, list), f"list prefixItems at [{spath}]"
                 model = [
-                    schema2model(s, path + (("prefixItems", i), ), strict, fix, False, resilient)
+                    schema2model(s, lid or url, path + (("prefixItems", i), ), strict, fix, False, resilient)
                         for i, s in enumerate(vpi)
                 ]
                 if "items" in schema:
@@ -877,7 +931,7 @@ def schema2model(schema, path: SchemaPath = (),
                     # items is a schema
                     if ">=" not in constraints:
                         constraints[">="] = 0
-                    model.append(schema2model(schema["items"], path + ("items", ),
+                    model.append(schema2model(schema["items"], lid or url, path + ("items", ),
                                               strict, fix, False, resilient))
                     return buildModel(model, constraints, defs, sharp, is_root)
                 else:
@@ -889,7 +943,7 @@ def schema2model(schema, path: SchemaPath = (),
                 # items without prefixItems
                 doubt(only(schema, "type", "items", "minItems", "maxItems", "uniqueItems",
                            *IGNORE), f"array props with items at [{spath}]", strict)
-                model = [schema2model(schema["items"], path + ("items", ), strict, fix, False, resilient)]
+                model = [schema2model(schema["items"], lid or url, path + ("items", ), strict, fix, False, resilient)]
                 return buildModel(model, constraints, defs, sharp, is_root)
             elif "contains" in schema:
                 # NO contains/items mixing yet
@@ -898,7 +952,7 @@ def schema2model(schema, path: SchemaPath = (),
                 # NOTE contains is not really supported in jm v2, or rather as an extension
                 model = {
                     "@": ["$ANY"],
-                    ".in": schema2model(schema["contains"], path + ("contains", ), strict, fix, False, resilient)
+                    ".in": schema2model(schema["contains"], lid or url, path + ("contains", ), strict, fix, False, resilient)
                 }
                 if "minContains" in schema:
                     mini = schema["minContains"]
@@ -971,13 +1025,13 @@ def schema2model(schema, path: SchemaPath = (),
                 assert isinstance(pats, dict), f"dict pattern props at [{spath}]"
                 for pp in sorted(pats.keys()):
                     model[f"/{pp}/"] = \
-                        schema2model(pats[pp], path + (("patternProperties", pp), ), strict, fix, False, resilient)
+                        schema2model(pats[pp], lid or url, path + (("patternProperties", pp), ), strict, fix, False, resilient)
 
             if "propertyNames" in schema:
                 # does not seem very useful?
                 pnames = schema["propertyNames"]
                 if "additionalProperties" in schema:
-                    target = schema2model(schema["additionalProperties"], path, strict, fix, False, resilient)
+                    target = schema2model(schema["additionalProperties"], lid or url, path, strict, fix, False, resilient)
                 else:
                     target = "$ANY"
 
@@ -1004,10 +1058,10 @@ def schema2model(schema, path: SchemaPath = (),
                 for k, v in props.items():
                     if k in required:
                         model[f"_{k}"] = \
-                            schema2model(v, path + (("properties", f"_{k}"), ), strict, fix, False, resilient)
+                            schema2model(v, lid or url, path + (("properties", f"_{k}"), ), strict, fix, False, resilient)
                     else:
                         model[f"?{k}"] = \
-                            schema2model(v, path + (("properties", f"?{k}"), ), strict, fix, False, resilient)
+                            schema2model(v, lid or url, path + (("properties", f"?{k}"), ), strict, fix, False, resilient)
                 if "additionalProperties" in schema:
                     ap = schema["additionalProperties"]
                     if isinstance(ap, bool):
@@ -1015,7 +1069,7 @@ def schema2model(schema, path: SchemaPath = (),
                             model[""] = "$ANY"
                         # else nothing else is allowed
                     elif isinstance(ap, dict):
-                        model[""] = schema2model(ap, path + ("additionalProperties", ),
+                        model[""] = schema2model(ap, lid or url, path + ("additionalProperties", ),
                                                  strict, fix, False, resilient)
                     else:
                         assert False, f"not implemented yet at [{spath}]"
@@ -1035,7 +1089,7 @@ def schema2model(schema, path: SchemaPath = (),
                         model[""] = "$ANY"
                     # else nothing else is allowed
                 elif isinstance(ap, dict):
-                    model[""] = schema2model(ap, path + ("additionalProperties", ),
+                    model[""] = schema2model(ap, lid or url, path + ("additionalProperties", ),
                                              strict, fix, False, resilient)
                 else:
                     assert False, f"not implemented yet at [{spath}]"
@@ -1176,9 +1230,11 @@ def schema_to_model(
             typer: bool = False, simpler: bool = False, fix: bool = True,
             use_id: bool = False, strict: bool = True, resolve: bool = True,
             resilient: bool = False, cache: str|None = None, version: int|None = None,
-            mapping: dict[str, str] = {},
+            mapping: dict[str, str] = {}, level: int = logging.INFO,
         ):
     """Convert a JSON Schema to a JSON Model."""
+    log.setLevel(level)
+    rec_log.setLevel(level)
     reset()
     model = None
     if use_id and isinstance(schema, dict):
@@ -1192,18 +1248,21 @@ def schema_to_model(
     if model is None:
         try:
             if resolve and isinstance(schema, dict):
-                schema = resolveExternalRefs(schema, cache=cache, mapping=mapping)
+                schema = resolveExternalRefs(schema, version=version,
+                    cache=cache, mapping=mapping, level=level,
+                )
             if typer and isinstance(schema, dict):
                 log.debug("typing schema")
                 schema = computeTypes(schema)
             if simpler and isinstance(schema, dict):
                 log.debug("simplifying schema")
-                scopeDefs(schema)
+                scopeDefs(schema, version=version, level=level)
                 url = schema.get("$id", ".")
                 assert isinstance(url, str)
-                schema = simplifySchema(schema, url, sversion=version)
+                schema = simplifySchema(schema, url, sversion=version, level=level)
             # then actually convert to model
-            model = schema2model(schema, strict=strict, fix=fix, resilient=resilient)
+            log.debug(f"convert in: {json.dumps(schema)}")
+            model = schema2model(schema, ".", strict=strict, fix=fix, resilient=resilient)
         except BaseException as e:
             log.error(f"schema to model conversion for {schema_name} failed: {e}")
             if resilient:

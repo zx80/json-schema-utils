@@ -1,6 +1,8 @@
 from typing import Callable
+from urllib.parse import quote, unquote
 import logging
 import sys
+import re
 
 log = logging.getLogger("JSU")
 
@@ -67,3 +69,25 @@ def openfiles(args: list[str] = []):
         else:
             with open(fn) as fh:
                 yield fn, fh
+
+def encode_url(segment: str) -> str:
+    """Encode path: why not rely simply on URL encoding?!"""
+    return quote(segment.replace("~", "~0").replace("/", "~1"))
+
+def decode_url(segment: str) -> str:
+    """Decode strange url-and-more path."""
+    if "~0" in segment or "~1" in segment or "%" in segment:
+        return unquote(segment).replace("~1", "/").replace("~0", "~")
+    else:
+        return segment
+
+def schemapath_to_urlpath(path: SchemaPath) -> str:
+    """Encode a schema path as a url path."""
+    return "/".join(encode_url(s) if isinstance(s, str) else
+                    f"{encode_url(str(s[0]))}/{encode_url(str(s[1]))}"
+                        for s in path)
+
+_IS_ABS_URL = re.compile(r"((https?|file)://|urn:)").match
+
+def is_abs_url(s: str) -> bool:
+    return _IS_ABS_URL(s) is not None
