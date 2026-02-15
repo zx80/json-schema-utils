@@ -1261,8 +1261,11 @@ def schema_to_model(
                 assert isinstance(url, str)
                 schema = simplifySchema(schema, url, sversion=version, level=level)
             # then actually convert to model
-            log.debug(f"convert in: {json.dumps(schema)}")
+            if level == logging.DEBUG:
+                log.debug(f"convert in: {json.dumps(schema)}")
             model = schema2model(schema, ".", strict=strict, fix=fix, resilient=resilient)
+            if level == logging.DEBUG:
+                log.debug(f"model: {json.dumps(model)}")
         except BaseException as e:
             log.error(f"schema to model conversion for {schema_name} failed: {e}")
             if resilient:

@@ -1,5 +1,8 @@
 #! /bin/bash
 
+debug= err=/dev/null
+# debug=1 err=jsts.err
+
 # provide JSON Schema Test Suite root directory from env, parameter or genua default
 default_root="../dsv/json-model/tests/JSON-Schema-Test-Suite"
 root_dir=${1:-${JSTS_ROOT:-$default_root}}
@@ -21,12 +24,13 @@ echo "JSU (front) version: \`$(jsu-test-runner --version)\`"
 echo "JMC (back) version: \`$(jmc --version)\`"
 echo
 
-jsu_runner="jsu-test-runner --resilient"
+if ! [ -d $root_dir/remotes ] ; then
+  err 2 "remotes directory is missing"
+fi
+
+jsu_runner="jsu-test-runner --resilient --map http://localhost:1234/=file://$root_dir/remotes/"
 
 for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 latest ; do
-  echo "## Results for _${draft}_"
-  echo
-  echo -n "$draft: " >&2
 
   jsu_opts=""
   case $draft in
@@ -34,23 +38,33 @@ for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 latest ; d
     draft6) jsu_opts+=" --schema-version 6" ;;
     draft4) jsu_opts+=" --schema-version 4" ;;
     draft3) jsu_opts+=" --schema-version 3" ;;
+    # others should be retrieved automatically?
     *) ;;
   esac
 
+  [ "$debug" ] && jsu_opts+=" --debug"
+
   test_dir="${root_dir}/tests/${draft}"
   test -d "$test_dir" || err 2 "no such case directory: $test_dir"
+
+  echo "## Results for _${draft}_"
+  echo
+  echo -n "$draft: " >&2
+
+  [ "$debug" ] && echo "$jsu_runner $jsu_opts ..." >&2
 
   # per case
   for file in ${test_dir}/*.json ; do
     test=${file#$test_dir}
     echo -n "- \`$test\`: "
-    $jsu_runner $jsu_opts $file 2> /dev/null | tail -1 | sed -e 's/files=1 //'
+    [ "$debug" ] && echo "# command: $jsu_runner $jsu_opts $file" >> $err
+    $jsu_runner $jsu_opts $file 2>> $err | tail -1 | sed -e 's/files=1 //'
     echo -n "." >&2
   done
 
   # and summary
   echo -n "- summary: "
-  summary=$($jsu_runner $jsu_opts ${test_dir}/*.json 2> /dev/null | tail -1)
+  summary=$($jsu_runner $jsu_opts ${test_dir}/*.json 2>> $err | tail -1)
   echo $summary
   percent="(${summary##* \(}"
   echo ". $percent" >&2

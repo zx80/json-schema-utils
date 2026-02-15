@@ -54,7 +54,7 @@ def jsu_inline():
     )
     arg = ap.add_argument
     ap_common(arg)
-    arg("--map", "-m", action="append", help="url local mapping")
+    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("--auto", "-a", action="store_true", help="automatic url mapping")
     arg("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
@@ -69,7 +69,7 @@ def jsu_inline():
 
     if args.map:
         for m in args.map:
-            url, target = m.split(" ", 1)
+            url, target = m.split("=", 1)
             schemas.addMap(url, target)
 
     for fn in args.schemas:
@@ -374,6 +374,7 @@ def jsu_model():
     arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
     arg("--schema-version", "-V", dest="sversion", type=int, default=None, help="set JSON Schema version")
+    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args()
 
@@ -382,6 +383,15 @@ def jsu_model():
     if args.version:
         print(__version__)
         sys.exit(0)
+
+    mapping = {}
+    if args.map:
+        for m in args.map:
+            src, dst = m.split("=", 1)
+            mapping[src] = dst
+        if args.debug:
+            log.debug(f"url mapping: {mapping}")
+
 
     if not args.schemas:
         args.schemas = ["-"]
@@ -396,7 +406,7 @@ def jsu_model():
                 schema, fn,
                 use_id=args.id, strict=args.strict, fix=args.fix,
                 simpler=args.simple, typer=args.type, resilient=args.resilient,
-                version=args.sversion,
+                version=args.sversion, mapping=mapping,
                 level=logging.DEBUG if args.debug else logging.INFO,
             )
         except Exception as e:
@@ -429,6 +439,7 @@ def jsu_compile():
     arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
     arg("--schema-version", "-V", dest="sversion", type=int, default=None, help="set JSON Schema version")
+    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("schema", default="-", help="schema to process")
     arg("others", nargs="*", help="jmc backend options and arguments")
     args = ap.parse_args()
@@ -439,6 +450,14 @@ def jsu_compile():
         print(__version__)
         sys.exit(0)
 
+    mapping = {}
+    if args.map:
+        for m in args.map:
+            src, dst = m.split("=", 1)
+            mapping[src] = dst
+        if args.debug:
+            log.debug(f"url mapping: {mapping}")
+
     # intermediate model
     model = None
 
@@ -448,7 +467,7 @@ def jsu_compile():
             schema, args.schema,
             use_id=args.id, strict=args.strict, fix=args.fix,
             typer=args.type, simpler=args.simple, resilient=args.resilient,
-            cache=args.cache, version=args.sversion,
+            cache=args.cache, version=args.sversion, mapping=mapping,
             level=logging.DEBUG if args.debug else logging.INFO,
         )
     except Exception as e:
@@ -496,7 +515,7 @@ def jsu_runner():
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
     arg("--strict", action="store_true", default=False, help="reject doubtful schemas")
     arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
-    arg("--map", "-m", nargs="*", help="url mappings 'source dest'")
+    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("--schema-version", "-V", dest="sversion", type=int, default=None, help="set JSON Schema version")
     arg("--resilient", default=False, action="store_true",
         help="enable model conversion resilience")
@@ -514,10 +533,10 @@ def jsu_runner():
     mapping = {}
     if args.map:
         for m in args.map:
-            src, dst = m.split(" ", 1)
+            src, dst = m.split("=", 1)
             mapping[src] = dst
         if args.debug:
-            log.info(f"url mapping: {mapping}")
+            log.debug(f"url mapping: {mapping}")
 
     import json_model
 

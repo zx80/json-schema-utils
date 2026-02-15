@@ -276,6 +276,8 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
 
     return recurseSchema(schema, url, rwt=rwtRef)
 
+FILE_URL = "file://"
+
 def resolveExternalRefs(
             schema: JsonSchema, *,
             url: str|None = None,
@@ -298,7 +300,7 @@ def resolveExternalRefs(
     assert isinstance(schema, dict)
 
     log.setLevel(level)
-    log.debug(f"resolve ext in: {schema}")
+    log.debug(f"resolve ext in: {json.dumps(schema)}")
 
     defs = ("$defs" if "$defs" in schema  else
             "definitions" if "definitions" in schema else
@@ -369,15 +371,6 @@ def resolveExternalRefs(
         elif dest in resolved:
             local["$ref"] = resolved[dest]
         else:
-            # local url mapping for some JSTS tests
-            if mapping:
-                for src, dst in mapping.items():
-                    if dest.startswith(src):
-                        init_dest = dest
-                        dest = dst + dest[len(src):]
-                        log.warning(f"remapping {init_dest} to {dest}")
-                        break
-
             if is_abs_url(dest):
                 if "#" in dest:
                     url, path = dest.split("#", 1)
@@ -385,43 +378,77 @@ def resolveExternalRefs(
                     url, path = dest, None
             else:
                 url, path = None, None
+            init_url = url
 
-            # log.debug(f"$ref: url={url} path={path} dest={dest}")
+            log.debug(f"url={url} path={path}")
 
             if url is not None:
 
+                # local url mapping for some JSTS tests
                 if url in resolved:  # retrieve local name or path
                     name = resolved[url]
                 else:  # or create one
-                    if cache:
+                    js, loaded, filed, cached, cfn = None, False, False, False, None
+
+                    if cache:  # we cache the **initial** url only
                         uh = hashlib.sha3_256(url.encode()).hexdigest()
-                        fn = f"{cache}/{uh}.json"
+                        cfn = f"{cache}/{uh}.json"
+                        try:
+                            with open(cfn) as f:
+                                js = json.load(f)
+                            log.info(f"# loaded from cache: {url}")
+                            loaded, cached = True, True
+                        except Exception as e:
+                            log.debug(f"not found in cache: {url}")
                     else:
-                        fn = None
-                    js, loaded, cached = None, False, False
-                    if fn:
+                        uh = None
+
+                    if not loaded and mapping:
+                        for src, dst in mapping.items():
+                            if url.startswith(src):
+                                init_url = url
+                                url = dst + url[len(src):]
+                                log.warning(f"remapping {init_url} to {url}")
+                                break  # stop on first match
+
+                    if not loaded and url.startswith(FILE_URL):
+                        fn = url[len(FILE_URL):]
                         try:
                             with open(fn) as f:
                                 js = json.load(f)
-                            loaded, cached = True, True
-                            log.info(f"# loaded from cache: {url}")
+                            log.info(f"# loaded from file: {url}")
+                            loaded, filed = True, True
                         except Exception as e:
-                            log.debug(f"# not found in cache: {url} ({e})")
+                            log.debug(f"file not found for: {url}")
+
                     if not loaded:
                         res = requests.get(url)
-                        log.info(f"# loaded from net: {url}")
+                        log.info(f"# loaded from net: {url!r}")
                         js, loaded = res.json(), True
-                    if cache and not cached:  # store in cache
-                        with open(fn, "w") as f:
+
+                    # store in cache
+                    if cache and not cached:
+                        with open(cfn, "w") as f:
                             f.write(res.text)
 
                     # find next available name
                     while (name := f"_extern_{externs}_") in schema[defs]:
                         externs += 1
 
-                    # FIXME delay changes?
+                    # ensure that hierarchical relative urls are consistent
+                    if "id" not in js and "$id" not in js:
+                        js["$id"] = init_url
+                    else:
+                        sid = "$id" if "$id" in js else "id"
+                        if js[sid] != init_url:
+                            log.warning(f"overriding {sid} in {init_url}")
+                            # NOTE should it be #/$defs/name instead?
+                            js[sid] = init_url
+                        else:
+                            # consistent
+                            pass
                     schema[defs][name] = js
-                    resolved[url] = name
+                    resolved[init_url] = name
 
                 # update external reference to local destination
                 if name and name[0] == "#":  # this is a local path
@@ -465,6 +492,6 @@ def resolveExternalRefs(
     if not schema[defs]:
         del schema[defs]
 
-    log.debug(f"resolve ext out: {schema}")
+    log.debug(f"resolve ext out: {json.dumps(schema)}")
 
     return schema
