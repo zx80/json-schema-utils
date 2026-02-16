@@ -899,10 +899,11 @@ def schema2model(
                         schema["items"] = schema["additionalItems"]
                     else:
                         # TODO add to simplify
-                        log.warning(f"ignoring additionalItems because items is a schema")
+                        log.warning("ignoring additionalItems because items is a schema")
                         assert isinstance(items, (bool, dict))
                 else:
-                    schema["items"] = schema["additionalItems"]
+                    log.warning("ignoring additionalItems with empty items")
+                    # schema["items"] = schema["additionalItems"]
                 del schema["additionalItems"]
             elif "items" in schema and isinstance(schema["items"], list):
                 assert "prefixItems" not in schema

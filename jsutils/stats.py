@@ -1125,7 +1125,9 @@ def _json_schema_stats_rec(
                     collection["additionalItems=false"] += 1
             # draft 7 6.4.2 §4, draft 8 9.3.1.2 §3
             if "items" in jdata and not isinstance(jdata["items"], list):
-                collectErr(collection, "ignore keywork", "additionalItems with items array", lpath)
+                collectErr(collection, "ignore keyword", "additionalItems with items schema", lpath)
+            elif "items" not in jdata:
+                collectErr(collection, "ignore keyword", "additionalItems with empty items", lpath)
 
         elif prop == "prefixItems":
             # 9 / 10.3.1.1 §1
