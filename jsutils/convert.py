@@ -5,7 +5,8 @@ import logging
 import hashlib
 import json
 
-from .utils import only, JsonSchema, SchemaPath, SchemaPathSegment, decode_url, schemapath_to_urlpath, is_abs_url
+from .utils import JsonSchema, SchemaPath, SchemaPathSegment, Jsonable
+from .utils import only, decode_url, schemapath_to_urlpath, is_abs_url
 from .utils import TYPED_KEYWORDS, KEYWORD_TYPE
 from .recurse import recurseSchema, log as rec_log
 
@@ -110,7 +111,7 @@ def numberConstraints(schema):
     return constraints
 
 
-def buildModel(model, constraints: dict, defs: dict, sharp: dict, is_root: bool = False):
+def buildModel(model, constraints: dict[str, Any], defs: dict[str, Jsonable], sharp: dict, is_root: bool = False):
     """Build a model."""
 
     if constraints or sharp or defs:
@@ -1028,27 +1029,70 @@ def schema2model(
                         schema2model(pats[pp], lid or url, path + (("patternProperties", pp), ), strict, fix, False, resilient)
 
             if "propertyNames" in schema:
-                # does not seem very useful?
                 pnames = schema["propertyNames"]
+                if isinstance(pnames, bool):
+                    if pnames:
+                        pnames = {"type": "string"}
+                    else:
+                        pnames = {"type": []}
+                assert isinstance(pnames, dict)
                 if "additionalProperties" in schema:
                     target = schema2model(schema["additionalProperties"], lid or url, path, strict, fix, False, resilient)
                 else:
                     target = "$ANY"
 
                 # TODO for other cases, we could create a new reference
-                if not only(pnames, "pattern", "type", "format", *IGNORE):
+                if not only(pnames, "pattern", "type", "format", "minLength", "maxLength", "const", "enum", *IGNORE):
                     log.warning(f"props for prop names at [{spath}]")
                 # if given a type, it must be string
                 if "type" in pnames:
-                    assert pnames["type"] == "string", f"unexpected prop name type {pnames['type']} at [{spath}]"
-                if "pattern" in pnames:
+                    if pnames["type"] == []:
+                        target = "$NONE"
+                    else:
+                        assert pnames["type"] == "string", f"unexpected prop name type {pnames['type']} at [{spath}]"
+
+                # FIXME only one at a time
+                if only(pnames, "const", "type", *IGNORE) and "const" in pnames:
+                    cst = pnames["const"]
+                    if isinstance(cst, str):
+                        model[f"?{cst}"] = target
+                    else:  # resilient
+                        model[""] = "$NONE"
+                elif only(pnames, "enum", "type", *IGNORE) and "enum" in pnames:
+                    enums = list(filter(lambda s: isinstance(s, str), pnames["enum"]))
+                    if enums:
+                        model[f"/^({'|'.join(re.escape(s) for s in enums)})$/"] = target
+                    else:  # empty list
+                        model[""] = "$NONE"
+                elif only(pnames, "pattern", "type", *IGNORE) and "pattern" in pnames:
                     pat = pnames["pattern"]
                     assert isinstance(pat, str), f"pattern is string at [{spath}]"
                     model[f"/{pat}/"] = target
-                elif "format" in pnames:
+                elif only(pnames, "format", "type", *IGNORE) and "format" in pnames:
                     fmt = pnames["format"]
                     model[format2model(fmt)] = target
+                elif only(pnames, "minLength", "maxLength", "type", *IGNORE) and \
+                        ("minLength" in pnames or "maxLength" in pnames):
+                    log.warning(f"TODO improve propertyNames handling at [{spath}]")
+                    mini, maxi = pnames.get("minLength", 0), pnames.get("maxLength", None)
+                    if maxi is not None:
+                        if mini == maxi:
+                            if maxi == 0:
+                                model["?"] = target
+                            else:
+                                model[f"/^.{{{mini}}}$/"] = target
+                        elif mini < maxi:
+                            model[f"/^.{{{mini},{maxi}}}$/"] = target
+                        else:  # not possible
+                            # FIXME or nothing?
+                            model[""] = "$NONE"
+                    elif mini:  # mini > 0
+                        model[f"/^{{{mini},}}$/"] = target
+                    else:  # mini == 0
+                        model[""] = target
                 else:
+                    # TODO improve with a reference
+                    log.warning(f"bad handling of 'propertyNames' at [{spath}]")
                     model[""] = target
 
             if "properties" in schema:
