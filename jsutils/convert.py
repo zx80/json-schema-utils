@@ -537,7 +537,7 @@ def schema2model(
             pp = schema["patternProperties"]
             del schema["patternProperties"]
             for s in lof:
-                # cold overwrite, should warn
+                # FIXME cold overwrite, should warn
                 s["patternProperties"] = pp
 
     if "type" in schema and ("allOf" in schema or "anyOf" in schema or "oneOf" in schema or
@@ -665,6 +665,14 @@ def schema2model(
     elif "type" in schema:
         ts = schema["type"]
         if isinstance(ts, (list, tuple)):
+
+            # recognize $ANY
+            all_types = \
+                set(ts) == { "null", "boolean", "integer", "number", "string", "array", "object" }
+            if only(schema, "type", *IGNORE) and all_types:
+                return buildModel("$ANY", {}, defs, sharp, is_root)
+
+            # else split schema per type
             schemas = split_schema(schema)
             del schemas[""]  # remove ignored stuff
             return buildModel(
@@ -989,11 +997,14 @@ def schema2model(
             # sanity check
             doubt(only(schema, "type", "properties", "additionalProperties", "required",
                        "minProperties", "maxProperties", "patternProperties", "propertyNames",
-                       *IGNORE), f"object properties at [{spath}]", strict)
+                       "unevaluatedProperties", *IGNORE),
+                  f"object properties at [{spath}]", strict)
 
             # build model
             constraints = {}
             model = {}
+            ands = []
+
             if "minProperties" in schema and "maxProperties" in schema and \
                     schema["minProperties"] == schema["maxProperties"]:
                 ival = schema["maxProperties"]
@@ -1016,17 +1027,55 @@ def schema2model(
                     assert type(maxi) is int, f"int max props at [{spath}] ({tname(maxi)})"
                     if maxi > 0:
                         constraints["<="] = maxi
-                    else:
+                    else:  # maxi == 0
                         constraints["="] = maxi
                         if ">=" in constraints:
                             del constraints[">="]
 
+            # just remove empty patternProperties
+            if "patternProperties" in schema and not schema["patternProperties"]:
+                del schema["patternProperties"]
+
             if "patternProperties" in schema:
+
+                # FIXME combine with properties and additionalProperties
+                # NOTE pattern properties are NOT exclusive, thus require a combinator
+                if "additionalProperties" in schema:
+                    ap = schema["additionalProperties"]
+                    # still needed with properties
+                    # del schema["additionalProperties"]
+                    if isinstance(ap, bool):
+                        target = "$ANY" if ap else "$NONE"
+                    else:
+                        target = schema2model(
+                            ap, lid or url, path + ("additionalProperties", ),
+                            strict, fix, False, resilient
+                    )
+                else:
+                    target = "$ANY"
+
                 pats = schema["patternProperties"]
                 assert isinstance(pats, dict), f"dict pattern props at [{spath}]"
+
+                models = []
+                # NOTE it could be a straightforward set of // but only if they are distinct
                 for pp in sorted(pats.keys()):
-                    model[f"/{pp}/"] = \
-                        schema2model(pats[pp], lid or url, path + (("patternProperties", pp), ), strict, fix, False, resilient)
+                    m = {
+                        f"/{pp}/": schema2model(pats[pp], lid or url,
+                                                path + (("patternProperties", pp), ),
+                                                strict, fix, False, resilient)
+                    }
+                    if target != "$NONE":
+                        m[""] = copy.deepcopy(target)
+                    models.append(m)
+
+                if len(models) == 0:  # dead code
+                    if target is not None:
+                        model[""] = target
+                elif len(models) == 1:  # shortcut
+                    model.update(models[0])
+                else:  # "properties" in schema:  # to be processed later
+                    ands += models
 
             if "propertyNames" in schema:
                 pnames = schema["propertyNames"]
@@ -1117,8 +1166,12 @@ def schema2model(
                                                  strict, fix, False, resilient)
                     else:
                         assert False, f"not implemented yet at [{spath}]"
-                else:
+                elif "" not in model:
                     model[""] = "$ANY"
+
+                # else "" already in model, maybe coming from patternProperties
+                if ands:
+                    model = { "&": [ model ] + ands }
 
             elif "additionalProperties" in schema:
                 # "additionalProperties" without "properties" or "patternProperties"
@@ -1155,6 +1208,11 @@ def schema2model(
                     pass
                 else:
                     model[""] = "$ANY"
+
+            # recombine
+            if ands:
+                model = { "&": [ model ] + ands }
+
             # handle constraints
             return buildModel(model, constraints, defs, sharp, is_root)
         else:
