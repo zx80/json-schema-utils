@@ -30,7 +30,7 @@ fi
 
 jsu_runner="jsu-test-runner --resilient --map http://localhost:1234/=file://$root_dir/remotes/"
 
-for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 latest ; do
+for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 ; do
 
   jsu_opts=""
   case $draft in
