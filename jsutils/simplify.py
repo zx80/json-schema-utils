@@ -5,10 +5,11 @@ import logging
 from typing import Any
 import copy
 import json
+import re
 
 from .utils import JsonSchema, SchemaPath, JSUError, only, schemapath_to_urlpath, decode_url
 from .recurse import recurseSchema
-from .inline import mergeProperty
+from .inline import mergeProperty, mergeSchemas
 
 log = logging.getLogger("simpler")
 # log.setLevel(logging.DEBUG)
@@ -223,123 +224,167 @@ def simplifySchema(
         dynroot = schema["$dynamicAnchor"]
         del schema["$dynamicAnchor"]
 
-    def fltSimpler(schema: JsonSchema, path: SchemaPath) -> bool:
-        if isinstance(schema, dict) and (
-                "dependencies" in schema or  # <= 7
-                "dependentRequired" in schema or "dependentSchemas" in schema  # >= 8
+    def fltSimpler(local: JsonSchema, path: SchemaPath) -> bool:
+        if isinstance(local, dict):
+            if ("dependencies" in local or  # <= 7
+                "dependentRequired" in local or "dependentSchemas" in local  # >= 8
             ):
-            noDependencies(schema, path)
+                noDependencies(local, path)
+
+            # resolve some simple local references which may be optimized out
+            # but not at/for the root, nor definitions which are all kept
+            if "$ref" in local and path != ():
+                dest = local["$ref"]
+                assert isinstance(dest, str)
+                if dest.startswith("#/") and dest != "#/" and \
+                        not re.search(r"/(definitions|\$defs)/[^/]+$", dest):
+                    log.debug(f"inlining {dest}")
+                    js = schema
+                    for segment in dest.split("/")[1:]:
+                        # log.debug(f"segment = {segment}")
+                        segment = decode_url(segment)
+                        if isinstance(js, dict):
+                            js = js[segment]
+                        elif isinstance(js, list):
+                            js = js[int(segment)]
+                        else:
+                            raise Exception(f"unexpected type while following {dest}")
+                    if isinstance(js, bool):
+                        del local["$ref"]
+                        if not js:
+                            local.clear()
+                            local["type"] = []  # no types is false
+                        # else keep local as-is
+                    else:
+                        del local["$ref"]
+                        if sversion and sversion <= 7:
+                            for p in list(local.keys()):
+                                if p not in _IGNORABLE:
+                                    del local[p]
+                            local.update(js)
+                        else:
+                            # actual merge
+                            nlocal = mergeSchemas(local, js)
+                            local.clear()
+                            if isinstance(nlocal, bool):
+                                if not nlocal:
+                                    local["type"] = []
+                            else:
+                                local.update(nlocal)
+                        log.debug(f"desc schema: {local}")
+
+                # TODO keep track of used path to avoid removing stuff which is referenced
         return True
 
-    def rwtSimpler(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
+    def rwtSimpler(local: JsonSchema, path: SchemaPath) -> JsonSchema:
 
         lpath = ".".join(str(s) for s in path) if path else "."
 
-        if isinstance(schema, bool):
-            return schema
-        assert isinstance(schema, dict)
+        if isinstance(local, bool):
+            return local
+        assert isinstance(local, dict)
 
         # references
-        if "$ref" in schema and version <= 7:
+        if "$ref" in local and version <= 7:
             # https://json-schema.org/draft-07/draft-handrews-json-schema-01#rfc.section.8.3
-            keep = { p: v for p, v in schema.items() if p in _IGNORABLE or p == "$ref" }
-            if len(keep) != len(schema):
+            keep = { p: v for p, v in local.items() if p in _IGNORABLE or p == "$ref" }
+            if len(keep) != len(local):
                 # FIXME spurious warning on "type" added by an ealier phase
                 log.warning(f"dropping all props adjacent to $ref on old schemas at {path}")
             return keep
 
         if isinstance(dynroot, str):
-            if path and "$dynamicAnchor" in schema and schema["$dynamicAnchor"] == dynroot:
+            if path and "$dynamicAnchor" in local and local["$dynamicAnchor"] == dynroot:
                 log.error(f"Ooops: multiple root dynamic anchor: {dynroot}")
                 raise Exception("FIXME!")
 
-            if "$dynamicRef" in schema:
-                dref = schema["$dynamicRef"]
+            if "$dynamicRef" in local:
+                dref = local["$dynamicRef"]
                 if dref == "#" + dynroot:
                     log.info(f"replacing root $dynamicAnchor with simple $ref at {path}")
-                    del schema["$dynamicRef"]
-                    schema["$ref"] = "#"
+                    del local["$dynamicRef"]
+                    local["$ref"] = "#"
 
         # minimum (val >= M) + exclusiveMinimum (val > M)
-        if "minimum" in schema and "exclusiveMinimum" in schema:
-            inmini, exmini = schema["minimum"], schema["exclusiveMinimum"]
+        if "minimum" in local and "exclusiveMinimum" in local:
+            inmini, exmini = local["minimum"], local["exclusiveMinimum"]
             assert isinstance(inmini, (int, float)) and isinstance(exmini, (int, float))
             if inmini > exmini:
-                del schema["exclusiveMinimum"]
+                del local["exclusiveMinimum"]
             else:  # exmini >= inmini
-                del schema["minimum"]
+                del local["minimum"]
 
         # maximum + exclusiveMaximum
-        if "maximum" in schema and "exclusiveMaximum" in schema:
-            inmaxi, exmaxi = schema["maximum"], schema["exclusiveMaximum"]
+        if "maximum" in local and "exclusiveMaximum" in local:
+            inmaxi, exmaxi = local["maximum"], local["exclusiveMaximum"]
             assert isinstance(inmaxi, (int, float)) and isinstance(exmaxi, (int, float))
             if inmaxi < exmaxi:
-                del schema["exclusiveMaximum"]
+                del local["exclusiveMaximum"]
             else:  # exmaxi <= inmaxi
-                del schema["maximum"]
+                del local["maximum"]
 
         # TODO allOf with some inclusions { "&": [ "", "/.../" ] }
         # TODO anyOf/oneOf/allOf of length 0? are they already dropped?
 
         # anyOf/oneOf/allOf of length 1
         for prop in ("anyOf", "oneOf", "allOf"):
-            if (isinstance(schema, dict) and prop in schema and
-                    len(schema[prop]) == 1):  # type: ignore
+            if (isinstance(local, dict) and prop in local and
+                    len(local[prop]) == 1):  # type: ignore
                 try:
-                    nschema = copy.deepcopy(schema)
-                    sub = schema[prop][0]  # pyright: ignore
+                    nschema = copy.deepcopy(local)
+                    sub = local[prop][0]  # pyright: ignore
                     if isinstance(sub, bool):
                         if sub:
-                            nschema = schema
+                            nschema = local
                         else:
                             nschema = False
                     else:
                         for p, v in sub.items():  # pyright: ignore
                             nschema = mergeProperty(nschema, p, v)
                     # success!
-                    schema = nschema
-                    if isinstance(schema, dict):
-                        del schema[prop]
+                    local = nschema
+                    if isinstance(local, dict):
+                        del local[prop]
                 except JSUError as e:
                     log.debug(e)
                     log.warning(f"{prop} of one merge failed")
 
-        if isinstance(schema, bool):
-            return schema
-        assert isinstance(schema, dict)
+        if isinstance(local, bool):
+            return local
+        assert isinstance(local, dict)
 
         # TODO detect inconsistent allOf?
 
         # switch oneOf/anyOf const/enum to enum/const
         for prop in ("oneOf", "anyOf"):
-            if prop in schema:
-                val = schema[prop]
+            if prop in local:
+                val = local[prop]
                 assert isinstance(val, list)
                 lv = getEnum(val, prop == "oneOf")  # pyright: ignore
                 if lv is not None:
-                    del schema[prop]
+                    del local[prop]
                     log.info(f"{prop} to enum/const/false at {lpath}")
                     if len(lv) == 0:
                         # FIXME check
                         return False
                     else:  # at least one
-                        if "enum" in schema:
-                            lev = schema["enum"]
-                            del schema["enum"]
+                        if "enum" in local:
+                            lev = local["enum"]
+                            del local["enum"]
                             assert isinstance(lev, list)
                             # intersect in initial order
                             nlv = []
                             for v in lev:
                                 if v in lv:
                                     nlv.append(v)
-                            schema["enum"] = nlv
+                            local["enum"] = nlv
                         else:
-                            schema["enum"] = lv
+                            local["enum"] = lv
 
         # void condition application
         for kw in ("then", "else"):
-            if kw in schema:
-                subs = schema[kw]
+            if kw in local:
+                subs = local[kw]
                 if isinstance(subs, bool):
                     continue
                 assert isinstance(subs, dict)
@@ -347,170 +392,170 @@ def simplifySchema(
                 for k, v in subs.items():
                     if k in _IGNORABLE:
                         pass
-                    elif k in schema and v == schema[k]:
+                    elif k in local and v == local[k]:
                         pass
-                    elif k in schema:
+                    elif k in local:
                         # special case, check for inclusion
                         if k == "required":
-                            assert "required" in schema and isinstance(schema["required"], list)
+                            assert "required" in local and isinstance(local["required"], list)
                             assert isinstance(v, list)  # and str
                             for n in v:
-                                if n not in schema["required"]:
+                                if n not in local["required"]:
                                     compat = False
                     else:
                         compat = False
                 if compat:
                     log.info(f"removing ineffective {kw}")
-                    del schema[kw]
+                    del local[kw]
 
         # if/then/else
-        if "if" not in schema:
+        if "if" not in local:
             for kw in ("then", "else"):
-                if kw in schema:
+                if kw in local:
                     log.info(f"removing {kw} without if")
-                    del schema[kw]
-        if "if" in schema and not ("then" in schema or "else" in schema):
+                    del local[kw]
+        if "if" in local and not ("then" in local or "else" in local):
             log.info(f"removing lone if at {path}")
-            del schema["if"]
+            del local["if"]
 
         # simplify condition if possible
-        if "if" in schema:
-            cond = schema["if"]
+        if "if" in local:
+            cond = local["if"]
             if isinstance(cond, bool):
-                if cond and "else" in schema:
-                    del schema["else"]
-                    if "then" not in schema:
-                        del schema["if"]
-                if not cond and "then" in schema:
-                    if "else" in schema:
-                        schema["if"] = True
-                        schema["then"] = schema["else"]
-                        del schema["else"]
+                if cond and "else" in local:
+                    del local["else"]
+                    if "then" not in local:
+                        del local["if"]
+                if not cond and "then" in local:
+                    if "else" in local:
+                        local["if"] = True
+                        local["then"] = local["else"]
+                        del local["else"]
                     else:
-                        del schema["then"]
-                        del schema["if"]
+                        del local["then"]
+                        del local["if"]
             elif "not" in cond and only(cond, "not", *_IGNORABLE):
                 log.info("simplifying if not")
-                schema["if"] = cond["not"]
-                sthen = schema.get("then", None)
-                selse = schema.get("else", None)
+                local["if"] = cond["not"]
+                sthen = local.get("then", None)
+                selse = local.get("else", None)
                 if sthen is not None:
-                    schema["else"] = sthen
+                    local["else"] = sthen
                     if selse is not None:
-                        schema["then"] = selse
+                        local["then"] = selse
                     else:
-                        del schema["then"]
+                        del local["then"]
                 else:
                     assert selse is not None
-                    schema["then"] = selse
-                    del schema["else"]
+                    local["then"] = selse
+                    del local["else"]
 
         # short type list
-        if "type" in schema and isinstance(schema["type"], list):
-            types = schema["type"]
+        if "type" in local and isinstance(local["type"], list):
+            types = local["type"]
             if len(types) == 0:
                 return False
             elif len(types) == 1:
-                schema["type"] = types[0]
+                local["type"] = types[0]
         # type/props…
-        if "type" in schema and isinstance(schema["type"], str):
-            stype = schema["type"]
+        if "type" in local and isinstance(local["type"], str):
+            stype = local["type"]
             if stype == "number":
-                if "multipleOf" in schema and schema["multipleOf"] == 1:
-                    schema["type"] = "integer"
-                    del schema["multipleOf"]
+                if "multipleOf" in local and local["multipleOf"] == 1:
+                    local["type"] = "integer"
+                    del local["multipleOf"]
             if stype == "integer":
-                if "multipleOf" in schema and schema["multipleOf"] == 1:
-                    del schema["multipleOf"]
+                if "multipleOf" in local and local["multipleOf"] == 1:
+                    del local["multipleOf"]
                 # use this for later type-related checks
                 stype = "number"
             # remove type-specific properties
             if stype in TYPED_PROPS:
                 for p in incompatibleProps(stype):
-                    if p in schema:
+                    if p in local:
                         log.info(f"unused property {p} for {stype} at {lpath}")
-                        del schema[p]
-            if stype != "string" and "format" in schema and schema["format"] in STRING_FORMATS:
+                        del local[p]
+            if stype != "string" and "format" in local and local["format"] in STRING_FORMATS:
                 log.info(f"unused string format on {stype}: {schema['format']}")
-                del schema["format"]
+                del local["format"]
             # type/const
-            if "const" in schema:
-                cst = schema["const"]
+            if "const" in local:
+                cst = local["const"]
                 if _typeCompat(stype, cst):
                     log.info(f"removing redundant type with const at {lpath}")
-                    del schema["type"]
+                    del local["type"]
                 else:
                     log.info(f"incompatible type {stype} for {cst} at {lpath}")
                     return False
             # type/enum
-            if "enum" in schema:
-                vals = schema["enum"]
+            if "enum" in local:
+                vals = local["enum"]
                 assert isinstance(vals, list)
                 nvals = list(filter(lambda v: _typeCompat(stype, v), vals))
                 if len(vals) != len(nvals):
                     log.info(f"removing {len(vals) - len(nvals)} incompatible values "
                              f"from enum at {lpath}")
-                    schema["enum"] = nvals
-                del schema["type"]
+                    local["enum"] = nvals
+                del local["type"]
             # simplify any array
             if stype == "array":
-                simpler = _ignored(schema)
+                simpler = _ignored(local)
                 assert isinstance(simpler, dict)  # pyright hint
-                if len(simpler) == 2 and "type" in schema:
+                if len(simpler) == 2 and "type" in local:
                     # lone keyword
                     for kw in ("items", "additionalItems", "unevaluatedItems"):
-                        if kw in schema:
-                            subschema = _ignored(schema[kw])  # pyright: ignore
+                        if kw in local:
+                            subschema = _ignored(local[kw])  # pyright: ignore
                             if subschema in (True, {}):
                                 log.info(f"removing useless {kw} keyword at {lpath}")
-                                del schema[kw]
+                                del local[kw]
             # simplify any object
             if stype == "object":
-                simpler = _ignored(schema)
+                simpler = _ignored(local)
                 assert isinstance(simpler, dict)  # pyright hint
-                if len(simpler) == 2 and "type" in schema:
+                if len(simpler) == 2 and "type" in local:
                     # lone keyword
                     for kw in ("additionalProperties", "unevaluatedProperties"):
-                        if kw in schema:
-                            subschema = _ignored(schema[kw])  # pyright: ignore
+                        if kw in local:
+                            subschema = _ignored(local[kw])  # pyright: ignore
                             if subschema in (True, {}):
                                 log.info(f"removing useless {kw} keyword at {lpath}")
-                                del schema[kw]
+                                del local[kw]
 
                 # simplify propertyNames + additionalProperties to patternProperties
-                if "propertyNames" in schema and "additionalProperties" in schema and \
-                        "properties" not in schema and "patternProperties" not in schema:
-                    pn = schema["propertyNames"]
+                if "propertyNames" in local and "additionalProperties" in local and \
+                        "properties" not in local and "patternProperties" not in local:
+                    pn = local["propertyNames"]
                     assert isinstance(pn, dict)
-                    ap = schema["additionalProperties"]
+                    ap = local["additionalProperties"]
                     if "pattern" in pn and only(pn, "pattern", "type", *_IGNORABLE):
                         log.info("switching propertyNames and additionalProperties to "
                                  f"patternProperties at {lpath}")
-                        del schema["propertyNames"]
-                        del schema["additionalProperties"]
+                        del local["propertyNames"]
+                        del local["additionalProperties"]
                         assert isinstance(pn["pattern"], str)
-                        schema["patternProperties"] = { pn["pattern"]: ap }
+                        local["patternProperties"] = { pn["pattern"]: ap }
 
         # const/enum
-        if "const" in schema and "enum" in schema:
+        if "const" in local and "enum" in local:
             log.info(f"const/enum at {lpath}")
-            assert isinstance(schema["enum"], list)
-            if schema["const"] in schema["enum"]:
-                del schema["enum"]
+            assert isinstance(local["enum"], list)
+            if local["const"] in local["enum"]:
+                del local["enum"]
             else:
                 return False
-        elif "enum" in schema:
-            assert isinstance(schema["enum"], list)
-            nenum = len(schema["enum"])
+        elif "enum" in local:
+            assert isinstance(local["enum"], list)
+            nenum = len(local["enum"])
             if nenum == 0:
                 log.info(f"empty enum at {lpath}")
                 return False
             elif nenum == 1:
                 log.info(f"enum of one at {lpath}")
-                schema["const"] = schema["enum"][0]
-                del schema["enum"]
+                local["const"] = local["enum"][0]
+                del local["enum"]
 
-        return schema
+        return local
 
     return recurseSchema(schema, url, flt=fltSimpler, rwt=rwtSimpler)
 
@@ -642,11 +687,12 @@ def _scopeSubDefs(
         delete.append((schema, defn, prefix, ids[sid], sid, path))
 
 
-def scopeDefs(schema: JsonSchema, version: int, level: int = logging.INFO):
+def scopeDefs(schema: JsonSchema, version: int|None = None, level: int = logging.INFO):
     """Move internal definitions/$defs to root schema, possibly handing nested $id"""
 
     log.setLevel(level)
-    log.debug(f"scope in: {json.dumps(schema)}")
+    if level == logging.DEBUG:
+        log.debug(f"scope in: {json.dumps(schema, indent=2)}")
 
     # collect $id/id and $defs/definitions
     todo_ids, todo_defs = [], []
@@ -663,6 +709,7 @@ def scopeDefs(schema: JsonSchema, version: int, level: int = logging.INFO):
 
     recurseSchema(schema, "", flt=fltDefs)
 
+    # early exit if nothing to scope
     if not todo_ids and not todo_defs:
         return
 
@@ -760,4 +807,5 @@ def scopeDefs(schema: JsonSchema, version: int, level: int = logging.INFO):
 
     recurseSchema(schema, ".", rwt=rwtCleanDefs)
 
-    log.debug(f"scope out: {json.dumps(schema)}")
+    if level == logging.DEBUG:
+        log.debug(f"scope out: {json.dumps(schema, indent=2)}")

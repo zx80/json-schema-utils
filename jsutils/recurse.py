@@ -83,6 +83,7 @@ def recurseSchema(
             schema: JsonSchema, url: str,
             flt: FilterFun = lambda s, p: True,
             rwt: RewriteFun = lambda s, p: s,
+            path: SchemaPath = (),
             def_first: bool = False
         ) -> JsonSchema:
     """Generic recursion on a JSON Schema.
@@ -91,9 +92,10 @@ def recurseSchema(
     :param url: url of schema.
     :param flt: filter (top-down) function, whether to keep recursing.
     :param rwt: rewrite (bottom-up) function.
+    :param path: starting path.
     :param def_first: whether to handle definitions prior everything else
     """
-    return _recurseSchema(schema, url, (), flt, rwt, def_first=def_first)
+    return _recurseSchema(schema, url, path, flt, rwt, def_first=def_first)
 
 
 def hasDirectRef(schema, url):

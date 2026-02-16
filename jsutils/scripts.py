@@ -609,7 +609,7 @@ def jsu_runner():
                                 n_tests_passed += 1
                                 n_tests_ok += 1
                             else:
-                                log.warning(f"unexpected result on {scase}[{it}]: {test['description']}")
+                                log.error(f"unexpected result on {scase}[{it}]: {test['description']}")
                         except BaseException as e:
                             n_errors += 1
                             if args.debug:
