@@ -7,7 +7,7 @@ import json
 
 from .utils import JsonSchema, SchemaPath, SchemaPathSegment, Jsonable
 from .utils import only, decode_url, schemapath_to_urlpath, is_abs_url
-from .utils import TYPED_KEYWORDS, KEYWORD_TYPE
+from .utils import TYPED_KEYWORDS, KEYWORD_TYPE, META_KEYS, IGNORE, ALL_TYPES
 from .recurse import recurseSchema, log as rec_log
 
 # wrapper may use a simplification step
@@ -141,18 +141,6 @@ def buildModel(model, constraints: dict[str, Any], defs: dict[str, Jsonable], sh
             model = model["@"]
 
         return model
-
-
-META_KEYS = [
-    "title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly", "id",
-    "$schema", "$id", "$comment", "$dynamicAnchor", "$dynamicRef",
-    # OLD?
-    "context", "notes",
-    # extensions and strange stuff?
-    "markdownDescription", "deprecationMessage", "scope", "body", "example", "private",
-]
-
-IGNORE = META_KEYS + ["$defs", "definitions"]
 
 
 def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -667,8 +655,7 @@ def schema2model(
         if isinstance(ts, (list, tuple)):
 
             # recognize $ANY
-            all_types = \
-                set(ts) == { "null", "boolean", "integer", "number", "string", "array", "object" }
+            all_types = set(ts) == ALL_TYPES
             if only(schema, "type", *IGNORE) and all_types:
                 return buildModel("$ANY", {}, defs, sharp, is_root)
 

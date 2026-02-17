@@ -8,7 +8,8 @@ import hashlib
 import json
 import logging
 
-from .utils import JsonSchema, SchemaPath, JSUError, KEYWORD_TYPE, is_abs_url, schemapath_to_urlpath
+from .utils import JsonSchema, SchemaPath, JSUError, KEYWORD_TYPE
+from .utils import only, is_abs_url, schemapath_to_urlpath, is_any
 from .schemas import Schemas
 from .recurse import recurseSchema
 
@@ -28,7 +29,6 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     assert isinstance(schema, dict)  # pyright helper
 
     # log.debug(f"merging {prop} in {schema}")
-
     # if the type is known and singular, incompatible props can be dropped!
     stype: str|None = None
     if "type" in schema and isinstance(schema["type"], str):
@@ -88,6 +88,9 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
         else:
             schema["required"] = value
     elif prop == "properties":
+        # FIXME probably not allowed unless some conditions
+        if "additionalProperties" in schema and not is_any(schema["additionalProperties"]):
+            raise JSUError(f"cannot merge prop {prop} with existing additionanProperties")
         if prop in schema:
             props = schema[prop]
             assert isinstance(value, dict) and isinstance(props, dict)
@@ -214,10 +217,16 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
                         schema[prop] = types
         else:
             schema[prop] = value
+    elif prop == "additionalProperties":
+        # NOTE this is fun (or not): it cannot really be mixed with an open object
+        # because the checks must be applied independently…
+        if prop in schema and schema[prop] == value:
+            pass
+        else:
+            raise JSUError(f"merging of prop {prop} is not supported (yet)")
     # TODO
     # - $ref pattern with allOf?
-    elif prop in ("$ref", "pattern",
-                  "additionalProperties", "additionalItems", "items", "uniqueItems"):
+    elif prop in ("$ref", "pattern", "additionalItems", "prefixItems", "items", "uniqueItems"):
         # allow identical values only (for now)
         if prop in schema:
             if schema[prop] == value:

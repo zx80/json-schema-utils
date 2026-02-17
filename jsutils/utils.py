@@ -15,6 +15,8 @@ type SchemaPath = tuple[SchemaPathSegment, ...]
 type FilterFun = Callable[[JsonSchema, SchemaPath], bool]
 type RewriteFun = Callable[[JsonSchema, SchemaPath], JsonSchema]
 
+ALL_TYPES: set[str] = {"null", "boolean", "integer", "number", "string", "array", "object"}
+
 # keywords specific to a type
 TYPED_KEYWORDS: dict[str, list[str]] = {
     "number": ["minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf"],
@@ -26,6 +28,17 @@ TYPED_KEYWORDS: dict[str, list[str]] = {
 }
 
 KEYWORD_TYPE: dict[str, str] = {}
+
+META_KEYS = [
+    "title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly", "id",
+    "$schema", "$id", "$comment", "$dynamicAnchor", "$dynamicRef",
+    # OLD?
+    "context", "notes",
+    # extensions and strange stuff?
+    "markdownDescription", "deprecationMessage", "scope", "body", "example", "private",
+]
+
+IGNORE = META_KEYS + ["$defs", "definitions"]
 
 for k in TYPED_KEYWORDS.keys():
     for n in TYPED_KEYWORDS[k]:
@@ -91,3 +104,14 @@ _IS_ABS_URL = re.compile(r"((https?|file)://|urn:)").match
 
 def is_abs_url(s: str) -> bool:
     return _IS_ABS_URL(s) is not None
+
+def is_any(schema: JsonSchema) -> bool:
+    if isinstance(schema, bool):
+        return schema
+    elif only(schema, "type", *IGNORE):
+        if "type" in schema:
+            types = schema["type"]
+            return isinstance(types, list) and set(types) == ALL_TYPES
+        else:
+            return True
+            
