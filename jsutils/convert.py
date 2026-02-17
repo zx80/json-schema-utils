@@ -1024,114 +1024,104 @@ def schema2model(
             if "patternProperties" in schema and not schema["patternProperties"]:
                 del schema["patternProperties"]
 
+            # pre-compiled patterns, to be combined later on with properties and additionalProperties
+            pattern_props = {}
+
             if "patternProperties" in schema:
 
-                # FIXME combine with properties and additionalProperties
-                # NOTE pattern properties are NOT exclusive, thus require a combinator
-                if "additionalProperties" in schema:
-                    ap = schema["additionalProperties"]
-                    # still needed with properties
-                    # del schema["additionalProperties"]
-                    if isinstance(ap, bool):
-                        target = "$ANY" if ap else "$NONE"
-                    else:
-                        target = schema2model(
-                            ap, lid or url, path + ("additionalProperties", ),
-                            strict, fix, False, resilient
-                    )
-                else:
-                    target = "$ANY"
+                # schema pattern:
+                # S = { props: { x: X }, patprops: { p: P, … }, aprops: A }
+                #
+                # explicit multipass model:
+                # m(S) = { &: [ { x: m(X), /p/: any, "": A }, { /p/: m(P), "": any }, … ] }
+                #
+                # the point is to check aprops only if props and patterns did not match
+                # and to cumulate patterns
 
                 pats = schema["patternProperties"]
                 assert isinstance(pats, dict), f"dict pattern props at [{spath}]"
 
-                models = []
-                # NOTE it could be a straightforward set of // but only if they are distinct
-                for pp in sorted(pats.keys()):
-                    m = {
-                        f"/{pp}/": schema2model(pats[pp], lid or url,
-                                                path + (("patternProperties", pp), ),
-                                                strict, fix, False, resilient)
-                    }
-                    if target != "$NONE":
-                        m[""] = copy.deepcopy(target)
-                    models.append(m)
+                pattern_props = {
+                    f"/{pp}/": schema2model(ps, lid or url, path + (("patternProperties", pp), ),
+                                            strict, fix, False, resilient)
+                        for pp, ps in pats.items()
+                }
 
-                if len(models) == 0:  # dead code
-                    if target is not None:
-                        model[""] = target
-                elif len(models) == 1:  # shortcut
-                    model.update(models[0])
-                else:  # "properties" in schema:  # to be processed later
-                    ands += models
+                assert len(pattern_props) == len(pats)
+
+            # default property name filter is any string
+            pnames = ""
 
             if "propertyNames" in schema:
-                pnames = schema["propertyNames"]
-                if isinstance(pnames, bool):
-                    if pnames:
-                        pnames = {"type": "string"}
-                    else:
-                        pnames = {"type": []}
-                assert isinstance(pnames, dict)
-                if "additionalProperties" in schema:
-                    target = schema2model(schema["additionalProperties"], lid or url, path, strict, fix, False, resilient)
-                else:
-                    target = "$ANY"
+                pn = schema["propertyNames"]
+
+                if isinstance(pn, bool):
+                    if pn:
+                        pn = {"type": "string"}
+                    else:  # not feasible
+                        pn = {"type": []}
+                assert isinstance(pn, dict)
 
                 # TODO for other cases, we could create a new reference
-                if not only(pnames, "pattern", "type", "format", "minLength", "maxLength", "const", "enum", *IGNORE):
+                if not only(pn, "pattern", "type", "format", "minLength", "maxLength", "const", "enum", *IGNORE):
                     log.warning(f"props for prop names at [{spath}]")
+
                 # if given a type, it must be string
-                if "type" in pnames:
-                    if pnames["type"] == []:
-                        target = "$NONE"
+                if "type" in pn:
+                    if pn["type"] == []:
+                        pnames = "$NONE"
                     else:
-                        assert pnames["type"] == "string", f"unexpected prop name type {pnames['type']} at [{spath}]"
+                        assert pn["type"] == "string", f"unexpected prop name type {pnames['type']} at [{spath}]"
+                else:
+                    pnames = ""
 
                 # FIXME only one at a time
-                if only(pnames, "const", "type", *IGNORE) and "const" in pnames:
-                    cst = pnames["const"]
+                if only(pn, "type", *IGNORE):
+                    pass
+                elif only(pn, "const", "type", *IGNORE) and "const" in pn:
+                    cst = pn["const"]
                     if isinstance(cst, str):
-                        model[f"?{cst}"] = target
+                        pnames = f"?{cst}"
                     else:  # resilient
-                        model[""] = "$NONE"
-                elif only(pnames, "enum", "type", *IGNORE) and "enum" in pnames:
-                    enums = list(filter(lambda s: isinstance(s, str), pnames["enum"]))
+                        pnames = "$NONE"
+                elif only(pn, "enum", "type", *IGNORE) and "enum" in pn:
+                    enums = list(filter(lambda s: isinstance(s, str), pn["enum"]))
                     if enums:
-                        model[f"/^({'|'.join(re.escape(s) for s in enums)})$/"] = target
+                        pnames = f"/^({'|'.join(re.escape(s) for s in enums)})$/"
                     else:  # empty list
-                        model[""] = "$NONE"
-                elif only(pnames, "pattern", "type", *IGNORE) and "pattern" in pnames:
-                    pat = pnames["pattern"]
+                        pn = "$NONE"
+                elif only(pn, "pattern", "type", *IGNORE) and "pattern" in pn:
+                    pat = pn["pattern"]
                     assert isinstance(pat, str), f"pattern is string at [{spath}]"
-                    model[f"/{pat}/"] = target
-                elif only(pnames, "format", "type", *IGNORE) and "format" in pnames:
-                    fmt = pnames["format"]
-                    model[format2model(fmt)] = target
-                elif only(pnames, "minLength", "maxLength", "type", *IGNORE) and \
-                        ("minLength" in pnames or "maxLength" in pnames):
+                    pnames = f"/{pat}/"
+                elif only(pn, "format", "type", *IGNORE) and "format" in pn:
+                    fmt = pn["format"]
+                    pnames = format2model(fmt)
+                elif only(pn, "minLength", "maxLength", "type", *IGNORE) and \
+                        ("minLength" in pn or "maxLength" in pn):
                     log.warning(f"TODO improve propertyNames handling at [{spath}]")
-                    mini, maxi = pnames.get("minLength", 0), pnames.get("maxLength", None)
+                    mini, maxi = pn.get("minLength", 0), pn.get("maxLength", None)
                     if maxi is not None:
                         if mini == maxi:
                             if maxi == 0:
-                                model["?"] = target
+                                pnames = "?"
                             else:
-                                model[f"/^.{{{mini}}}$/"] = target
+                                pnames = f"/^.{{{mini}}}$/"
                         elif mini < maxi:
-                            model[f"/^.{{{mini},{maxi}}}$/"] = target
+                            pnames = f"/^.{{{mini},{maxi}}}$/"
                         else:  # not possible
                             # FIXME or nothing?
-                            model[""] = "$NONE"
+                            pnames = "$NONE"
                     elif mini:  # mini > 0
-                        model[f"/^{{{mini},}}$/"] = target
+                        pnames = f"/^{{{mini},}}$/"
                     else:  # mini == 0
-                        model[""] = target
+                        pnames = ""
                 else:
                     # TODO improve with a reference
                     log.warning(f"bad handling of 'propertyNames' at [{spath}]")
-                    model[""] = target
+                    pnames = ""
 
+            # build expected properties
             if "properties" in schema:
                 props = schema["properties"]
                 required = schema.get("required", [])
@@ -1143,62 +1133,50 @@ def schema2model(
                     else:
                         model[f"?{k}"] = \
                             schema2model(v, lid or url, path + (("properties", f"?{k}"), ), strict, fix, False, resilient)
-                if "additionalProperties" in schema:
-                    ap = schema["additionalProperties"]
-                    if isinstance(ap, bool):
-                        if ap:
-                            model[""] = "$ANY"
-                        # else nothing else is allowed
-                    elif isinstance(ap, dict):
-                        model[""] = schema2model(ap, lid or url, path + ("additionalProperties", ),
-                                                 strict, fix, False, resilient)
-                    else:
-                        assert False, f"not implemented yet at [{spath}]"
-                elif "" not in model:
-                    model[""] = "$ANY"
-
-                # else "" already in model, maybe coming from patternProperties
-                if ands:
-                    model = { "&": [ model ] + ands }
-
-            elif "additionalProperties" in schema:
-                # "additionalProperties" without "properties" or "patternProperties"
-                doubt(only(schema, "type", "additionalProperties", "maxProperties", "minProperties",
-                           "properties", "patternProperties", *IGNORE),
-                      f"add prop props at [{spath}]", strict)
-                if "properties" not in schema and "additionalProperties" not in schema and strict:
-                    assert False, "additionalProperties without properties or patternProperties"
-                ap = schema["additionalProperties"]
-                if isinstance(ap, bool):
-                    if ap:
-                        model[""] = "$ANY"
-                    # else nothing else is allowed
-                elif isinstance(ap, dict):
-                    model[""] = schema2model(ap, lid or url, path + ("additionalProperties", ),
-                                             strict, fix, False, resilient)
-                else:
-                    assert False, f"not implemented yet at [{spath}]"
-
             elif "required" in schema:
-                # required without properties or additionalProperties
+                # required without properties
                 doubt(only(schema, "type", "required", "maxProperties", "minProperties",
-                           *IGNORE), f"object props at [{spath}]", strict)
+                           "patternProperties", *IGNORE), f"object props at [{spath}]", strict)
                 required = schema["required"]
                 assert isinstance(required, list) and all(isinstance(s, str) for s in required)
                 model[""] = "$ANY"
                 model.update({ f"_{k}": "$ANY" for k in required })
                 # what about other props?
 
-            else:
-                doubt(only(schema, "type", "maxProperties", "minProperties", "patternProperties",
-                           "propertyNames", *IGNORE), f"object props at [{spath}]", strict)
-                if "propertyNames" in schema:
-                    pass
+            # append misc props
+            if "additionalProperties" in schema:
+                ap = schema["additionalProperties"]
+                if isinstance(ap, bool):
+                    if ap:
+                        model[""] = "$ANY"
+                    # else nothing else is allowed
+                    # model[""] = "$NONE"
+                elif isinstance(ap, dict):
+                    model[""] = schema2model(ap, lid or url, path + ("additionalProperties", ),
+                                             strict, fix, False, resilient)
                 else:
-                    model[""] = "$ANY"
+                    assert False, f"not implemented yet at [{spath}]"
+            elif "" not in model:  # JS default is open
+                model[""] = "$ANY"
 
-            # recombine
-            if ands:
+            # combine pattern props and prop names to mimic the expected semantics, at a cost…
+            if pattern_props or pnames not in ("", "$ANY", "$STRING"):
+                ands = []
+
+                for pp in sorted(pattern_props.keys()):
+                    # add to main model to mask additionalProperties
+                    # FIXME not needed in some cases?
+                    model[pp] = "$ANY"
+                    # and check the pattern independently
+                    ands.append({ pp: pattern_props[pp], "": "$ANY" })
+
+                # property names must be checked independently
+                if pnames not in ("", "$ANY", "$STRING"):
+                    if pnames == "$NONE":
+                        ands.append({})
+                    else:
+                        ands.append({ pnames: "$ANY" })
+
                 model = { "&": [ model ] + ands }
 
             # handle constraints
