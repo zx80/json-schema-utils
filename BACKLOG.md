@@ -16,3 +16,4 @@
 - [ ] add `.in` support with constraints
 - [ ] tests with all languages, not just Python
 - [ ] list compiler current limitations
+- [ ] run some optional tests, eg _format_
