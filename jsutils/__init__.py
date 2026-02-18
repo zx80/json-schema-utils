@@ -1,10 +1,12 @@
 from jsutils.scripts import (
-    jsu_inline, jsu_simpler, jsu_check, jsu_stats, jsu_pretty, jsu_model,
-    jsu_compile, jsu_runner
+    jsu_inline, jsu_simpler, jsu_check, jsu_stats, jsu_pretty,
+    jsu_model, jsu_compile, jsu_runner,
+    json_schema_to_python_checker,
 )
 
 # silent unused warnings
 _ = [
-    jsu_inline, jsu_simpler, jsu_check, jsu_stats, jsu_pretty, jsu_model,
-    jsu_compile, jsu_runner
+    jsu_inline, jsu_simpler, jsu_check, jsu_stats, jsu_pretty,
+    jsu_model, jsu_compile, jsu_runner,
+    json_schema_to_python_checker,
 ]

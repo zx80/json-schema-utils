@@ -1,5 +1,5 @@
 import sys
-from typing import Any
+from typing import Any, Callable
 import copy
 import json
 import hashlib
@@ -12,7 +12,7 @@ from importlib.metadata import version as pkg_version
 logging.basicConfig()
 
 from .schemas import Schemas
-from .utils import log, JSUError, JsonSchema
+from .utils import log, JSUError, JsonSchema, Jsonable
 from .recurse import hasDirectRef, recurseSchema
 from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
@@ -498,6 +498,45 @@ def jsu_compile():
             log.error(f"backend jmc process return code: {done.returncode}")
         sys.exit(done.returncode)
 
+def json_schema_to_python_checker(
+        schema: JsonSchema,
+        name: str|None = None,
+        version: int|None = None,
+        strict: bool = True,
+        fix: bool = False,
+        typer: bool = True,
+        simpler: bool = True,
+        resilient: bool = True,
+        cache: str|None = None,
+        mapping: dict[str, str] = {},
+        level: int = logging.INFO,
+        loose_int: bool = True,
+        loose_float: bool = True,
+        predef: bool = False,
+        extend: bool = True,
+    ) -> Callable[[Jsonable], bool]:
+    """Build a dynamic python checker function from a schema."""
+    try:
+        # build the intermediate model
+        model = schema_to_model(
+            schema, name, strict=strict, fix=fix, typer=typer, simpler=simpler,
+            version=version, resilient=resilient, cache=cache, mapping=mapping, level=level,
+        )
+        if level == logging.DEBUG:
+            log.debug(f"intermediate model: {model}")
+        # convert model to a checker function
+        import json_model
+        return json_model.model_checker_from_json(
+            model, loose_int=loose_int, loose_float=loose_float, predef=predef, extend=extend,
+        )
+        return checker
+    except BaseException as e:
+        log.error(f"schema compilation failed: {e}")
+        if not resilient:
+            raise
+        log.warning("using all-pass checker for {name} (resilient mode)")
+        return lambda _: True
+
 def jsu_runner():
 
     ap = argparse.ArgumentParser(
@@ -580,27 +619,13 @@ def jsu_runner():
                 log.info(f"considering {scase}: {description}")
 
                 try:
-                    model = schema_to_model(
+                    checker = json_schema_to_python_checker(
                         case["schema"], scase, strict=args.strict, fix=False,
                         typer=args.type, simpler=args.simple, version=args.sversion,
                         resilient=args.resilient, cache=args.cache, mapping=mapping,
                         level = logging.DEBUG if args.debug else logging.INFO,
+                        loose_int=True, loose_float=True, predef=False, extend=True,
                     )
-                    if args.dump:
-                        log.debug(f"model: {model}")
-
-                    checker: callable
-                    try:
-                        checker = json_model.model_checker_from_json(
-                            model, loose_int=True, loose_float=True, predef=False, extend=True,
-                        )
-                    except BaseException as e:
-                        n_errors += 1
-                        log.error(f"jmc compilation failed: {e}")
-                        if not args.resilient:
-                            raise
-                        log.warning("using default true checker for case {scase} (resilient mode)")
-                        checker = lambda _: True
 
                     n_tests_ok = 0
                     for it, test in enumerate(case["tests"]):
