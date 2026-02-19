@@ -226,7 +226,7 @@ JMC (back) version: `2.0b37`
 - `/default.json`: errors=0 cases=3/3 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `/dependencies.json`: errors=0 cases=2/3 (66.7%) tests=17/18 (94.4%, 1 fails)
 - `/disallow.json`: errors=0 cases=0/3 (0.0%) tests=4/9 (44.4%, 5 fails)
-- `/divisibleBy.json`: errors=0 cases=0/3 (0.0%) tests=5/8 (62.5%, 3 fails)
+- `/divisibleBy.json`: errors=0 cases=3/3 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `/enum.json`: errors=0 cases=4/5 (80.0%) tests=14/16 (87.5%, 2 fails)
 - `/extends.json`: errors=0 cases=0/3 (0.0%) tests=3/10 (30.0%, 7 fails)
 - `/format.json`: errors=0 cases=10/10 (100.0%) tests=60/60 (100.0%, 0 fails)
@@ -246,7 +246,7 @@ JMC (back) version: `2.0b37`
 - `/required.json`: errors=0 cases=2/3 (66.7%) tests=3/4 (75.0%, 1 fails)
 - `/type.json`: errors=0 cases=9/12 (75.0%) tests=73/80 (91.2%, 7 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=62/62 (100.0%, 0 fails)
-- summary: files=25 errors=0 cases=85/104 (81.7%) tests=404/434 (93.1%, 30 fails)
+- summary: files=25 errors=0 cases=88/104 (84.6%) tests=407/434 (93.8%, 27 fails)
 
 ## Results for _v1_
 

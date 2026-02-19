@@ -17,9 +17,10 @@ type RewriteFun = Callable[[JsonSchema, SchemaPath], JsonSchema]
 
 ALL_TYPES: set[str] = {"null", "boolean", "integer", "number", "string", "array", "object"}
 
-# keywords specific to a type
+# keywords specific to a type, including some old keywords (draft3 divisibleBy)
 TYPED_KEYWORDS: dict[str, list[str]] = {
-    "number": ["minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf"],
+    "number": ["minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf",
+               "divisibleBy"],
     "string": ["minLength", "maxLength", "pattern"],
     "array": ["minItems", "maxItems", "uniqueItems", "items", "prefixItems", "contains",
               "minContains", "maxContains", "additionalItems", "unevaluatedItems"],

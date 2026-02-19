@@ -100,6 +100,11 @@ def numberConstraints(schema):
             del schema["maximum"]
         else:
             del schema["exclusiveMaximum"]
+    # draft3
+    if "divisibleBy" in schema:
+        assert "multipleOf" not in schema
+        schema["multipleOf"] = schema["divisibleBy"]
+        del schema["divisibleBy"]
     # draft6 and better
     if "multipleOf" in schema:
         mo = schema["multipleOf"]
