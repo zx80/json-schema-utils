@@ -938,12 +938,21 @@ def schema2model(
                     return buildModel(model, constraints, defs, sharp, is_root)
             elif "items" in schema:
                 # items without prefixItems
+                # TODO try merging with contains next?
                 doubt(only(schema, "type", "items", "minItems", "maxItems", "uniqueItems",
-                           *IGNORE), f"array props with items at [{spath}]", strict)
-                model = [schema2model(schema["items"], lid or url, path + ("items", ), strict, fix, False, resilient)]
+                           "contains", *IGNORE), f"array props with items at [{spath}]", strict)
+                model = [
+                    schema2model(schema["items"], lid or url, path + ("items", ), strict, fix, False, resilient)
+                ]
+                if "contains" in schema:
+                    model = {
+                        "@": model,
+                        ".in": schema2model(
+                            schema["contains"], lid or url, path + ("contains", ), strict, fix, False, resilient
+                        )
+                    }
                 return buildModel(model, constraints, defs, sharp, is_root)
             elif "contains" in schema:
-                # NO contains/items mixing yet
                 assert only(schema, "type", "contains", "minContains", "maxContains",
                             "uniqueItems", *IGNORE), f"array props for containts[{spath}]"
                 # NOTE contains is not really supported in jm v2, or rather as an extension
