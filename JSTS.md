@@ -222,15 +222,15 @@ JMC (back) version: `2.0b37`
 ## Results for _draft3_
 
 - `/additionalItems.json`: errors=0 cases=7/7 (100.0%) tests=14/14 (100.0%, 0 fails)
-- `/additionalProperties.json`: errors=0 cases=6/7 (85.7%) tests=15/16 (93.8%, 1 fails)
+- `/additionalProperties.json`: errors=0 cases=7/7 (100.0%) tests=16/16 (100.0%, 0 fails)
 - `/default.json`: errors=0 cases=3/3 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `/dependencies.json`: errors=0 cases=2/3 (66.7%) tests=17/18 (94.4%, 1 fails)
-- `/disallow.json`: errors=0 cases=0/3 (0.0%) tests=4/9 (44.4%, 5 fails)
+- `/disallow.json`: errors=0 cases=0/3 (0.0%) tests=6/9 (66.7%, 3 fails)
 - `/divisibleBy.json`: errors=0 cases=3/3 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `/enum.json`: errors=0 cases=4/5 (80.0%) tests=14/16 (87.5%, 2 fails)
-- `/extends.json`: errors=0 cases=0/3 (0.0%) tests=3/10 (30.0%, 7 fails)
+- `/extends.json`: errors=0 cases=1/3 (33.3%) tests=8/10 (80.0%, 2 fails)
 - `/format.json`: errors=0 cases=10/10 (100.0%) tests=60/60 (100.0%, 0 fails)
-- `/infinite-loop-detection.json`: errors=0 cases=0/1 (0.0%) tests=1/2 (50.0%, 1 fails)
+- `/infinite-loop-detection.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
 - `/items.json`: errors=0 cases=4/4 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `/maximum.json`: errors=0 cases=4/4 (100.0%) tests=14/14 (100.0%, 0 fails)
 - `/maxItems.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
@@ -246,7 +246,7 @@ JMC (back) version: `2.0b37`
 - `/required.json`: errors=0 cases=2/3 (66.7%) tests=3/4 (75.0%, 1 fails)
 - `/type.json`: errors=0 cases=9/12 (75.0%) tests=73/80 (91.2%, 7 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=62/62 (100.0%, 0 fails)
-- summary: files=25 errors=0 cases=88/104 (84.6%) tests=407/434 (93.8%, 27 fails)
+- summary: files=25 errors=0 cases=91/104 (87.5%) tests=416/434 (95.9%, 18 fails)
 
 ## Results for _v1_
 

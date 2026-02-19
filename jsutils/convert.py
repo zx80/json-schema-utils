@@ -424,6 +424,33 @@ def schema2model(
                 log.warning(f"ignoring nullable directive at [{spath}]")
             del schema["nullable"]
 
+    # draft3 stuff
+    if "type" in schema:
+        ts = schema["type"]
+        if (isinstance(ts, list) and "any" in ts or
+            isinstance(ts, str) and ts == "any"):
+            schema["type"] = sorted(ALL_TYPES)
+    if "extends" in schema:
+        if "allOf" not in schema:
+            schema["allOf"] = []
+        extends = schema["extends"]
+        if isinstance(extends, list):
+            schema["allOf"] += extends
+        else:
+            schema["allOf"].append(extends)
+        del schema["extends"]
+    if "disallow" in schema:  # not this type
+        dis = schema["disallow"]
+        if isinstance(dis, str):
+            dis = [dis]
+        ts = schema["type"] if "type" in schema else sorted(ALL_TYPES)
+        for t in dis:
+            if t in schema["type"]:
+                ts.remove(t)
+        del schema["disallow"]
+        schema["type"] = ts[0] if len(ts) == 1 else ts
+    # TODO boolean required
+
     # missing type in some cases
     # FIXME this breaks many JSTS stupid examples
     if "type" not in schema:
@@ -1155,7 +1182,8 @@ def schema2model(
                 required = schema.get("required", [])
                 assert isinstance(props, dict), f"dict properties [{spath}]"
                 for k, v in props.items():
-                    if k in required:
+                    if k in required or \
+                        isinstance(v, dict) and "required" in v and isinstance(v["required"], bool) and v["required"]:  # draft3
                         model[f"_{k}"] = \
                             schema2model(v, lid or url, path + (("properties", f"_{k}"), ), strict, fix, False, resilient)
                     else:
