@@ -308,20 +308,22 @@ def simplifySchema(
         # minimum (val >= M) + exclusiveMinimum (val > M)
         if "minimum" in local and "exclusiveMinimum" in local:
             inmini, exmini = local["minimum"], local["exclusiveMinimum"]
-            assert isinstance(inmini, (int, float)) and isinstance(exmini, (int, float))
-            if inmini > exmini:
-                del local["exclusiveMinimum"]
-            else:  # exmini >= inmini
-                del local["minimum"]
+            if not isinstance(exmini, bool):  # skip draft4
+                assert isinstance(inmini, (int, float)) and isinstance(exmini, (int, float))
+                if inmini > exmini:
+                    del local["exclusiveMinimum"]
+                else:  # exmini >= inmini
+                    del local["minimum"]
 
         # maximum + exclusiveMaximum
         if "maximum" in local and "exclusiveMaximum" in local:
             inmaxi, exmaxi = local["maximum"], local["exclusiveMaximum"]
-            assert isinstance(inmaxi, (int, float)) and isinstance(exmaxi, (int, float))
-            if inmaxi < exmaxi:
-                del local["exclusiveMaximum"]
-            else:  # exmaxi <= inmaxi
-                del local["maximum"]
+            if not isinstance(exmaxi, bool):  # skip draft4
+                assert isinstance(inmaxi, (int, float)) and isinstance(exmaxi, (int, float))
+                if inmaxi < exmaxi:
+                    del local["exclusiveMaximum"]
+                else:  # exmaxi <= inmaxi
+                    del local["maximum"]
 
         # TODO allOf with some inclusions { "&": [ "", "/.../" ] }
         # TODO anyOf/oneOf/allOf of length 0? are they already dropped?
