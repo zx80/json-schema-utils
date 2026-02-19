@@ -192,7 +192,7 @@ JMC (back) version: `2.0b37`
 - `/allOf.json`: errors=0 cases=9/9 (100.0%) tests=27/27 (100.0%, 0 fails)
 - `/anyOf.json`: errors=0 cases=5/5 (100.0%) tests=15/15 (100.0%, 0 fails)
 - `/default.json`: errors=0 cases=3/3 (100.0%) tests=7/7 (100.0%, 0 fails)
-- `/definitions.json`: errors=0 cases=0/1 (0.0%) tests=1/2 (50.0%, 1 fails)
+- `/definitions.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
 - `/dependencies.json`: errors=0 cases=5/5 (100.0%) tests=29/29 (100.0%, 0 fails)
 - `/enum.json`: errors=0 cases=16/16 (100.0%) tests=49/49 (100.0%, 0 fails)
 - `/format.json`: errors=0 cases=6/6 (100.0%) tests=36/36 (100.0%, 0 fails)
@@ -212,12 +212,12 @@ JMC (back) version: `2.0b37`
 - `/pattern.json`: errors=0 cases=2/2 (100.0%) tests=9/9 (100.0%, 0 fails)
 - `/patternProperties.json`: errors=0 cases=4/4 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/properties.json`: errors=0 cases=5/5 (100.0%) tests=24/24 (100.0%, 0 fails)
-- `/ref.json`: errors=0 cases=18/19 (94.7%) tests=44/45 (97.8%, 1 fails)
+- `/ref.json`: errors=0 cases=19/19 (100.0%) tests=45/45 (100.0%, 0 fails)
 - `/refRemote.json`: errors=0 cases=8/8 (100.0%) tests=17/17 (100.0%, 0 fails)
 - `/required.json`: errors=0 cases=4/4 (100.0%) tests=17/17 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=79/79 (100.0%, 0 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- summary: files=30 errors=0 cases=155/160 (96.9%) tests=610/615 (99.2%, 5 fails)
+- summary: files=30 errors=0 cases=157/160 (98.1%) tests=612/615 (99.5%, 3 fails)
 
 ## Results for _draft3_
 

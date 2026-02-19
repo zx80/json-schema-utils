@@ -87,6 +87,20 @@ def jpath(path: SchemaPath):
 def numberConstraints(schema):
     assert "type" in schema and schema["type"] in ("integer", "number")
     constraints = {}
+    # boolean exlusives (draft4), normalize to draft6 or more
+    if "exclusiveMinimum" in schema and isinstance(schema["exclusiveMinimum"], bool):
+        if schema["exclusiveMinimum"] and "minimum" in schema:
+            schema["exclusiveMinimum"] = schema["minimum"]
+            del schema["minimum"]
+        else:
+            del schema["exclusiveMinimum"]
+    if "exclusiveMaximum" in schema and isinstance(schema["exclusiveMaximum"], bool):
+        if schema["exclusiveMaximum"] and "maximum" in schema:
+            schema["exclusiveMaximum"] = schema["maximum"]
+            del schema["maximum"]
+        else:
+            del schema["exclusiveMaximum"]
+    # draft6 and better
     if "multipleOf" in schema:
         mo = schema["multipleOf"]
         assert type(mo) in (int, float)
