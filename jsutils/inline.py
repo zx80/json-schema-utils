@@ -522,7 +522,7 @@ def resolveExternalRefs(
                     js, loaded, filed, cached, cfn = None, False, False, False, None
 
                     if cache:  # we cache the **initial** url only
-                        uh = hashlib.sha3_256(url.encode()).hexdigest()
+                        uh = hashlib.sha3_256(url.encode()).hexdigest()[:16]
                         cfn = f"{cache}/{uh}.json"
                         try:
                             with open(cfn) as f:
