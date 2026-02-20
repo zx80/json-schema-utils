@@ -45,14 +45,24 @@ def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
 
     if "disallow" in schema:  # not this type
         dis = schema["disallow"]
-        if isinstance(dis, str):
+        if not isinstance(dis, list):
             dis = [dis]
         ts = schema["type"] if "type" in schema else sorted(ALL_TYPES)
         for t in dis:
-            if isinstance(t, str) and t in ts:
-                ts.remove(t)
-            elif t == {} or t == "any":
+            if t == "any":
                 ts.clear()
+            elif t == "integer" and "number" not in dis and "number" in ts:  # integer/number issue
+                if "allOf" not in schema:
+                    schema["allOf"] = []
+                schema["allOf"].append({"not": {"type": t}})
+            elif isinstance(t, str) and t in ts:
+                ts.remove(t)
+            elif t == {}:
+                ts.clear()
+            else:
+                if "allOf" not in schema:
+                    schema["allOf"] = []
+                schema["allOf"].append({"not": t})
         del schema["disallow"]
         schema["type"] = ts[0] if len(ts) == 1 else ts
 
