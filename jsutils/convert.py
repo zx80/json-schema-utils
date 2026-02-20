@@ -13,7 +13,8 @@ from .recurse import recurseSchema, log as rec_log
 # wrapper may use a simplification step
 from .inline import resolveExternalRefs
 from .simplify import simplifySchema, scopeDefs
-from .restruct import computeTypes
+from .types import computeTypes
+from .restruct import modernizeOldDraft
 
 log = logging.getLogger("convert")
 log.setLevel(logging.DEBUG)
@@ -83,28 +84,9 @@ def jpath(path: SchemaPath):
     log.debug(f"path = {path}")
     return "." + ".".join(sesc(s) for s in path)
 
-
 def numberConstraints(schema):
     assert "type" in schema and schema["type"] in ("integer", "number")
     constraints = {}
-    # boolean exlusives (draft4), normalize to draft6 or more
-    if "exclusiveMinimum" in schema and isinstance(schema["exclusiveMinimum"], bool):
-        if schema["exclusiveMinimum"] and "minimum" in schema:
-            schema["exclusiveMinimum"] = schema["minimum"]
-            del schema["minimum"]
-        else:
-            del schema["exclusiveMinimum"]
-    if "exclusiveMaximum" in schema and isinstance(schema["exclusiveMaximum"], bool):
-        if schema["exclusiveMaximum"] and "maximum" in schema:
-            schema["exclusiveMaximum"] = schema["maximum"]
-            del schema["maximum"]
-        else:
-            del schema["exclusiveMaximum"]
-    # draft3
-    if "divisibleBy" in schema:
-        assert "multipleOf" not in schema
-        schema["multipleOf"] = schema["divisibleBy"]
-        del schema["divisibleBy"]
     # draft6 and better
     if "multipleOf" in schema:
         mo = schema["multipleOf"]
@@ -121,11 +103,11 @@ def numberConstraints(schema):
         constraints["<="] = maxi
     if "exclusiveMinimum" in schema:
         mini = schema["exclusiveMinimum"]
-        assert type(mini) in (int, float)
+        assert type(mini) in (int, float), f"exclusiveMinimum is a number but: {mini}"
         constraints[">"] = mini
     if "exclusiveMaximum" in schema:
         maxi = schema["exclusiveMaximum"]
-        assert type(maxi) in (int, float)
+        assert type(maxi) in (int, float), f"exclusiveMaximum is a number but: {maxi}"
         constraints["<"] = maxi
     return constraints
 
@@ -423,33 +405,6 @@ def schema2model(
                     schema["type"] = [schema["type"], "null"]
                 log.warning(f"ignoring nullable directive at [{spath}]")
             del schema["nullable"]
-
-    # draft3 stuff
-    if "type" in schema:
-        ts = schema["type"]
-        if (isinstance(ts, list) and "any" in ts or
-            isinstance(ts, str) and ts == "any"):
-            schema["type"] = sorted(ALL_TYPES)
-    if "extends" in schema:
-        if "allOf" not in schema:
-            schema["allOf"] = []
-        extends = schema["extends"]
-        if isinstance(extends, list):
-            schema["allOf"] += extends
-        else:
-            schema["allOf"].append(extends)
-        del schema["extends"]
-    if "disallow" in schema:  # not this type
-        dis = schema["disallow"]
-        if isinstance(dis, str):
-            dis = [dis]
-        ts = schema["type"] if "type" in schema else sorted(ALL_TYPES)
-        for t in dis:
-            if t in schema["type"]:
-                ts.remove(t)
-        del schema["disallow"]
-        schema["type"] = ts[0] if len(ts) == 1 else ts
-    # TODO boolean required
 
     # missing type in some cases
     # FIXME this breaks many JSTS stupid examples
@@ -1182,8 +1137,7 @@ def schema2model(
                 required = schema.get("required", [])
                 assert isinstance(props, dict), f"dict properties [{spath}]"
                 for k, v in props.items():
-                    if k in required or \
-                        isinstance(v, dict) and "required" in v and isinstance(v["required"], bool) and v["required"]:  # draft3
+                    if k in required:
                         model[f"_{k}"] = \
                             schema2model(v, lid or url, path + (("properties", f"_{k}"), ), strict, fix, False, resilient)
                     else:
@@ -1351,7 +1305,7 @@ def schema2id(schema: JsonSchema, keep_format: bool = True) -> str:
 
 def schema_to_model(
             schema: JsonSchema, schema_name: str,
-            typer: bool = False, simpler: bool = False, fix: bool = True,
+            typer: bool = False, simpler: bool = False, fix: bool = True, modernize: bool = True,
             use_id: bool = False, strict: bool = True, resolve: bool = True,
             resilient: bool = False, cache: str|None = None, version: int|None = None,
             mapping: dict[str, str] = {}, level: int = logging.INFO,
@@ -1375,6 +1329,8 @@ def schema_to_model(
                 schema = resolveExternalRefs(schema, version=version,
                     cache=cache, mapping=mapping, level=level,
                 )
+            if modernize:
+                modernizeOldDraft(schema, version, level=level)
             if typer and isinstance(schema, dict):
                 log.debug("typing schema")
                 schema = computeTypes(schema)

@@ -11,7 +11,7 @@ def goFlt(_s: JsonSchema, _p: SchemaPath) -> bool:
 def noRwt(schema: JsonSchema, _p: SchemaPath) -> JsonSchema:
     return schema
 
-def _recurseSchema(
+def _recSchema(
         schema: JsonSchema,
         url: str,
         path: SchemaPath,
@@ -31,7 +31,7 @@ def _recurseSchema(
                 props = schema[prop]
                 assert isinstance(props, dict)
                 for p, s in list(props.items()):
-                    props[p] = _recurseSchema(s, url, path + ((prop, p), ), flt, rwt, def_first)
+                    props[p] = _recSchema(s, url, path + ((prop, p), ), flt, rwt, def_first)
 
     # skip recursion
     if not flt(schema, path):
@@ -45,12 +45,22 @@ def _recurseSchema(
         if isinstance(schema, dict):
             recValue(schema, "$defs", "definitions")
 
+    # draft3 types… we are skipping disallow though
+    if "type" in schema:
+        ts = schema["type"]
+        if isinstance(ts, dict):
+            schema["type"] = _recSchema(ts, url, path + ("type",), flt, rwt, def_first)  # type: ignore
+        if isinstance(ts, list):
+            for i, t in enumerate(ts):
+                if isinstance(t, dict):
+                    ts[i] = _recSchema(t, url, path + (("type", i),), flt, rwt, def_first)  # type: ignore
+
     # list of schemas
     for prop in ("allOf", "oneOf", "anyOf", "prefixItems"):
         if prop in schema:
             subs = schema[prop]
             assert isinstance(subs, list)
-            schema[prop] = [ _recurseSchema(s, url, path + ((prop, i),), flt, rwt, def_first)  # type: ignore
+            schema[prop] = [ _recSchema(s, url, path + ((prop, i),), flt, rwt, def_first)  # type: ignore
                              for i, s in enumerate(subs) ]
 
     # direct schemas
@@ -60,10 +70,10 @@ def _recurseSchema(
         if prop in schema:
             # handle old items ~ prefixItems
             if prop == "items" and isinstance(schema["items"], list):
-                schema[prop] = [ _recurseSchema(s, url, path + ((prop, i),), flt, rwt, def_first)
+                schema[prop] = [ _recSchema(s, url, path + ((prop, i),), flt, rwt, def_first)
                     for i, s in enumerate(schema[prop]) ]  # type: ignore
             else:  # standard case
-                schema[prop] = _recurseSchema(schema[prop],  # type: ignore
+                schema[prop] = _recSchema(schema[prop],  # type: ignore
                                               url, path + (prop,), flt, rwt, def_first)
 
     recValue(schema, "properties", "dependentSchemas", "patternProperties")
@@ -95,7 +105,7 @@ def recurseSchema(
     :param path: starting path.
     :param def_first: whether to handle definitions prior everything else
     """
-    return _recurseSchema(schema, url, path, flt, rwt, def_first=def_first)
+    return _recSchema(schema, url, path, flt, rwt, def_first=def_first)
 
 
 def hasDirectRef(schema, url):

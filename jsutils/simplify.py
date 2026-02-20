@@ -8,6 +8,7 @@ import json
 import re
 
 from .utils import JsonSchema, SchemaPath, JSUError, only, schemapath_to_urlpath, decode_url
+from .utils import ALL_TYPES
 from .recurse import recurseSchema
 from .inline import mergeProperty, mergeSchemas
 

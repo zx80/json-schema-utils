@@ -18,7 +18,7 @@ from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
 from .convert import schema_to_model
-from .restruct import computeTypes
+from .types import computeTypes
 
 __version__ = pkg_version("json_schema_utils")
 
