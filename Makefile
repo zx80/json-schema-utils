@@ -13,8 +13,10 @@ clean.dev: clean
 .PHONY: dev
 dev: venv
 
+PYTHON  = python
+
 venv:
-	python -m venv venv
+	$(PYTHON) -m venv venv
 	source venv/bin/activate
 	pip install -e .[dev,compile]
 
