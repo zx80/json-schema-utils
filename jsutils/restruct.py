@@ -49,8 +49,10 @@ def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
             dis = [dis]
         ts = schema["type"] if "type" in schema else sorted(ALL_TYPES)
         for t in dis:
-            if t in ts:
+            if isinstance(t, str) and t in ts:
                 ts.remove(t)
+            elif t == {} or t == "any":
+                ts.clear()
         del schema["disallow"]
         schema["type"] = ts[0] if len(ts) == 1 else ts
 
