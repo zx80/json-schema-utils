@@ -373,6 +373,8 @@ def jsu_model():
     arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
     arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
+    arg("--modernize", default=True, action="store_true", help="modernize schema")
+    arg("--no-modernize", dest="modernize", action="store_false", help="do not modernize schema")
     arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("schemas", nargs="*", help="schemas to process")
@@ -404,7 +406,7 @@ def jsu_model():
             schema = json.load(open(fn) if fn != "-" else sys.stdin)
             model = schema_to_model(
                 schema, fn,
-                use_id=args.id, strict=args.strict, fix=args.fix,
+                use_id=args.id, strict=args.strict, fix=args.fix, modernize=args.modernize,
                 simpler=args.simple, typer=args.type, resilient=args.resilient,
                 version=args.sversion, mapping=mapping,
                 level=logging.DEBUG if args.debug else logging.INFO,
@@ -436,6 +438,8 @@ def jsu_compile():
     arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")
     arg("--resilient", default=False, action="store_true", help="be cool, try harder")
     arg("--no-resilient", dest="resilient", action="store_false", help="not cool")
+    arg("--modernize", default=True, action="store_true", help="modernize schema")
+    arg("--no-modernize", dest="modernize", action="store_false", help="do not modernize schema")
     arg("--type", default=True, action="store_true", help="type schema before conversion")
     arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
     arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
@@ -470,7 +474,7 @@ def jsu_compile():
         schema = json.load(open(args.schema) if args.schema != "-" else sys.stdin)
         model = schema_to_model(
             schema, args.schema,
-            use_id=args.id, strict=args.strict, fix=args.fix,
+            use_id=args.id, strict=args.strict, fix=args.fix, modernize=args.modernize,
             typer=args.type, simpler=args.simple, resilient=args.resilient,
             cache=args.cache, version=args.sversion, mapping=mapping,
             level=logging.DEBUG if args.debug else logging.INFO,
@@ -509,6 +513,7 @@ def json_schema_to_python_checker(
         version: int = 0,
         strict: bool = True,
         fix: bool = False,
+        modernize: bool = True,
         typer: bool = True,
         simpler: bool = True,
         resilient: bool = True,
@@ -524,8 +529,9 @@ def json_schema_to_python_checker(
     try:
         # build the intermediate model
         model = schema_to_model(
-            schema, name, strict=strict, fix=fix, typer=typer, simpler=simpler,
-            version=version, resilient=resilient, cache=cache, mapping=mapping, level=level,
+            schema, name, strict=strict, fix=fix, modernize=modernize, typer=typer,
+            simpler=simpler, version=version, resilient=resilient,
+            cache=cache, mapping=mapping, level=level,
         )
         if level == logging.DEBUG:
             log.debug(f"intermediate model: {model}")
@@ -555,6 +561,8 @@ def jsu_runner():
     arg("--cache", type=str, default=None, help="cache directory")
     arg("--dump", default=False, action="store_true", help="show generated model as debug")
     arg("--no-dump", dest="dump", action="store_false", help="do not show generated model as debug")
+    arg("--modernize", default=True, action="store_true", help="modernize schema")
+    arg("--no-modernize", dest="modernize", action="store_false", help="do not modernize schema")
     arg("--type", default=True, action="store_true", help="type schema before conversion")
     arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
     arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
@@ -628,8 +636,9 @@ def jsu_runner():
                 try:
                     checker = json_schema_to_python_checker(
                         case["schema"], scase, strict=args.strict, fix=False,
-                        typer=args.type, simpler=args.simple, version=args.sversion,
-                        resilient=args.resilient, cache=args.cache, mapping=mapping,
+                        modernize=args.modernize, typer=args.type, simpler=args.simple,
+                        version=args.sversion, resilient=args.resilient,
+                        cache=args.cache, mapping=mapping,
                         level = logging.DEBUG if args.debug else logging.INFO,
                         loose_int=True, loose_float=True, predef=False, extend=True,
                     )
