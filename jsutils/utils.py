@@ -115,4 +115,3 @@ def is_any(schema: JsonSchema) -> bool:
             return isinstance(types, list) and set(types) == ALL_TYPES
         else:
             return True
-            
