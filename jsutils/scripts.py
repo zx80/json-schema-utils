@@ -373,7 +373,7 @@ def jsu_model():
     arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
     arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
-    arg("--schema-version", "-V", dest="sversion", type=int, default=None, help="set JSON Schema version")
+    arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args()
@@ -438,7 +438,7 @@ def jsu_compile():
     arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
     arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
-    arg("--schema-version", "-V", dest="sversion", type=int, default=None, help="set JSON Schema version")
+    arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("schema", default="-", help="schema to process")
     arg("others", nargs="*", help="jmc backend options and arguments")
@@ -501,7 +501,7 @@ def jsu_compile():
 def json_schema_to_python_checker(
         schema: JsonSchema,
         name: str|None = None,
-        version: int|None = None,
+        version: int = 0,
         strict: bool = True,
         fix: bool = False,
         typer: bool = True,
@@ -555,7 +555,7 @@ def jsu_runner():
     arg("--strict", action="store_true", default=False, help="reject doubtful schemas")
     arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
-    arg("--schema-version", "-V", dest="sversion", type=int, default=None, help="set JSON Schema version")
+    arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("--resilient", default=False, action="store_true",
         help="enable model conversion resilience")
     arg("--no-resilient", dest="resilient", default=False, action="store_true",

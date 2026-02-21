@@ -241,12 +241,12 @@ JMC (back) version: `2.0b37`
 - `/pattern.json`: errors=0 cases=2/2 (100.0%) tests=9/9 (100.0%, 0 fails)
 - `/patternProperties.json`: errors=0 cases=4/4 (100.0%) tests=17/17 (100.0%, 0 fails)
 - `/properties.json`: errors=0 cases=3/3 (100.0%) tests=15/15 (100.0%, 0 fails)
-- `/ref.json`: errors=0 cases=8/10 (80.0%) tests=25/27 (92.6%, 2 fails)
+- `/ref.json`: errors=0 cases=9/10 (90.0%) tests=26/27 (96.3%, 1 fails)
 - `/refRemote.json`: errors=0 cases=4/4 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `/required.json`: errors=0 cases=3/3 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=12/12 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=62/62 (100.0%, 0 fails)
-- summary: files=25 errors=0 cases=102/104 (98.1%) tests=432/434 (99.5%, 2 fails)
+- summary: files=25 errors=0 cases=103/104 (99.0%) tests=433/434 (99.8%, 1 fails)
 
 ## Results for _v1_
 

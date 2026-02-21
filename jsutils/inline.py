@@ -11,6 +11,7 @@ import logging
 from .utils import JsonSchema, SchemaPath, JSUError, KEYWORD_TYPE
 from .utils import only, is_abs_url, schemapath_to_urlpath, is_any
 from .schemas import Schemas
+from .restruct import modernizeOldDraft
 from .recurse import recurseSchema
 
 log = logging.getLogger("inline")
@@ -337,9 +338,10 @@ FILE_URL = "file://"
 def resolveExternalRefs(
             schema: JsonSchema, *,
             url: str = ".",
+            modernize: bool = True,
             cache: str|None = None,
             mapping: dict[str, str] = {},
-            version: int|None = None,
+            version: int = 0,
             level: int = logging.INFO,
         ) -> JsonSchema:
     """Resolution of external schema references.
@@ -362,11 +364,21 @@ def resolveExternalRefs(
         log.debug(f"resolve ext in: {json.dumps(schema, indent=2)}")
 
     # set version if possible
-    if version is None and "$schema" in schema:
+    if not version and "$schema" in schema:
         sversion = schema["$schema"]
-        version = 8 if "draft/2019-09/schema" in sversion else \
-                  9 if "draft/2020-12/schema" in sversion else \
-                  7  # take a guess
+        version = 8 if "/draft/2019-09/schema" in sversion else \
+                  9 if "/draft/2020-12/schema" in sversion else \
+                  7 if "/draft-07/schema" in sversion else \
+                  6 if "/draft-06/schema" in sversion else \
+                  4 if "/draft-04/schema" in sversion else \
+                  3 if "/draft-03/schema" in sversion else \
+                  0  # take a guess
+        if version == 0:
+            log.warning(f"unexpected $schema: {sversion}")
+
+    # we need to do that here in order to manage external refs reliably
+    if modernize and version < 7:
+        modernizeOldDraft(schema, version=version, level=level)
 
     defs = ("$defs" if "$defs" in schema  else
             "definitions" if "definitions" in schema else
@@ -377,12 +389,11 @@ def resolveExternalRefs(
     else:
         assert isinstance(schema[defs], dict)
 
-    sid = "id" if "id" in schema else "$id"
-    if sid in schema:
-        assert isinstance(schema[sid], str), "schema {sid} must be a string"
-        if url and schema[sid] != url:
-            log.warning(f"inconsistent {sid}: {schema[sid]} vs {url}")
-        url = schema[sid]
+    if "$id" in schema:
+        assert isinstance(schema["$id"], str), "schema $id must be a string"
+        if url and schema["$id"] != url:
+            log.warning(f"inconsistent $id: {schema['$id']} vs {url}")
+        url = schema["$id"]
 
     # url -> local name in outer scope
     resolved: dict[str, str] = {}
@@ -408,16 +419,15 @@ def resolveExternalRefs(
     def fltExtRef(local: JsonSchema, p: SchemaPath) -> bool:
         if isinstance(local, dict):
             # note $anchor is more or less a supplement to $id
-            sid = "id" if "id" in local else "$id"
             anchor = local.get("$anchor", None)
             if anchor is not None:
                 # move anchor as $id if possible
                 del local["$anchor"]
-                if sid not in local:
-                    local[sid] = "#" + anchor
+                if "$id" not in local:
+                    local["$id"] = "#" + anchor
                     anchor = None
-            if sid in local:
-                url = local[sid]
+            if "$id" in local:
+                url = local["$id"]
                 assert isinstance(url, str)
                 if re.match(r"#[^/]", url):  # local identifier case ???
                     # FIXME is this actually the case
@@ -440,10 +450,9 @@ def resolveExternalRefs(
             pushed.pop()
             urls.pop()
             if not keep_id:
-                sid = "$id" if "$id" in local else "id"
                 if level == logging.DEBUG:
-                    local["$comment"] = local[sid]
-                del local[sid]
+                    local["$comment"] = local["$id"]
+                del local["$id"]
         return local
 
     # rewrite remote refs as local definitions, without ids
@@ -484,7 +493,7 @@ def resolveExternalRefs(
                     if version and version >= 8:
                         idx = -1
                     else:
-                        idx = -2 if "$id" in local or "id" in local else -1
+                        idx = -2 if "$id" in local else -1
                     dest = urljoin(urls[idx], dest)
                 # log.debug(f"join: {local['$ref']} -> {dest}")
             elif dest and dest[0] == "#" :  # name? maybe with a path??
@@ -566,15 +575,18 @@ def resolveExternalRefs(
                     while (name := f"_extern_{externs}_") in schema[defs]:
                         externs += 1
 
+                    # upgrade schema for later processing
+                    if modernize:
+                        modernizeOldDraft(js, version=version, level=level)
+
                     # ensure that hierarchical relative urls are consistent in the target
-                    if "id" not in js and "$id" not in js:
+                    if "$id" not in js:
                         js["$id"] = init_url
                     else:
-                        sid = "id" if "id" in js else "$id"
-                        if js[sid] != init_url:
-                            log.warning(f"overriding {sid} in {init_url}")
+                        if js["$id"] != init_url:
+                            log.warning(f"overriding $id in {init_url}")
                             # NOTE should it be #/$defs/name instead?
-                            js[sid] = init_url
+                            js["$id"] = init_url
                         else:
                             # consistent
                             pass

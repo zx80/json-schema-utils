@@ -14,7 +14,6 @@ from .recurse import recurseSchema, log as rec_log
 from .inline import resolveExternalRefs
 from .simplify import simplifySchema, scopeDefs
 from .types import computeTypes
-from .restruct import modernizeOldDraft
 
 log = logging.getLogger("convert")
 log.setLevel(logging.DEBUG)
@@ -1307,7 +1306,7 @@ def schema_to_model(
             schema: JsonSchema, schema_name: str,
             typer: bool = False, simpler: bool = False, fix: bool = True, modernize: bool = True,
             use_id: bool = False, strict: bool = True, resolve: bool = True,
-            resilient: bool = False, cache: str|None = None, version: int|None = None,
+            resilient: bool = False, cache: str|None = None, version: int = 0,
             mapping: dict[str, str] = {}, level: int = logging.INFO,
         ):
     """Convert a JSON Schema to a JSON Model."""
@@ -1326,11 +1325,9 @@ def schema_to_model(
     if model is None:
         try:
             if resolve and isinstance(schema, dict):
-                schema = resolveExternalRefs(schema, version=version,
+                schema = resolveExternalRefs(schema, version=version, modernize=modernize,
                     cache=cache, mapping=mapping, level=level,
                 )
-            if modernize:
-                modernizeOldDraft(schema, version, level=level)
             if typer and isinstance(schema, dict):
                 log.debug("typing schema")
                 schema = computeTypes(schema)

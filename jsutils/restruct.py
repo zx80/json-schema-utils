@@ -1,9 +1,9 @@
 import json
 import logging
 
-from .utils import ALL_TYPES
+from .utils import ALL_TYPES, IGNORE
 from .utils import JsonSchema, SchemaPath
-from .utils import log
+from .utils import log, only
 from .recurse import recurseSchema, noRwt
 
 def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
@@ -12,20 +12,22 @@ def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
         return False
     assert isinstance(schema, dict)
 
+    if "id" in schema and "$id" not in schema:
+        assert "$id" not in schema, "should not have both id and $id"
+        schema["$id"] = schema.pop("id")
+
     if "divisibleBy" in schema:
-        assert "multipleOf" not in schema
-        schema["multipleOf"] = schema["divisibleBy"]
-        del schema["divisibleBy"]
+        assert "multipleOf" not in schema, "should not have both multipleOf and divisibleBy"
+        schema["multipleOf"] = schema.pop("divisibleBy")
 
     if "extends" in schema:
         if "allOf" not in schema:
             schema["allOf"] = []
-        extends = schema["extends"]
+        extends = schema.pop("extends")
         if isinstance(extends, list):
             schema["allOf"] += extends
         else:
             schema["allOf"].append(extends)
-        del schema["extends"]
 
     if "type" in schema:
         ts = schema["type"]
@@ -51,13 +53,13 @@ def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
         for t in dis:
             if t == "any":
                 ts.clear()
-            elif t == "integer" and "number" not in dis and "number" in ts:  # integer/number issue
+            elif t == "integer" and ("number" in ts or "number" not in dis):  # integer/number issue
                 if "allOf" not in schema:
                     schema["allOf"] = []
                 schema["allOf"].append({"not": {"type": t}})
             elif isinstance(t, str) and t in ts:
                 ts.remove(t)
-            elif t == {}:
+            elif t == only(schema, "type", *IGNORE):
                 ts.clear()
             else:
                 if "allOf" not in schema:
