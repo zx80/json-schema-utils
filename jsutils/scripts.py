@@ -446,14 +446,15 @@ def jsu_compile():
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
     arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
-    arg("schema", default="-", help="schema to process")
+    arg("schema", default="-", nargs="?", help="schema to process")
     arg("others", nargs="*", help="jmc backend options and arguments")
     args = ap.parse_args()
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     if args.version:
-        print(__version__)
+        backend = pkg_version("json_model_compiler")
+        print(f"{__version__} (backend jmc {backend})")
         sys.exit(0)
 
     # translate schema lingo into model lingo
@@ -500,6 +501,7 @@ def jsu_compile():
         tmp.flush()
 
         # launch jmc
+        # TODO invoke the internal interface? or not?
         done = subprocess.run(["jmc", "--model", tmp.name, "--extend"] + args.others)
 
         # exit status
@@ -581,7 +583,8 @@ def jsu_runner():
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     if args.version:
-        print(__version__)
+        backend = pkg_version("json_model_compiler")
+        print(f"{__version__} (backend jmc {backend})")
         sys.exit(0)
 
     mapping = {}
