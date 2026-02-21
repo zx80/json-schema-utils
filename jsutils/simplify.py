@@ -7,8 +7,9 @@ import copy
 import json
 import re
 
-from .utils import JsonSchema, SchemaPath, JSUError, only, schemapath_to_urlpath, decode_url
-from .utils import ALL_TYPES
+from .utils import JsonSchema, SchemaPath, JSUError
+from .utils import only, schemapath_to_urlpath, decode_url, encode_url
+from .utils import ALL_TYPES, IGNORE
 from .recurse import recurseSchema
 from .inline import mergeProperty, mergeSchemas
 
@@ -189,12 +190,14 @@ def noDependencies(schema: JsonSchema, path: SchemaPath):
 def simplifySchema(
             schema: JsonSchema,
             url: str,
-            sversion: int|None = None,
+            sversion: int = 0,
             level: int = logging.INFO,
         ):
     """Simplify a JSON Schema with various rules."""
 
     log.setLevel(level)
+    if level == logging.DEBUG:
+        log.debug(f"simpler in: {json.dumps(schema, indent=2)}")
 
     # schema version for $ref aggressive pruning
     version: int
@@ -333,6 +336,16 @@ def simplifySchema(
         for prop in ("anyOf", "oneOf", "allOf"):
             if (isinstance(local, dict) and prop in local and
                     len(local[prop]) == 1):  # type: ignore
+                # NOTE filter out older versions in some cases
+                if "$ref" in local[prop][0] and version <= 7:
+                    if only(local, prop, *IGNORE):
+                        pass
+                    elif only(local, "type", prop, *IGNORE) and set(local["type"]) == ALL_TYPES:
+                        pass
+                    else:
+                        # skip as it would induce an adjacent removal optimization
+                        continue
+                # merge attempt
                 try:
                     nschema = copy.deepcopy(local)
                     sub = local[prop][0]  # pyright: ignore
@@ -560,15 +573,16 @@ def simplifySchema(
 
         return local
 
-    return recurseSchema(schema, url, flt=fltSimpler, rwt=rwtSimpler)
+    schema = recurseSchema(schema, url, flt=fltSimpler, rwt=rwtSimpler)
 
+    if level == logging.DEBUG:
+        log.debug(f"simpler out: {json.dumps(schema, indent=2)}")
+
+    return schema
 
 #
 # move definitions at the root and resolve ids
 #
-from urllib.parse import quote, unquote
-
-
 def _defId(schema) -> tuple[str|None, str|None]:
     """return name of definitions and id properties."""
     if not isinstance(schema, dict):
@@ -625,7 +639,7 @@ def _scopeSubDefs(
             else:
                 new_name = f"_dsub_{_SUBCOUNT}_"
                 _SUBCOUNT += 1
-                old_name = quote(name).replace("~", "~0").replace("/", "~1")
+                old_name = encode_url(name)
             npath = rootdef + "/" + new_name
             opath = f"#/{schemapath_to_urlpath(path)}/{defn}/{old_name}"  # type: ignore
             sschema["$comment"] = f"origin: {opath}"
@@ -660,9 +674,6 @@ def _scopeSubDefs(
         iddefs = f"#/{defn}/"
         # id's defs with be there
         moved[sid + iddefs] = rootdef + "/" + prefix
-        # "#/" + "/".join(p if "/" not in p and "%" not in p else
-        #                            quote(p).replace("~", "~0").replace("/", "~1")
-        #                                for p in path)
 
         # remap all sub-schema local references
         def rwtRef(schema, lpath):
@@ -688,7 +699,6 @@ def _scopeSubDefs(
         # whole object will be moved later
         assert defn in schema
         delete.append((schema, defn, prefix, ids[sid], sid, path))
-
 
 def scopeDefs(schema: JsonSchema, version: int|None = None, level: int = logging.INFO):
     """Move internal definitions/$defs to root schema, possibly handing nested $id"""

@@ -44,7 +44,7 @@ JMC (back) version: `2.0b37`
 - `/prefixItems.json`: errors=0 cases=4/4 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `/properties.json`: errors=0 cases=6/6 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/propertyNames.json`: errors=0 cases=6/6 (100.0%) tests=20/20 (100.0%, 0 fails)
-- `/ref.json`: errors=0 cases=30/36 (83.3%) tests=73/79 (92.4%, 6 fails)
+- `/ref.json`: errors=0 cases=29/36 (80.6%) tests=72/79 (91.1%, 7 fails)
 - `/refRemote.json`: errors=0 cases=14/15 (93.3%) tests=30/31 (96.8%, 1 fails)
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
@@ -52,7 +52,7 @@ JMC (back) version: `2.0b37`
 - `/unevaluatedProperties.json`: errors=0 cases=10/42 (23.8%) tests=81/125 (64.8%, 44 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=288/377 (76.4%) tests=1165/1277 (91.2%, 112 fails)
+- summary: files=46 errors=0 cases=287/377 (76.1%) tests=1164/1277 (91.2%, 113 fails)
 
 ## Results for _draft2019-09_
 
@@ -241,12 +241,12 @@ JMC (back) version: `2.0b37`
 - `/pattern.json`: errors=0 cases=2/2 (100.0%) tests=9/9 (100.0%, 0 fails)
 - `/patternProperties.json`: errors=0 cases=4/4 (100.0%) tests=17/17 (100.0%, 0 fails)
 - `/properties.json`: errors=0 cases=3/3 (100.0%) tests=15/15 (100.0%, 0 fails)
-- `/ref.json`: errors=0 cases=9/10 (90.0%) tests=26/27 (96.3%, 1 fails)
+- `/ref.json`: errors=0 cases=10/10 (100.0%) tests=27/27 (100.0%, 0 fails)
 - `/refRemote.json`: errors=0 cases=4/4 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `/required.json`: errors=0 cases=3/3 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=12/12 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=62/62 (100.0%, 0 fails)
-- summary: files=25 errors=0 cases=103/104 (99.0%) tests=433/434 (99.8%, 1 fails)
+- summary: files=25 errors=0 cases=104/104 (100.0%) tests=434/434 (100.0%, 0 fails)
 
 ## Results for _v1_
 

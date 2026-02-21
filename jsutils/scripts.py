@@ -532,6 +532,8 @@ def json_schema_to_python_checker(
         return checker
     except BaseException as e:
         log.error(f"schema compilation failed: {e}")
+        if level == logging.DEBUG:
+            log.debug(e, exc_info=True)
         if not resilient:
             raise
         log.warning("using all-pass checker for {name} (resilient mode)")

@@ -566,10 +566,10 @@ def resolveExternalRefs(
                         log.info(f"# loaded from net: {url!r}")
                         js, loaded = res.json(), True
 
-                    # store in cache
-                    if cache and not cached:
-                        with open(cfn, "w") as f:
-                            f.write(res.text)
+                        # store in cache
+                        if cache and not cached:
+                            with open(cfn, "w") as f:
+                                f.write(res.text)
 
                     # find next available name
                     while (name := f"_extern_{externs}_") in schema[defs]:
