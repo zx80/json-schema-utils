@@ -1,8 +1,7 @@
 # JSON Schema Test Suite Report
 
 JSTS version: `4253477cdaadd6b324172b9617eba22f95436fae`
-JSU (front) version: `0.9.0`
-JMC (back) version: `2.0b37`
+JSU version: `0.9.0 (backend jmc 2.0b37)`
 
 ## Results for _draft2020-12_
 
@@ -93,7 +92,7 @@ JMC (back) version: `2.0b37`
 - `/patternProperties.json`: errors=0 cases=5/5 (100.0%) tests=23/23 (100.0%, 0 fails)
 - `/properties.json`: errors=0 cases=6/6 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/propertyNames.json`: errors=0 cases=6/6 (100.0%) tests=20/20 (100.0%, 0 fails)
-- `/recursiveRef.json`: errors=0 cases=1/9 (11.1%) tests=20/34 (58.8%, 14 fails)
+- `/recursiveRef.json`: errors=0 cases=1/9 (11.1%) tests=23/34 (67.6%, 11 fails)
 - `/ref.json`: errors=0 cases=29/37 (78.4%) tests=73/81 (90.1%, 8 fails)
 - `/refRemote.json`: errors=0 cases=14/15 (93.3%) tests=30/31 (96.8%, 1 fails)
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
@@ -102,7 +101,7 @@ JMC (back) version: `2.0b37`
 - `/unevaluatedProperties.json`: errors=0 cases=10/42 (23.8%) tests=81/125 (64.8%, 44 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=293/368 (79.6%) tests=1145/1242 (92.2%, 97 fails)
+- summary: files=46 errors=0 cases=293/368 (79.6%) tests=1148/1242 (92.4%, 94 fails)
 
 ## Results for _draft7_
 

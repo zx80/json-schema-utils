@@ -419,15 +419,18 @@ def schema2model(
                 log.warning(f"ignoring nullable directive at [{spath}]")
             del schema["nullable"]
 
-    # set type explicitely
-    if "type" not in schema:
-        if fix:
-            if "properties" in schema or "required" in schema or "additionalProperties" in schema:
-                schema["type"] = "object"
-            elif "pattern" in schema or "maxLength" in schema or "minLength" in schema:
-                schema["type"] = "string"
-            elif "items" in schema or "minItems" in schema or "maxItems" in schema:
-                schema["type"] = "array"
+    # set type explicitely for typical cases of forgotten types
+    # $ref?
+    if fix and ("type" not in schema or isinstance(schema["type"], list)):
+        # only(schema, *TYPED_KEYWORDS["object"], *IGNORE):
+        if "properties" in schema or "required" in schema or "additionalProperties" in schema:
+            schema["type"] = "object"
+        # only(schema, *TYPED_KEYWORDS["string"], *IGNORE):
+        elif "pattern" in schema or "maxLength" in schema or "minLength" in schema:
+            schema["type"] = "string"
+        # only(schema, *TYPED_KEYWORDS["array"], *IGNORE):
+        elif "items" in schema or "minItems" in schema or "maxItems" in schema:
+            schema["type"] = "array"
         # else: schema["type"] = sorted(ALL_TYPES)
 
     # if resilient and "type" not in schema:

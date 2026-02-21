@@ -20,8 +20,7 @@ test -d "$root_dir" || err 1 "no such directory: $root_dir"
 echo "# JSON Schema Test Suite Report"
 echo
 echo "JSTS version: \`$(pushd "$root_dir" > /dev/null 2>&1 && git log -1 | head -1 | cut -d' ' -f2)\`"
-echo "JSU (front) version: \`$(jsu-test-runner --version)\`"
-echo "JMC (back) version: \`$(jmc --version)\`"
+echo "JSU version: \`$(jsu-test-runner --version)\`"
 echo
 
 if ! [ -d $root_dir/remotes ] ; then

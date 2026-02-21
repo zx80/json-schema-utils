@@ -34,7 +34,7 @@ META_KEYS = [
     "title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly", "id",
     "$schema", "$id", "$comment", "$dynamicAnchor", "$dynamicRef",
     # OLD?
-    "context", "notes",
+    "context", "notes", "$recursiveAnchor", "$recursiveRef",
     # extensions and strange stuff?
     "markdownDescription", "deprecationMessage", "scope", "body", "example", "private",
 ]

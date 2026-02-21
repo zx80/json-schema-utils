@@ -9,6 +9,7 @@
 - [ ] tests with all languages, not just Python
 - [ ] list compiler current limitations
 - [ ] run some optional tests, eg _format_
+- [ ] put typing result in "$type" instead of "type" to help with fixing?
 
 ## Dones
 
