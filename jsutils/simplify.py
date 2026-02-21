@@ -337,7 +337,8 @@ def simplifySchema(
             if (isinstance(local, dict) and prop in local and
                     len(local[prop]) == 1):  # type: ignore
                 # NOTE filter out older versions in some cases
-                if "$ref" in local[prop][0] and version <= 7:
+                xofs = local[prop][0]
+                if isinstance(xofs, dict) and "$ref" in xofs and version <= 7:
                     if only(local, prop, *IGNORE):
                         pass
                     elif only(local, "type", prop, *IGNORE) and set(local["type"]) == ALL_TYPES:
