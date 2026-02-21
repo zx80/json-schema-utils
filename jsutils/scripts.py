@@ -427,6 +427,8 @@ def jsu_compile():
     ap_common(arg)
     arg("--id", action="store_true", default=False, help="enable $id lookup")
     arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
+    arg("--format", action="store_true", default=False, help="ignore formats")
+    arg("--no-format", dest="format", action="store_false", help="do not ignore formats")
     arg("--cache", type=str, default=None, help="cache directory")
     arg("--strict", action="store_true", default=True, help="reject doubtful schemas")
     arg("--loose", dest="strict", action="store_false", help="accept doubtful schemas")
@@ -449,6 +451,9 @@ def jsu_compile():
     if args.version:
         print(__version__)
         sys.exit(0)
+
+    # translate schema lingo into model lingo
+    args.others.append("--predef" if args.format else "--no-predef")
 
     mapping = {}
     if args.map:
@@ -491,7 +496,7 @@ def jsu_compile():
         tmp.flush()
 
         # launch jmc
-        done = subprocess.run(["jmc", "--model", tmp.name, "--no-predef", "--extend"] + args.others)
+        done = subprocess.run(["jmc", "--model", tmp.name, "--extend"] + args.others)
 
         # exit status
         if done.returncode:
