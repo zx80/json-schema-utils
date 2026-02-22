@@ -171,8 +171,9 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
         elif prop == "enum":
             # DEAD CODE… enum does not need any check and is already before?
             assert isinstance(val, list), "enum is a list"
-            for sh in schemas.values():
-                sh["enum"] = []
+            for t, sh in schemas.items():
+                if t != "":
+                    sh["enum"] = []
             for v in val:
                 if v is None and "null" in schemas:
                     # just drop the enum
@@ -198,7 +199,7 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
                 # else just ignore incompatible value…
             # simplify if possible
             for t in schemas:
-                if "enum" in schemas[t]:
+                if t != "" and "enum" in schemas[t]:
                     enums = schemas[t]["enum"]
                     if len(enums) == 0:
                         schemas[t] = False
