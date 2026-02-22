@@ -422,7 +422,9 @@ def schema2model(
 
     # set type explicitely for typical cases of forgotten types
     # $ref?
-    if fix and ("type" not in schema or isinstance(schema["type"], list)):
+    # TODO do not overwrite initial type?
+    if fix and ("type" not in schema or
+                isinstance(schema["type"], list) and len(schema["type"]) > 5):
         # only(schema, *TYPED_KEYWORDS["object"], *IGNORE):
         if "properties" in schema or "required" in schema or "additionalProperties" in schema:
             schema["type"] = "object"
