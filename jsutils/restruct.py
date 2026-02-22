@@ -104,6 +104,16 @@ def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
             if isinstance(s, str):
                 deps[p] = [ s ]
 
+    # recursiveAnchor/Ref to dynamicAnchor/Ref
+    if "recursiveAnchor" in schema:
+        assert "dynamicAnchor" not in schema
+        schema["dynamicAnchor"] = schema["recursiveAnchor"]
+        del schema["recursiveAnchor"]
+    if "recursiveRef" in schema:
+        assert "dynamicRef" not in schema
+        schema["dynamicRef"] = schema["recursiveRef"]
+        del schema["recursiveRef"]
+
     return True
 
 def modernizeOldDraft(schema: JsonSchema, version: int, level: int = logging.INFO):
