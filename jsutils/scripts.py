@@ -429,6 +429,8 @@ def jsu_compile():
     ap_common(arg)
     arg("--id", action="store_true", default=False, help="enable $id lookup")
     arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
+    arg("--reporting", action="store_true", default=True, help="enable reporting")
+    arg("--no-reporting", dest="reporting", action="store_false", help="disable reporting")
     arg("--format", action="store_true", default=False, help="ignore formats")
     arg("--no-format", dest="format", action="store_false", help="do not ignore formats")
     arg("--cache", type=str, default=None, help="cache directory")
@@ -446,6 +448,7 @@ def jsu_compile():
     arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
     arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
+    arg("--out", "-o", default=None, help="set output file")
     arg("schema", default="-", nargs="?", help="schema to process")
     arg("others", nargs="*", help="jmc backend options and arguments")
     args = ap.parse_args()
@@ -457,8 +460,11 @@ def jsu_compile():
         print(f"{__version__} (backend jmc {backend})")
         sys.exit(0)
 
-    # translate schema lingo into model lingo
+    # forward some options to back-end
     args.others.append("--predef" if args.format else "--no-predef")
+    args.others.append("--reporting" if args.reporting else "--no-reporting")
+    if args.out is not None:
+        args.others += [ "-o", args.out ]
 
     mapping = {}
     if args.map:
