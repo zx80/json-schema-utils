@@ -190,6 +190,7 @@ def typeFlt(schema: JsonSchema, path: SchemaPath) -> bool:
                 references[rpath] = set()
             references[rpath].add(path)
 
+        # dynamic anchors X and reference #X (why?)
         if "$dynamicAnchor" in schema:
             name = schema["$dynamicAnchor"]
             assert isinstance(name, str)
@@ -200,6 +201,8 @@ def typeFlt(schema: JsonSchema, path: SchemaPath) -> bool:
         if "$dynamicRef" in schema:
             name = schema["$dynamicRef"]
             assert isinstance(name, str)
+            if name.startswith("#"):
+                name = name[1:]
             if name not in dynRefs:
                 dynRefs[name] = set()
             dynRefs[name].add(path)
@@ -255,6 +258,8 @@ def updateTypes(schema: JsonSchema, path: SchemaPath):
 
     if "$dynamicRef" in schema:
         name = schema["$dynamicRef"]
+        if name.startswith("#"):
+            name = name[1:]
         if name in dynAnchors:
             ntypes = NONE
             for p in sorted(dynAnchors[name]):
