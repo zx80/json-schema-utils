@@ -100,7 +100,7 @@ using the [JSON Model Compiler](https://json-model.org/) as a backend.
 
 ```sh
 # generate a python script
-jsu-compile some.schema.json -- -o some.py
+jsu-compile -o some.py some.schema.json
 # run the script to validate values
 ./some.py val1.json val2.json
 ```
@@ -114,7 +114,6 @@ see [JSON Model HOWTO](https://json-model.org/#/HOWTO).
 ## TODO
 
 - improve model conversion resilience by ignoring unexpected stuff
-- check/compile: add `--loose` option? relevant default value?
 - stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)
   to reduce false positive errors/warnings.

@@ -2,6 +2,7 @@
 
 ## JSU schema compilation with JMC backend
 
+- [x] add `--loose` option for numbers
 - [ ] be listed on [bowtie](https://bowtie.report/)
 - [ ] get 100% on _draft2019-09_
 - [ ] get 100% on _draft2020-12_
