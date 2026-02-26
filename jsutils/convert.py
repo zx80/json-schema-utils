@@ -34,6 +34,21 @@ def tname(v) -> str:
 # BEST EFFORT SCHEMA TO MODEL CONVERSION
 #
 
+# collection of properties that hint of a cross-version meta schema
+_META_PROPS = {
+    "type", "$schema", "allOf", "anyOf", "oneOf",
+    "properties", "additionalProperties",
+    "items", "uniqueItems",
+    # NO: $ref
+}
+
+def is_probable_meta_schema(properties: dict[str, Any]) -> bool:
+    """Detect property list which looks like a meta-schema."""
+    for prop in _META_PROPS:
+        if prop not in properties:
+            return False
+    return True
+
 def toconst(val):
     match val:
         case None:
@@ -1013,16 +1028,17 @@ def schema2model(
                 del schema["discriminator"]
 
             if fix:
-                # common misplacements
+                # common misplacements, but not on a meta-schema!
                 if not strict and "properties" in schema and isinstance(schema["properties"], dict):
                     properties = schema["properties"]
-                    for kw in ["additionalProperties", "unevaluatedProperties",
-                               "minProperties", "maxProperties"]:
-                        if kw in properties:
-                            if kw not in schema:
-                                log.warning(f"moving misplaced {kw} at [{spath}.properties]")
-                                schema[kw] = properties[kw]
-                                del properties[kw]
+                    if not is_probable_meta_schema(properties):
+                        for kw in ["additionalProperties", "unevaluatedProperties",
+                                   "minProperties", "maxProperties"]:
+                            if kw in properties:
+                                if kw not in schema:
+                                    log.warning(f"moving misplaced {kw} at [{spath}.properties]")
+                                    schema[kw] = properties[kw]
+                                    del properties[kw]
 
             # sanity check
             doubt(only(schema, "type", "properties", "additionalProperties", "required",
@@ -1341,8 +1357,8 @@ def schema_to_model(
     if model is None:
         try:
             if resolve and isinstance(schema, dict):
-                schema = resolveExternalRefs(schema, version=version, modernize=modernize,
-                    cache=cache, mapping=mapping, level=level,
+                schema = resolveExternalRefs(schema, version=version, cache=cache,
+                    modernize=modernize, mapping=mapping, level=level,
                 )
             if typer and isinstance(schema, dict):
                 log.debug("typing schema")

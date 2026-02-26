@@ -377,7 +377,7 @@ def resolveExternalRefs(
             log.warning(f"unexpected $schema: {sversion}")
 
     # we need to do that here in order to manage external refs reliably
-    if modernize and version < 7:
+    if modernize:
         modernizeOldDraft(schema, version=version, level=level)
 
     defs = ("$defs" if "$defs" in schema  else

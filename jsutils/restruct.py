@@ -15,6 +15,10 @@ def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
     assert isinstance(schema, dict)
 
     # obviously there are examples with both $id and id… see ui5-manifest
+    if "$id" in schema and "id" in schema:
+        log.error(f"removing `id` next to `$id` at {path}")
+        del schema["id"]
+
     if cur_version <= 5 and "id" in schema and "$id" not in schema:
         schema["$id"] = schema.pop("id")
 
@@ -123,9 +127,11 @@ def modernizeOldDraft(schema: JsonSchema, version: int, level: int = logging.INF
     log.setLevel(level)
     if level == logging.DEBUG:
         log.debug(f"modernize in: {json.dumps(schema, indent=2)}")
+
     global cur_version
     cur_version = version
     # TODO add a context
     recurseSchema(schema, (), oldDraftFlt, noRwt)
+
     if level == logging.DEBUG:
         log.debug(f"modernize out: {json.dumps(schema, indent=2)}")
