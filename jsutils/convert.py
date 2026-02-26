@@ -216,7 +216,7 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
                 schemas["number"][prop] = copy.deepcopy(val)
         else:
             log.debug(f"type split: property {prop} moved to commons")
-            schema[""][prop] = val
+            schemas[""][prop] = val
     # log.debug(f"splitted: {schemas}")
     return schemas
 
