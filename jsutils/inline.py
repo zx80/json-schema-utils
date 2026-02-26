@@ -54,7 +54,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
                 log.warning("incompatible enum/enum makes schema unsatisfiable")
                 schema = False
             else:
-                schema[prop] = vals
+                schema[prop] = vals  # type: ignore
         elif "const" in schema:
             if schema["const"] in value:
                 pass
@@ -87,10 +87,11 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
                 if p not in schema["required"]:
                     schema["required"].append(p)  # pyright: ignore
         else:
-            schema["required"] = value
+            schema["required"] = value  # type: ignore
     elif prop == "properties":
         # FIXME probably not allowed unless some conditions
-        if "additionalProperties" in schema and not is_any(schema["additionalProperties"]):
+        assert isinstance(schema, dict)  # pyright
+        if "additionalProperties" in schema and not is_any(schema["additionalProperties"]):  # type: ignore
             raise JSUError(f"cannot merge prop {prop} with existing additionanProperties")
         if prop in schema:
             props = schema[prop]
@@ -100,7 +101,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
                     if props[p] == s or s is True:
                         pass
                     else:
-                        props[p] = { "allOf": [ props[p], s ] }
+                        props[p] = {"allOf": [ props[p], s ]}  # type: ignore
                 else:
                     props[p] = s
         else:
@@ -108,9 +109,9 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     elif prop in ("allOf", "anyOf", "oneOf"):
         assert isinstance(value, list)
         if prop in schema:
-            schema[prop].extend(value)  # pyright: ignore
+            schema[prop].extend(value)  # type: ignore
         else:
-            schema[prop] = value
+            schema[prop] = value  # type: ignore
     elif prop in ("title", "$comment"):
         # best effort
         if prop not in schema:
@@ -126,13 +127,13 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             if isinstance(ival, float) and ival == int(ival):
                 ival = int(ival)
             if ival == value:
-                schema[prop] = value  # may switch to int in passing
+                schema[prop] = value  # type: ignore # may switch to int in passing
             elif type(ival) is int and type(value) is int:
-                schema[prop] = math.lcm(ival, value)
+                schema[prop] = math.lcm(ival, value)  # type: ignore
             else:
                 raise JSUError(f"cannot merge prop {prop} distinct values")
         else:
-            schema[prop] = value
+            schema[prop] = value  # type: ignore
     elif prop in ("minimum", "exclusiveMinimum"):
         if prop in schema:
             schema[prop] = max(schema[prop], value)
@@ -154,9 +155,9 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
                 assert ival == int(ival), "integer min length spec"
                 ival = int(ival)
             assert type(ival) is int, "integer min length spec"
-            schema[prop] = max(value, ival)
+            schema[prop] = max(value, ival)  # type: ignore
         else:
-            schema[prop] = value
+            schema[prop] = value  # type: ignore
     elif prop in ("maxLength", "maxProperties", "maxItems", "maxContains"):
         if isinstance(value, float):
             assert value == int(value), "integer max length spec"
@@ -168,9 +169,9 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
                 assert ival == int(ival), "integer max length spec"
                 ival = int(ival)
             assert type(ival) is int, "integer max length spec"
-            schema[prop] = min(value, ival)
+            schema[prop] = min(value, ival)  # type: ignore
         else:
-            schema[prop] = value
+            schema[prop] = value  # type: ignore
     elif prop == "type":
         if prop in schema:
             sval = schema[prop]
@@ -179,7 +180,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             elif isinstance(sval, str):
                 if isinstance(value, str):
                     if sval in ("integer", "number") and value in ("integer", "number"):
-                        schema[prop] = "integer"  # keep stricter type
+                        schema[prop] = "integer"  # type: ignore # keep stricter type
                     else:
                         return False  # not feasible as svalue != value
                 assert isinstance(value, list)
@@ -189,33 +190,33 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
                     if sval == "integer" and "number" in value:
                         pass
                     elif sval == "number" and "integer" in value:
-                        schema[prop] = "integer"
+                        schema[prop] = "integer"  # type: ignore
                     else:
                         return False
             else:
                 assert isinstance(sval, list)
                 if isinstance(value, str):
                     if value in sval:
-                        schema[prop] = value
+                        schema[prop] = value  # type: ignore
                     elif value in ("integer", "number") and "integer" in sval or "number" in sval:
-                        schema[prop] = "integer"
+                        schema[prop] = "integer"  # type: ignore
                     else:
                         return False
                 else:
                     assert isinstance(value, list)
                     # integer/number
-                    if "number" in value and "integer" in svalue and "number" not in svalue:
-                        svalue.append("number")
-                    if "integer" in value and "number" in svalue and "integer" not in svalue:
-                        svalue.append("integer")
+                    if "number" in value and "integer" in sval and "number" not in sval:
+                        sval.append("number")
+                    if "integer" in value and "number" in sval and "integer" not in sval:
+                        sval.append("integer")
                     # intersect lists
-                    types = [ t for t in svalue if t in value ]
+                    types = [ t for t in sval if t in value ]
                     if len(types) == 0:
                         return False
                     elif len(types) == 1:
-                        schema[prop] = types[0]
+                        schema[prop] = types[0]  # type: ignore
                     else:
-                        schema[prop] = types
+                        schema[prop] = types  # type: ignore
         else:
             schema[prop] = value
     elif prop == "additionalProperties":
@@ -285,11 +286,11 @@ def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
                 separate[p] = schema[p]
                 del schema[p]
         if "allOf" not in schema:
-            schema["allOf"] = []
+            schema["allOf"] = []  # type: ignore
         if len(separate) > 0:
-            schema["allOf"].append(separate)  # pyright: ignore
+            schema["allOf"].append(separate)  # type: ignore
         if len(refschema) > 0:
-            schema["allOf"].append(refschema)  # pyright: ignore
+            schema["allOf"].append(refschema)  # type: ignore
 
     return schema
 
@@ -366,6 +367,7 @@ def resolveExternalRefs(
     # set version if possible
     if not version and "$schema" in schema:
         sversion = schema["$schema"]
+        assert isinstance(sversion, str)  # pyright
         version = 8 if "/draft/2019-09/schema" in sversion else \
                   9 if "/draft/2020-12/schema" in sversion else \
                   7 if "/draft-07/schema" in sversion else \
@@ -412,7 +414,7 @@ def resolveExternalRefs(
 
     # defs already processed
     processed: set[str] = set()
-    processed.update(schema[defs].keys())
+    processed.update(schema[defs].keys())  # type: ignore
 
     # keep track of current $id (absolute or relative) to resolve relative urls in $ref
     # argh, we have to throw in $anchor as well…
@@ -420,11 +422,12 @@ def resolveExternalRefs(
         if isinstance(local, dict):
             # note $anchor is more or less a supplement to $id
             anchor = local.get("$anchor", None)
+            assert anchor is None or isinstance(anchor, str)  # pyright
             if anchor is not None:
                 # move anchor as $id if possible
                 del local["$anchor"]
                 if "$id" not in local:
-                    local["$id"] = "#" + anchor
+                    local["$id"] = "#" + anchor  # type: ignore
                     anchor = None
             if "$id" in local:
                 url = local["$id"]
@@ -446,7 +449,7 @@ def resolveExternalRefs(
         return True
 
     def rwtScanPop(local: JsonSchema, p: SchemaPath) -> JsonSchema:
-        if pushed and tuple(p) == pushed[-1]:
+        if isinstance(local, dict) and pushed and tuple(p) == pushed[-1]:
             pushed.pop()
             urls.pop()
             if not keep_id:
@@ -568,12 +571,15 @@ def resolveExternalRefs(
 
                         # store in cache
                         if cache and not cached:
+                            assert isinstance(cfn, str)  # pyright
                             with open(cfn, "w") as f:
                                 f.write(res.text)
 
                     # find next available name
-                    while (name := f"_extern_{externs}_") in schema[defs]:
+                    while (name := f"_extern_{externs}_") in schema[defs]:  # type: ignore
                         externs += 1
+
+                    assert isinstance(js, dict)  # pyright
 
                     # upgrade schema for later processing
                     if modernize:
@@ -591,10 +597,12 @@ def resolveExternalRefs(
                             # consistent
                             pass
 
+                    assert isinstance(name, str) and isinstance(init_url, str)
+
                     # dest = urls[0] + f"#{defs}/{name}"
                     resolved[init_url] = name
                     dest = f"#/{defs}/{name}"
-                    schema[defs][name] = js
+                    schema[defs][name] = js  # type: ignore
                     log.warning(f"url_path: {init_url} -> {dest}")
                     url_path[init_url] = str(dest)
 
@@ -610,7 +618,7 @@ def resolveExternalRefs(
                                 dest = url_path[spath]
                             else:
                                 log.warning(f"undefined anchor #{path}")
-                                dest = "#" + anchor
+                                dest = "#" + path
                     elif dest[0] == "#":
                         if path[0] == "/":
                             if path != "/":  # non trivial path
@@ -622,7 +630,7 @@ def resolveExternalRefs(
                                 dest = url_path[spath]
                             else:
                                 log.warning(f"undefined anchor #{path}")
-                                dest = "#" + anchor
+                                dest = "#" + path
                         # else ignore
                     else:
                         dest = urljoin(dest, "#" + path)
@@ -639,23 +647,24 @@ def resolveExternalRefs(
     schema = recurseSchema(schema, ".", flt=fltExtRef, rwt=rwtExtRef, def_first=True)
 
     # recurse in newly added names
+    assert isinstance(schema, dict)
     changed = True
 
     while changed:
         changed = False
-        for name in list(sorted(schema[defs].keys())):
+        for name in list(sorted(schema[defs].keys())):  # type: ignore
             if name in processed:
                 continue
             processed.add(name)
             changed = True
             keep_id = True
             log.debug(f"onto {name}")
-            recurseSchema(schema[defs][name], ".", path=((defs, name), ),
+            recurseSchema(schema[defs][name], ".", path=((defs, name), ),  # type: ignore
                 flt=fltExtRef, rwt=rwtScanPop, def_first=True,
             )
             keep_id = False
-            schema[defs][name] = recurseSchema(
-                schema[defs][name], f"#/{defs}/{name}", path=((defs, name), ),
+            schema[defs][name] = recurseSchema(  # type: ignore
+                schema[defs][name], f"#/{defs}/{name}", path=((defs, name), ),  # type: ignore
                 flt=fltExtRef, rwt=rwtExtRef, def_first = True,
             )
 

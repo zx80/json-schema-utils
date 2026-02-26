@@ -166,7 +166,7 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
     assert isinstance(types, (list, tuple))
     # log.info(f"splitting on {types}")
     # per type
-    schemas = {t: {"type": t} for t in types}
+    schemas: dict[str, Any] = {t: {"type": t} for t in types}
     schemas[""] = {}
     for prop, val in schema.items():
         if prop in IGNORE:
@@ -212,7 +212,7 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
                 elif isinstance(v, dict) and "object" in schemas:
                     schemas["object"]["enum"].append(v)
                 # else just ignore incompatible value…
-            # simplify if possible
+            # if possible remove empty list or switch to const
             for t in schemas:
                 if t != "" and "enum" in schemas[t]:
                     enums = schemas[t]["enum"]
@@ -338,7 +338,7 @@ def schema2model(
             schema,
             url: str = ".",
             path: SchemaPath = (),
-            defs: dict[str, Any]|None = None,
+            defs: dict[str, Jsonable]|None = None,
             strict: bool = True,
             fix: bool = True,
             is_root: bool = True,
@@ -398,6 +398,8 @@ def schema2model(
     if is_root:
         assert defs is None
         defs = {}
+    assert isinstance(defs, dict)
+
     if is_root and dname in schema:
         # FIXME push?
         IDS[dname] = {}
@@ -1129,7 +1131,7 @@ def schema2model(
                     if pn["type"] == []:
                         pnames = "$NONE"
                     else:
-                        assert pn["type"] == "string", f"unexpected prop name type {pnames['type']} at [{spath}]"
+                        assert pn["type"] == "string", f"unexpected prop name type {pn['type']} at [{spath}]"
                 else:
                     pnames = ""
 
@@ -1153,6 +1155,7 @@ def schema2model(
                     pnames = f"/{pat}/"
                 elif only(pn, "format", "type", *IGNORE) and "format" in pn:
                     fmt = pn["format"]
+                    assert isinstance(fmt, str)  # pyright
                     pnames = format2model(fmt)
                 else:  # general case with a reference
                     fname: str

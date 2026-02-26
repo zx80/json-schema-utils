@@ -230,7 +230,7 @@ def updateTypes(schema: JsonSchema, path: SchemaPath):
         for i, _ in enumerate(schema["allOf"]):
             lpath = path + (("allOf", i), )
             ltypes = _types.get(lpath)
-            types &= ltypes
+            types &= ltypes  # type: ignore
             if ltypes != types:  # smaller, push downward!
                 _types[lpath] = types
                 todo.add(path)  # we may have to retry
@@ -239,17 +239,18 @@ def updateTypes(schema: JsonSchema, path: SchemaPath):
         if op in schema:
             ntypes = NONE
             assert isinstance(schema[op], list)
-            for i, s in enumerate(schema[op]):
+            for i, s in enumerate(schema[op]):  # type: ignore
                 lpath = path + ((op, i), )
                 ltypes = _types.get(lpath)
-                ntypes |= ltypes
-                if ltypes & types != ltypes:
-                    _types[lpath] = ltypes & types
+                ntypes |= ltypes  # type: ignore
+                if ltypes & types != ltypes:  # type: ignore
+                    _types[lpath] = ltypes & types  # type: ignore
                     todo.add(path)  # we may have to retry
             types &= ntypes  # type: ignore
 
     if "$ref" in schema:
         name = schema["$ref"]
+        assert isinstance(name, str)  # pyright
         for prefix in (f"#/{defs}/", f"#./{defs}/"):
             if name.startswith(prefix):
                 name = name[len(prefix):]
@@ -258,6 +259,7 @@ def updateTypes(schema: JsonSchema, path: SchemaPath):
 
     if "$dynamicRef" in schema:
         name = schema["$dynamicRef"]
+        assert isinstance(name, str)  # pyright
         if name.startswith("#"):
             name = name[1:]
         if name in dynAnchors:
