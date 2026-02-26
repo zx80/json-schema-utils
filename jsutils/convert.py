@@ -215,7 +215,8 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
             elif ptype == "integer" and "number" in types:
                 schemas["number"][prop] = copy.deepcopy(val)
         else:
-            log.info(f"ignoring {prop}, cannot map to a type")
+            log.debug(f"type split: property {prop} moved to commons")
+            schema[""][prop] = val
     # log.debug(f"splitted: {schemas}")
     return schemas
 

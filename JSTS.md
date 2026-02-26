@@ -43,7 +43,7 @@ JSU version: `0.9.0 (backend jmc 2.0b37)`
 - `/prefixItems.json`: errors=0 cases=4/4 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `/properties.json`: errors=0 cases=6/6 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/propertyNames.json`: errors=0 cases=6/6 (100.0%) tests=20/20 (100.0%, 0 fails)
-- `/ref.json`: errors=0 cases=30/36 (83.3%) tests=73/79 (92.4%, 6 fails)
+- `/ref.json`: errors=0 cases=29/36 (80.6%) tests=72/79 (91.1%, 7 fails)
 - `/refRemote.json`: errors=0 cases=14/15 (93.3%) tests=30/31 (96.8%, 1 fails)
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)

@@ -6,13 +6,15 @@ from .utils import JsonSchema, SchemaPath
 from .utils import log, only
 from .recurse import recurseSchema, noRwt
 
+cur_version: int = 0
+
 def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
 
     if isinstance(schema, bool):
         return False
     assert isinstance(schema, dict)
 
-    if "id" in schema and "$id" not in schema:
+    if cur_version <= 5 and "id" in schema and "$id" not in schema:
         assert "$id" not in schema, "should not have both id and $id"
         schema["$id"] = schema.pop("id")
 
@@ -118,8 +120,12 @@ def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
 
 def modernizeOldDraft(schema: JsonSchema, version: int, level: int = logging.INFO):
     """More or less convert old stuff to draft7/better."""
+    log.setLevel(level)
     if level == logging.DEBUG:
         log.debug(f"modernize in: {json.dumps(schema, indent=2)}")
+    global cur_version
+    cur_version = version
+    # TODO add a context
     recurseSchema(schema, (), oldDraftFlt, noRwt)
     if level == logging.DEBUG:
         log.debug(f"modernize out: {json.dumps(schema, indent=2)}")

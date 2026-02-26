@@ -377,6 +377,7 @@ def jsu_model():
     arg("--no-modernize", dest="modernize", action="store_false", help="do not modernize schema")
     arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
+    arg("--out", "-o", default="-", help="set model output file")
     arg("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args()
 
@@ -415,7 +416,14 @@ def jsu_model():
             log.error(e, exc_info=args.debug)
             errors += 1
             model = {"ERROR": str(e)}
-        print(json.dumps(model, sort_keys=args.sort_keys, indent=args.indent))
+
+        output = json.dumps(model, sort_keys=args.sort_keys, indent=args.indent)
+
+        if args.out == "-":
+            print(output, flush=True)
+        else:
+            with open(args.out, "w") as f:
+                print(output, file=f, flush=True)
 
     sys.exit(1 if errors else 0)
 
