@@ -1,6 +1,6 @@
 # JSON Schema Test Suite Report
 
-JSTS version: `4253477cdaadd6b324172b9617eba22f95436fae`
+JSTS version: `583d7c62c9f5fc382530d59e0fa01481a6d10470`
 JSU version: `0.9.0 (backend jmc 2.0b37)`
 
 ## Results for _draft2020-12_
