@@ -14,8 +14,8 @@ def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
         return False
     assert isinstance(schema, dict)
 
+    # obviously there are examples with both $id and id… see ui5-manifest
     if cur_version <= 5 and "id" in schema and "$id" not in schema:
-        assert "$id" not in schema, "should not have both id and $id"
         schema["$id"] = schema.pop("id")
 
     if "divisibleBy" in schema:
