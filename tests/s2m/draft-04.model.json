@@ -53,25 +53,15 @@
       "": "$ANY",
       "?$schema": "",
       "?additionalItems": {
-        "&": [
-          {
-            "|": [
-              true,
-              "$#"
-            ]
-          },
-          "$ANY"
+        "|": [
+          true,
+          "$#"
         ]
       },
       "?additionalProperties": {
-        "&": [
-          {
-            "|": [
-              true,
-              "$#"
-            ]
-          },
-          "$ANY"
+        "|": [
+          true,
+          "$#"
         ]
       },
       "?allOf": "$schemaArray",
@@ -82,14 +72,9 @@
       },
       "?dependencies": {
         "": {
-          "&": [
-            {
-              "|": [
-                "$#",
-                "$stringArray"
-              ]
-            },
-            "$ANY"
+          "|": [
+            "$#",
+            "$stringArray"
           ]
         }
       },
@@ -110,14 +95,9 @@
       "?format": "",
       "?id": "",
       "?items": {
-        "&": [
-          {
-            "|": [
-              "$#",
-              "$schemaArray"
-            ]
-          },
-          "$ANY"
+        "|": [
+          "$#",
+          "$schemaArray"
         ]
       },
       "?maxItems": "$positiveInteger",
@@ -172,70 +152,50 @@
       }
     },
     {
-      "&": [
-        "$ANY",
+      "|": [
         {
-          "|": [
+          "&": [
             {
-              "&": [
-                {
-                  "": "$ANY",
-                  "_exclusiveMaximum": "$ANY"
-                },
-                {
-                  "": "$ANY",
-                  "_maximum": "$ANY"
-                }
-              ]
+              "": "$ANY",
+              "_exclusiveMaximum": "$ANY"
             },
             {
-              "&": [
-                {
-                  "^": [
-                    "$ANY",
-                    {
-                      "": "$ANY",
-                      "_exclusiveMaximum": "$ANY"
-                    }
-                  ]
-                },
-                "$ANY"
-              ]
+              "": "$ANY",
+              "_maximum": "$ANY"
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_exclusiveMaximum": "$ANY"
             }
           ]
         }
       ]
     },
     {
-      "&": [
-        "$ANY",
+      "|": [
         {
-          "|": [
+          "&": [
             {
-              "&": [
-                {
-                  "": "$ANY",
-                  "_exclusiveMinimum": "$ANY"
-                },
-                {
-                  "": "$ANY",
-                  "_minimum": "$ANY"
-                }
-              ]
+              "": "$ANY",
+              "_exclusiveMinimum": "$ANY"
             },
             {
-              "&": [
-                {
-                  "^": [
-                    "$ANY",
-                    {
-                      "": "$ANY",
-                      "_exclusiveMinimum": "$ANY"
-                    }
-                  ]
-                },
-                "$ANY"
-              ]
+              "": "$ANY",
+              "_minimum": "$ANY"
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_exclusiveMinimum": "$ANY"
             }
           ]
         }

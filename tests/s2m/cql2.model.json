@@ -152,68 +152,13 @@
     },
     "arrayExpression": [
       {
-        "&": [
+        "^": [
           {
-            "^": [
+            "&": [
+              "$characterExpression",
               {
-                "&": [
-                  "$characterExpression",
-                  {
-                    "|": [
-                      "",
-                      {
-                        "": "$ANY"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "&": [
-                  "$numericExpression",
-                  "$ANY"
-                ]
-              },
-              {
-                "&": [
-                  "$#",
-                  {
-                    "|": [
-                      true,
-                      {
-                        "": "$ANY"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "&": [
-                  "$spatialInstance",
-                  {
-                    "": "$ANY"
-                  }
-                ]
-              },
-              {
-                "&": [
-                  "$temporalInstance",
-                  {
-                    "": "$ANY"
-                  }
-                ]
-              },
-              {
-                "&": [
-                  "$arrayExpression",
-                  [
-                    "$ANY"
-                  ]
-                ]
-              },
-              {
-                "&": [
-                  "$propertyRef",
+                "|": [
+                  "",
                   {
                     "": "$ANY"
                   }
@@ -221,7 +166,52 @@
               }
             ]
           },
-          "$ANY"
+          "$numericExpression",
+          {
+            "&": [
+              "$#",
+              {
+                "|": [
+                  true,
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "&": [
+              "$spatialInstance",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          {
+            "&": [
+              "$temporalInstance",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          {
+            "&": [
+              "$arrayExpression",
+              [
+                "$ANY"
+              ]
+            ]
+          },
+          {
+            "&": [
+              "$propertyRef",
+              {
+                "": "$ANY"
+              }
+            ]
+          }
         ]
       }
     ],
@@ -491,61 +481,15 @@
       "": "$ANY",
       "_args": [
         {
-          "&": [
+          "^": [
+            "$characterExpression",
+            "$numericExpression",
             {
-              "^": [
+              "&": [
+                "$#",
                 {
-                  "&": [
-                    "$characterExpression",
-                    "$ANY"
-                  ]
-                },
-                {
-                  "&": [
-                    "$numericExpression",
-                    "$ANY"
-                  ]
-                },
-                {
-                  "&": [
-                    "$#",
-                    {
-                      "|": [
-                        true,
-                        {
-                          "": "$ANY"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "&": [
-                    "$spatialInstance",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "&": [
-                    "$temporalInstance",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "&": [
-                    "$arrayExpression",
-                    [
-                      "$ANY"
-                    ]
-                  ]
-                },
-                {
-                  "&": [
-                    "$propertyRef",
+                  "|": [
+                    true,
                     {
                       "": "$ANY"
                     }
@@ -553,7 +497,38 @@
                 }
               ]
             },
-            "$ANY"
+            {
+              "&": [
+                "$spatialInstance",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$temporalInstance",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$arrayExpression",
+                [
+                  "$ANY"
+                ]
+              ]
+            },
+            {
+              "&": [
+                "$propertyRef",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
           ]
         }
       ],
@@ -746,19 +721,9 @@
       "=": 2,
       ">=": 0,
       "@": [
-        {
-          "&": [
-            "$scalarExpression",
-            "$ANY"
-          ]
-        },
+        "$scalarExpression",
         [
-          {
-            "&": [
-              "$scalarExpression",
-              "$ANY"
-            ]
-          }
+          "$scalarExpression"
         ],
         "$ANY"
       ]
@@ -808,35 +773,25 @@
       "=": 2,
       "@": [
         {
-          "&": [
+          "^": [
+            "$instantString",
+            "_..",
             {
-              "^": [
+              "&": [
+                "$propertyRef",
                 {
-                  "&": [
-                    "$instantString",
-                    "$ANY"
-                  ]
-                },
-                "_..",
-                {
-                  "&": [
-                    "$propertyRef",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "&": [
-                    "$functionRef",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
+                  "": "$ANY"
                 }
               ]
             },
-            "$ANY"
+            {
+              "&": [
+                "$functionRef",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
           ]
         }
       ]
@@ -1007,60 +962,13 @@
       "=": 1,
       "@": [
         {
-          "&": [
+          "^": [
             {
-              "^": [
+              "&": [
+                "$characterExpression",
                 {
-                  "&": [
-                    "$characterExpression",
-                    {
-                      "|": [
-                        "",
-                        {
-                          "": "$ANY"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "&": [
-                    "$numericExpression",
-                    "$ANY"
-                  ]
-                },
-                {
-                  "&": [
-                    "$#",
-                    {
-                      "|": [
-                        true,
-                        {
-                          "": "$ANY"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "&": [
-                    "$spatialInstance",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "&": [
-                    "$temporalInstance",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "&": [
-                    "$propertyRef",
+                  "|": [
+                    "",
                     {
                       "": "$ANY"
                     }
@@ -1068,7 +976,44 @@
                 }
               ]
             },
-            "$ANY"
+            "$numericExpression",
+            {
+              "&": [
+                "$#",
+                {
+                  "|": [
+                    true,
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                "$spatialInstance",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$temporalInstance",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$propertyRef",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
           ]
         }
       ]
@@ -1228,12 +1173,7 @@
               "_args": {
                 "=": 1,
                 "@": [
-                  {
-                    "&": [
-                      "$patternExpression",
-                      "$ANY"
-                    ]
-                  }
+                  "$patternExpression"
                 ]
               },
               "_op": "_casei"
@@ -1243,12 +1183,7 @@
               "_args": {
                 "=": 1,
                 "@": [
-                  {
-                    "&": [
-                      "$patternExpression",
-                      "$ANY"
-                    ]
-                  }
+                  "$patternExpression"
                 ]
               },
               "_op": "_accenti"

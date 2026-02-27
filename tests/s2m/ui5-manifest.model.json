@@ -2812,15 +2812,10 @@
     },
     "_defs_2_nonNegativeIntegerDefault0": {
       "&": [
+        "$_defs_2_nonNegativeInteger",
         {
-          "&": [
-            "$_defs_2_nonNegativeInteger",
-            {
-              "@": "$ANY"
-            }
-          ]
-        },
-        "$ANY"
+          "@": "$ANY"
+        }
       ]
     },
     "_defs_2_schemaArray": {
@@ -3255,19 +3250,14 @@
       }
     },
     "_defs_3_AssociatedInputs": {
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_Auto",
-                "_None"
-              ]
-            },
-            "/^([a|A][u|U][t|T][o|O])|([n|N][o|O][n|N][e|E])$/"
+            "_Auto",
+            "_None"
           ]
         },
-        "$ANY"
+        "/^([a|A][u|U][t|T][o|O])|([n|N][o|O][n|N][e|E])$/"
       ]
     },
     "_defs_3_AuthCardButton": {
@@ -3338,57 +3328,42 @@
       }
     },
     "_defs_3_BlockElementHeight": {
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_auto",
-                "_stretch"
-              ]
-            },
-            "/^([a|A][u|U][t|T][o|O])|([s|S][t|T][r|R][e|E][t|T][c|C][h|H])$/"
+            "_auto",
+            "_stretch"
           ]
         },
-        "$ANY"
+        "/^([a|A][u|U][t|T][o|O])|([s|S][t|T][r|R][e|E][t|T][c|C][h|H])$/"
       ]
     },
     "_defs_3_ChoiceInputStyle": {
       "#": "Style hint for `Input.ChoiceSet`.",
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_compact",
-                "_expanded"
-              ]
-            },
-            "/^([c|C][o|O][m|M][p|P][a|A][c|C][t|T])|([e|E][x|X][p|P][a|A][n|N][d|D][e|E][d|D])$/"
+            "_compact",
+            "_expanded"
           ]
         },
-        "$ANY"
+        "/^([c|C][o|O][m|M][p|P][a|A][c|C][t|T])|([e|E][x|X][p|P][a|A][n|N][d|D][e|E][d|D])$/"
       ]
     },
     "_defs_3_Colors": {
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_default",
-                "_dark",
-                "_light",
-                "_accent",
-                "_good",
-                "_warning",
-                "_attention"
-              ]
-            },
-            "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([d|D][a|A][r|R][k|K])|([l|L][i|I][g|G][h|H][t|T])|([a|A][c|C][c|C][e|E][n|N][t|T])|([g|G][o|O][o|O][d|D])|([w|W][a|A][r|R][n|N][i|I][n|N][g|G])|([a|A][t|T][t|T][e|E][n|N][t|T][i|I][o|O][n|N])$/"
+            "_default",
+            "_dark",
+            "_light",
+            "_accent",
+            "_good",
+            "_warning",
+            "_attention"
           ]
         },
-        "$ANY"
+        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([d|D][a|A][r|R][k|K])|([l|L][i|I][g|G][h|H][t|T])|([a|A][c|C][c|C][e|E][n|N][t|T])|([g|G][o|O][o|O][d|D])|([w|W][a|A][r|R][n|N][i|I][n|N][g|G])|([a|A][t|T][t|T][e|E][n|N][t|T][i|I][o|O][n|N])$/"
       ]
     },
     "_defs_3_Column": {
@@ -3506,14 +3481,9 @@
           },
           "?style": {
             "#": "Style hint for `Column`.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_ContainerStyle",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_ContainerStyle",
+              null
             ]
           },
           "?type": {
@@ -3592,14 +3562,9 @@
           "?height": "$ANY",
           "?horizontalAlignment": {
             "#": "Controls the horizontal alignment of the ColumnSet. When not specified, the value of horizontalAlignment is inherited from the parent container. If no parent container has horizontalAlignment set, it defaults to Left.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_HorizontalAlignment",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_HorizontalAlignment",
+              null
             ]
           },
           "?id": "$ANY",
@@ -3727,14 +3692,9 @@
           "?spacing": "$ANY",
           "?style": {
             "#": "Style hint for `Container`.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_ContainerStyle",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_ContainerStyle",
+              null
             ]
           },
           "?type": {
@@ -3777,23 +3737,18 @@
       ]
     },
     "_defs_3_ContainerStyle": {
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_default",
-                "_emphasis",
-                "_good",
-                "_attention",
-                "_warning",
-                "_accent"
-              ]
-            },
-            "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([e|E][m|M][p|P][h|H][a|A][s|S][i|I][s|S])|([g|G][o|O][o|O][d|D])|([a|A][t|T][t|T][e|E][n|N][t|T][i|I][o|O][n|N])|([w|W][a|A][r|R][n|N][i|I][n|N][g|G])|([a|A][c|C][c|C][e|E][n|N][t|T])$/"
+            "_default",
+            "_emphasis",
+            "_good",
+            "_attention",
+            "_warning",
+            "_accent"
           ]
         },
-        "$ANY"
+        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([e|E][m|M][p|P][h|H][a|A][s|S][i|I][s|S])|([g|G][o|O][o|O][d|D])|([a|A][t|T][t|T][e|E][n|N][t|T][i|I][o|O][n|N])|([w|W][a|A][r|R][n|N][i|I][n|N][g|G])|([a|A][c|C][c|C][e|E][n|N][t|T])$/"
       ]
     },
     "_defs_3_Extendable.Action": {
@@ -4067,84 +4022,59 @@
       ]
     },
     "_defs_3_FallbackOption": {
-      "&": [
-        {
-          "|": [
-            "_drop",
-            "/^([d|D][r|R][o|O][p|P])$/"
-          ]
-        },
-        "$ANY"
+      "|": [
+        "_drop",
+        "/^([d|D][r|R][o|O][p|P])$/"
       ]
     },
     "_defs_3_FontSize": {
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_default",
-                "_small",
-                "_medium",
-                "_large",
-                "_extraLarge"
-              ]
-            },
-            "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([s|S][m|M][a|A][l|L][l|L])|([m|M][e|E][d|D][i|I][u|U][m|M])|([l|L][a|A][r|R][g|G][e|E])|([e|E][x|X][t|T][r|R][a|A][l|L][a|A][r|R][g|G][e|E])$/"
+            "_default",
+            "_small",
+            "_medium",
+            "_large",
+            "_extraLarge"
           ]
         },
-        "$ANY"
+        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([s|S][m|M][a|A][l|L][l|L])|([m|M][e|E][d|D][i|I][u|U][m|M])|([l|L][a|A][r|R][g|G][e|E])|([e|E][x|X][t|T][r|R][a|A][l|L][a|A][r|R][g|G][e|E])$/"
       ]
     },
     "_defs_3_FontType": {
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_default",
-                "_monospace"
-              ]
-            },
-            "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([m|M][o|O][n|N][o|O][s|S][p|P][a|A][c|C][e|E])$/"
+            "_default",
+            "_monospace"
           ]
         },
-        "$ANY"
+        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([m|M][o|O][n|N][o|O][s|S][p|P][a|A][c|C][e|E])$/"
       ]
     },
     "_defs_3_FontWeight": {
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_default",
-                "_lighter",
-                "_bolder"
-              ]
-            },
-            "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([l|L][i|I][g|G][h|H][t|T][e|E][r|R])|([b|B][o|O][l|L][d|D][e|E][r|R])$/"
+            "_default",
+            "_lighter",
+            "_bolder"
           ]
         },
-        "$ANY"
+        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([l|L][i|I][g|G][h|H][t|T][e|E][r|R])|([b|B][o|O][l|L][d|D][e|E][r|R])$/"
       ]
     },
     "_defs_3_HorizontalAlignment": {
       "#": "Controls how content is horizontally positioned within its container.",
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_left",
-                "_center",
-                "_right"
-              ]
-            },
-            "/^([l|L][e|E][f|F][t|T])|([c|C][e|E][n|N][t|T][e|E][r|R])|([r|R][i|I][g|G][h|H][t|T])$/"
+            "_left",
+            "_center",
+            "_right"
           ]
         },
-        "$ANY"
+        "/^([l|L][e|E][f|F][t|T])|([c|C][e|E][n|N][t|T][e|E][r|R])|([r|R][i|I][g|G][h|H][t|T])$/"
       ]
     },
     "_defs_3_Image": {
@@ -4211,14 +4141,9 @@
       },
       "?horizontalAlignment": {
         "#": "Controls how this element is horizontally positioned within its parent. When not specified, the value of horizontalAlignment is inherited from the parent container. If no parent container has horizontalAlignment set, it defaults to Left.",
-        "&": [
-          {
-            "|": [
-              "$_defs_3_HorizontalAlignment",
-              null
-            ]
-          },
-          "$ANY"
+        "|": [
+          "$_defs_3_HorizontalAlignment",
+          null
         ]
       },
       "?id": {
@@ -4267,21 +4192,16 @@
       }
     },
     "_defs_3_ImageFillMode": {
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_cover",
-                "_repeatHorizontally",
-                "_repeatVertically",
-                "_repeat"
-              ]
-            },
-            "/^([c|C][o|O][v|V][e|E][r|R])|([r|R][e|E][p|P][e|E][a|A][t|T][h|H][o|O][r|R][i|I][z|Z][o|O][n|N][t|T][a|A][l|L][l|L][y|Y])|([r|R][e|E][p|P][e|E][a|A][t|T][v|V][e|E][r|R][t|T][i|I][c|C][a|A][l|L][l|L][y|Y])|([r|R][e|E][p|P][e|E][a|A][t|T])$/"
+            "_cover",
+            "_repeatHorizontally",
+            "_repeatVertically",
+            "_repeat"
           ]
         },
-        "$ANY"
+        "/^([c|C][o|O][v|V][e|E][r|R])|([r|R][e|E][p|P][e|E][a|A][t|T][h|H][o|O][r|R][i|I][z|Z][o|O][n|N][t|T][a|A][l|L][l|L][y|Y])|([r|R][e|E][p|P][e|E][a|A][t|T][v|V][e|E][r|R][t|T][i|I][c|C][a|A][l|L][l|L][y|Y])|([r|R][e|E][p|P][e|E][a|A][t|T])$/"
       ]
     },
     "_defs_3_ImageSet": {
@@ -4322,466 +4242,441 @@
     },
     "_defs_3_ImageSize": {
       "#": "Controls the approximate size of the image. The physical dimensions will vary per host. Every option preserves aspect ratio.",
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_auto",
-                "_stretch",
-                "_small",
-                "_medium",
-                "_large"
-              ]
-            },
-            "/^([a|A][u|U][t|T][o|O])|([s|S][t|T][r|R][e|E][t|T][c|C][h|H])|([s|S][m|M][a|A][l|L][l|L])|([m|M][e|E][d|D][i|I][u|U][m|M])|([l|L][a|A][r|R][g|G][e|E])$/"
+            "_auto",
+            "_stretch",
+            "_small",
+            "_medium",
+            "_large"
           ]
         },
-        "$ANY"
+        "/^([a|A][u|U][t|T][o|O])|([s|S][t|T][r|R][e|E][t|T][c|C][h|H])|([s|S][m|M][a|A][l|L][l|L])|([m|M][e|E][d|D][i|I][u|U][m|M])|([l|L][a|A][r|R][g|G][e|E])$/"
       ]
     },
     "_defs_3_ImageStyle": {
       "#": "Controls how this `Image` is displayed.",
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_default",
-                "_person"
-              ]
-            },
-            "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([p|P][e|E][r|R][s|S][o|O][n|N])$/"
+            "_default",
+            "_person"
           ]
         },
-        "$ANY"
+        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([p|P][e|E][r|R][s|S][o|O][n|N])$/"
       ]
     },
     "_defs_3_ImplementationsOf.Action": {
-      "&": [
+      "|": [
         {
-          "|": [
+          "&": [
             {
               "&": [
+                "$_defs_3_Action.Execute",
                 {
-                  "&": [
-                    "$_defs_3_Action.Execute",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
+                  "": "$ANY"
                 }
               ]
             },
             {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.OpenUrl",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.ShowCard",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.Submit",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.ToggleVisibility",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
+              "": "$ANY",
+              "_type": "$ANY"
             }
           ]
         },
-        "$ANY"
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.OpenUrl",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.ShowCard",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.Submit",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.ToggleVisibility",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        }
       ]
     },
     "_defs_3_ImplementationsOf.Element": {
-      "&": [
+      "|": [
         {
-          "|": [
+          "&": [
             {
               "&": [
+                "$_defs_3_ActionSet",
                 {
-                  "&": [
-                    "$_defs_3_ActionSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
+                  "": "$ANY"
                 }
               ]
             },
             {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_ColumnSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Container",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_FactSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Image",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_ImageSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.ChoiceSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Date",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Number",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Text",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Time",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Toggle",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Media",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_RichTextBlock",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Table",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_TextBlock",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
+              "": "$ANY",
+              "_type": "$ANY"
             }
           ]
         },
-        "$ANY"
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_ColumnSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Container",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_FactSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Image",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_ImageSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.ChoiceSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Date",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Number",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Text",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Time",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Toggle",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Media",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_RichTextBlock",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Table",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_TextBlock",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        }
       ]
     },
     "_defs_3_ImplementationsOf.ISelectAction": {
-      "&": [
+      "|": [
         {
-          "|": [
+          "&": [
             {
               "&": [
+                "$_defs_3_Action.Execute",
                 {
-                  "&": [
-                    "$_defs_3_Action.Execute",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
+                  "": "$ANY"
                 }
               ]
             },
             {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.OpenUrl",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.Submit",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.ToggleVisibility",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
+              "": "$ANY",
+              "_type": "$ANY"
             }
           ]
         },
-        "$ANY"
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.OpenUrl",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.Submit",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.ToggleVisibility",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        }
       ]
     },
     "_defs_3_ImplementationsOf.Inline": {
@@ -4801,750 +4696,735 @@
       ]
     },
     "_defs_3_ImplementationsOf.Input": {
-      "&": [
+      "|": [
         {
-          "|": [
+          "&": [
             {
               "&": [
+                "$_defs_3_Input.ChoiceSet",
                 {
-                  "&": [
-                    "$_defs_3_Input.ChoiceSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
+                  "": "$ANY"
                 }
               ]
             },
             {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Date",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Number",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Text",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Time",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Toggle",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
+              "": "$ANY",
+              "_type": "$ANY"
             }
           ]
         },
-        "$ANY"
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Date",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Number",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Text",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Time",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Toggle",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        }
       ]
     },
     "_defs_3_ImplementationsOf.Item": {
-      "&": [
+      "|": [
         {
-          "|": [
+          "&": [
             {
               "&": [
+                "$_defs_3_Action.Execute",
                 {
-                  "&": [
-                    "$_defs_3_Action.Execute",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
+                  "": "$ANY"
                 }
               ]
             },
             {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.OpenUrl",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.ShowCard",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.Submit",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Action.ToggleVisibility",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_ActionSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Column",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_ColumnSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Container",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_FactSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Image",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_ImageSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.ChoiceSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Date",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Number",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Text",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Time",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Toggle",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Media",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_RichTextBlock",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Table",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_TextBlock",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
+              "": "$ANY",
+              "_type": "$ANY"
             }
           ]
         },
-        "$ANY"
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.OpenUrl",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.ShowCard",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.Submit",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Action.ToggleVisibility",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_ActionSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Column",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_ColumnSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Container",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_FactSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Image",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_ImageSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.ChoiceSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Date",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Number",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Text",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Time",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Toggle",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Media",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_RichTextBlock",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Table",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_TextBlock",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        }
       ]
     },
     "_defs_3_ImplementationsOf.ToggleableItem": {
-      "&": [
+      "|": [
         {
-          "|": [
+          "&": [
             {
               "&": [
+                "$_defs_3_ActionSet",
                 {
-                  "&": [
-                    "$_defs_3_ActionSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
+                  "": "$ANY"
                 }
               ]
             },
             {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Column",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_ColumnSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Container",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_FactSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Image",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_ImageSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.ChoiceSet",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Date",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Number",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Text",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Time",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Input.Toggle",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Media",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_RichTextBlock",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_Table",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
-            },
-            {
-              "&": [
-                {
-                  "&": [
-                    "$_defs_3_TextBlock",
-                    {
-                      "": "$ANY"
-                    }
-                  ]
-                },
-                {
-                  "": "$ANY",
-                  "_type": "$ANY"
-                }
-              ]
+              "": "$ANY",
+              "_type": "$ANY"
             }
           ]
         },
-        "$ANY"
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Column",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_ColumnSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Container",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_FactSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Image",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_ImageSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.ChoiceSet",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Date",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Number",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Text",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Time",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Input.Toggle",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Media",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_RichTextBlock",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_Table",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "&": [
+                "$_defs_3_TextBlock",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "_type": "$ANY"
+            }
+          ]
+        }
       ]
     },
     "_defs_3_Input.Choice": {
@@ -5943,14 +5823,9 @@
           "?height": "$ANY",
           "?horizontalAlignment": {
             "#": "Controls the horizontal text alignment. When not specified, the value of horizontalAlignment is inherited from the parent container. If no parent container has horizontalAlignment set, it defaults to Left.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_HorizontalAlignment",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_HorizontalAlignment",
+              null
             ]
           },
           "?id": "$ANY",
@@ -5973,24 +5848,19 @@
     },
     "_defs_3_Spacing": {
       "#": "Specifies how much spacing. Hosts pick the exact pixel amounts for each of these.",
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_default",
-                "_none",
-                "_small",
-                "_medium",
-                "_large",
-                "_extraLarge",
-                "_padding"
-              ]
-            },
-            "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([n|N][o|O][n|N][e|E])|([s|S][m|M][a|A][l|L][l|L])|([m|M][e|E][d|D][i|I][u|U][m|M])|([l|L][a|A][r|R][g|G][e|E])|([e|E][x|X][t|T][r|R][a|A][l|L][a|A][r|R][g|G][e|E])|([p|P][a|A][d|D][d|D][i|I][n|N][g|G])$/"
+            "_default",
+            "_none",
+            "_small",
+            "_medium",
+            "_large",
+            "_extraLarge",
+            "_padding"
           ]
         },
-        "$ANY"
+        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([n|N][o|O][n|N][e|E])|([s|S][m|M][a|A][l|L][l|L])|([m|M][e|E][d|D][i|I][u|U][m|M])|([l|L][a|A][r|R][g|G][e|E])|([e|E][x|X][t|T][r|R][a|A][l|L][a|A][r|R][g|G][e|E])|([p|P][a|A][d|D][d|D][i|I][n|N][g|G])$/"
       ]
     },
     "_defs_3_Table": {
@@ -6018,27 +5888,17 @@
           },
           "?gridStyle": {
             "#": "Defines the style of the grid. This property currently only controls the grid's color.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_ContainerStyle",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_ContainerStyle",
+              null
             ]
           },
           "?height": "$ANY",
           "?horizontalCellContentAlignment": {
             "#": "Controls how the content of all cells is horizontally aligned by default. When not specified, horizontal alignment is defined on a per-cell basis.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_HorizontalAlignment",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_HorizontalAlignment",
+              null
             ]
           },
           "?id": "$ANY",
@@ -6062,14 +5922,9 @@
           },
           "?verticalCellContentAlignment": {
             "#": "Controls how the content of all cells is vertically aligned by default. When not specified, vertical alignment is defined on a per-cell basis.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_VerticalAlignment",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_VerticalAlignment",
+              null
             ]
           }
         }
@@ -6137,14 +5992,9 @@
       },
       "?style": {
         "#": "Style hint for `TableCell`.",
-        "&": [
-          {
-            "|": [
-              "$_defs_3_ContainerStyle",
-              null
-            ]
-          },
-          "$ANY"
+        "|": [
+          "$_defs_3_ContainerStyle",
+          null
         ]
       },
       "?type": {
@@ -6188,14 +6038,9 @@
       "#": "Defines the characteristics of a column in a Table element.",
       "?horizontalCellContentAlignment": {
         "#": "Controls how the content of all cells in the column is horizontally aligned by default. When specified, this value overrides the setting at the table level. When not specified, horizontal alignment is defined at the table, row or cell level.",
-        "&": [
-          {
-            "|": [
-              "$_defs_3_HorizontalAlignment",
-              null
-            ]
-          },
-          "$ANY"
+        "|": [
+          "$_defs_3_HorizontalAlignment",
+          null
         ]
       },
       "?type": {
@@ -6204,14 +6049,9 @@
       },
       "?verticalCellContentAlignment": {
         "#": "Controls how the content of all cells in the column is vertically aligned by default. When specified, this value overrides the setting at the table level. When not specified, vertical alignment is defined at the table, row or cell level.",
-        "&": [
-          {
-            "|": [
-              "$_defs_3_VerticalAlignment",
-              null
-            ]
-          },
-          "$ANY"
+        "|": [
+          "$_defs_3_VerticalAlignment",
+          null
         ]
       },
       "?width": {
@@ -6242,26 +6082,16 @@
       },
       "?horizontalCellContentAlignment": {
         "#": "Controls how the content of all cells in the row is horizontally aligned by default. When specified, this value overrides both the setting at the table and columns level. When not specified, horizontal alignment is defined at the table, column or cell level.",
-        "&": [
-          {
-            "|": [
-              "$_defs_3_HorizontalAlignment",
-              null
-            ]
-          },
-          "$ANY"
+        "|": [
+          "$_defs_3_HorizontalAlignment",
+          null
         ]
       },
       "?style": {
         "#": "Defines the style of the entire row.",
-        "&": [
-          {
-            "|": [
-              "$_defs_3_ContainerStyle",
-              null
-            ]
-          },
-          "$ANY"
+        "|": [
+          "$_defs_3_ContainerStyle",
+          null
         ]
       },
       "?type": {
@@ -6270,14 +6100,9 @@
       },
       "?verticalCellContentAlignment": {
         "#": "Controls how the content of all cells in the column is vertically aligned by default. When specified, this value overrides the setting at the table and column level. When not specified, vertical alignment is defined either at the table, column or cell level.",
-        "&": [
-          {
-            "|": [
-              "$_defs_3_VerticalAlignment",
-              null
-            ]
-          },
-          "$ANY"
+        "|": [
+          "$_defs_3_VerticalAlignment",
+          null
         ]
       }
     },
@@ -6343,14 +6168,9 @@
         {
           "?color": {
             "#": "Controls the color of `TextBlock` elements.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_Colors",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_Colors",
+              null
             ]
           },
           "?fallback": "$ANY",
@@ -6383,14 +6203,9 @@
           "?height": "$ANY",
           "?horizontalAlignment": {
             "#": "Controls the horizontal text alignment. When not specified, the value of horizontalAlignment is inherited from the parent container. If no parent container has horizontalAlignment set, it defaults to Left.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_HorizontalAlignment",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_HorizontalAlignment",
+              null
             ]
           },
           "?id": "$ANY",
@@ -6420,27 +6235,17 @@
           "?separator": "$ANY",
           "?size": {
             "#": "Controls size of text.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_FontSize",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_FontSize",
+              null
             ]
           },
           "?spacing": "$ANY",
           "?style": {
             "#": "The style of this TextBlock for accessibility purposes.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_TextBlockStyle",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_TextBlockStyle",
+              null
             ]
           },
           "?type": {
@@ -6449,14 +6254,9 @@
           },
           "?weight": {
             "#": "Controls the weight of `TextBlock` elements.",
-            "&": [
-              {
-                "|": [
-                  "$_defs_3_FontWeight",
-                  null
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_defs_3_FontWeight",
+              null
             ]
           },
           "?wrap": {
@@ -6503,22 +6303,17 @@
     },
     "_defs_3_TextInputStyle": {
       "#": "Style hint for text input.",
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_text",
-                "_tel",
-                "_url",
-                "_email",
-                "_password"
-              ]
-            },
-            "/^([t|T][e|E][x|X][t|T])|([t|T][e|E][l|L])|([u|U][r|R][l|L])|([e|E][m|M][a|A][i|I][l|L])|([p|P][a|A][s|S][s|S][w|W][o|O][r|R][d|D])$/"
+            "_text",
+            "_tel",
+            "_url",
+            "_email",
+            "_password"
           ]
         },
-        "$ANY"
+        "/^([t|T][e|E][x|X][t|T])|([t|T][e|E][l|L])|([u|U][r|R][l|L])|([e|E][m|M][a|A][i|I][l|L])|([p|P][a|A][s|S][s|S][w|W][o|O][r|R][d|D])$/"
       ]
     },
     "_defs_3_TextRun": {
@@ -6533,26 +6328,16 @@
             {
               "?color": {
                 "#": "Controls the color of the text.",
-                "&": [
-                  {
-                    "|": [
-                      "$_defs_3_Colors",
-                      null
-                    ]
-                  },
-                  "$ANY"
+                "|": [
+                  "$_defs_3_Colors",
+                  null
                 ]
               },
               "?fontType": {
                 "#": "The type of font to use",
-                "&": [
-                  {
-                    "|": [
-                      "$_defs_3_FontType",
-                      null
-                    ]
-                  },
-                  "$ANY"
+                "|": [
+                  "$_defs_3_FontType",
+                  null
                 ]
               },
               "?highlight": {
@@ -6586,14 +6371,9 @@
               },
               "?size": {
                 "#": "Controls size of text.",
-                "&": [
-                  {
-                    "|": [
-                      "$_defs_3_FontSize",
-                      null
-                    ]
-                  },
-                  "$ANY"
+                "|": [
+                  "$_defs_3_FontSize",
+                  null
                 ]
               },
               "?strikethrough": {
@@ -6610,14 +6390,9 @@
               },
               "?weight": {
                 "#": "Controls the weight of the text.",
-                "&": [
-                  {
-                    "|": [
-                      "$_defs_3_FontWeight",
-                      null
-                    ]
-                  },
-                  "$ANY"
+                "|": [
+                  "$_defs_3_FontWeight",
+                  null
                 ]
               },
               "_text": {
@@ -6657,37 +6432,27 @@
       }
     },
     "_defs_3_VerticalAlignment": {
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_top",
-                "_center",
-                "_bottom"
-              ]
-            },
-            "/^([t|T][o|O][p|P])|([c|C][e|E][n|N][t|T][e|E][r|R])|([b|B][o|O][t|T][t|T][o|O][m|M])$/"
+            "_top",
+            "_center",
+            "_bottom"
           ]
         },
-        "$ANY"
+        "/^([t|T][o|O][p|P])|([c|C][e|E][n|N][t|T][e|E][r|R])|([b|B][o|O][t|T][t|T][o|O][m|M])$/"
       ]
     },
     "_defs_3_VerticalContentAlignment": {
-      "&": [
+      "|": [
         {
           "|": [
-            {
-              "|": [
-                "_top",
-                "_center",
-                "_bottom"
-              ]
-            },
-            "/^([t|T][o|O][p|P])|([c|C][e|E][n|N][t|T][e|E][r|R])|([b|B][o|O][t|T][t|T][o|O][m|M])$/"
+            "_top",
+            "_center",
+            "_bottom"
           ]
         },
-        "$ANY"
+        "/^([t|T][o|O][p|P])|([c|C][e|E][n|N][t|T][e|E][r|R])|([b|B][o|O][t|T][t|T][o|O][m|M])$/"
       ]
     },
     "_name_0_": {
@@ -6713,14 +6478,9 @@
           },
           "?dependencies": {
             "": {
-              "&": [
-                {
-                  "|": [
-                    "$_name_0_",
-                    "$_defs_2_stringArray"
-                  ]
-                },
-                "$ANY"
+              "|": [
+                "$_name_0_",
+                "$_defs_2_stringArray"
               ]
             }
           },
@@ -6741,14 +6501,9 @@
           "?format": "",
           "?if": "$_name_0_",
           "?items": {
-            "&": [
-              {
-                "|": [
-                  "$_name_0_",
-                  "$_defs_2_schemaArray"
-                ]
-              },
-              "$ANY"
+            "|": [
+              "$_name_0_",
+              "$_defs_2_schemaArray"
             ]
           },
           "?maxItems": "$_defs_2_nonNegativeInteger",
@@ -6787,20 +6542,15 @@
           "?then": "$_name_0_",
           "?title": "",
           "?type": {
-            "&": [
+            "|": [
+              "$_defs_2_simpleTypes",
               {
-                "|": [
-                  "$_defs_2_simpleTypes",
-                  {
-                    "!": true,
-                    ">=": 1,
-                    "@": [
-                      "$_defs_2_simpleTypes"
-                    ]
-                  }
+                "!": true,
+                ">=": 1,
+                "@": [
+                  "$_defs_2_simpleTypes"
                 ]
-              },
-              "$ANY"
+              }
             ]
           },
           "?uniqueItems": {
@@ -6813,10 +6563,7 @@
       ]
     },
     "_name_1_": {
-      "&": [
-        "$_defs_3_AdaptiveCard",
-        "$ANY"
-      ]
+      "@": "$_defs_3_AdaptiveCard"
     },
     "action": {
       "#": "Represents actions that can be applied on card elements",
@@ -7780,149 +7527,139 @@
       ]
     },
     "enhanceWithSetting": {
-      "&": [
+      "^": [
         {
-          "^": [
-            {
-              "?bundleUrlRelativeTo": {
-                "#": "Indicates whether url is relative to component (default) or manifest",
-                "|": [
-                  "_manifest",
-                  "_component"
-                ]
+          "?bundleUrlRelativeTo": {
+            "#": "Indicates whether url is relative to component (default) or manifest",
+            "|": [
+              "_manifest",
+              "_component"
+            ]
+          },
+          "?fallbackLocale": {
+            "#": "Represents the fallback locale",
+            "@": ""
+          },
+          "?supportedLocales": {
+            "#": "Represents the list of supported locales",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?terminologies": {
+            "#": "Represents terminologies with additional properties files",
+            "&": [
+              {
+                "/^[a-zA-Z0-9_\\-]*$/": "$ANY"
               },
-              "?fallbackLocale": {
-                "#": "Represents the fallback locale",
-                "@": ""
-              },
-              "?supportedLocales": {
-                "#": "Represents the list of supported locales",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?terminologies": {
-                "#": "Represents terminologies with additional properties files",
-                "&": [
-                  {
-                    "/^[a-zA-Z0-9_\\-]*$/": "$ANY"
-                  },
-                  {
-                    "": "$ANY",
-                    "/^[a-zA-Z0-9_\\-]*$/": "$terminologySetting"
-                  }
-                ]
-              },
-              "_bundleUrl": {
-                "#": "Represents property url for model enhancement",
-                "@": ""
+              {
+                "": "$ANY",
+                "/^[a-zA-Z0-9_\\-]*$/": "$terminologySetting"
               }
-            },
-            {
-              "?fallbackLocale": {
-                "#": "Represents the fallback locale",
-                "@": ""
-              },
-              "?supportedLocales": {
-                "#": "Represents the list of supported locales",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?terminologies": {
-                "#": "Represents terminologies with additional properties files",
-                "&": [
-                  {
-                    "/^[a-zA-Z0-9_\\-]*$/": "$ANY"
-                  },
-                  {
-                    "": "$ANY",
-                    "/^[a-zA-Z0-9_\\-]*$/": "$terminologySetting"
-                  }
-                ]
-              },
-              "_bundleName": {
-                "#": "Represents the alternative for bundleUrl",
-                "@": ""
-              }
-            }
-          ]
+            ]
+          },
+          "_bundleUrl": {
+            "#": "Represents property url for model enhancement",
+            "@": ""
+          }
         },
-        "$ANY"
+        {
+          "?fallbackLocale": {
+            "#": "Represents the fallback locale",
+            "@": ""
+          },
+          "?supportedLocales": {
+            "#": "Represents the list of supported locales",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?terminologies": {
+            "#": "Represents terminologies with additional properties files",
+            "&": [
+              {
+                "/^[a-zA-Z0-9_\\-]*$/": "$ANY"
+              },
+              {
+                "": "$ANY",
+                "/^[a-zA-Z0-9_\\-]*$/": "$terminologySetting"
+              }
+            ]
+          },
+          "_bundleName": {
+            "#": "Represents the alternative for bundleUrl",
+            "@": ""
+          }
+        }
       ]
     },
     "enhanceWithSetting_0": {
-      "&": [
+      "^": [
         {
-          "^": [
-            {
-              "?bundleUrlRelativeTo": {
-                "#": "Indicates whether url is relative to component (default) or manifest",
-                "|": [
-                  "_manifest",
-                  "_component"
-                ]
+          "?bundleUrlRelativeTo": {
+            "#": "Indicates whether url is relative to component (default) or manifest",
+            "|": [
+              "_manifest",
+              "_component"
+            ]
+          },
+          "?fallbackLocale": {
+            "#": "Represents the fallback locale",
+            "@": ""
+          },
+          "?supportedLocales": {
+            "#": "Represents the list of supported locales",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?terminologies": {
+            "#": "Represents terminologies with additional properties files",
+            "&": [
+              {
+                "": "$ANY",
+                "/^[a-zA-Z0-9_\\-]*$/": "$ANY"
               },
-              "?fallbackLocale": {
-                "#": "Represents the fallback locale",
-                "@": ""
-              },
-              "?supportedLocales": {
-                "#": "Represents the list of supported locales",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?terminologies": {
-                "#": "Represents terminologies with additional properties files",
-                "&": [
-                  {
-                    "": "$ANY",
-                    "/^[a-zA-Z0-9_\\-]*$/": "$ANY"
-                  },
-                  {
-                    "": "$ANY",
-                    "/^[a-zA-Z0-9_\\-]*$/": "$terminologySetting"
-                  }
-                ]
-              },
-              "_bundleUrl": {
-                "#": "Represents property url for model enhancement",
-                "@": ""
+              {
+                "": "$ANY",
+                "/^[a-zA-Z0-9_\\-]*$/": "$terminologySetting"
               }
-            },
-            {
-              "?fallbackLocale": {
-                "#": "Represents the fallback locale",
-                "@": ""
-              },
-              "?supportedLocales": {
-                "#": "Represents the list of supported locales",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?terminologies": {
-                "#": "Represents terminologies with additional properties files",
-                "&": [
-                  {
-                    "": "$ANY",
-                    "/^[a-zA-Z0-9_\\-]*$/": "$ANY"
-                  },
-                  {
-                    "": "$ANY",
-                    "/^[a-zA-Z0-9_\\-]*$/": "$terminologySetting"
-                  }
-                ]
-              },
-              "_bundleName": {
-                "#": "Represents the alternative for bundleUrl",
-                "@": ""
-              }
-            }
-          ]
+            ]
+          },
+          "_bundleUrl": {
+            "#": "Represents property url for model enhancement",
+            "@": ""
+          }
         },
-        "$ANY"
+        {
+          "?fallbackLocale": {
+            "#": "Represents the fallback locale",
+            "@": ""
+          },
+          "?supportedLocales": {
+            "#": "Represents the list of supported locales",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "?terminologies": {
+            "#": "Represents terminologies with additional properties files",
+            "&": [
+              {
+                "": "$ANY",
+                "/^[a-zA-Z0-9_\\-]*$/": "$ANY"
+              },
+              {
+                "": "$ANY",
+                "/^[a-zA-Z0-9_\\-]*$/": "$terminologySetting"
+              }
+            ]
+          },
+          "_bundleName": {
+            "#": "Represents the alternative for bundleUrl",
+            "@": ""
+          }
+        }
       ]
     },
     "extension": {
@@ -9845,43 +9582,38 @@
       ]
     },
     "terminologySetting": {
-      "&": [
+      "^": [
         {
-          "^": [
-            {
-              "?supportedLocales": {
-                "#": "Represents the list of supported locales",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "_bundleName": {
-                "#": "Represents the alternative for bundleUrl",
-                "@": ""
-              }
-            },
-            {
-              "?bundleUrlRelativeTo": {
-                "#": "Indicates whether url is relative to component (default) or manifest",
-                "|": [
-                  "_manifest",
-                  "_component"
-                ]
-              },
-              "?supportedLocales": {
-                "#": "Represents the list of supported locales",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "_bundleUrl": {
-                "#": "Represents the URL for the resource bundle",
-                "@": ""
-              }
-            }
-          ]
+          "?supportedLocales": {
+            "#": "Represents the list of supported locales",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "_bundleName": {
+            "#": "Represents the alternative for bundleUrl",
+            "@": ""
+          }
         },
-        "$ANY"
+        {
+          "?bundleUrlRelativeTo": {
+            "#": "Indicates whether url is relative to component (default) or manifest",
+            "|": [
+              "_manifest",
+              "_component"
+            ]
+          },
+          "?supportedLocales": {
+            "#": "Represents the list of supported locales",
+            "@": [
+              "$ANY"
+            ]
+          },
+          "_bundleUrl": {
+            "#": "Represents the URL for the resource bundle",
+            "@": ""
+          }
+        }
       ]
     },
     "textAlign": {
@@ -10157,17 +9889,12 @@
                     ]
                   },
                   {
-                    "&": [
+                    "^": [
+                      "$ANY",
                       {
-                        "^": [
-                          "$ANY",
-                          {
-                            "": "$ANY",
-                            "?type": "_List"
-                          }
-                        ]
-                      },
-                      "$ANY"
+                        "": "$ANY",
+                        "?type": "_List"
+                      }
                     ]
                   }
                 ]
@@ -10194,17 +9921,12 @@
                     ]
                   },
                   {
-                    "&": [
+                    "^": [
+                      "$ANY",
                       {
-                        "^": [
-                          "$ANY",
-                          {
-                            "": "$ANY",
-                            "?type": "_Analytical"
-                          }
-                        ]
-                      },
-                      "$ANY"
+                        "": "$ANY",
+                        "?type": "_Analytical"
+                      }
                     ]
                   }
                 ]
@@ -10231,17 +9953,12 @@
                     ]
                   },
                   {
-                    "&": [
+                    "^": [
+                      "$ANY",
                       {
-                        "^": [
-                          "$ANY",
-                          {
-                            "": "$ANY",
-                            "?type": "_AnalyticsCloud"
-                          }
-                        ]
-                      },
-                      "$ANY"
+                        "": "$ANY",
+                        "?type": "_AnalyticsCloud"
+                      }
                     ]
                   }
                 ]
@@ -10268,17 +9985,12 @@
                     ]
                   },
                   {
-                    "&": [
+                    "^": [
+                      "$ANY",
                       {
-                        "^": [
-                          "$ANY",
-                          {
-                            "": "$ANY",
-                            "?type": "_Timeline"
-                          }
-                        ]
-                      },
-                      "$ANY"
+                        "": "$ANY",
+                        "?type": "_Timeline"
+                      }
                     ]
                   }
                 ]
@@ -10305,17 +10017,12 @@
                     ]
                   },
                   {
-                    "&": [
+                    "^": [
+                      "$ANY",
                       {
-                        "^": [
-                          "$ANY",
-                          {
-                            "": "$ANY",
-                            "?type": "_Table"
-                          }
-                        ]
-                      },
-                      "$ANY"
+                        "": "$ANY",
+                        "?type": "_Table"
+                      }
                     ]
                   }
                 ]
@@ -10342,17 +10049,12 @@
                     ]
                   },
                   {
-                    "&": [
+                    "^": [
+                      "$ANY",
                       {
-                        "^": [
-                          "$ANY",
-                          {
-                            "": "$ANY",
-                            "?type": "_Object"
-                          }
-                        ]
-                      },
-                      "$ANY"
+                        "": "$ANY",
+                        "?type": "_Object"
+                      }
                     ]
                   }
                 ]
@@ -10379,17 +10081,12 @@
                     ]
                   },
                   {
-                    "&": [
+                    "^": [
+                      "$ANY",
                       {
-                        "^": [
-                          "$ANY",
-                          {
-                            "": "$ANY",
-                            "?type": "_Component"
-                          }
-                        ]
-                      },
-                      "$ANY"
+                        "": "$ANY",
+                        "?type": "_Component"
+                      }
                     ]
                   }
                 ]
@@ -10416,17 +10113,12 @@
                     ]
                   },
                   {
-                    "&": [
+                    "^": [
+                      "$ANY",
                       {
-                        "^": [
-                          "$ANY",
-                          {
-                            "": "$ANY",
-                            "?type": "_Calendar"
-                          }
-                        ]
-                      },
-                      "$ANY"
+                        "": "$ANY",
+                        "?type": "_Calendar"
+                      }
                     ]
                   }
                 ]
@@ -10453,17 +10145,12 @@
                     ]
                   },
                   {
-                    "&": [
+                    "^": [
+                      "$ANY",
                       {
-                        "^": [
-                          "$ANY",
-                          {
-                            "": "$ANY",
-                            "?type": "_AdaptiveCard"
-                          }
-                        ]
-                      },
-                      "$ANY"
+                        "": "$ANY",
+                        "?type": "_AdaptiveCard"
+                      }
                     ]
                   }
                 ]
@@ -10490,17 +10177,12 @@
                     ]
                   },
                   {
-                    "&": [
+                    "^": [
+                      "$ANY",
                       {
-                        "^": [
-                          "$ANY",
-                          {
-                            "": "$ANY",
-                            "?type": "_WebPage"
-                          }
-                        ]
-                      },
-                      "$ANY"
+                        "": "$ANY",
+                        "?type": "_WebPage"
+                      }
                     ]
                   }
                 ]
@@ -11288,35 +10970,25 @@
         }
       },
       {
-        "&": [
-          "$ANY",
+        "|": [
           {
-            "|": [
+            "&": [
               {
-                "&": [
-                  {
-                    "": "$ANY",
-                    "_globalFilterEntityType": "$ANY"
-                  },
-                  {
-                    "": "$ANY",
-                    "_globalFilterModel": "$ANY"
-                  }
-                ]
+                "": "$ANY",
+                "_globalFilterEntityType": "$ANY"
               },
               {
-                "&": [
-                  {
-                    "^": [
-                      "$ANY",
-                      {
-                        "": "$ANY",
-                        "_globalFilterEntityType": "$ANY"
-                      }
-                    ]
-                  },
-                  "$ANY"
-                ]
+                "": "$ANY",
+                "_globalFilterModel": "$ANY"
+              }
+            ]
+          },
+          {
+            "^": [
+              "$ANY",
+              {
+                "": "$ANY",
+                "_globalFilterEntityType": "$ANY"
               }
             ]
           }

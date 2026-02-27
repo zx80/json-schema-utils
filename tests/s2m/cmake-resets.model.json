@@ -1798,17 +1798,12 @@
       ]
     },
     "topCondition": {
-      "&": [
+      "|": [
+        "$condition",
         {
-          "|": [
-            "$condition",
-            {
-              "#": "Null indicates that the condition always evaluates to true and is not inherited.",
-              "@": null
-            }
-          ]
-        },
-        "$ANY"
+          "#": "Null indicates that the condition always evaluates to true and is not inherited.",
+          "@": null
+        }
       ]
     },
     "vendor": {

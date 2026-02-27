@@ -443,17 +443,12 @@
                       ]
                     },
                     {
-                      "&": [
+                      "^": [
+                        "$ANY",
                         {
-                          "^": [
-                            "$ANY",
-                            {
-                              "": "$ANY",
-                              "?standalone": "=true"
-                            }
-                          ]
-                        },
-                        "$ANY"
+                          "": "$ANY",
+                          "?standalone": "=true"
+                        }
                       ]
                     }
                   ]
@@ -499,17 +494,12 @@
                       ]
                     },
                     {
-                      "&": [
+                      "^": [
+                        "$ANY",
                         {
-                          "^": [
-                            "$ANY",
-                            {
-                              "": "$ANY",
-                              "?standalone": "=false"
-                            }
-                          ]
-                        },
-                        "$ANY"
+                          "": "$ANY",
+                          "?standalone": "=false"
+                        }
                       ]
                     }
                   ]

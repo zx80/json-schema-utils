@@ -579,8 +579,14 @@ def schema2model(
         if only(schema, "oneOf", *IGNORE):
             model = {"^": [schema2model(s, lid or url, path + (("oneOf", i), ), defs, strict, fix, False, resilient)
                          for i, s in enumerate(choices)]}
-            if len(model["^"]) == 1:
-                model = model["^"][0]
+            # cleanup
+            match len(model["^"]):
+                case 0:
+                    model = "$NONE"
+                case 1:
+                    model = model["^"][0]
+                case _:
+                    pass
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # try building an "allOf" layer
             log.warning(f"keyword oneOf intermixed with other keywords at [{spath}]")
@@ -593,9 +599,15 @@ def schema2model(
         if only(schema, "anyOf", *IGNORE):
             model = {"|": [schema2model(s, lid or url, path + (("anyOf", i), ), defs, strict, fix, False, resilient)
                         for i, s in enumerate(choices)]}
+            # some cleanup
             model["|"] = list(filter(lambda m: m != "$NONE", model["|"]))
-            if len(model["|"]) == 1:
-                model = model["|"][0]
+            match len(model["|"]):
+                case 0:
+                    model = "$NONE"
+                case 1:
+                    model = model["|"][0]
+                case _:
+                    pass
             return buildModel(model, {}, defs, sharp, is_root)
         else:
             log.warning(f"keyword anyOf intermixed with other keywords at [{spath}]")
@@ -608,8 +620,14 @@ def schema2model(
         if only(schema, "allOf", *IGNORE):
             model = {"&": [schema2model(s, lid or url, path + (("allOf", i), ), defs, strict, fix, False, resilient)
                         for i, s in enumerate(choices)]}
-            if len(model["&"]) == 1:
-                model = model["&"][0]
+            model["&"] = list(filter(lambda m: m != "$ANY", model["&"]))
+            match len(model["&"]):
+                case 0:
+                    model = "$ANY"
+                case 1:
+                    model = model["&"][0]
+                case _:
+                    pass
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # build another allOf layer
             log.warning(f"keyword allOf intermixed with other keywords at [{spath}]")
@@ -619,15 +637,13 @@ def schema2model(
     elif "not" in schema:
         val = schema["not"]
         if isinstance(val, bool):
-            if val:
-                model = "$NONE"
-                return model
-            else:  # ignore "not: false"
+            if val:  # not true shortcut
+                return buildModel("$NONE", {}, defs, sharp, is_root)
+            else:  # ignore not false and proceed
                 del schema["not"]
         elif only(schema, "not", *IGNORE):
             if len(val) == 0:
                 model = "$NONE"
-                return model
             else:
                 model = {"^": ["$ANY", schema2model(val, lid or url, path + ("not", ), defs, strict, fix, False, resilient)]}
             return buildModel(model, {}, defs, sharp, is_root)
@@ -645,7 +661,7 @@ def schema2model(
             assert isinstance(ref, str) and len(ref) > 0
             log.debug(f"$ref: {ref}")
             if ref in ("#/", "#"):
-                return "$#"
+                return buildModel("$#", {}, defs, sharp, is_root)
 
             # found a reference to an $id
             if ref in ID_TO_PATH:
@@ -713,22 +729,22 @@ def schema2model(
             # else split schema per type
             schemas = split_schema(schema)
             del schemas[""]  # remove ignored stuff
-            model = buildModel(
-                {
-                    "|": [
-                        schema2model(v, lid or url, path + (("|", i), ), defs, strict, fix, False, resilient)
-                            for i, v in enumerate(schemas.values())
-                    ]
-                }, {}, defs, sharp, is_root)
-            # cleanup
+            model = {
+                "|": [
+                    schema2model(v, lid or url, path + (("|", i), ), defs, strict, fix, False, resilient)
+                        for i, v in enumerate(schemas.values())
+                ]
+            }
+            # minimal cleanup
             model["|"] = list(filter(lambda m: m != "$NONE", model["|"]))
-            if len(model["|"]) == 1:
-                if len(model) == 1:
+            match len(model["|"]):
+                case 0:
+                    model = "$NONE"
+                case 1:
                     model = model["|"][0]
-                else:
-                    model["@"] = model["|"][0]
-                    del model["|"]
-            return model
+                case _:
+                    pass
+            return buildModel(model, {}, defs, sharp, is_root)
         elif ts == "string" and "const" in schema:
             doubt(only(schema, "type", "const", *IGNORE), f"string const at [{spath}]", strict)
             const = schema["const"]
@@ -788,7 +804,7 @@ def schema2model(
                         constraints["<="] = maxlen
                     else:
                         constraints["="] = maxlen
-            # if "contentMediaType" in schema:
+            # if "contentMediaType" in schema:  # TODO detect $JSON
             #     val = schema["contentMediaType"]
             #     assert isinstance(val, str), path
             #     constraints["mime"] = val

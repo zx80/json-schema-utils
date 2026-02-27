@@ -609,14 +609,9 @@
     },
     "DictionaryReference": {
       "#": "Reference to a dictionary by name. One of:\n-  {@link  DictionaryRef } \n-  {@link  DictionaryNegRef }",
-      "&": [
-        {
-          "|": [
-            "$DictionaryRef",
-            "$DictionaryNegRef"
-          ]
-        },
-        "$ANY"
+      "|": [
+        "$DictionaryRef",
+        "$DictionaryNegRef"
       ]
     },
     "EditCosts": {
@@ -886,16 +881,11 @@
       "@": ""
     },
     "MatchingFileType": {
-      "&": [
-        {
-          "|": [
-            "$LanguageId",
-            [
-              "$LanguageId"
-            ]
-          ]
-        },
-        "$ANY"
+      "|": [
+        "$LanguageId",
+        [
+          "$LanguageId"
+        ]
       ]
     },
     "OverrideSettings": {
@@ -1046,16 +1036,11 @@
       },
       "_filename": {
         "#": "Glob pattern or patterns to match against.",
-        "&": [
-          {
-            "|": [
-              "$Glob",
-              [
-                "$Glob"
-              ]
-            ]
-          },
-          "$ANY"
+        "|": [
+          "$Glob",
+          [
+            "$Glob"
+          ]
         ]
       }
     },

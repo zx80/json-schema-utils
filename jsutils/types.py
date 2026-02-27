@@ -171,6 +171,12 @@ def typeFlt(schema: JsonSchema, path: SchemaPath) -> bool:
                     todo.add(path)
                 types &= ntypes
 
+        # not: true
+        if "not" in schema:
+            nots = schema["not"]
+            if isinstance(nots, bool) and nots:
+                types = NONE
+
         _types[path] = types
 
         # build propagation graph
