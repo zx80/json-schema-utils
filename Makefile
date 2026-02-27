@@ -10,6 +10,9 @@ clean:
 clean.dev: clean
 	$(RM) -rf venv *.egg-info
 
+.PHONY: venv
+venv: venv/.init
+
 .PHONY: dev
 dev: venv/.dev
 
@@ -18,13 +21,14 @@ venv.dist: venv/.dist
 
 PYTHON  = python
 
-venv:
+venv/.init:
 	$(PYTHON) -m venv venv
 	source venv/bin/activate
 	pip install -U pip
 	pip install -e .[compile]
+	touch $@
 
-venv/.dev: venv
+venv/.dev: venv/.init
 	source venv/bin/activate
 	pip install -e .[dev]
 	touch $@
