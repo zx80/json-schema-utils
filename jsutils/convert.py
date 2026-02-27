@@ -612,7 +612,8 @@ def schema2model(
         else:
             log.warning(f"keyword anyOf intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "anyOf")
-            return schema2model(ao, lid or url, path + ("anyOf",), defs, strict, fix, False, resilient)
+            model = schema2model(ao, lid or url, path + ("anyOf",), defs, strict, fix, False, resilient)
+            return buildModel(model, {}, defs, sharp, is_root)
     elif "allOf" in schema:
         # NOTE types should be compatible to avoid an empty match
         choices = schema["allOf"]
