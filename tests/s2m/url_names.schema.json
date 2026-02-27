@@ -1,0 +1,9 @@
+{
+  "$defs": {
+    "http://localhost:1234/foo.json": {
+      "$id": "http://localhost:1234/foo.json",
+      "type": "string"
+    }
+  },
+  "$ref": "#/$defs/http:~1~1localhost:1234~1foo.json"
+}
