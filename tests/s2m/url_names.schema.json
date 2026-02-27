@@ -5,5 +5,5 @@
       "type": "string"
     }
   },
-  "$ref": "#/$defs/http:~1~1localhost:1234~1foo.json"
+  "$ref": "#/$defs/http%3A~1~1localhost%3A1234~1foo.json"
 }
