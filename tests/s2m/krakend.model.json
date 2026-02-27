@@ -461,7 +461,7 @@
           },
           "?extra_config": {
             "#": "When there is additional configuration related to a specific component or middleware (like a circuit breaker, rate limit, etc.), it is declared under this section.",
-            "@": "$https://www.krakend.io/schema/v2.7/backend_extra_config.json"
+            "@": "$_name_22_"
           },
           "?group": {
             "#": "Instead of placing all the response attributes in the root of the response, create a new key and encapsulate the response inside.\n\nSee: https://www.krakend.io/docs/backends/data-manipulation/",
@@ -769,7 +769,7 @@
           "/^[@$_#]/": "$ANY",
           "?client_tls": {
             "#": "Enables specific TLS connection options when using the gRPC service. Supports all options under [TLS client settings](https://www.krakend.io/docs/service-settings/tls/#client-tls-settings).\n\nSee: https://www.krakend.io/docs/backends/grpc/",
-            "@": "$https://www.krakend.io/schema/v2.7/client_tls.json"
+            "@": "$_name_23_"
           },
           "?disable_query_params": {
             "#": "When `true`, it does not use URL parameters (`{placeholders}` in endpoints)  or query strings to fill the gRPC payload to send. If `use_request_body` is not set, or set to `false`, and this option is set to `true`, there will be no input used for the gRPC message to send. That is still a valid option, when we just want to send the message with its default values, or when the input for the gRPC calls is just the [empty message](https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/empty.proto).\n\nSee: https://www.krakend.io/docs/backends/grpc/",
@@ -851,7 +851,7 @@
           "/^[@$_#]/": "$ANY",
           "?client_tls": {
             "#": "Allows to set specific transport settings when using TLS in your upstream services. See the global [Client TLS options](https://www.krakend.io/docs/service-settings/tls/#client-tls-settings) for the list of all supported options.",
-            "@": "$https://www.krakend.io/schema/v2.7/client_tls.json"
+            "@": "$_name_23_"
           },
           "?no_redirect": {
             "#": "Set `no_redirect` to true if you don't want KrakenD to follow redirects and let the consuming user to receive the `30x` status code.\n\nSee: https://www.krakend.io/docs/enterprise/backends/http-client/",
@@ -983,7 +983,7 @@
               "_backend": {
                 "#": "The [backend definition](https://www.krakend.io/docs/backends/) (as you might have in any endpoint) indicating where the event data is sent. It is a full backend object definition, with all its possible options, transformations, filters, validations, etc.",
                 "@": [
-                  "$https://www.krakend.io/schema/v2.7/backend.json"
+                  "$_name_11_"
                 ]
               },
               "_consumer": {
@@ -1149,19 +1149,19 @@
           "?backend/pubsub/subscriber": "$_name_19_",
           "?backend/soap": "$_name_20_",
           "?backend/static-filesystem": "$_name_21_",
-          "?modifier/body-generator": "$https://www.krakend.io/schema/v2.7/modifier/body-generator.json",
-          "?modifier/jmespath": "$https://www.krakend.io/schema/v2.7/modifier/jmespath.json",
-          "?modifier/lua-backend": "$https://www.krakend.io/schema/v2.7/modifier/lua.json",
+          "?modifier/body-generator": "$_name_28_",
+          "?modifier/jmespath": "$_name_29_",
+          "?modifier/lua-backend": "$_name_30_",
           "?modifier/martian": {
             "#": "Transform requests and responses through a simple DSL definition in the configuration file.\n\nSee: https://www.krakend.io/docs/backends/martian/",
-            "@": "$https://www.krakend.io/schema/v2.7/modifier/martian.json"
+            "@": "$_name_31_"
           },
-          "?modifier/request-body-generator": "$https://www.krakend.io/schema/v2.7/modifier/body-generator.json",
-          "?modifier/response-body-generator": "$https://www.krakend.io/schema/v2.7/modifier/body-generator.json",
-          "?plugin/http-client": "$https://www.krakend.io/schema/v2.7/plugin/http-client.json",
-          "?plugin/req-resp-modifier": "$https://www.krakend.io/schema/v2.7/plugin/req-resp-modifier.json",
-          "?proxy": "$https://www.krakend.io/schema/v2.7/proxy.json",
-          "?qos/circuit-breaker": "$https://www.krakend.io/schema/v2.7/qos/circuit-breaker.json",
+          "?modifier/request-body-generator": "$_name_28_",
+          "?modifier/response-body-generator": "$_name_28_",
+          "?plugin/http-client": "$_name_35_",
+          "?plugin/req-resp-modifier": "$_name_40_",
+          "?proxy": "$_name_46_",
+          "?qos/circuit-breaker": "$_name_48_",
           "?qos/http-cache": {
             "#": "Enable in-memory caching for backend responses for as long as its Cache-Control header permits.\n\nSee: https://www.krakend.io/docs/backends/caching/",
             "&": [
@@ -1178,13 +1178,13 @@
               }
             ]
           },
-          "?qos/ratelimit/proxy": "$https://www.krakend.io/schema/v2.7/qos/ratelimit/proxy.json",
-          "?security/policies": "$https://www.krakend.io/schema/v2.7/security/policies.json",
-          "?telemetry/opentelemetry": "$https://www.krakend.io/schema/v2.7/telemetry/opentelemetry-backend.json",
-          "?validation/cel": "$https://www.krakend.io/schema/v2.7/validation/cel.json",
+          "?qos/ratelimit/proxy": "$_name_49_",
+          "?security/policies": "$_name_56_",
+          "?telemetry/opentelemetry": "$_name_68_",
+          "?validation/cel": "$_name_74_",
           "?workflow": {
             "#": "Enterprise only. A whole new endpoint that is executed within this backend context.",
-            "@": "$https://www.krakend.io/schema/v2.7/workflow.json"
+            "@": "$_name_76_"
           }
         },
         {
@@ -1575,7 +1575,7 @@
           },
           "?extra_config": {
             "#": "Configuration entries for additional components that are executed within this endpoint, during the request, response or merge operations.",
-            "@": "$https://www.krakend.io/schema/v2.7/endpoint_extra_config.json"
+            "@": "$_name_26_"
           },
           "?input_headers": {
             "!": true,
@@ -1680,12 +1680,12 @@
           "?auth/signer": "$_name_9_",
           "?auth/validator": "$_name_10_",
           "?documentation/openapi": "$_name_24_",
-          "?modifier/jmespath": "$https://www.krakend.io/schema/v2.7/modifier/jmespath.json",
-          "?modifier/lua-endpoint": "$https://www.krakend.io/schema/v2.7/modifier/lua.json",
-          "?modifier/lua-proxy": "$https://www.krakend.io/schema/v2.7/modifier/lua.json",
-          "?modifier/request-body-generator": "$https://www.krakend.io/schema/v2.7/modifier/body-generator.json",
-          "?modifier/response-body-generator": "$https://www.krakend.io/schema/v2.7/modifier/body-generator.json",
-          "?plugin/req-resp-modifier": "$https://www.krakend.io/schema/v2.7/plugin/req-resp-modifier.json",
+          "?modifier/jmespath": "$_name_29_",
+          "?modifier/lua-endpoint": "$_name_30_",
+          "?modifier/lua-proxy": "$_name_30_",
+          "?modifier/request-body-generator": "$_name_28_",
+          "?modifier/response-body-generator": "$_name_28_",
+          "?plugin/req-resp-modifier": "$_name_40_",
           "?proxy": {
             "&": [
               {
@@ -1696,7 +1696,7 @@
                 },
                 "?flatmap_filter": {
                   "#": "The list of operations to **execute sequentially** (top down). Every operation is defined with an object containing two properties:\n\nSee: https://www.krakend.io/docs/backends/flatmap/",
-                  "@": "$https://www.krakend.io/schema/v2.7/proxy/flatmap.json"
+                  "@": "$_name_47_"
                 },
                 "?sequential": {
                   "#": "The sequential proxy allows you to chain backend requests, making calls dependent one of each other.\n\nSee: https://www.krakend.io/docs/endpoints/sequential-proxy/",
@@ -1737,20 +1737,20 @@
           },
           "?qos/ratelimit/router": {
             "#": "The router rate limit feature allows you to set a number of maximum requests per second a KrakenD endpoint will accept.\n\nSee: https://www.krakend.io/docs/endpoints/rate-limit/",
-            "@": "$https://www.krakend.io/schema/v2.7/qos/ratelimit/router.json"
+            "@": "$_name_50_"
           },
-          "?qos/ratelimit/tiered": "$https://www.krakend.io/schema/v2.7/qos/ratelimit/tiered.json",
-          "?security/bot-detector": "$https://www.krakend.io/schema/v2.7/security/bot-detector.json",
-          "?security/cors": "$https://www.krakend.io/schema/v2.7/security/cors.json",
-          "?security/http": "$https://www.krakend.io/schema/v2.7/security/http.json",
-          "?security/policies": "$https://www.krakend.io/schema/v2.7/security/policies.json",
-          "?telemetry/opentelemetry": "$https://www.krakend.io/schema/v2.7/telemetry/opentelemetry-endpoint.json",
-          "?validation/cel": "$https://www.krakend.io/schema/v2.7/validation/cel.json",
+          "?qos/ratelimit/tiered": "$_name_51_",
+          "?security/bot-detector": "$_name_53_",
+          "?security/cors": "$_name_54_",
+          "?security/http": "$_name_55_",
+          "?security/policies": "$_name_56_",
+          "?telemetry/opentelemetry": "$_name_69_",
+          "?validation/cel": "$_name_74_",
           "?validation/json-schema": {
             "": "$ANY",
             "#": "apply automatic validations using the JSON Schema vocabulary before the content passes to the backends. The json schema component allows you to define validation rules on the body, type definition, or even validate the fields' values.\n\nSee: https://www.krakend.io/docs/endpoints/json-schema/"
           },
-          "?websocket": "$https://www.krakend.io/schema/v2.7/websocket.json"
+          "?websocket": "$_name_75_"
         },
         {
           "": "$ANY",
@@ -2929,13 +2929,13 @@
     "_name_36_": {
       "": "$ANY",
       "?geoip": "$_name_34_",
-      "?ip-filter": "$https://www.krakend.io/schema/v2.7/plugin/ip-filter.json",
-      "?jwk-aggregator": "$https://www.krakend.io/schema/v2.7/plugin/jwk-aggregator.json",
-      "?redis-ratelimit": "$https://www.krakend.io/schema/v2.7/plugin/redis-ratelimit.json",
-      "?static-filesystem": "$https://www.krakend.io/schema/v2.7/plugin/static-filesystem.json",
-      "?url-rewrite": "$https://www.krakend.io/schema/v2.7/plugin/url-rewrite.json",
-      "?virtualhost": "$https://www.krakend.io/schema/v2.7/plugin/virtualhost.json",
-      "?wildcard": "$https://www.krakend.io/schema/v2.7/plugin/wildcard.json",
+      "?ip-filter": "$_name_37_",
+      "?jwk-aggregator": "$_name_38_",
+      "?redis-ratelimit": "$_name_39_",
+      "?static-filesystem": "$_name_42_",
+      "?url-rewrite": "$_name_43_",
+      "?virtualhost": "$_name_44_",
+      "?wildcard": "$_name_45_",
       "_name": {
         "#": "An array with the names of plugins to load. The names are defined inside your plugin.\n\nSee: https://www.krakend.io/docs/extending/http-server-plugins/",
         "@": [
@@ -3086,7 +3086,7 @@
           "$ANY"
         ]
       },
-      "?response-schema-validator": "$https://www.krakend.io/schema/v2.7/plugin/response-schema-validator.json"
+      "?response-schema-validator": "$_name_41_"
     },
     "_name_41_": {
       "#": "Enterprise only. The response schema validator plugin adds a schema validation before the gateway returns the response to the end-user or before it\u2019s merged in the endpoint with the rest of the backends.\n\nSee: https://www.krakend.io/docs/enterprise/endpoints/response-schema-validator/",
@@ -3245,7 +3245,7 @@
           },
           "?flatmap_filter": {
             "#": "The list of operations to **execute sequentially** (top down). Every operation is defined with an object containing two properties:\n\nSee: https://www.krakend.io/docs/backends/flatmap/",
-            "@": "$https://www.krakend.io/schema/v2.7/proxy/flatmap.json"
+            "@": "$_name_47_"
           },
           "?max_payload": {
             "#": "Enterprise Only. Limits the maximum number of bytes a user can send to the endpoint. `0` means no limit. You can also set this value globally at the [service level](/docs/enterprise/service-settings/router-options/#max_payload).\n\nSee: https://www.krakend.io/docs/service-settings/router-options/",
@@ -4266,7 +4266,7 @@
           "?auth/revoker": "$_name_8_",
           "?auth/validator": "$_name_6_",
           "?documentation/openapi": "$_name_24_",
-          "?github_com/letgoapp/krakend-influx": "$https://www.krakend.io/schema/v2.7/telemetry/influx.json",
+          "?github_com/letgoapp/krakend-influx": "$_name_61_",
           "?grpc": "$_name_27_",
           "?modifier/lua-endpoint": "$_name_30_",
           "?modifier/response-headers": {
@@ -4337,16 +4337,16 @@
           "?security/http": "$_name_55_",
           "?server/static-filesystem": "$_name_57_",
           "?server/virtualhost": "$_name_58_",
-          "?telemetry/gelf": "$https://www.krakend.io/schema/v2.7/telemetry/gelf.json",
-          "?telemetry/influx": "$https://www.krakend.io/schema/v2.7/telemetry/influx.json",
-          "?telemetry/logging": "$https://www.krakend.io/schema/v2.7/telemetry/logging.json",
-          "?telemetry/logstash": "$https://www.krakend.io/schema/v2.7/telemetry/logstash.json",
-          "?telemetry/metrics": "$https://www.krakend.io/schema/v2.7/telemetry/metrics.json",
-          "?telemetry/moesif": "$https://www.krakend.io/schema/v2.7/telemetry/moesif.json",
-          "?telemetry/newrelic": "$https://www.krakend.io/schema/v2.7/telemetry/newrelic.json",
-          "?telemetry/opencensus": "$https://www.krakend.io/schema/v2.7/telemetry/opencensus.json",
-          "?telemetry/opentelemetry": "$https://www.krakend.io/schema/v2.7/telemetry/opentelemetry.json",
-          "?telemetry/opentelemetry-security": "$https://www.krakend.io/schema/v2.7/telemetry/opentelemetry-security.json"
+          "?telemetry/gelf": "$_name_60_",
+          "?telemetry/influx": "$_name_61_",
+          "?telemetry/logging": "$_name_62_",
+          "?telemetry/logstash": "$_name_63_",
+          "?telemetry/metrics": "$_name_64_",
+          "?telemetry/moesif": "$_name_65_",
+          "?telemetry/newrelic": "$_name_66_",
+          "?telemetry/opencensus": "$_name_67_",
+          "?telemetry/opentelemetry": "$_name_71_",
+          "?telemetry/opentelemetry-security": "$_name_70_"
         },
         {
           "": "$ANY",
@@ -5935,7 +5935,7 @@
           },
           "?extra_config": {
             "#": "Configuration entries for additional components that are executed within this endpoint, during the request, response or merge operations.",
-            "@": "$https://www.krakend.io/schema/v2.7/workflow_extra_config.json"
+            "@": "$_name_77_"
           },
           "?ignore_errors": {
             "#": "Allow the workflow to continue with the rest of declared actions when there are errors (like security policies, network errors, etc). The default behavior of KrakenD is to abort an execution that has errors as soon as possible. If you use conditional backends and similar approaches, you might want to allow the gateway to go through all steps.\n\nSee: https://www.krakend.io/docs/endpoints/",

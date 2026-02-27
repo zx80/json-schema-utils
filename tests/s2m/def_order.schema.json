@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "http://localhost/foo.json": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "$ref": "#/definitions/http%3A~1~1localhost~1bla.json"
+        }
+      }
+    },
+    "http://localhost/bla.json": {
+      "type": "string"
+    }
+  }
+}

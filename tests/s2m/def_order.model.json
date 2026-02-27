@@ -1,0 +1,11 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "$": {
+    "_name_0_": {
+      "": "$ANY",
+      "?foo": "$_name_1_"
+    },
+    "_name_1_": ""
+  },
+  "@": "$ANY"
+}

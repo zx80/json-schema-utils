@@ -401,13 +401,19 @@ def schema2model(
     assert isinstance(defs, dict)
 
     if is_root and dname in schema:
+
         # FIXME push?
         IDS[dname] = {}
         _defs = schema[dname]
         assert isinstance(_defs, dict)
+
+        # special root handling
+        IDS[dname][""] = "$#"
+
+        # first pass to create needed names for all definitions
         for name, val in _defs.items():
             log.info(f"registering {dname}/{name} at [{spath}] ({is_root})")
-            log.debug(f"- schema: {json.dumps(val)}")
+            # log.debug(f"- schema: {json.dumps(val)}")
             if name == "" or "/" in name or "%" in name or "~" in name or "\"" in name:
                 # if name is ugly, $ref are encoded…
                 new_name = get_new_name()
@@ -417,12 +423,14 @@ def schema2model(
             RENAMES[name] = new_name
             # keep json schema for handling $ref with a local path (eg "#/$defs/foo")
             IDS[dname][name] = val
+
+        # second pass to convert with new names in the context
+        for name, val in _defs.items():
+            new_name = RENAMES[name]
             # provide a local converted version as well? not enough??
             defs[new_name] = schema2model(val, lid or url, path + ((dname, name),), defs, strict, fix, False, resilient)
-
+            # result
             log.debug(f"def {new_name}: {json.dumps(defs[new_name])}")
-        # special root handling
-        IDS[dname][""] = "$#"
 
     # FIXME cleanup OpenAPI extentions "x-*", nullable
     for prop in list(schema.keys()):
