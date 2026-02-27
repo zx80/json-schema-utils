@@ -85,7 +85,7 @@ check.stats: venv
 # twine upload dist/*
 #
 .PHONY: publish
-publish:
+publish: venv/.dist
 	source venv/bin/activate
 	python -m build
 	twine check dist/*
