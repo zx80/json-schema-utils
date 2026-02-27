@@ -12,11 +12,21 @@
     "": "$ANY"
   },
   "?name": {
-    "^": [
-      -1.0,
+    "&": [
       {
-        ">=": 1,
-        "@": ""
+        "^": [
+          -1.0,
+          {
+            ">=": 1,
+            "@": ""
+          }
+        ]
+      },
+      {
+        "|": [
+          -1.0,
+          ""
+        ]
       }
     ]
   },
@@ -81,10 +91,22 @@
     "#": "Specify tabs (deprecated)",
     "@": [
       {
-        "^": [
-          "",
+        "&": [
           {
-            "": "$ANY"
+            "^": [
+              "",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          {
+            "|": [
+              "",
+              {
+                "": "$ANY"
+              }
+            ]
           }
         ]
       }
@@ -104,33 +126,58 @@
   },
   "?windows": [
     {
-      "^": [
-        "",
+      "&": [
         {
-          "": "$ANY",
-          "?layout": {
-            "#": "The layout setting gets handed down to tmux directly, so you can choose from one of the five tmux standard layouts or specify your own.",
-            "@": ""
-          },
-          "?panes": {
-            "#": "Panes are optional and are children of window entries.",
-            "@": [
-              {
-                "^": [
-                  -1.0,
+          "^": [
+            "",
+            {
+              "": "$ANY",
+              "?layout": {
+                "#": "The layout setting gets handed down to tmux directly, so you can choose from one of the five tmux standard layouts or specify your own.",
+                "@": ""
+              },
+              "?panes": {
+                "#": "Panes are optional and are children of window entries.",
+                "@": [
                   {
-                    ">=": 1,
-                    "@": ""
-                  },
-                  [
-                    ""
-                  ]
+                    "&": [
+                      {
+                        "^": [
+                          -1.0,
+                          {
+                            ">=": 1,
+                            "@": ""
+                          },
+                          [
+                            ""
+                          ]
+                        ]
+                      },
+                      {
+                        "|": [
+                          -1.0,
+                          "",
+                          [
+                            "$ANY"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
                 ]
-              }
-            ]
-          },
-          "?pre": [
-            ""
+              },
+              "?pre": [
+                ""
+              ]
+            }
+          ]
+        },
+        {
+          "|": [
+            "",
+            {
+              "": "$ANY"
+            }
           ]
         }
       ]

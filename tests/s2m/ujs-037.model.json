@@ -1,10 +1,14 @@
 {
   "#": "JSON Model generated from a JSON Schema with json-schema-utils",
   "|": [
-    "_red",
-    "_amber",
-    "_green",
     null,
-    "=42"
+    "=42",
+    {
+      "|": [
+        "red",
+        "amber",
+        "green"
+      ]
+    }
   ]
 }

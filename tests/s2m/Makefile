@@ -1,12 +1,12 @@
 F.schema    = $(wildcard *.schema.json)
 F.model     = $(F.schema:%.schema.json=%.model.json)
 
-MODEL.opts  = --loose --no-fix
+MODEL.opts  = --no-strict --fix
 
 .PHONY: gen
 gen: $(F.model)
 %.model.json: %.schema.json
-	jsu-simpler $< | jsu-model $(MODEL.opts) > $@
+	jsu-model $(MODEL.opts) -o $@ $<
 
 .PHONY: clean
 clean:

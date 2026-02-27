@@ -30,9 +30,15 @@ TYPED_KEYWORDS: dict[str, list[str]] = {
 
 KEYWORD_TYPE: dict[str, str] = {}
 
-META_KEYS = [
-    "title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly", "id",
-    "$schema", "$id", "$comment", "$dynamicAnchor", "$dynamicRef",
+# keyword that can always be dropped
+NO_SEMANTICS = [
+    "title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly",
+    "$comment",
+]
+
+# FIXME ref should be out
+META_KEYS = NO_SEMANTICS + [
+    "$schema", "$id", "id", "$dynamicAnchor", "$dynamicRef",
     # OLD?
     "context", "notes", "$recursiveAnchor", "$recursiveRef",
     # extensions and strange stuff?

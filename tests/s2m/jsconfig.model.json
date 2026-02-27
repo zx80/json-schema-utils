@@ -1,6 +1,21 @@
 {
   "#": "JSON Model generated from a JSON Schema with json-schema-utils",
   "$": {
+    "_name_0_": {
+      "|": [
+        null,
+        true,
+        -1,
+        -1.0,
+        "",
+        [
+          "$ANY"
+        ],
+        {
+          "": "$ANY"
+        }
+      ]
+    },
     "buildOptionsDefinition": {
       "": "$ANY",
       "?buildOptions": {
@@ -109,8 +124,8 @@
         "?declarationDir": {
           "#": "Specify the output directory for generated declaration files.",
           "|": [
-            "",
-            null
+            null,
+            ""
           ]
         },
         "?declarationMap": {
@@ -248,90 +263,95 @@
           "#": "Specify a set of bundled library declaration files that describe the target runtime environment.",
           "@": [
             {
-              "|": [
+              "&": [
                 {
                   "|": [
-                    "_ES5",
-                    "_ES6",
-                    "_ES2015",
-                    "_ES2015.Collection",
-                    "_ES2015.Core",
-                    "_ES2015.Generator",
-                    "_ES2015.Iterable",
-                    "_ES2015.Promise",
-                    "_ES2015.Proxy",
-                    "_ES2015.Reflect",
-                    "_ES2015.Symbol.WellKnown",
-                    "_ES2015.Symbol",
-                    "_ES2016",
-                    "_ES2016.Array.Include",
-                    "_ES2017",
-                    "_ES2017.Intl",
-                    "_ES2017.Object",
-                    "_ES2017.SharedMemory",
-                    "_ES2017.String",
-                    "_ES2017.TypedArrays",
-                    "_ES2018",
-                    "_ES2018.AsyncGenerator",
-                    "_ES2018.AsyncIterable",
-                    "_ES2018.Intl",
-                    "_ES2018.Promise",
-                    "_ES2018.Regexp",
-                    "_ES2019",
-                    "_ES2019.Array",
-                    "_ES2019.Intl",
-                    "_ES2019.Object",
-                    "_ES2019.String",
-                    "_ES2019.Symbol",
-                    "_ES2020",
-                    "_ES2020.BigInt",
-                    "_ES2020.Promise",
-                    "_ES2020.String",
-                    "_ES2020.Symbol.WellKnown",
-                    "_ESNext",
-                    "_ESNext.Array",
-                    "_ESNext.AsyncIterable",
-                    "_ESNext.BigInt",
-                    "_ESNext.Intl",
-                    "_ESNext.Promise",
-                    "_ESNext.String",
-                    "_ESNext.Symbol",
-                    "_DOM",
-                    "_DOM.Iterable",
-                    "_ScriptHost",
-                    "_WebWorker",
-                    "_WebWorker.ImportScripts",
-                    "_Webworker.Iterable",
-                    "_ES7",
-                    "_ES2021",
-                    "_ES2020.SharedMemory",
-                    "_ES2020.Intl",
-                    "_ES2021.Promise",
-                    "_ES2021.String",
-                    "_ES2021.WeakRef",
-                    "_ESNext.WeakRef",
-                    "_es2021.intl",
-                    "_ES2022",
-                    "_ES2022.Array",
-                    "_ES2022.Error",
-                    "_ES2022.Intl",
-                    "_ES2022.Object",
-                    "_ES2022.String"
+                    {
+                      "|": [
+                        "ES5",
+                        "ES6",
+                        "ES2015",
+                        "ES2015.Collection",
+                        "ES2015.Core",
+                        "ES2015.Generator",
+                        "ES2015.Iterable",
+                        "ES2015.Promise",
+                        "ES2015.Proxy",
+                        "ES2015.Reflect",
+                        "ES2015.Symbol.WellKnown",
+                        "ES2015.Symbol",
+                        "ES2016",
+                        "ES2016.Array.Include",
+                        "ES2017",
+                        "ES2017.Intl",
+                        "ES2017.Object",
+                        "ES2017.SharedMemory",
+                        "ES2017.String",
+                        "ES2017.TypedArrays",
+                        "ES2018",
+                        "ES2018.AsyncGenerator",
+                        "ES2018.AsyncIterable",
+                        "ES2018.Intl",
+                        "ES2018.Promise",
+                        "ES2018.Regexp",
+                        "ES2019",
+                        "ES2019.Array",
+                        "ES2019.Intl",
+                        "ES2019.Object",
+                        "ES2019.String",
+                        "ES2019.Symbol",
+                        "ES2020",
+                        "ES2020.BigInt",
+                        "ES2020.Promise",
+                        "ES2020.String",
+                        "ES2020.Symbol.WellKnown",
+                        "ESNext",
+                        "ESNext.Array",
+                        "ESNext.AsyncIterable",
+                        "ESNext.BigInt",
+                        "ESNext.Intl",
+                        "ESNext.Promise",
+                        "ESNext.String",
+                        "ESNext.Symbol",
+                        "DOM",
+                        "DOM.Iterable",
+                        "ScriptHost",
+                        "WebWorker",
+                        "WebWorker.ImportScripts",
+                        "Webworker.Iterable",
+                        "ES7",
+                        "ES2021",
+                        "ES2020.SharedMemory",
+                        "ES2020.Intl",
+                        "ES2021.Promise",
+                        "ES2021.String",
+                        "ES2021.WeakRef",
+                        "ESNext.WeakRef",
+                        "es2021.intl",
+                        "ES2022",
+                        "ES2022.Array",
+                        "ES2022.Error",
+                        "ES2022.Intl",
+                        "ES2022.Object",
+                        "ES2022.String"
+                      ]
+                    },
+                    "/^[Ee][Ss]5|[Ee][Ss]6|[Ee][Ss]7$/",
+                    "/^[Ee][Ss]2015(\\.([Cc][Oo][Ll][Ll][Ee][Cc][Tt][Ii][Oo][Nn]|[Cc][Oo][Rr][Ee]|[Gg][Ee][Nn][Ee][Rr][Aa][Tt][Oo][Rr]|[Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Pp][Rr][Oo][Xx][Yy]|[Rr][Ee][Ff][Ll][Ee][Cc][Tt]|[Ss][Yy][Mm][Bb][Oo][Ll].[Ww][Ee][Ll][Ll][Kk][Nn][Oo][Ww][Nn]|[Ss][Yy][Mm][Bb][Oo][Ll]))?$/",
+                    "/^[Ee][Ss]2016(\\.[Aa][Rr][Rr][Aa][Yy].[Ii][Nn][Cc][Ll][Uu][Dd][Ee])?$/",
+                    "/^[Ee][Ss]2017(\\.([Ii][Nn][Tt][Ll]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Hh][Aa][Rr][Ee][Dd][Mm][Ee][Mm][Oo][Rr][Yy]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Tt][Yy][Pp][Ee][Dd][Aa][Rr][Rr][Aa][Yy][Ss]))?$/",
+                    "/^[Ee][Ss]2018(\\.([Aa][Ss][Yy][Nn][Cc][Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Rr][Ee][Gg][Ee][Xx][Pp]))?$/",
+                    "/^[Ee][Ss]2019(\\.([Aa][Rr][Rr][Aa][Yy]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll]))?$/",
+                    "/^[Ee][Ss]2020(\\.([Bb][Ii][Gg][Ii][Nn][Tt]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll].[Ww][Ee][Ll][Ll][Kk][Nn][Oo][Ww][Nn]))?$/",
+                    "/^[Ee][Ss]2021(\\.([Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ww][Ee][Aa][Kk][Rr][Ee][Ff]))?$/",
+                    "/^[Ee][Ss]2022(\\.([Aa][Rr][Rr][Aa][Yy]|[Ee][Rr][Rr][Oo][Rr]|[Ii][Nn][Tt][Ll]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Tt][Rr][Ii][Nn][Gg]))?$/",
+                    "/^[Ee][Ss][Nn][Ee][Xx][Tt](\\.([Aa][Rr][Rr][Aa][Yy]|[Aa][Ss][Yy][Nn][Cc][Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Bb][Ii][Gg][Ii][Nn][Tt]|[Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll]|[Ww][Ee][Aa][Kk][Rr][Ee][Ff]))?$/",
+                    "/^[Dd][Oo][Mm](\\.[Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee])?$/",
+                    "/^[Ss][Cc][Rr][Ii][Pp][Tt][Hh][Oo][Ss][Tt]$/",
+                    "/^[Ww][Ee][Bb][Ww][Oo][Rr][Kk][Ee][Rr](\\.[Ii][Mm][Pp][Oo][Rr][Tt][Ss][Cc][Rr][Ii][Pp][Tt][Ss])?$/"
                   ]
                 },
-                "/^[Ee][Ss]5|[Ee][Ss]6|[Ee][Ss]7$/",
-                "/^[Ee][Ss]2015(\\.([Cc][Oo][Ll][Ll][Ee][Cc][Tt][Ii][Oo][Nn]|[Cc][Oo][Rr][Ee]|[Gg][Ee][Nn][Ee][Rr][Aa][Tt][Oo][Rr]|[Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Pp][Rr][Oo][Xx][Yy]|[Rr][Ee][Ff][Ll][Ee][Cc][Tt]|[Ss][Yy][Mm][Bb][Oo][Ll].[Ww][Ee][Ll][Ll][Kk][Nn][Oo][Ww][Nn]|[Ss][Yy][Mm][Bb][Oo][Ll]))?$/",
-                "/^[Ee][Ss]2016(\\.[Aa][Rr][Rr][Aa][Yy].[Ii][Nn][Cc][Ll][Uu][Dd][Ee])?$/",
-                "/^[Ee][Ss]2017(\\.([Ii][Nn][Tt][Ll]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Hh][Aa][Rr][Ee][Dd][Mm][Ee][Mm][Oo][Rr][Yy]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Tt][Yy][Pp][Ee][Dd][Aa][Rr][Rr][Aa][Yy][Ss]))?$/",
-                "/^[Ee][Ss]2018(\\.([Aa][Ss][Yy][Nn][Cc][Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Rr][Ee][Gg][Ee][Xx][Pp]))?$/",
-                "/^[Ee][Ss]2019(\\.([Aa][Rr][Rr][Aa][Yy]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll]))?$/",
-                "/^[Ee][Ss]2020(\\.([Bb][Ii][Gg][Ii][Nn][Tt]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll].[Ww][Ee][Ll][Ll][Kk][Nn][Oo][Ww][Nn]))?$/",
-                "/^[Ee][Ss]2021(\\.([Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ww][Ee][Aa][Kk][Rr][Ee][Ff]))?$/",
-                "/^[Ee][Ss]2022(\\.([Aa][Rr][Rr][Aa][Yy]|[Ee][Rr][Rr][Oo][Rr]|[Ii][Nn][Tt][Ll]|[Oo][Bb][Jj][Ee][Cc][Tt]|[Ss][Tt][Rr][Ii][Nn][Gg]))?$/",
-                "/^[Ee][Ss][Nn][Ee][Xx][Tt](\\.([Aa][Rr][Rr][Aa][Yy]|[Aa][Ss][Yy][Nn][Cc][Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee]|[Bb][Ii][Gg][Ii][Nn][Tt]|[Ii][Nn][Tt][Ll]|[Pp][Rr][Oo][Mm][Ii][Ss][Ee]|[Ss][Tt][Rr][Ii][Nn][Gg]|[Ss][Yy][Mm][Bb][Oo][Ll]|[Ww][Ee][Aa][Kk][Rr][Ee][Ff]))?$/",
-                "/^[Dd][Oo][Mm](\\.[Ii][Tt][Ee][Rr][Aa][Bb][Ll][Ee])?$/",
-                "/^[Ss][Cc][Rr][Ii][Pp][Tt][Hh][Oo][Ss][Tt]$/",
-                "/^[Ww][Ee][Bb][Ww][Oo][Rr][Kk][Ee][Rr](\\.[Ii][Mm][Pp][Oo][Rr][Tt][Ss][Cc][Rr][Ii][Pp][Tt][Ss])?$/"
+                ""
               ]
             }
           ]
@@ -358,51 +378,66 @@
         },
         "?module": {
           "#": "Specify what module code is generated.",
-          "|": [
+          "&": [
             {
               "|": [
-                "_CommonJS",
-                "_AMD",
-                "_System",
-                "_UMD",
-                "_ES6",
-                "_ES2015",
-                "_ES2020",
-                "_ESNext",
-                "_None",
-                "_ES2022",
-                "_Node16",
-                "_NodeNext"
+                {
+                  "|": [
+                    "CommonJS",
+                    "AMD",
+                    "System",
+                    "UMD",
+                    "ES6",
+                    "ES2015",
+                    "ES2020",
+                    "ESNext",
+                    "None",
+                    "ES2022",
+                    "Node16",
+                    "NodeNext"
+                  ]
+                },
+                "/^([Cc][Oo][Mm][Mm][Oo][Nn][Jj][Ss]|[AaUu][Mm][Dd]|[Ss][Yy][Ss][Tt][Ee][Mm]|[Ee][Ss]([356]|20(1[567]|2[02])|[Nn][Ee][Xx][Tt])|[Nn][Oo][dD][Ee]16|[Nn][Oo][Dd][Ee][Nn][Ee][Xx][Tt]|[Nn][Oo][Nn][Ee])$/"
               ]
             },
-            "/^([Cc][Oo][Mm][Mm][Oo][Nn][Jj][Ss]|[AaUu][Mm][Dd]|[Ss][Yy][Ss][Tt][Ee][Mm]|[Ee][Ss]([356]|20(1[567]|2[02])|[Nn][Ee][Xx][Tt])|[Nn][Oo][dD][Ee]16|[Nn][Oo][Dd][Ee][Nn][Ee][Xx][Tt]|[Nn][Oo][Nn][Ee])$/"
+            ""
           ]
         },
         "?moduleResolution": {
           "#": "Specify how TypeScript looks up a file from a given module specifier.",
-          "|": [
+          "&": [
             {
               "|": [
-                "_classic",
-                "_node",
-                "_node16",
-                "_nodenext",
-                "_bundler"
+                {
+                  "|": [
+                    "classic",
+                    "node",
+                    "node16",
+                    "nodenext",
+                    "bundler"
+                  ]
+                },
+                "/^(([Nn]ode)|([Nn]ode16)|([Nn]ode[Nn]ext)|([Cc]lassic)|([Bb]undler))$/"
               ]
             },
-            "/^(([Nn]ode)|([Nn]ode16)|([Nn]ode[Nn]ext)|([Cc]lassic)|([Bb]undler))$/"
+            ""
           ]
         },
         "?newLine": {
           "#": "Set the newline character for emitting files.",
-          "|": [
+          "&": [
             {
               "|": [
-                "_crlf",
-                "_lf"
+                {
+                  "|": [
+                    "crlf",
+                    "lf"
+                  ]
+                },
+                "/^(CRLF|LF|crlf|lf)$/"
               ]
             },
-            "/^(CRLF|LF|crlf|lf)$/"
+            ""
           ]
         },
         "?noEmit": {
@@ -606,25 +641,30 @@
         },
         "?target": {
           "#": "Set the JavaScript language version for emitted JavaScript and include compatible library declarations.",
-          "|": [
+          "&": [
             {
               "|": [
-                "_ES3",
-                "_ES5",
-                "_ES6",
-                "_ES2015",
-                "_ES2016",
-                "_ES2017",
-                "_ES2018",
-                "_ES2019",
-                "_ES2020",
-                "_ES2021",
-                "_ES2022",
-                "_ES2023",
-                "_ESNext"
+                {
+                  "|": [
+                    "ES3",
+                    "ES5",
+                    "ES6",
+                    "ES2015",
+                    "ES2016",
+                    "ES2017",
+                    "ES2018",
+                    "ES2019",
+                    "ES2020",
+                    "ES2021",
+                    "ES2022",
+                    "ES2023",
+                    "ESNext"
+                  ]
+                },
+                "/^([Ee][Ss]([356]|(20(1[56789]|2[0123]))|[Nn][Ee][Xx][Tt]))$/"
               ]
             },
-            "/^([Ee][Ss]([356]|(20(1[56789]|2[0123]))|[Nn][Ee][Xx][Tt]))$/"
+            ""
           ]
         },
         "?traceResolution": {
@@ -701,13 +741,25 @@
       "": "$ANY",
       "?extends": {
         "#": "Path to base configuration file to inherit from (requires TypeScript version 2.1 or later), or array of base files, with the rightmost files having the greater priority (requires TypeScript version 5.0 or later).",
-        "^": [
+        "&": [
           {
-            "@": ""
+            "^": [
+              {
+                "@": ""
+              },
+              {
+                "@": [
+                  ""
+                ]
+              }
+            ]
           },
           {
-            "@": [
-              ""
+            "|": [
+              "",
+              [
+                "$ANY"
+              ]
             ]
           }
         ]
@@ -815,23 +867,99 @@
           "@": ""
         }
       }
-    },
-    "~1~1": "$ANY"
+    }
   },
   "&": [
-    "$compilerOptionsDefinition",
-    "$compileOnSaveDefinition",
-    "$typeAcquisitionDefinition",
-    "$extendsDefinition",
-    "$watchOptionsDefinition",
-    "$buildOptionsDefinition",
     {
-      "|": [
-        "$filesDefinition",
-        "$excludeDefinition",
-        "$includeDefinition",
-        "$referencesDefinition"
+      "&": [
+        {
+          "&": [
+            "$compilerOptionsDefinition",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$compileOnSaveDefinition",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$typeAcquisitionDefinition",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$extendsDefinition",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$watchOptionsDefinition",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$buildOptionsDefinition",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "|": [
+            {
+              "&": [
+                "$filesDefinition",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$excludeDefinition",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$includeDefinition",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$referencesDefinition",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ]
+        }
       ]
+    },
+    {
+      "": "$ANY"
     }
   ]
 }

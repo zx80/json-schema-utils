@@ -35,64 +35,76 @@
         ]
       },
       "?builder": {
-        "|": [
+        "&": [
           {
-            "#": "Builder to be used (tsc, webpack, swc). For details on how to configure `SWC` see https://docs.nestjs.com/recipes/swc#getting-started",
             "|": [
-              "_tsc",
-              "_webpack",
-              "_swc"
+              {
+                "#": "Builder to be used (tsc, webpack, swc). For details on how to configure `SWC` see https://docs.nestjs.com/recipes/swc#getting-started",
+                "|": [
+                  "_tsc",
+                  "_webpack",
+                  "_swc"
+                ]
+              },
+              {
+                "": "$ANY",
+                "?options": {
+                  "": "$ANY",
+                  "?copyFiles": {
+                    "#": "Whether to copy files or not.",
+                    "@": true
+                  },
+                  "?extensions": {
+                    "#": "Array of file extensions to be considered.",
+                    "@": [
+                      ""
+                    ]
+                  },
+                  "?filenames": {
+                    "#": "Array of filenames to be included.",
+                    "@": [
+                      ""
+                    ]
+                  },
+                  "?includeDotfiles": {
+                    "#": "Whether to include dotfiles or not.",
+                    "@": true
+                  },
+                  "?outDir": {
+                    "#": "The directory to output files.",
+                    "@": ""
+                  },
+                  "?quiet": {
+                    "#": "Whether to suppress logs or not.",
+                    "@": true
+                  },
+                  "?sync": {
+                    "#": "Whether to synchronize files or not.",
+                    "@": true
+                  },
+                  "?watch": {
+                    "#": "Whether to watch files for changes or not.",
+                    "@": true
+                  }
+                },
+                "?type": {
+                  "#": "Builder to be used (tsc, webpack, swc). For details on how to configure `SWC` see https://docs.nestjs.com/recipes/swc#getting-started",
+                  "|": [
+                    "_tsc",
+                    "_webpack",
+                    "_swc"
+                  ]
+                }
+              }
             ]
           },
           {
-            "": "$ANY",
-            "?options": {
-              "": "$ANY",
-              "?copyFiles": {
-                "#": "Whether to copy files or not.",
-                "@": true
-              },
-              "?extensions": {
-                "#": "Array of file extensions to be considered.",
-                "@": [
-                  ""
-                ]
-              },
-              "?filenames": {
-                "#": "Array of filenames to be included.",
-                "@": [
-                  ""
-                ]
-              },
-              "?includeDotfiles": {
-                "#": "Whether to include dotfiles or not.",
-                "@": true
-              },
-              "?outDir": {
-                "#": "The directory to output files.",
-                "@": ""
-              },
-              "?quiet": {
-                "#": "Whether to suppress logs or not.",
-                "@": true
-              },
-              "?sync": {
-                "#": "Whether to synchronize files or not.",
-                "@": true
-              },
-              "?watch": {
-                "#": "Whether to watch files for changes or not.",
-                "@": true
+            "|": [
+              "",
+              {
+                "": "$ANY"
               }
-            },
-            "?type": {
-              "#": "Builder to be used (tsc, webpack, swc). For details on how to configure `SWC` see https://docs.nestjs.com/recipes/swc#getting-started",
-              "|": [
-                "_tsc",
-                "_webpack",
-                "_swc"
-              ]
-            }
+            ]
           }
         ]
       },
@@ -316,9 +328,30 @@
           },
           "?options": {
             "|": [
-              "$PluginOptions",
-              "$GraphQLPluginOptions",
-              "$SwaggerPluginOptions"
+              {
+                "&": [
+                  "$PluginOptions",
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              },
+              {
+                "&": [
+                  "$GraphQLPluginOptions",
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              },
+              {
+                "&": [
+                  "$SwaggerPluginOptions",
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              }
             ]
           }
         }

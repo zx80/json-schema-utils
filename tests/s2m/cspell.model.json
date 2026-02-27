@@ -142,11 +142,46 @@
     },
     "DictionaryDefinition": {
       "|": [
-        "$DictionaryDefinitionPreferred",
-        "$DictionaryDefinitionCustom",
-        "$DictionaryDefinitionAugmented",
-        "$DictionaryDefinitionInline",
-        "$DictionaryDefinitionAlternate"
+        {
+          "&": [
+            "$DictionaryDefinitionPreferred",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$DictionaryDefinitionCustom",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$DictionaryDefinitionAugmented",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$DictionaryDefinitionInline",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$DictionaryDefinitionAlternate",
+            {
+              "": "$ANY"
+            }
+          ]
+        }
       ]
     },
     "DictionaryDefinitionAlternate": {
@@ -228,11 +263,23 @@
       },
       "?scope": {
         "#": "Defines the scope for when words will be added to the dictionary.\n\nScope values: `user`, `workspace`, `folder`.",
-        "|": [
-          "$CustomDictionaryScope",
-          [
-            "$CustomDictionaryScope"
-          ]
+        "&": [
+          {
+            "|": [
+              "$CustomDictionaryScope",
+              [
+                "$CustomDictionaryScope"
+              ]
+            ]
+          },
+          {
+            "|": [
+              "",
+              [
+                "$ANY"
+              ]
+            ]
+          }
         ]
       },
       "?type": {
@@ -259,9 +306,30 @@
     "DictionaryDefinitionInline": {
       "#": "Inline Dictionary Definitions",
       "|": [
-        "$DictionaryDefinitionInlineWords",
-        "$DictionaryDefinitionInlineIgnoreWords",
-        "$DictionaryDefinitionInlineFlagWords"
+        {
+          "&": [
+            "$DictionaryDefinitionInlineWords",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$DictionaryDefinitionInlineIgnoreWords",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$DictionaryDefinitionInlineFlagWords",
+            {
+              "": "$ANY"
+            }
+          ]
+        }
       ]
     },
     "DictionaryDefinitionInlineFlagWords": {
@@ -460,11 +528,23 @@
       "#": "Use by dictionary authors to help improve the quality of suggestions given from the dictionary.\n\nAdded with `v5.16.0`.",
       "?accents": {
         "#": "The accent characters.\n\nDefault: `\"\\u0300-\\u0341\"`",
-        "|": [
-          "$CharacterSet",
-          [
-            "$CharacterSetCosts"
-          ]
+        "&": [
+          {
+            "|": [
+              "$CharacterSet",
+              [
+                "$CharacterSetCosts"
+              ]
+            ]
+          },
+          {
+            "|": [
+              "",
+              [
+                "$ANY"
+              ]
+            ]
+          }
         ]
       },
       "?adjustments": {
@@ -475,11 +555,23 @@
       },
       "?alphabet": {
         "#": "The alphabet to use.",
-        "|": [
-          "$CharacterSet",
-          [
-            "$CharacterSetCosts"
-          ]
+        "&": [
+          {
+            "|": [
+              "$CharacterSet",
+              [
+                "$CharacterSetCosts"
+              ]
+            ]
+          },
+          {
+            "|": [
+              "",
+              [
+                "$ANY"
+              ]
+            ]
+          }
         ]
       },
       "?costs": {
@@ -517,9 +609,14 @@
     },
     "DictionaryReference": {
       "#": "Reference to a dictionary by name. One of:\n-  {@link  DictionaryRef } \n-  {@link  DictionaryNegRef }",
-      "|": [
-        "$DictionaryRef",
-        "$DictionaryNegRef"
+      "&": [
+        {
+          "|": [
+            "$DictionaryRef",
+            "$DictionaryNegRef"
+          ]
+        },
+        "$ANY"
       ]
     },
     "EditCosts": {
@@ -618,10 +715,30 @@
       }
     },
     "LanguageId": {
-      "|": [
-        "$LanguageIdSingle",
-        "$LanguageIdMultiple",
-        "$LanguageIdMultipleNeg"
+      "&": [
+        {
+          "|": [
+            {
+              "&": [
+                "$LanguageIdSingle",
+                ""
+              ]
+            },
+            {
+              "&": [
+                "$LanguageIdMultiple",
+                ""
+              ]
+            },
+            {
+              "&": [
+                "$LanguageIdMultipleNeg",
+                ""
+              ]
+            }
+          ]
+        },
+        ""
       ]
     },
     "LanguageIdMultiple": {
@@ -691,20 +808,44 @@
       },
       "?local": {
         "#": "Deprecated - The locale filter, matches against the language. This can be a comma separated list. \"*\" will match all locales.",
-        "|": [
-          "$LocaleId",
-          [
-            "$LocaleId"
-          ]
+        "&": [
+          {
+            "|": [
+              "$LocaleId",
+              [
+                "$LocaleId"
+              ]
+            ]
+          },
+          {
+            "|": [
+              "",
+              [
+                "$ANY"
+              ]
+            ]
+          }
         ]
       },
       "?locale": {
         "#": "The locale filter, matches against the language. This can be a comma separated list. \"*\" will match all locales.",
-        "|": [
-          "$LocaleId",
-          [
-            "$LocaleId"
-          ]
+        "&": [
+          {
+            "|": [
+              "$LocaleId",
+              [
+                "$LocaleId"
+              ]
+            ]
+          },
+          {
+            "|": [
+              "",
+              [
+                "$ANY"
+              ]
+            ]
+          }
         ]
       },
       "?name": {
@@ -745,11 +886,16 @@
       "@": ""
     },
     "MatchingFileType": {
-      "|": [
-        "$LanguageId",
-        [
-          "$LanguageId"
-        ]
+      "&": [
+        {
+          "|": [
+            "$LanguageId",
+            [
+              "$LanguageId"
+            ]
+          ]
+        },
+        "$ANY"
       ]
     },
     "OverrideSettings": {
@@ -900,11 +1046,16 @@
       },
       "_filename": {
         "#": "Glob pattern or patterns to match against.",
-        "|": [
-          "$Glob",
-          [
-            "$Glob"
-          ]
+        "&": [
+          {
+            "|": [
+              "$Glob",
+              [
+                "$Glob"
+              ]
+            ]
+          },
+          "$ANY"
         ]
       }
     },
@@ -929,10 +1080,30 @@
     },
     "PatternRef": {
       "#": "A PatternRef is a Pattern or PatternId.",
-      "|": [
-        "$Pattern",
-        "$PatternId",
-        "$PredefinedPatterns"
+      "&": [
+        {
+          "|": [
+            {
+              "&": [
+                "$Pattern",
+                ""
+              ]
+            },
+            {
+              "&": [
+                "$PatternId",
+                ""
+              ]
+            },
+            {
+              "&": [
+                "$PredefinedPatterns",
+                ""
+              ]
+            }
+          ]
+        },
+        ""
       ]
     },
     "PredefinedPatterns": {
@@ -978,11 +1149,23 @@
       },
       "_pattern": {
         "#": "RegExp pattern or array of RegExp patterns.",
-        "|": [
-          "$Pattern",
-          [
-            "$Pattern"
-          ]
+        "&": [
+          {
+            "|": [
+              "$Pattern",
+              [
+                "$Pattern"
+              ]
+            ]
+          },
+          {
+            "|": [
+              "",
+              [
+                "$ANY"
+              ]
+            ]
+          }
         ]
       }
     },
@@ -1011,38 +1194,66 @@
     },
     "ReporterSettings": {
       "#": "Declare a reporter to use.\n\n`default` - is a special name for the default cli reporter.\n\nExamples:\n- `\"default\"` - to use the default reporter\n- `\"@cspell/cspell-json-reporter\"` - use the cspell JSON reporter.\n- `[\"@cspell/cspell-json-reporter\", { \"outFile\": \"out.json\" }]`",
-      "|": [
-        "$ReporterModuleName",
+      "&": [
         {
-          "=": 1,
-          "@": [
+          "|": [
+            "$ReporterModuleName",
             {
-              "@": "$ReporterModuleName"
+              "=": 1,
+              "@": [
+                {
+                  "@": "$ReporterModuleName"
+                }
+              ]
+            },
+            {
+              "=": 2,
+              ">=": 0,
+              "@": [
+                {
+                  "@": "$ReporterModuleName"
+                },
+                {
+                  "@": "$ReporterOptions"
+                },
+                "$ANY"
+              ]
             }
           ]
         },
         {
-          ">=": 0,
-          "@": [
-            {
-              "@": "$ReporterModuleName"
-            },
-            {
-              "@": "$ReporterOptions"
-            },
-            "$ANY"
+          "|": [
+            "",
+            [
+              "$ANY"
+            ]
           ]
         }
       ]
     },
     "Serializable": {
-      "|": [
-        -1.0,
-        "",
-        true,
-        null,
+      "&": [
         {
-          "": "$ANY"
+          "|": [
+            -1.0,
+            "",
+            true,
+            null,
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "|": [
+            null,
+            true,
+            -1.0,
+            "",
+            {
+              "": "$ANY"
+            }
+          ]
         }
       ]
     },
@@ -1053,18 +1264,54 @@
     "SuggestionCostMapDef": {
       "#": "A WeightedMapDef enables setting weights for edits between related characters and substrings.\n\nMultiple groups can be defined using a `|`. A multi-character substring is defined using `()`.\n\nFor example, in some languages, some letters sound alike.\n\n```yaml   map: 'sc(sh)(sch)(ss)|t(tt)' # two groups.   replace: 50    # Make it 1/2 the cost of a normal edit to replace a `t` with `tt`. ```\n\nThe following could be used to make inserting, removing, or replacing vowels cheaper. ```yaml   map: 'aeiouy'   insDel: 50     # Make it is cheaper to insert or delete a vowel.   replace: 45    # It is even cheaper to replace one with another. ```\n\nNote: the default edit distance is 100.",
       "|": [
-        "$CostMapDefReplace",
-        "$CostMapDefInsDel",
-        "$CostMapDefSwap"
+        {
+          "&": [
+            "$CostMapDefReplace",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$CostMapDefInsDel",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "&": [
+            "$CostMapDefSwap",
+            {
+              "": "$ANY"
+            }
+          ]
+        }
       ]
     },
     "SuggestionCostsDefs": [
       "$SuggestionCostMapDef"
     ],
     "Version": {
-      "|": [
-        "$VersionLatest",
-        "$VersionLegacy"
+      "&": [
+        {
+          "|": [
+            {
+              "&": [
+                "$VersionLatest",
+                ""
+              ]
+            },
+            {
+              "&": [
+                "$VersionLegacy",
+                ""
+              ]
+            }
+          ]
+        },
+        ""
       ]
     },
     "VersionLatest": {
@@ -1151,11 +1398,23 @@
   },
   "?gitignoreRoot": {
     "#": "Tells the spell checker to searching for `.gitignore` files when it reaches a matching root.",
-    "|": [
-      "$FsPath",
-      [
-        "$FsPath"
-      ]
+    "&": [
+      {
+        "|": [
+          "$FsPath",
+          [
+            "$FsPath"
+          ]
+        ]
+      },
+      {
+        "|": [
+          "",
+          [
+            "$ANY"
+          ]
+        ]
+      }
     ]
   },
   "?globRoot": {
@@ -1184,11 +1443,23 @@
   },
   "?import": {
     "#": "Allows this configuration to inherit configuration for one or more other files.\n\nSee [Importing / Extending Configuration](https://cspell.org/configuration/imports/) for more details.",
-    "|": [
-      "$FsPath",
-      [
-        "$FsPath"
-      ]
+    "&": [
+      {
+        "|": [
+          "$FsPath",
+          [
+            "$FsPath"
+          ]
+        ]
+      },
+      {
+        "|": [
+          "",
+          [
+            "$ANY"
+          ]
+        ]
+      }
     ]
   },
   "?includeRegExpList": {

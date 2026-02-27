@@ -184,10 +184,10 @@
           },
           "?tags": {
             "|": [
+              "",
               [
                 ""
-              ],
-              ""
+              ]
             ]
           },
           "?vars": {
@@ -222,10 +222,10 @@
           },
           "?tags": {
             "|": [
+              "",
               [
                 ""
-              ],
-              ""
+              ]
             ]
           },
           "?vars": {
@@ -260,10 +260,10 @@
           },
           "?tags": {
             "|": [
+              "",
               [
                 ""
-              ],
-              ""
+              ]
             ]
           },
           "?vars": {
@@ -422,7 +422,9 @@
           "&": [
             {
               "&": [
-                "$ANY",
+                {
+                  "": "$ANY"
+                },
                 {
                   "|": [
                     {
@@ -460,7 +462,9 @@
             },
             {
               "&": [
-                "$ANY",
+                {
+                  "": "$ANY"
+                },
                 {
                   "|": [
                     {
@@ -1056,12 +1060,25 @@
       ]
     },
     "complex_conditional": {
-      "^": [
-        true,
-        "",
-        [
-          ""
-        ]
+      "&": [
+        {
+          "^": [
+            true,
+            "",
+            [
+              ""
+            ]
+          ]
+        },
+        {
+          "|": [
+            true,
+            "",
+            [
+              "$ANY"
+            ]
+          ]
+        }
       ]
     },
     "eosPlatformModel": {
@@ -1140,51 +1157,366 @@
       "@": [
         {
           "|": [
-            "$AIXPlatformModel",
-            "$AlpinePlatformModel",
-            "$AmazonPlatformModel",
-            "$AmazonLinuxPlatformModel",
-            "$aosPlatformModel",
-            "$ArchLinuxPlatformModel",
-            "$ClearLinuxPlatformModel",
-            "$CumulusPlatformModel",
-            "$NetBSDPlatformModel",
-            "$DebianPlatformModel",
-            "$DellOSPlatformModel",
-            "$DevuanPlatformModel",
-            "$DragonFlyBSDPlatformModel",
-            "$ELPlatformModel",
-            "$eosPlatformModel",
-            "$FedoraPlatformModel",
-            "$FreeBSDPlatformModel",
-            "$GenericBSDPlatformModel",
-            "$GenericLinuxPlatformModel",
-            "$GenericUNIXPlatformModel",
-            "$GentooPlatformModel",
-            "$HardenedBSDPlatformModel",
-            "$IOSPlatformModel",
-            "$JunosPlatformModel",
-            "$KaliPlatformModel",
-            "$macOSPlatformModel",
-            "$MacOSXPlatformModel",
-            "$MageiaPlatformModel",
-            "$NXOSPlatformModel",
-            "$OpenBSDPlatformModel",
-            "$opensusePlatformModel",
-            "$OpenWrtPlatformModel",
-            "$OracleLinuxPlatformModel",
-            "$os10PlatformModel",
-            "$PAN-OSPlatformModel",
-            "$SLESPlatformModel",
-            "$SmartOSPlatformModel",
-            "$SolarisPlatformModel",
-            "$SynologyPlatformModel",
-            "$TMOSPlatformModel",
-            "$UbuntuPlatformModel",
-            "$vCenterPlatformModel",
-            "$Void_LinuxPlatformModel",
-            "$vSpherePlatformModel",
-            "$WindowsPlatformModel"
+            {
+              "&": [
+                "$AIXPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$AlpinePlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$AmazonPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$AmazonLinuxPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$aosPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$ArchLinuxPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$ClearLinuxPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$CumulusPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$NetBSDPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$DebianPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$DellOSPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$DevuanPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$DragonFlyBSDPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$ELPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$eosPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$FedoraPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$FreeBSDPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$GenericBSDPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$GenericLinuxPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$GenericUNIXPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$GentooPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$HardenedBSDPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$IOSPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$JunosPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$KaliPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$macOSPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$MacOSXPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$MageiaPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$NXOSPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$OpenBSDPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$opensusePlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$OpenWrtPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$OracleLinuxPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$os10PlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$PAN-OSPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$SLESPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$SmartOSPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$SolarisPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$SynologyPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$TMOSPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$UbuntuPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$vCenterPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$Void_LinuxPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$vSpherePlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$WindowsPlatformModel",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
           ]
         }
       ]
@@ -1231,9 +1563,8 @@
     }
   },
   "|": [
+    null,
     {
-      "": "$ANY",
-      "?additionalProperties": "$NONE",
       "?allow_duplicates": {
         "@": true
       },
@@ -1244,7 +1575,6 @@
         ]
       },
       "?galaxy_info": "$GalaxyInfoModel"
-    },
-    null
+    }
   ]
 }

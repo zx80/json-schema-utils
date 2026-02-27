@@ -1,7 +1,19 @@
 {
-  "": "",
   "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-  "/^I_/": -1,
-  "/^S_/": "",
-  "?builtin": -1.0
+  "&": [
+    {
+      "": "",
+      "/^I_/": "$ANY",
+      "/^S_/": "$ANY",
+      "?builtin": -1.0
+    },
+    {
+      "": "$ANY",
+      "/^I_/": -1
+    },
+    {
+      "": "$ANY",
+      "/^S_/": ""
+    }
+  ]
 }

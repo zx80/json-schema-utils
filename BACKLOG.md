@@ -2,8 +2,7 @@
 
 ## JSU schema compilation with JMC backend
 
-- [x] add `--loose` option for numbers
-- [x] add `--out file` option to `jsu-model`
+- [ ] move typing out to simplify the generated code
 - [ ] be listed on [bowtie](https://bowtie.report/)
 - [ ] get 100% on _draft2019-09_
 - [ ] get 100% on _draft2020-12_
@@ -24,3 +23,5 @@
 - [x] add implementation to [bowtie](https://docs.bowtie.report/en/stable/)
 - [x] improve `propertyNames` handling with defs, requires some refactoring
 - [x] cleanup direct uses of quote/unquote in simplify
+- [x] add `--loose` option for numbers
+- [x] add `--out file` option to `jsu-model`

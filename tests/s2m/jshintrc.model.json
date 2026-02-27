@@ -120,8 +120,7 @@
   "?latedef": {
     "#": "Prohibits the use of a variable before it was defined",
     "|": [
-      "=true",
-      "=false",
+      true,
       "_nofunc"
     ]
   },
@@ -255,10 +254,13 @@
   "?shadow": {
     "#": "Suppresses warnings about variable shadowing. i.e. declaring a variable that had been already declared somewhere in the outer scope",
     "|": [
-      "=true",
-      "=false",
-      "_inner",
-      "_outer"
+      true,
+      {
+        "|": [
+          "inner",
+          "outer"
+        ]
+      }
     ]
   },
   "?shelljs": {
@@ -272,11 +274,14 @@
   "?strict": {
     "#": "Requires all code to run in ES5 strict mode",
     "|": [
-      "=true",
-      "=false",
-      "_implied",
-      "_global",
-      "_func"
+      true,
+      {
+        "|": [
+          "implied",
+          "global",
+          "func"
+        ]
+      }
     ]
   },
   "?supernew": {
@@ -298,10 +303,13 @@
   "?unused": {
     "#": "Warns when you define and never use your variables",
     "|": [
-      "=true",
-      "=false",
-      "_vars",
-      "_strict"
+      true,
+      {
+        "|": [
+          "vars",
+          "strict"
+        ]
+      }
     ]
   },
   "?validthis": {

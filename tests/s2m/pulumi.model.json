@@ -6,9 +6,21 @@
       "": "$ANY",
       "?items": "$configItemsType",
       "_type": {
-        "^": [
-          "$simpleConfigType",
-          "$configItemsType"
+        "&": [
+          {
+            "^": [
+              "$simpleConfigType",
+              "$configItemsType"
+            ]
+          },
+          {
+            "|": [
+              "",
+              {
+                "": "$ANY"
+              }
+            ]
+          }
         ]
       }
     },
@@ -46,76 +58,93 @@
   "?author": {
     "#": "Author is an optional author that created this project.",
     "|": [
-      "",
-      null
+      null,
+      ""
     ]
   },
   "?backend": {
     "#": "Backend of the project.",
     "|": [
+      null,
       {
         "?url": {
           "#": "URL is optional field to explicitly set backend url",
           "@": ""
         }
-      },
-      null
+      }
     ]
   },
   "?config": {
     "#": "A map of configuration keys to their types. Using config directory location relative to the location of Pulumi.yaml is a deprecated use of this key. Use stackConfigDir instead.",
     "|": [
+      null,
       {
         "": {
-          "^": [
-            "",
-            -1,
-            true,
-            [
-              "$ANY"
-            ],
-            "$configTypeDeclaration"
+          "&": [
+            {
+              "^": [
+                "",
+                -1,
+                true,
+                [
+                  "$ANY"
+                ],
+                "$configTypeDeclaration"
+              ]
+            },
+            {
+              "|": [
+                true,
+                -1,
+                "",
+                [
+                  "$ANY"
+                ],
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
           ]
         },
         "?secret": {
           "#": "If true this configuration value should be encrypted.",
           "@": true
         }
-      },
-      null
+      }
     ]
   },
   "?description": {
     "#": "Description of the project.",
     "|": [
-      "",
-      null
+      null,
+      ""
     ]
   },
   "?license": {
     "#": "License is the optional license governing this project's usage.",
     "|": [
-      "",
-      null
+      null,
+      ""
     ]
   },
   "?main": {
     "#": "Path to the Pulumi program. The default is the working directory.",
     "|": [
-      "",
-      null
+      null,
+      ""
     ]
   },
   "?options": {
     "#": "Additional project options.",
     "|": [
+      null,
       {
         "?refresh": {
           "#": "Set to \"always\" to refresh the state before performing a Pulumi operation.",
           "@": "_always"
         }
-      },
-      null
+      }
     ]
   },
   "?plugins": {
@@ -143,17 +172,19 @@
   "?stackConfigDir": {
     "#": "Config directory location relative to the location of Pulumi.yaml.",
     "|": [
-      "",
-      null
+      null,
+      ""
     ]
   },
   "?template": {
     "#": "ProjectTemplate is a Pulumi project template manifest.",
     "|": [
+      null,
       {
         "?config": {
           "#": "Config to apply to each stack in the project.",
           "|": [
+            null,
             {
               "": {
                 "": "$ANY",
@@ -164,52 +195,50 @@
                 "?description": {
                   "#": "Description of the config.",
                   "|": [
-                    "",
-                    null
+                    null,
+                    ""
                   ]
                 },
                 "?secret": {
                   "#": "Boolean indicating if the configuration is labeled as a secret.",
                   "|": [
-                    true,
-                    null
+                    null,
+                    true
                   ]
                 }
               }
-            },
-            null
+            }
           ]
         },
         "?description": {
           "#": "Description of the template.",
           "|": [
-            "",
-            null
+            null,
+            ""
           ]
         },
         "?important": {
           "#": "Important indicates the template is important and should be listed by default.",
           "|": [
-            true,
-            null
+            null,
+            true
           ]
         },
         "?quickstart": {
           "#": "Quickstart contains optional text to be displayed after template creation.",
           "|": [
-            "",
-            null
+            null,
+            ""
           ]
         }
-      },
-      null
+      }
     ]
   },
   "?website": {
     "#": "Website is an optional website for additional info about this project.",
     "|": [
-      "",
-      null
+      null,
+      ""
     ]
   },
   "_name": {
@@ -218,19 +247,31 @@
     "@": ""
   },
   "_runtime": {
-    "^": [
+    "&": [
       {
-        ">=": 1,
-        "@": ""
+        "^": [
+          {
+            ">=": 1,
+            "@": ""
+          },
+          {
+            "?name": {
+              ">=": 1,
+              "@": ""
+            },
+            "?options": {
+              "": "$ANY"
+            }
+          }
+        ]
       },
       {
-        "?name": {
-          ">=": 1,
-          "@": ""
-        },
-        "?options": {
-          "": "$ANY"
-        }
+        "|": [
+          "",
+          {
+            "": "$ANY"
+          }
+        ]
       }
     ]
   }

@@ -1,5 +1,4 @@
 {
-  "": "$ANY",
   "#": "Core schema meta-schema",
   "$": {
     "positiveInteger": {
@@ -8,10 +7,20 @@
     },
     "positiveIntegerDefault0": {
       "&": [
-        "$positiveInteger",
         {
-          "@": "$ANY"
-        }
+          "&": [
+            {
+              "&": [
+                "$positiveInteger",
+                -1
+              ]
+            },
+            {
+              "@": -1
+            }
+          ]
+        },
+        -1
       ]
     },
     "schemaArray": {
@@ -39,91 +48,198 @@
       ]
     }
   },
-  "?$schema": "",
-  "?additionalItems": {
-    "|": [
-      true,
-      "$#"
-    ]
-  },
-  "?additionalProperties": {
-    "|": [
-      true,
-      "$#"
-    ]
-  },
-  "?allOf": "$schemaArray",
-  "?anyOf": "$schemaArray",
-  "?default": "$ANY",
-  "?definitions": {
-    "": "$#"
-  },
-  "?dependencies": {
-    "": {
-      "|": [
-        "$#",
-        "$stringArray"
-      ]
-    }
-  },
-  "?description": "",
-  "?enum": {
-    "!": true,
-    ">=": 1,
-    "@": [
-      "$ANY"
-    ]
-  },
-  "?exclusiveMaximum": {
-    "@": true
-  },
-  "?exclusiveMinimum": {
-    "@": true
-  },
-  "?format": "",
-  "?id": "",
-  "?items": {
-    "|": [
-      "$#",
-      "$schemaArray"
-    ]
-  },
-  "?maxItems": "$positiveInteger",
-  "?maxLength": "$positiveInteger",
-  "?maxProperties": "$positiveInteger",
-  "?maximum": -1.0,
-  "?minItems": "$positiveIntegerDefault0",
-  "?minLength": "$positiveIntegerDefault0",
-  "?minProperties": "$positiveIntegerDefault0",
-  "?minimum": -1.0,
-  "?multipleOf": {
-    ">": 0,
-    "@": -1.0
-  },
-  "?not": "$#",
-  "?oneOf": "$schemaArray",
-  "?pattern": "$REGEX",
-  "?patternProperties": {
-    "": "$#"
-  },
-  "?properties": {
-    "": "$#"
-  },
-  "?required": "$stringArray",
-  "?title": "",
-  "?type": {
-    "|": [
-      "$simpleTypes",
-      {
+  "&": [
+    {
+      "": "$ANY",
+      "?$schema": "",
+      "?additionalItems": {
+        "&": [
+          {
+            "|": [
+              true,
+              "$#"
+            ]
+          },
+          "$ANY"
+        ]
+      },
+      "?additionalProperties": {
+        "&": [
+          {
+            "|": [
+              true,
+              "$#"
+            ]
+          },
+          "$ANY"
+        ]
+      },
+      "?allOf": "$schemaArray",
+      "?anyOf": "$schemaArray",
+      "?default": "$ANY",
+      "?definitions": {
+        "": "$#"
+      },
+      "?dependencies": {
+        "": {
+          "&": [
+            {
+              "|": [
+                "$#",
+                "$stringArray"
+              ]
+            },
+            "$ANY"
+          ]
+        }
+      },
+      "?description": "",
+      "?enum": {
         "!": true,
         ">=": 1,
         "@": [
-          "$simpleTypes"
+          "$ANY"
         ]
+      },
+      "?exclusiveMaximum": {
+        "@": true
+      },
+      "?exclusiveMinimum": {
+        "@": true
+      },
+      "?format": "",
+      "?id": "",
+      "?items": {
+        "&": [
+          {
+            "|": [
+              "$#",
+              "$schemaArray"
+            ]
+          },
+          "$ANY"
+        ]
+      },
+      "?maxItems": "$positiveInteger",
+      "?maxLength": "$positiveInteger",
+      "?maxProperties": "$positiveInteger",
+      "?maximum": -1.0,
+      "?minItems": "$positiveIntegerDefault0",
+      "?minLength": "$positiveIntegerDefault0",
+      "?minProperties": "$positiveIntegerDefault0",
+      "?minimum": -1.0,
+      "?multipleOf": {
+        ">": 0,
+        "@": -1.0
+      },
+      "?not": "$#",
+      "?oneOf": "$schemaArray",
+      "?pattern": "$REGEX",
+      "?patternProperties": {
+        "": "$#"
+      },
+      "?properties": {
+        "": "$#"
+      },
+      "?required": "$stringArray",
+      "?title": "",
+      "?type": {
+        "&": [
+          {
+            "|": [
+              "$simpleTypes",
+              {
+                "!": true,
+                ">=": 1,
+                "@": [
+                  "$simpleTypes"
+                ]
+              }
+            ]
+          },
+          {
+            "|": [
+              "",
+              [
+                "$ANY"
+              ]
+            ]
+          }
+        ]
+      },
+      "?uniqueItems": {
+        "@": true
       }
-    ]
-  },
-  "?uniqueItems": {
-    "@": true
-  }
+    },
+    {
+      "&": [
+        "$ANY",
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_exclusiveMaximum": "$ANY"
+                },
+                {
+                  "": "$ANY",
+                  "_maximum": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_exclusiveMaximum": "$ANY"
+                    }
+                  ]
+                },
+                "$ANY"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "&": [
+        "$ANY",
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_exclusiveMinimum": "$ANY"
+                },
+                {
+                  "": "$ANY",
+                  "_minimum": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_exclusiveMinimum": "$ANY"
+                    }
+                  ]
+                },
+                "$ANY"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

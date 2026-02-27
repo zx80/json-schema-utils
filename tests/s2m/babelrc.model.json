@@ -26,9 +26,8 @@
       "?compact": {
         "#": "Do not include superfluous whitespace characters and line terminators. When set to \"auto\" compact is set to true on input sizes of >500KB.",
         "|": [
-          "_auto",
-          "=true",
-          "=false"
+          true,
+          "_auto"
         ]
       },
       "?extends": {
@@ -153,10 +152,13 @@
       "?sourceMaps": {
         "#": "If truthy, adds a map property to returned output. If set to \"inline\", a comment with a sourceMappingURL directive is added to the bottom of the returned code. If set to \"both\" then a map property is returned as well as a source map comment appended.",
         "|": [
-          "_both",
-          "_inline",
-          "=true",
-          "=false"
+          true,
+          {
+            "|": [
+              "both",
+              "inline"
+            ]
+          }
         ]
       },
       "?sourceRoot": {
@@ -166,13 +168,27 @@
     }
   },
   "&": [
-    "$Options",
     {
-      "": "$ANY",
-      "?env": {
-        "": "$Options",
-        "#": "This is an object of keys that represent different environments. For example, you may have: `{ env: { production: { /* specific options */ } } }` which will use those options when the environment variable BABEL_ENV is set to \"production\". If BABEL_ENV isn't set then NODE_ENV will be used, if it's not set then it defaults to \"development\""
-      }
+      "&": [
+        {
+          "&": [
+            "$Options",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "": "$ANY",
+          "?env": {
+            "": "$Options",
+            "#": "This is an object of keys that represent different environments. For example, you may have: `{ env: { production: { /* specific options */ } } }` which will use those options when the environment variable BABEL_ENV is set to \"production\". If BABEL_ENV isn't set then NODE_ENV will be used, if it's not set then it defaults to \"development\""
+          }
+        }
+      ]
+    },
+    {
+      "": "$ANY"
     }
   ]
 }

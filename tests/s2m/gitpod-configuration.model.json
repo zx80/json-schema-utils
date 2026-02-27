@@ -79,8 +79,7 @@
           "?addCheck": {
             "#": "Add a commit check to pull requests. Set to 'fail-on-error' if you want broken prebuilds to block merging. Defaults to true.",
             "|": [
-              "=true",
-              "=false",
+              true,
               "_prevent-merge-on-error"
             ]
           },
@@ -114,6 +113,7 @@
   "?image": {
     "#": "The Docker image to run your workspace in.",
     "|": [
+      "",
       {
         "?context": {
           "#": "Relative path to the context path (optional). Should only be set if you need to copy files into the image.",
@@ -123,8 +123,7 @@
           "#": "Relative path to a docker file.",
           "@": ""
         }
-      },
-      ""
+      }
     ]
   },
   "?jetbrains": {

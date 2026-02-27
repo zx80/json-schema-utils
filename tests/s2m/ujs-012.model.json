@@ -1,6 +1,18 @@
 {
-  "": "$ANY",
   "#": "JSON Model generated from a JSON Schema with json-schema-utils",
-  "/^I_/": -1,
-  "/^S_/": ""
+  "&": [
+    {
+      "": "$ANY",
+      "/^I_/": "$ANY",
+      "/^S_/": "$ANY"
+    },
+    {
+      "": "$ANY",
+      "/^I_/": -1
+    },
+    {
+      "": "$ANY",
+      "/^S_/": ""
+    }
+  ]
 }

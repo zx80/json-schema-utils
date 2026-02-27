@@ -41,7 +41,7 @@ defref_0.inline.json:
 	touch $@
 
 %.inline.json: %.schema.json
-	jsu-inline -m "file:// ." -m ":// ." $< > $@
+	jsu-inline -m "file://=." -m "://=." $< > $@
 
 .PHONY: simpler
 simpler:

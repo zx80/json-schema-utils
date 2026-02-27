@@ -79,8 +79,8 @@
       "?componentFolder": {
         "#": "Path to folder containing component test files (Pass false to disable)",
         "|": [
-          "",
-          true
+          true,
+          ""
         ]
       },
       "?defaultCommandTimeout": {
@@ -126,8 +126,8 @@
       "?fixturesFolder": {
         "#": "Path to folder containing fixture files (Pass false to disable)",
         "|": [
-          "",
-          true
+          true,
+          ""
         ]
       },
       "?ignoreTestFiles": {
@@ -169,8 +169,8 @@
       "?pluginsFile": {
         "#": "Path to plugins file. (Pass false to disable)",
         "|": [
-          "",
-          true
+          true,
+          ""
         ]
       },
       "?port": {
@@ -200,11 +200,11 @@
       "?retries": {
         "#": "The number of times to retry a failing. Can be configured to apply only in runMode or openMode",
         "|": [
+          null,
+          -1.0,
           {
             "": "$ANY"
-          },
-          -1.0,
-          null
+          }
         ]
       },
       "?screenshotOnRunFailure": {
@@ -219,10 +219,14 @@
         "#": "Viewport position to which an element should be scrolled prior to action commands. Setting `false` disables scrolling.",
         "|": [
           "=false",
-          "_center",
-          "_top",
-          "_bottom",
-          "_nearest"
+          {
+            "|": [
+              "center",
+              "top",
+              "bottom",
+              "nearest"
+            ]
+          }
         ]
       },
       "?slowTestThreshold": {
@@ -232,8 +236,8 @@
       "?supportFile": {
         "#": "Path to file to load before test files load. This file is compiled and bundled. (Pass false to disable)",
         "|": [
-          "",
-          true
+          true,
+          ""
         ]
       },
       "?taskTimeout": {
@@ -264,8 +268,8 @@
       "?videoCompression": {
         "#": "The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be false to disable compression or a value between 0 and 51, where a lower value results in better quality (at the expense of a higher file size).",
         "|": [
-          -1.0,
-          true
+          true,
+          -1.0
         ]
       },
       "?videoUploadOnPasses": {
@@ -295,17 +299,31 @@
     }
   },
   "&": [
-    "$cypressConfig",
     {
-      "": "$ANY",
-      "?component": {
-        "#": "Any component runner specific overrides",
-        "@": "$cypressConfig"
-      },
-      "?e2e": {
-        "#": "Any e2e runner specific overrides",
-        "@": "$cypressConfig"
-      }
+      "&": [
+        {
+          "&": [
+            "$cypressConfig",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "": "$ANY",
+          "?component": {
+            "#": "Any component runner specific overrides",
+            "@": "$cypressConfig"
+          },
+          "?e2e": {
+            "#": "Any e2e runner specific overrides",
+            "@": "$cypressConfig"
+          }
+        }
+      ]
+    },
+    {
+      "": "$ANY"
     }
   ]
 }

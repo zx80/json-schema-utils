@@ -246,11 +246,16 @@
     "#": "Used to configure MSBuild solutions and projects",
     "?Configuration": {
       "#": "Build configuration used for project evaluation",
-      "|": [
+      "&": [
         {
           "|": [
-            "_Debug",
-            "_Release"
+            {
+              "|": [
+                "Debug",
+                "Release"
+              ]
+            },
+            ""
           ]
         },
         ""
@@ -277,15 +282,20 @@
     },
     "?Platform": {
       "#": "Specifies which version of the Common Language Runtime (CLR) use for project evaluation",
-      "|": [
+      "&": [
         {
           "|": [
-            "_AnyCPU",
-            "_x86",
-            "_x64",
-            "_ARM",
-            "_ARM64",
-            "_Itanium"
+            {
+              "|": [
+                "AnyCPU",
+                "x86",
+                "x64",
+                "ARM",
+                "ARM64",
+                "Itanium"
+              ]
+            },
+            ""
           ]
         },
         ""
@@ -300,14 +310,19 @@
     },
     "?ToolsVersion": {
       "#": "Value of ToolsVersion to use when building projects passed to this task",
-      "|": [
+      "&": [
         {
           "|": [
-            "_Current",
-            "_2.0",
-            "_3.5",
-            "_4.0",
-            "_15.0"
+            {
+              "|": [
+                "Current",
+                "2.0",
+                "3.5",
+                "4.0",
+                "15.0"
+              ]
+            },
+            ""
           ]
         },
         ""
@@ -328,40 +343,45 @@
     "": "$ANY",
     "#": "Used to configure C# scripting (CSX files)",
     "?defaultTargetFramework": {
-      "|": [
+      "&": [
         {
           "|": [
-            "_netstandard1.0",
-            "_netstandard1.1",
-            "_netstandard1.2",
-            "_netstandard1.3",
-            "_netstandard1.4",
-            "_netstandard1.5",
-            "_netstandard1.6",
-            "_netstandard2.0",
-            "_netstandard2.1",
-            "_netcoreapp1.0",
-            "_netcoreapp1.1",
-            "_netcoreapp2.0",
-            "_netcoreapp2.1",
-            "_netcoreapp2.2",
-            "_netcoreapp3.0",
-            "_netcoreapp3.1",
-            "_net11",
-            "_net20",
-            "_net35",
-            "_net40",
-            "_net403",
-            "_net45",
-            "_net451",
-            "_net452",
-            "_net46",
-            "_net461",
-            "_net462",
-            "_net47",
-            "_net471",
-            "_net472",
-            "_net48"
+            {
+              "|": [
+                "netstandard1.0",
+                "netstandard1.1",
+                "netstandard1.2",
+                "netstandard1.3",
+                "netstandard1.4",
+                "netstandard1.5",
+                "netstandard1.6",
+                "netstandard2.0",
+                "netstandard2.1",
+                "netcoreapp1.0",
+                "netcoreapp1.1",
+                "netcoreapp2.0",
+                "netcoreapp2.1",
+                "netcoreapp2.2",
+                "netcoreapp3.0",
+                "netcoreapp3.1",
+                "net11",
+                "net20",
+                "net35",
+                "net40",
+                "net403",
+                "net45",
+                "net451",
+                "net452",
+                "net46",
+                "net461",
+                "net462",
+                "net47",
+                "net471",
+                "net472",
+                "net48"
+              ]
+            },
+            ""
           ]
         },
         ""

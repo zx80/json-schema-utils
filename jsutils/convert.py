@@ -593,6 +593,7 @@ def schema2model(
         if only(schema, "anyOf", *IGNORE):
             model = {"|": [schema2model(s, lid or url, path + (("anyOf", i), ), defs, strict, fix, False, resilient)
                         for i, s in enumerate(choices)]}
+            model["|"] = list(filter(lambda m: m != "$NONE", model["|"]))
             if len(model["|"]) == 1:
                 model = model["|"][0]
             return buildModel(model, {}, defs, sharp, is_root)
@@ -712,13 +713,22 @@ def schema2model(
             # else split schema per type
             schemas = split_schema(schema)
             del schemas[""]  # remove ignored stuff
-            return buildModel(
+            model = buildModel(
                 {
                     "|": [
                         schema2model(v, lid or url, path + (("|", i), ), defs, strict, fix, False, resilient)
                             for i, v in enumerate(schemas.values())
                     ]
                 }, {}, defs, sharp, is_root)
+            # cleanup
+            model["|"] = list(filter(lambda m: m != "$NONE", model["|"]))
+            if len(model["|"]) == 1:
+                if len(model) == 1:
+                    model = model["|"][0]
+                else:
+                    model["@"] = model["|"][0]
+                    del model["|"]
+            return model
         elif ts == "string" and "const" in schema:
             doubt(only(schema, "type", "const", *IGNORE), f"string const at [{spath}]", strict)
             const = schema["const"]

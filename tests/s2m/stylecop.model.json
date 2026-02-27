@@ -56,7 +56,15 @@
       },
       "?variables": {
         "#": "Replacement variables which may be used in the 'copyrightText' value.",
-        "/^[a-zA-Z0-9]+$/": ""
+        "&": [
+          {
+            "/^[a-zA-Z0-9]+$/": "$ANY"
+          },
+          {
+            "": "$ANY",
+            "/^[a-zA-Z0-9]+$/": ""
+          }
+        ]
       },
       "?xmlHeader": {
         "#": "Determines whether the file header should be wrapped in the StyleCop-standard XML structure.",
@@ -124,12 +132,14 @@
         "@": true
       },
       "?allowedHungarianPrefixes": {
+        "!": true,
         "#": "Allowed Hungarian notation prefixes.",
         "@": [
           "/^[a-z]{1,2}$/"
         ]
       },
       "?allowedNamespaceComponents": {
+        "!": true,
         "#": "Allowed namespace components, such as ones beginning with a lowercase letter.",
         "@": [
           ""

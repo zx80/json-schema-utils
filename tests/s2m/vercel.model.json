@@ -6,17 +6,29 @@
   },
   "?alias": {
     "#": "Aliases that will get assigned when the deployment is `READY` and the target is `production`. The client needs to make a `GET` request to its API to ensure the assignment",
-    "^": [
+    "&": [
       {
-        "@": ""
+        "^": [
+          {
+            "@": ""
+          },
+          {
+            "<=": 50,
+            "@": [
+              {
+                "<=": 253,
+                "@": ""
+              }
+            ]
+          }
+        ]
       },
       {
-        "<=": 50,
-        "@": [
-          {
-            "<=": 253,
-            "@": ""
-          }
+        "|": [
+          "",
+          [
+            "$ANY"
+          ]
         ]
       }
     ]
@@ -27,22 +39,29 @@
       "#": "An object containing the deployment's environment variable names and values to be passed to Builds. Secrets can be referenced by prefixing the value with `@`",
       "<=": 100,
       "@": {
-        "/.+/": {
-          "<=": 65536,
-          ">=": 0,
-          "@": ""
-        }
+        "&": [
+          {
+            "/.+/": "$ANY"
+          },
+          {
+            "": "$ANY",
+            "/.+/": {
+              "<=": 65536,
+              "@": ""
+            }
+          }
+        ]
       }
     }
   },
   "?buildCommand": {
     "#": "The build command for this project. When `null` is used this value will be automatically detected",
     "|": [
+      null,
       {
         "<=": 256,
         "@": ""
-      },
-      null
+      }
     ]
   },
   "?builds": {
@@ -94,70 +113,81 @@
   "?devCommand": {
     "#": "The dev command for this project. When `null` is used this value will be automatically detected",
     "|": [
+      null,
       {
         "<=": 256,
         "@": ""
-      },
-      null
+      }
     ]
   },
   "?env": {
     "#": "An object containing the deployment's environment variable names and values. Secrets can be referenced by prefixing the value with `@`",
     "<=": 100,
     "@": {
-      "/.+/": {
-        "<=": 65536,
-        ">=": 0,
-        "@": ""
-      }
+      "&": [
+        {
+          "/.+/": "$ANY"
+        },
+        {
+          "": "$ANY",
+          "/.+/": {
+            "<=": 65536,
+            "@": ""
+          }
+        }
+      ]
     }
   },
   "?framework": {
     "#": "The framework that is being used for this project. When `null` is used no framework is selected",
     "|": [
-      "_blitzjs",
-      "_nextjs",
-      "_gatsby",
-      "_remix",
-      "_astro",
-      "_hexo",
-      "_eleventy",
-      "_docusaurus-2",
-      "_docusaurus",
-      "_preact",
-      "_solidstart",
-      "_dojo",
-      "_ember",
-      "_vue",
-      "_scully",
-      "_ionic-angular",
-      "_angular",
-      "_polymer",
-      "_svelte",
-      "_sveltekit",
-      "_sveltekit-1",
-      "_ionic-react",
-      "_create-react-app",
-      "_gridsome",
-      "_umijs",
-      "_sapper",
-      "_saber",
-      "_stencil",
-      "_nuxtjs",
-      "_redwoodjs",
-      "_hugo",
-      "_jekyll",
-      "_brunch",
-      "_middleman",
-      "_zola",
-      "_hydrogen",
-      "_vite",
-      "_vitepress",
-      "_vuepress",
-      "_parcel",
-      "_sanity",
-      "_storybook",
-      null
+      null,
+      {
+        "|": [
+          "blitzjs",
+          "nextjs",
+          "gatsby",
+          "remix",
+          "astro",
+          "hexo",
+          "eleventy",
+          "docusaurus-2",
+          "docusaurus",
+          "preact",
+          "solidstart",
+          "dojo",
+          "ember",
+          "vue",
+          "scully",
+          "ionic-angular",
+          "angular",
+          "polymer",
+          "svelte",
+          "sveltekit",
+          "sveltekit-1",
+          "ionic-react",
+          "create-react-app",
+          "gridsome",
+          "umijs",
+          "sapper",
+          "saber",
+          "stencil",
+          "nuxtjs",
+          "redwoodjs",
+          "hugo",
+          "jekyll",
+          "brunch",
+          "middleman",
+          "zola",
+          "hydrogen",
+          "vite",
+          "vitepress",
+          "vuepress",
+          "parcel",
+          "sanity",
+          "storybook"
+        ]
+      }
     ]
   },
   "?functions": {
@@ -165,45 +195,65 @@
     "<=": 50,
     ">=": 1,
     "@": {
-      "/^.{1,256}$/": {
-        "?excludeFiles": {
-          "#": "A glob pattern to match files that should be excluded from your Serverless Function. If you\u2019re using a Community Runtime, the behavior might vary.",
-          "<=": 256,
-          "@": ""
+      "&": [
+        {
+          "/^.{1,256}$/": "$ANY"
         },
-        "?includeFiles": {
-          "#": "A glob pattern to match files that should be included in your Serverless Function. If you\u2019re using a Community Runtime, the behavior might vary.",
-          "<=": 256,
-          "@": ""
-        },
-        "?maxDuration": {
-          "#": "An integer defining how long your Serverless Function should be allowed to run on every request in seconds (between 1 and the maximum limit of your plan).",
-          "<=": 900,
-          ">=": 1,
-          "@": -1.0
-        },
-        "?memory": {
-          "#": "An integer defining the memory your Serverless Function should be provided with (between 128 and 3008).",
-          "<=": 3008,
-          ">=": 128,
-          "@": -1.0
-        },
-        "?runtime": {
-          "#": "The npm package name of a Runtime, including its version",
-          "<=": 256,
-          "@": ""
+        {
+          "": "$ANY",
+          "/^.{1,256}$/": {
+            "?excludeFiles": {
+              "#": "A glob pattern to match files that should be excluded from your Serverless Function. If you\u2019re using a Community Runtime, the behavior might vary.",
+              "<=": 256,
+              "@": ""
+            },
+            "?includeFiles": {
+              "#": "A glob pattern to match files that should be included in your Serverless Function. If you\u2019re using a Community Runtime, the behavior might vary.",
+              "<=": 256,
+              "@": ""
+            },
+            "?maxDuration": {
+              "#": "An integer defining how long your Serverless Function should be allowed to run on every request in seconds (between 1 and the maximum limit of your plan).",
+              "<=": 900,
+              ">=": 1,
+              "@": -1.0
+            },
+            "?memory": {
+              "#": "An integer defining the memory your Serverless Function should be provided with (between 128 and 3008).",
+              "<=": 3008,
+              ">=": 128,
+              "@": -1.0
+            },
+            "?runtime": {
+              "#": "The npm package name of a Runtime, including its version",
+              "<=": 256,
+              "@": ""
+            }
+          }
         }
-      }
+      ]
     }
   },
   "?git": {
     "": "$ANY",
     "?deploymentEnabled": {
       "#": "Specifies the branches that will not trigger an auto-deployment when committing to them. Any non specified branch is `true` by default.",
-      "^": [
-        true,
+      "&": [
         {
-          "": true
+          "^": [
+            true,
+            {
+              "": true
+            }
+          ]
+        },
+        {
+          "|": [
+            true,
+            {
+              "": "$ANY"
+            }
+          ]
         }
       ]
     }
@@ -340,11 +390,11 @@
   },
   "?ignoreCommand": {
     "|": [
+      null,
       {
         "<=": 256,
         "@": ""
-      },
-      null
+      }
     ]
   },
   "?images": {
@@ -428,11 +478,11 @@
   "?installCommand": {
     "#": "The install command for this project. When `null` is used this value will be automatically detected",
     "|": [
+      null,
       {
         "<=": 256,
         "@": ""
-      },
-      null
+      }
     ]
   },
   "?name": {
@@ -442,11 +492,11 @@
   "?outputDirectory": {
     "#": "The output directory of the project. When `null` is used this value will be automatically detected",
     "|": [
+      null,
       {
         "<=": 256,
         "@": ""
-      },
-      null
+      }
     ]
   },
   "?public": {
@@ -732,10 +782,18 @@
               "<=": 100,
               ">=": 1,
               "@": {
-                "/^.{1,256}$/": {
-                  "<=": 4096,
-                  "@": ""
-                }
+                "&": [
+                  {
+                    "/^.{1,256}$/": "$ANY"
+                  },
+                  {
+                    "": "$ANY",
+                    "/^.{1,256}$/": {
+                      "<=": 4096,
+                      "@": ""
+                    }
+                  }
+                ]
               }
             },
             "?important": true,
@@ -759,10 +817,18 @@
                   "<=": 100,
                   ">=": 1,
                   "@": {
-                    "/^.{1,256}$/": {
-                      "<=": 4096,
-                      "@": ""
-                    }
+                    "&": [
+                      {
+                        "/^.{1,256}$/": "$ANY"
+                      },
+                      {
+                        "": "$ANY",
+                        "/^.{1,256}$/": {
+                          "<=": 4096,
+                          "@": ""
+                        }
+                      }
+                    ]
                   }
                 },
                 "?value": {
@@ -840,14 +906,17 @@
           },
           {
             "_handle": {
-              "|": [
-                "_error",
-                "_filesystem",
-                "_hit",
-                "_miss",
-                "_resource",
-                "_rewrite"
-              ]
+              "<=": 32,
+              "@": {
+                "|": [
+                  "error",
+                  "filesystem",
+                  "hit",
+                  "miss",
+                  "resource",
+                  "rewrite"
+                ]
+              }
             }
           }
         ]
@@ -879,7 +948,6 @@
         },
         "_value": {
           "<=": 1024,
-          ">=": 0,
           "@": ""
         }
       }

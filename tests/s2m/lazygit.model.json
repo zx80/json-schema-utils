@@ -2,27 +2,32 @@
   "#": "UI settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
   "$": {
     "color": {
-      "^": [
+      "&": [
         {
-          "|": [
-            "_black",
-            "_red",
-            "_green",
-            "_yellow",
-            "_blue",
-            "_magenta",
-            "_cyan",
-            "_white",
-            "_bold",
-            "_default",
-            "_reverse",
-            "_underline",
-            "_strikethrough"
+          "^": [
+            {
+              "|": [
+                "black",
+                "red",
+                "green",
+                "yellow",
+                "blue",
+                "magenta",
+                "cyan",
+                "white",
+                "bold",
+                "default",
+                "reverse",
+                "underline",
+                "strikethrough"
+              ]
+            },
+            {
+              "@": "/^#[0-9a-fA-F]{6}$/"
+            }
           ]
         },
-        {
-          "@": "/^#[0-9a-fA-F]{6}$/"
-        }
+        ""
       ]
     },
     "custom-commands-prompts-key-property": {
@@ -44,8 +49,8 @@
     },
     "keybinding": {
       "|": [
-        "",
-        null
+        null,
+        ""
       ]
     }
   },
@@ -84,7 +89,9 @@
                   "&": [
                     {
                       "&": [
-                        "$ANY",
+                        {
+                          "": "$ANY"
+                        },
                         {
                           "|": [
                             {
@@ -149,7 +156,9 @@
                     },
                     {
                       "&": [
-                        "$ANY",
+                        {
+                          "": "$ANY"
+                        },
                         {
                           "|": [
                             {
@@ -189,7 +198,9 @@
                     },
                     {
                       "&": [
-                        "$ANY",
+                        {
+                          "": "$ANY"
+                        },
                         {
                           "|": [
                             {
@@ -247,7 +258,9 @@
                     },
                     {
                       "&": [
-                        "$ANY",
+                        {
+                          "": "$ANY"
+                        },
                         {
                           "|": [
                             {
@@ -381,19 +394,27 @@
     },
     "?commitPrefixes": {
       "#": "Commit prefixes\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
-      "/./": {
-        "#": "A repository path\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
-        "_pattern": {
-          "#": "A pattern\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
-          ">=": 1,
-          "@": ""
+      "&": [
+        {
+          "/./": "$ANY"
         },
-        "_replace": {
-          "#": "A replacement\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
-          ">=": 1,
-          "@": ""
+        {
+          "": "$ANY",
+          "/./": {
+            "#": "A repository path\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
+            "_pattern": {
+              "#": "A pattern\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
+              ">=": 1,
+              "@": ""
+            },
+            "_replace": {
+              "#": "A replacement\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#predefined-commit-message-prefix",
+              ">=": 1,
+              "@": ""
+            }
+          }
         }
-      }
+      ]
     },
     "?diffContextSize": {
       "#": "how many lines of context are shown around a change in diffs\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
@@ -493,10 +514,18 @@
     },
     "?authorColors": {
       "#": "Author colors\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-author-color",
-      "/./": {
-        "#": "An author color\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-author-color",
-        "@": "$color"
-      }
+      "&": [
+        {
+          "/./": "$ANY"
+        },
+        {
+          "": "$ANY",
+          "/./": {
+            "#": "An author color\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-author-color",
+            "@": "$color"
+          }
+        }
+      ]
     },
     "?border": {
       "#": "A border style\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
@@ -509,10 +538,18 @@
     },
     "?branchColors": {
       "#": "Branch colors\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-branch-color",
-      "/./": {
-        "#": "A branch color\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-branch-color",
-        "@": "$color"
-      }
+      "&": [
+        {
+          "/./": "$ANY"
+        },
+        {
+          "": "$ANY",
+          "/./": {
+            "#": "A branch color\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-branch-color",
+            "@": "$color"
+          }
+        }
+      ]
     },
     "?commandLogSize": {
       "#": "A command log size\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",
@@ -1335,10 +1372,18 @@
   },
   "?services": {
     "#": "Service settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-pull-request-urls",
-    "/./": {
-      "#": "A service\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-pull-request-urls",
-      "@": "/^[^:]+:[^:]+$/"
-    }
+    "&": [
+      {
+        "/./": "$ANY"
+      },
+      {
+        "": "$ANY",
+        "/./": {
+          "#": "A service\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-pull-request-urls",
+          "@": "/^[^:]+:[^:]+$/"
+        }
+      }
+    ]
   },
   "?update": {
     "#": "Update settings\nhttps://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#default",

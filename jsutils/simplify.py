@@ -265,10 +265,10 @@ def simplifySchema(
                             for p in list(local.keys()):
                                 if p not in _IGNORABLE:
                                     del local[p]
-                            local.update(js)
+                            local.update(copy.deepcopy(js))
                         else:
                             # actual merge
-                            nlocal = mergeSchemas(local, js)
+                            nlocal = mergeSchemas(local, copy.deepcopy(js))
                             local.clear()
                             if isinstance(nlocal, bool):
                                 if not nlocal:

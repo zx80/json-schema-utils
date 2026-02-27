@@ -338,8 +338,8 @@
   "?lock": {
     "#": "Whether to use a lock file or the path to use for the lock file. Can be overridden by CLI arguments.",
     "|": [
-      "",
-      true
+      true,
+      ""
     ]
   },
   "?nodeModulesDir": {
@@ -358,10 +358,18 @@
   },
   "?tasks": {
     "#": "Configuration for deno task",
-    "/^[A-Za-z][A-Za-z0-9_\\-:]*$/": {
-      "#": "Command to execute for this task name.",
-      "@": ""
-    }
+    "&": [
+      {
+        "/^[A-Za-z][A-Za-z0-9_\\-:]*$/": "$ANY"
+      },
+      {
+        "": "$ANY",
+        "/^[A-Za-z][A-Za-z0-9_\\-:]*$/": {
+          "#": "Command to execute for this task name.",
+          "@": ""
+        }
+      }
+    ]
   },
   "?test": {
     "": "$ANY",

@@ -8,7 +8,7 @@ import hashlib
 import json
 import logging
 
-from .utils import JsonSchema, SchemaPath, JSUError, KEYWORD_TYPE
+from .utils import JsonSchema, SchemaPath, JSUError, KEYWORD_TYPE, NO_SEMANTICS
 from .utils import only, is_abs_url, schemapath_to_urlpath, is_any
 from .schemas import Schemas
 from .restruct import modernizeOldDraft
@@ -237,6 +237,8 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
                 raise JSUError(f"cannot merge prop {prop} distinct values")
         else:
             schema[prop] = value
+    elif prop in NO_SEMANTICS:
+        log.info(f"merging is dropping prop {prop}")
     else:
         raise JSUError(f"merging of prop {prop} is not supported (yet)")
 
@@ -446,6 +448,10 @@ def resolveExternalRefs(
                 # FIXME this is not true
                 # resolved[url] = urls[0] + "#/" + schemapath_to_urlpath(p)
                 url_path[url] = "#/" + schemapath_to_urlpath(p)
+                if url.endswith("#"):
+                    rurl = url[:-1]
+                    urls.append(rurl)
+                    url_path[rurl] = "#/" + schemapath_to_urlpath(p)
         return True
 
     def rwtScanPop(local: JsonSchema, p: SchemaPath) -> JsonSchema:

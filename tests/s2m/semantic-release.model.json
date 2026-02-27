@@ -5,9 +5,19 @@
     "branch-object": {
       "?channel": "",
       "?prerelease": {
-        "^": [
-          true,
-          ""
+        "&": [
+          {
+            "^": [
+              true,
+              ""
+            ]
+          },
+          {
+            "|": [
+              true,
+              ""
+            ]
+          }
         ]
       },
       "?range": "",
@@ -16,17 +26,44 @@
   },
   "?branches": {
     "#": "The branches on which releases should happen.",
-    "^": [
-      "",
-      "$branch-object",
-      [
-        {
-          "|": [
-            "",
-            "$branch-object"
+    "&": [
+      {
+        "^": [
+          "",
+          "$branch-object",
+          [
+            {
+              "&": [
+                {
+                  "|": [
+                    "",
+                    "$branch-object"
+                  ]
+                },
+                {
+                  "|": [
+                    "",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            }
           ]
-        }
-      ]
+        ]
+      },
+      {
+        "|": [
+          "",
+          [
+            "$ANY"
+          ],
+          {
+            "": "$ANY"
+          }
+        ]
+      }
     ]
   },
   "?ci": {
@@ -39,22 +76,46 @@
   },
   "?extends": {
     "#": "List of modules or file paths containing a shareable configuration. If multiple shareable configurations are set, they will be imported in the order defined with each configuration option taking precedence over the options defined in a previous shareable configuration",
-    "^": [
-      "",
-      [
-        ""
-      ]
-    ]
-  },
-  "?plugins": {
-    "#": "Define the list of plugins to use. Plugins will run in series, in the order defined",
-    "@": [
+    "&": [
+      {
+        "^": [
+          "",
+          [
+            ""
+          ]
+        ]
+      },
       {
         "|": [
           "",
           [
             "$ANY"
           ]
+        ]
+      }
+    ]
+  },
+  "?plugins": {
+    "#": "Define the list of plugins to use. Plugins will run in series, in the order defined",
+    "@": [
+      {
+        "&": [
+          {
+            "|": [
+              "",
+              [
+                "$ANY"
+              ]
+            ]
+          },
+          {
+            "|": [
+              "",
+              [
+                "$ANY"
+              ]
+            ]
+          }
         ]
       }
     ]

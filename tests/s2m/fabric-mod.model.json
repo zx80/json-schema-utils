@@ -29,21 +29,33 @@
       }
     },
     "entrypoint": {
-      "^": [
+      "&": [
         {
-          "": "$ANY",
-          "?adapter": {
-            "#": "The language adapter to use",
-            "@": ""
-          },
-          "_value": {
-            "#": "The entrypoint function or class",
-            "@": ""
-          }
+          "^": [
+            {
+              "": "$ANY",
+              "?adapter": {
+                "#": "The language adapter to use",
+                "@": ""
+              },
+              "_value": {
+                "#": "The entrypoint function or class",
+                "@": ""
+              }
+            },
+            {
+              "#": "The entrypoint function or class",
+              "@": ""
+            }
+          ]
         },
         {
-          "#": "The entrypoint function or class",
-          "@": ""
+          "|": [
+            "",
+            {
+              "": "$ANY"
+            }
+          ]
         }
       ]
     },
@@ -63,21 +75,33 @@
       }
     },
     "person": {
-      "^": [
+      "&": [
         {
-          "#": "The name of the person",
-          "@": ""
+          "^": [
+            {
+              "#": "The name of the person",
+              "@": ""
+            },
+            {
+              "": "$ANY",
+              "?contact": {
+                "#": "Contact information for the person",
+                "@": "$contactInfo"
+              },
+              "_name": {
+                "#": "The name of the person",
+                "@": ""
+              }
+            }
+          ]
         },
         {
-          "": "$ANY",
-          "?contact": {
-            "#": "Contact information for the person",
-            "@": "$contactInfo"
-          },
-          "_name": {
-            "#": "The name of the person",
-            "@": ""
-          }
+          "|": [
+            "",
+            {
+              "": "$ANY"
+            }
+          ]
         }
       ]
     },
@@ -86,12 +110,24 @@
       "@": ""
     },
     "versionRanges": {
-      "^": [
-        "$versionRange",
+      "&": [
         {
-          "#": "Multiple version ranges that are combined with an \"OR\" relationship - only one of the ranges needs to match",
-          "@": [
-            "$versionRange"
+          "^": [
+            "$versionRange",
+            {
+              "#": "Multiple version ranges that are combined with an \"OR\" relationship - only one of the ranges needs to match",
+              "@": [
+                "$versionRange"
+              ]
+            }
+          ]
+        },
+        {
+          "|": [
+            "",
+            [
+              "$ANY"
+            ]
           ]
         }
       ]
@@ -184,18 +220,38 @@
   },
   "?environment": "$environment",
   "?icon": {
-    "^": [
+    "&": [
       {
-        "#": "The path to a single .PNG file from the root of the JAR",
-        "@": ""
+        "^": [
+          {
+            "#": "The path to a single .PNG file from the root of the JAR",
+            "@": ""
+          },
+          {
+            "#": "A string\u2192string dictionary, where the keys conform to widths of each PNG file, and the values are said files' paths",
+            "&": [
+              {
+                "": "$ANY",
+                "/^[1-9][0-9]*$/": "$ANY"
+              },
+              {
+                "": "$ANY",
+                "/^[1-9][0-9]*$/": {
+                  "#": "The path to a single .PNG file from the root of the JAR",
+                  "@": ""
+                }
+              }
+            ]
+          }
+        ]
       },
       {
-        "": "$ANY",
-        "#": "A string\u2192string dictionary, where the keys conform to widths of each PNG file, and the values are said files' paths",
-        "/^[1-9][0-9]*$/": {
-          "#": "The path to a single .PNG file from the root of the JAR",
-          "@": ""
-        }
+        "|": [
+          "",
+          {
+            "": "$ANY"
+          }
+        ]
       }
     ]
   },
@@ -211,27 +267,51 @@
   },
   "?license": {
     "#": "The license the mod uses",
-    "^": [
-      "",
-      [
-        ""
-      ]
+    "&": [
+      {
+        "^": [
+          "",
+          [
+            ""
+          ]
+        ]
+      },
+      {
+        "|": [
+          "",
+          [
+            "$ANY"
+          ]
+        ]
+      }
     ]
   },
   "?mixins": [
     {
-      "^": [
+      "&": [
         {
-          "#": "Path to mixin file from the root of the JAR",
-          "@": ""
+          "^": [
+            {
+              "#": "Path to mixin file from the root of the JAR",
+              "@": ""
+            },
+            {
+              "": "$ANY",
+              "?config": {
+                "#": "Path to mixin file from the root of the JAR",
+                "@": ""
+              },
+              "?environment": "$environment"
+            }
+          ]
         },
         {
-          "": "$ANY",
-          "?config": {
-            "#": "Path to mixin file from the root of the JAR",
-            "@": ""
-          },
-          "?environment": "$environment"
+          "|": [
+            "",
+            {
+              "": "$ANY"
+            }
+          ]
         }
       ]
     }

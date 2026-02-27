@@ -22,10 +22,21 @@
       },
       "?seed": {
         "#": "Seed to use as the basis of randomization. Null causes the seed to be determined randomly at the start of execution.",
-        "|": [
-          "",
-          -1.0,
-          null
+        "&": [
+          {
+            "|": [
+              "",
+              -1.0,
+              null
+            ]
+          },
+          {
+            "|": [
+              null,
+              -1.0,
+              ""
+            ]
+          }
         ]
       },
       "?stopOnSpecFailure": {
@@ -62,11 +73,32 @@
     }
   },
   "&": [
-    "$root-items",
     {
-      "": "$ANY",
-      "?env": "$env-items"
+      "&": [
+        {
+          "&": [
+            "$root-items",
+            {
+              "": "$ANY"
+            }
+          ]
+        },
+        {
+          "": "$ANY",
+          "?env": "$env-items"
+        },
+        {
+          "&": [
+            "$env-items",
+            {
+              "": "$ANY"
+            }
+          ]
+        }
+      ]
     },
-    "$env-items"
+    {
+      "": "$ANY"
+    }
   ]
 }

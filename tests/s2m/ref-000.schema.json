@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": { "type": "string", "enum": [ "hello", "world" ] },
+    "bla": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "foo": { "$ref": "#/properties/foo" }
+        }
+      }
+    } 
+  }
+}
+  

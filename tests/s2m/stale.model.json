@@ -6,15 +6,15 @@
       "?closeComment": {
         "#": "Comment to post when closing a stale issue or pull request.",
         "|": [
-          "",
-          true
+          true,
+          ""
         ]
       },
       "?daysUntilClose": {
         "#": "Number of days of inactivity before an Issue or Pull Request with the stale label is closed.",
         "|": [
-          -1,
-          true
+          true,
+          -1
         ]
       },
       "?daysUntilStale": {
@@ -46,8 +46,8 @@
       "?markComment": {
         "#": "Comment to post when marking as stale.",
         "|": [
-          "",
-          true
+          true,
+          ""
         ]
       },
       "?only": {
@@ -72,8 +72,8 @@
       "?unmarkComment": {
         "#": "Comment to post when removing the stale label.",
         "|": [
-          "",
-          true
+          true,
+          ""
         ]
       }
     }
