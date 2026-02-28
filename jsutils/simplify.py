@@ -572,6 +572,18 @@ def simplifySchema(
                 local["const"] = local["enum"][0]
                 del local["enum"]
 
+        # min/maxContains without contains are ignored, and should be ints
+        if "minContains" in local:
+            if "contains" not in local:
+                del local["minContains"]
+            elif isinstance(local["minContains"], float):
+                local["minContains"] = int(local["minContains"])
+        if "maxContains" in local:
+            if "contains" not in local:
+                del local["maxContains"]
+            elif isinstance(local["maxContains"], float):
+                local["maxContains"] = int(local["maxContains"])
+
         return local
 
     schema = recurseSchema(schema, url, flt=fltSimpler, rwt=rwtSimpler)

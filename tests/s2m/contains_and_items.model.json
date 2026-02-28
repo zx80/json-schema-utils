@@ -1,0 +1,18 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "&": [
+    {
+      ">=": 5,
+      "@": [
+        ""
+      ]
+    },
+    {
+      ".in": "/^a/",
+      ">=": 3,
+      "@": [
+        "$ANY"
+      ]
+    }
+  ]
+}

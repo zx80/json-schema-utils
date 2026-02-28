@@ -6,7 +6,7 @@ MODEL.opts  = --no-strict --fix
 .PHONY: gen
 gen: $(F.model)
 %.model.json: %.schema.json
-	jsu-model $(MODEL.opts) -o $@ $<
+	jsu-model --quiet $(MODEL.opts) -o $@ $<
 
 .PHONY: clean
 clean:

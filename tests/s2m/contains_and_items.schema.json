@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "at least 5 string items, at least 2 of which begin with an a",
+  "type": "array",
+  "items": { "type": "string" },
+  "minItems": 5,
+  "contains": { "type": "string", "pattern": "^a" },
+  "minContains": 3
+}

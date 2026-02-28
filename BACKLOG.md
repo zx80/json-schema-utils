@@ -2,6 +2,9 @@
 
 ## JSU schema compilation with JMC backend
 
+- [x] improve conversion of int/float enums and consts
+- [x] improve conversion with mixed minContains/maxContains and other array constraints
+- [ ] fix conversion of `json-model.schema.json`
 - [ ] move typing out to simplify the generated code
 - [ ] be listed on [bowtie](https://bowtie.report/)
 - [ ] get 100% on _draft2019-09_
