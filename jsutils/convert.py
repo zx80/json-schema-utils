@@ -580,6 +580,44 @@ def schema2model(
     #     log.warning("removing type from constructed schema?")
     #     del schema["type"]
 
+    # split m*Items/m*Contains before model conversion
+    if (("minItems" in schema or "maxItems" in schema) and
+            ("minContains" in schema or "maxContains" in schema)):
+        # split
+        arrs, cons = {"type": "array"}, {"type": "array"}
+        for p, v in list(schema.items()):
+            if p in ("minContains", "maxContains", "contains"):
+                cons[p] = schema.pop(p)
+            elif p in ("minItems", "maxItems", "items", "prefixItems",
+                       "uniqueItems", "additionalItems", "unevaluatedItems"):
+                arrs[p] = schema.pop(p)
+        # combine this into schema
+        if "type" in schema:
+            ts = schema["type"]
+            if ts == "array":
+                if "allOf" in schema:
+                    schema["allOf"] += [ arrs, cons ]
+                else:
+                    schema["allOf"] = [ arrs, cons ]
+                del schema["type"]  # not needed
+            elif isinstance(ts, list):
+                if "array" not in ts:
+                    # we just removed props incompatible with the type
+                    pass
+                else:
+                    assert False, "FIXME not implemented yet"
+            else:
+                # we just removed props incompatible with the type
+                pass
+        else:
+            if "anyOf" not in schema:
+                schema["anyOf"] = [
+                    { "type": ["null", "integer", "number", "string", "object"] },
+                    { "allOf": [ arrs, cons ] }
+                ]
+            else:
+                assert False, "FIXME not implemented yet"
+
     # structures
     if "oneOf" in schema:
         choices = schema["oneOf"]
@@ -822,6 +860,27 @@ def schema2model(
             #     assert isinstance(val, str), path
             #     constraints["encoding"] = val
             return buildModel(model, constraints, defs, sharp, is_root)
+        elif ts == "number" and "const" in schema:
+            fval = schema["const"]
+            if isinstance(fval, (int, float)):
+                model = f"={float(fval)}"
+            else:
+                model = "$NONE"
+            return buildModel(model, {}, defs, sharp, is_root)
+        elif ts == "number" and "enum" in schema:
+            enums = schema["enum"]
+            assert isinstance(enums, list)
+            enums = list(filter(lambda f: isinstance(f, (int, float)), enums))
+            # TODO filter with numerical constraints if any
+            models = sorted(set(f"={float(f)}" for f in enums))
+            match len(models):
+                case 0:
+                    model = "$NONE"
+                case 1:
+                    model = models[0]
+                case _:
+                    model = {"|": models}
+            return buildModel(model, {}, defs, sharp, is_root)
         elif ts == "number":
             doubt(only(schema, "type", "format", "multipleOf", "minimum", "maximum",
                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE),
@@ -841,9 +900,49 @@ def schema2model(
         elif ts == "integer" and "const" in schema:
             ival = schema["const"]
             if isinstance(ival, (int, float)) and ival == int(ival):
-                model = "={int(ival)}"
+                model = f"={int(ival)}"
             else:
                 model = "$NONE"
+            return buildModel(model, {}, defs, sharp, is_root)
+        elif ts == "integer" and "enum" in schema:
+            enums = schema["enum"]
+            assert isinstance(enums, list)
+            # keep (loose) ints
+            ivals = list(filter(lambda i: isinstance(i, (int, float)) and i == int(i), enums))
+            # cast to int
+            ivals = [ int(i) for i in ivals ]
+            # additional filtering
+            if "minimum" in schema:
+                mini = schema["minimum"]
+                assert isinstance(mini, (int, float))
+                ivals = list(filter(lambda i: i >= mini, ivals))
+            if "exclusiveMinimum" in schema:
+                mini = schema["exclusiveMinimum"]
+                assert isinstance(mini, (int, float))
+                ivals = list(filter(lambda i: i > mini, ivals))
+            if "maximum" in schema:
+                maxi = schema["maximum"]
+                assert isinstance(maxi, (int, float))
+                ivals = list(filter(lambda i: i <= maxi, ivals))
+            if "exclusiveMaximum" in schema:
+                maxi = schema["exclusiveMaximum"]
+                assert isinstance(maxi, (int, float))
+                ivals = list(filter(lambda i: i < maxi, ivals))
+            if "multipleOf" in schema:
+                mo = schema["multipleOf"]
+                assert isinstance(mo, (int, float))
+                # FIXME numerically unsound
+                ivals = list(filter(lambda i: i % mo == 0, ivals))
+            # generate model
+            models = sorted(set(f"={i}" for i in ivals))
+            match len(ivals):
+                case 0:
+                    model = "$NONE"
+                case 1:
+                    model = models[0]
+                case _:
+                    model = {"|": models}
+            return buildModel(model, {}, defs, sharp, is_root)
         elif ts == "integer":
             doubt(only(schema, "type", "format", "multipleOf", "minimum", "maximum",
                        "exclusiveMinimum", "exclusiveMaximum", *IGNORE),
@@ -1045,14 +1144,29 @@ def schema2model(
                     "@": ["$ANY"],
                     ".in": schema2model(schema["contains"], lid or url, path + ("contains", ), defs, strict, fix, False, resilient)
                 }
+                # the semantics is quite special
                 if "minContains" in schema:
                     mini = schema["minContains"]
                     assert type(mini) is int, f"int min contains at [{spath}]"
                     model[">="] = mini
+                elif "maxContains" in schema:
+                    # ensure that there is at least one
+                    model[">="] = 1
+                # else neither minContains nor maxContains
                 if "maxContains" in schema:
                     maxi = schema["maxContains"]
                     assert type(maxi) is int, f"int max contains at [{spath}]"
+                    # NOTE 0 may be used to for "not"
                     model["<="] = maxi
+                # post cleanup
+                if "<=" in model and ">=" in model:
+                    maxi, mini = model["<="], model[">="]
+                    if maxi < mini:
+                        model = "$NONE"
+                    elif maxi == mini:
+                        del model["<="]
+                        del model[">="]
+                        model["="] = mini
                 return buildModel(model, constraints, defs, sharp, is_root)
             else:
                 return buildModel(["$ANY"], constraints, defs, sharp, is_root)

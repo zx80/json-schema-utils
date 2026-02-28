@@ -1,7 +1,7 @@
 # JSON Schema Test Suite Report
 
 JSTS version: `583d7c62c9f5fc382530d59e0fa01481a6d10470`
-JSU version: `0.9.0 (backend jmc 2.0b37)`
+JSU version: `0.9.1 (backend jmc 2.0b38)`
 
 ## Results for _draft2020-12_
 
@@ -25,12 +25,12 @@ JSU version: `0.9.0 (backend jmc 2.0b37)`
 - `/if-then-else.json`: errors=0 cases=12/12 (100.0%) tests=30/30 (100.0%, 0 fails)
 - `/infinite-loop-detection.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
 - `/items.json`: errors=0 cases=9/10 (90.0%) tests=28/29 (96.6%, 1 fails)
-- `/maxContains.json`: errors=0 cases=2/4 (50.0%) tests=10/12 (83.3%, 2 fails)
+- `/maxContains.json`: errors=0 cases=4/4 (100.0%) tests=12/12 (100.0%, 0 fails)
 - `/maximum.json`: errors=0 cases=2/2 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `/maxItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `/maxLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `/maxProperties.json`: errors=0 cases=3/3 (100.0%) tests=10/10 (100.0%, 0 fails)
-- `/minContains.json`: errors=0 cases=3/8 (37.5%) tests=21/28 (75.0%, 7 fails)
+- `/minContains.json`: errors=0 cases=8/8 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/minimum.json`: errors=0 cases=2/2 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `/minItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `/minLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
@@ -51,7 +51,7 @@ JSU version: `0.9.0 (backend jmc 2.0b37)`
 - `/unevaluatedProperties.json`: errors=0 cases=11/42 (26.2%) tests=82/125 (65.6%, 43 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=292/377 (77.5%) tests=1167/1277 (91.4%, 110 fails)
+- summary: files=46 errors=0 cases=299/377 (79.3%) tests=1176/1277 (92.1%, 101 fails)
 
 ## Results for _draft2019-09_
 
@@ -75,12 +75,12 @@ JSU version: `0.9.0 (backend jmc 2.0b37)`
 - `/if-then-else.json`: errors=0 cases=12/12 (100.0%) tests=30/30 (100.0%, 0 fails)
 - `/infinite-loop-detection.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
 - `/items.json`: errors=0 cases=9/9 (100.0%) tests=28/28 (100.0%, 0 fails)
-- `/maxContains.json`: errors=0 cases=2/4 (50.0%) tests=10/12 (83.3%, 2 fails)
+- `/maxContains.json`: errors=0 cases=4/4 (100.0%) tests=12/12 (100.0%, 0 fails)
 - `/maximum.json`: errors=0 cases=2/2 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `/maxItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `/maxLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `/maxProperties.json`: errors=0 cases=3/3 (100.0%) tests=10/10 (100.0%, 0 fails)
-- `/minContains.json`: errors=0 cases=3/8 (37.5%) tests=21/28 (75.0%, 7 fails)
+- `/minContains.json`: errors=0 cases=8/8 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/minimum.json`: errors=0 cases=2/2 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `/minItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `/minLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
@@ -101,7 +101,7 @@ JSU version: `0.9.0 (backend jmc 2.0b37)`
 - `/unevaluatedProperties.json`: errors=0 cases=11/42 (26.2%) tests=82/125 (65.6%, 43 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=295/368 (80.2%) tests=1150/1242 (92.6%, 92 fails)
+- summary: files=46 errors=0 cases=302/368 (82.1%) tests=1159/1242 (93.3%, 83 fails)
 
 ## Results for _draft7_
 
@@ -268,12 +268,12 @@ JSU version: `0.9.0 (backend jmc 2.0b37)`
 - `/if-then-else.json`: errors=0 cases=10/10 (100.0%) tests=26/26 (100.0%, 0 fails)
 - `/infinite-loop-detection.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
 - `/items.json`: errors=0 cases=9/10 (90.0%) tests=28/29 (96.6%, 1 fails)
-- `/maxContains.json`: errors=0 cases=2/4 (50.0%) tests=10/12 (83.3%, 2 fails)
+- `/maxContains.json`: errors=0 cases=4/4 (100.0%) tests=12/12 (100.0%, 0 fails)
 - `/maximum.json`: errors=0 cases=2/2 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `/maxItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `/maxLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `/maxProperties.json`: errors=0 cases=3/3 (100.0%) tests=10/10 (100.0%, 0 fails)
-- `/minContains.json`: errors=0 cases=3/8 (37.5%) tests=21/28 (75.0%, 7 fails)
+- `/minContains.json`: errors=0 cases=8/8 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/minimum.json`: errors=0 cases=2/2 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `/minItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `/minLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
@@ -293,5 +293,5 @@ JSU version: `0.9.0 (backend jmc 2.0b37)`
 - `/unevaluatedItems.json`: errors=0 cases=8/29 (27.6%) tests=43/71 (60.6%, 28 fails)
 - `/unevaluatedProperties.json`: errors=0 cases=11/42 (26.2%) tests=82/125 (65.6%, 43 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- summary: files=44 errors=0 cases=259/343 (75.5%) tests=1003/1113 (90.1%, 110 fails)
+- summary: files=44 errors=0 cases=266/343 (77.6%) tests=1012/1113 (90.9%, 101 fails)
 
