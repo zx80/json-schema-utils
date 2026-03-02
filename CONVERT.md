@@ -4,7 +4,7 @@ Some discussion about how to convert some advanced features.
 
 ## Logical keyword elimination
 
-Keywords `if then else not dependentSchemas` can be
+Keywords `if then else not dependentSchemas dependentRequired` can be
 replaced with `anyOf andOf oneOf` equivalents as shown below.
 
 ### Keyword `not`
@@ -14,14 +14,18 @@ Expression _not(S)_ is converted to _oneOf(true, S)_.
 ### Keyword `if then else`
 
 Expression _if(C) then(T) else(E)_ is converted to
-_oneOf(allOf(C, T), allOf(not(C), E))_
-which, given that _C_ and _not(C)_ are disjunct, is
 _anyOf(allOf(C, T), allOf(not(C), E))_.
+Given that _C_ and _not(C)_ are disjunct, _oneOf_ would be okay as well.
 
 ### Keyword `dependentSchemas`
 
-Expression _deps(P -> S)_ is converted to
-_if(required(P)) then(S)_, using `allOf` as a wrapper if there are several.
+Expression _depS(P -> S)_ is converted to _if(required(P)) then(S)_.
+If there are several properties in the mapping, a additional _allOf_ wrapper is
+used.
+
+### Keyword `dependentRequired`
+
+Expression _depR(P -> L)_ is converted to _if(required(P)) then(required(L))_.
 
 ### `xxxOf` and `$ref` reductions
 
