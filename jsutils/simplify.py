@@ -467,6 +467,16 @@ def simplifySchema(
                     local["then"] = selse
                     del local["else"]
 
+        # properties
+        # FIXME consider more in-place stuff?
+        if ("unevaluatedProperties" in local and "additionalProperties" not in local and
+                ("$ref" not in local and "allOf" not in local and "anyOf" not in local and
+                 "oneOf" not in local and "$dynamicRef" not in local)):
+            local["additionalProperties"] = local.pop("unevaluatedProperties")
+        if "additionalProperties" in local and "unevaluatedProperties" in local:
+            # second is shadowed by first thus can be dropped
+            del local["unevaluatedProperties"]
+
         # short type list
         if "type" in local and isinstance(local["type"], list):
             types = local["type"]
@@ -531,7 +541,7 @@ def simplifySchema(
                 simpler = _ignored(local)
                 assert isinstance(simpler, dict)  # pyright hint
                 if len(simpler) == 2 and "type" in local:
-                    # lone keyword
+                    # lone keyword without effect
                     for kw in ("additionalProperties", "unevaluatedProperties"):
                         if kw in local:
                             subschema = _ignored(local[kw])  # pyright: ignore

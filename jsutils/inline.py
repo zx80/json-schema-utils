@@ -92,7 +92,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
         # FIXME probably not allowed unless some conditions
         assert isinstance(schema, dict)  # pyright
         if "additionalProperties" in schema and not is_any(schema["additionalProperties"]):  # type: ignore
-            raise JSUError(f"cannot merge prop {prop} with existing additionanProperties")
+            raise JSUError(f"cannot merge prop {prop} with existing additionalProperties")
         if prop in schema:
             props = schema[prop]
             assert isinstance(value, dict) and isinstance(props, dict)
@@ -104,6 +104,20 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
                         props[p] = {"allOf": [ props[p], s ]}  # type: ignore
                 else:
                     props[p] = s
+        else:
+            schema[prop] = value
+    elif prop == "patternProperties":
+        assert isinstance(value, dict)
+        # NOTE unevaluatedProperties can be ignored as it is processed later
+        # it is mergeable with properties if these is only a trivial additionalProperties (true)
+        if "additionalProperties" in schema and not is_any(schema["additionalProperties"]):
+            raise JSUError(f"cannot merge prop {prop} with existing additionalProperties")
+        # properties: not an issue?
+        if "patternProperties" in schema:
+            if value == schema["patternProperties"]:  # unlikely
+                pass
+            else:
+                raise JSUError(f"cannot merge prop {prop} with existing patternProperties")
         else:
             schema[prop] = value
     elif prop in ("allOf", "anyOf", "oneOf"):
@@ -222,9 +236,21 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     elif prop == "additionalProperties":
         # NOTE this is fun (or not): it cannot really be mixed with an open object
         # because the checks must be applied independently…
+        # NOTE an existing unevaluatedProperties is not an issue because
+        # it is expected to be shadowed?
         if prop in schema and schema[prop] == value:
             pass
+        elif prop not in schema and is_any(value):
+            # special case which will work because it does not need a double check
+            schema[prop] = value
         else:
+            raise JSUError(f"merging of prop {prop} is not supported (yet)")
+    elif prop == "unevaluatedProperties":
+        if "additionalProperties" in schema:
+            # the prop is overshadowed
+            pass
+        else:
+            # more thoughts needed
             raise JSUError(f"merging of prop {prop} is not supported (yet)")
     # TODO
     # - $ref pattern with allOf?

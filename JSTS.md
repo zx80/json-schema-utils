@@ -43,15 +43,15 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/prefixItems.json`: errors=0 cases=4/4 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `/properties.json`: errors=0 cases=6/6 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/propertyNames.json`: errors=0 cases=6/6 (100.0%) tests=20/20 (100.0%, 0 fails)
-- `/ref.json`: errors=0 cases=31/36 (86.1%) tests=74/79 (93.7%, 5 fails)
+- `/ref.json`: errors=0 cases=32/36 (88.9%) tests=75/79 (94.9%, 4 fails)
 - `/refRemote.json`: errors=0 cases=14/15 (93.3%) tests=30/31 (96.8%, 1 fails)
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: errors=0 cases=8/29 (27.6%) tests=43/71 (60.6%, 28 fails)
-- `/unevaluatedProperties.json`: errors=0 cases=11/42 (26.2%) tests=82/125 (65.6%, 43 fails)
+- `/unevaluatedProperties.json`: errors=0 cases=30/42 (71.4%) tests=110/125 (88.0%, 15 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=299/377 (79.3%) tests=1176/1277 (92.1%, 101 fails)
+- summary: files=46 errors=0 cases=319/377 (84.6%) tests=1205/1277 (94.4%, 72 fails)
 
 ## Results for _draft2019-09_
 
@@ -93,15 +93,15 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/properties.json`: errors=0 cases=6/6 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/propertyNames.json`: errors=0 cases=6/6 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `/recursiveRef.json`: errors=0 cases=1/9 (11.1%) tests=23/34 (67.6%, 11 fails)
-- `/ref.json`: errors=0 cases=30/37 (81.1%) tests=74/81 (91.4%, 7 fails)
+- `/ref.json`: errors=0 cases=31/37 (83.8%) tests=75/81 (92.6%, 6 fails)
 - `/refRemote.json`: errors=0 cases=14/15 (93.3%) tests=30/31 (96.8%, 1 fails)
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: errors=0 cases=11/26 (42.3%) tests=39/56 (69.6%, 17 fails)
-- `/unevaluatedProperties.json`: errors=0 cases=11/42 (26.2%) tests=82/125 (65.6%, 43 fails)
+- `/unevaluatedProperties.json`: errors=0 cases=26/42 (61.9%) tests=105/125 (84.0%, 20 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=302/368 (82.1%) tests=1159/1242 (93.3%, 83 fails)
+- summary: files=46 errors=0 cases=318/368 (86.4%) tests=1183/1242 (95.2%, 59 fails)
 
 ## Results for _draft7_
 
@@ -286,12 +286,12 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/prefixItems.json`: errors=0 cases=4/4 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `/properties.json`: errors=0 cases=6/6 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/propertyNames.json`: errors=0 cases=3/3 (100.0%) tests=10/10 (100.0%, 0 fails)
-- `/ref.json`: errors=0 cases=27/37 (73.0%) tests=68/80 (85.0%, 12 fails)
+- `/ref.json`: errors=0 cases=28/37 (75.7%) tests=69/80 (86.2%, 11 fails)
 - `/refRemote.json`: errors=0 cases=11/15 (73.3%) tests=27/31 (87.1%, 4 fails)
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: errors=0 cases=8/29 (27.6%) tests=43/71 (60.6%, 28 fails)
-- `/unevaluatedProperties.json`: errors=0 cases=11/42 (26.2%) tests=82/125 (65.6%, 43 fails)
+- `/unevaluatedProperties.json`: errors=0 cases=26/42 (61.9%) tests=105/125 (84.0%, 20 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- summary: files=44 errors=0 cases=266/343 (77.6%) tests=1012/1113 (90.9%, 101 fails)
+- summary: files=44 errors=0 cases=282/343 (82.2%) tests=1036/1113 (93.1%, 77 fails)
 
