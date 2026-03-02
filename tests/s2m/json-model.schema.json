@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://json-model.org/schemas/json-model",
+  "title": "JSON Schema for JSON Model, painfully written by hand",
+  "$defs": {
+    "common": {
+      "title": "Common Object Stuff",
+      "type": "object",
+      "properties": {
+        "#": { "type": "string" }
+      },
+      "patternProperties": {
+        "^#.": {}
+      }
+    },
+    "simpleModel": {
+      "$comment": "restricted list of scalars which are models",
+      "enum": [ null, true, -1, 0, 1, -1.0, 0.0, 1.0, "" ]
+    },
+    "stringModel": {
+      "type": "string",
+      "pattern": "(?s)^(/.*/[Xa-z]*|=(null|true|false|-?\\d+.*)|\\$.*|[_a-zA-Z0-9].*)$",
+      "minLength": 1
+    },
+    "cmpValue": {
+      "type": [ "integer", "number", "string" ]
+    },
+    "arrayModel": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "$ref": "#/$defs/Model" },
+          { "type": "string", "pattern": "^#" }
+        ]
+      }
+    },
+    "simpleObject": {
+      "type": "object",
+      "$ref": "#/$defs/common",
+      "$comment": "handle specials to ensure oneOf",
+      "patternProperties": { "^[@|^&+]$": false, "^#": true },
+      "properties": { "$": true, "%": true, "~": true },
+      "additionalProperties": { "$ref": "#/$defs/Model" }
+    },
+    "andModel": {
+      "type": "object",
+      "$ref": "#/$defs/common",
+      "properties": {
+        "&": { "$ref": "#/$defs/arrayModel" },
+        "$": true, "%": true, "~": true
+      },
+      "patternProperties": { "^#": true },
+      "additionalProperties": false,
+      "required": [ "&" ]
+    },
+    "orModel": {
+      "type": "object",
+      "$ref": "#/$defs/common",
+      "properties": {
+        "|": { "$ref": "#/$defs/arrayModel" },
+        "$": true, "%": true, "~": true
+      },
+      "patternProperties": { "^#": true },
+      "additionalProperties": false,
+      "required": [ "|" ]
+    },
+    "xorModel": {
+      "type": "object",
+      "$ref": "#/$defs/common",
+      "properties": {
+        "^": { "$ref": "#/$defs/arrayModel" },
+        "$": true, "%": true, "~": true
+      },
+      "patternProperties": { "^#": true },
+      "additionalProperties": false,
+      "required": [ "^" ]
+    },
+    "addModel": {
+      "type": "object",
+      "$ref": "#/$defs/common",
+      "properties": {
+        "+": { "$ref": "#/$defs/arrayModel" },
+        "$": true, "%": true, "~": true
+      },
+      "patternProperties": { "^#": true },
+      "additionalProperties": false,
+      "required": [ "+" ]
+    },
+    "constraintModel": {
+      "$comment": "no extensions .mo and .in",
+      "type": "object",
+      "$ref": "#/$defs/common",
+      "properties": {
+        "@": { "$ref": "#/$defs/Model" },
+        "=": { "$ref": "#/$defs/cmpValue" },
+        "!=": { "$ref": "#/$defs/cmpValue" },
+        "<=": { "$ref": "#/$defs/cmpValue" },
+        ">=": { "$ref": "#/$defs/cmpValue" },
+        "<": { "$ref": "#/$defs/cmpValue" },
+        ">": { "$ref": "#/$defs/cmpValue" },
+        "!": { "type": "boolean" },
+        "$": true, "%": true, "~": true
+      },
+      "patternProperties": { "^#": true },
+      "additionalProperties": false,
+      "required": [ "@" ]
+    },
+    "objModel": {
+      "description": "A model which uses an object representation",
+      "type": "object",
+      "oneOf": [
+        { "$ref": "#/$defs/simpleObject" },
+        { "$ref": "#/$defs/andModel" },
+        { "$ref": "#/$defs/orModel" },
+        { "$ref": "#/$defs/xorModel" },
+        { "$ref": "#/$defs/addModel" },
+        { "$ref": "#/$defs/constraintModel" }
+      ]
+    },
+    "Model": {
+      "$comment": "a model which is NOT at the root, thus root-specific props are rejected",
+      "oneOf": [
+        { "$ref": "#/$defs/simpleModel" },
+        { "$ref": "#/$defs/stringModel" },
+        { "$ref": "#/$defs/arrayModel" },
+        { "$ref": "#/$defs/objModel" }
+      ],
+      "properties": { "$": false, "%": false, "~": false }
+    },
+    "defsModel": {
+      "description": "Keywords available only at the root",
+      "type": "object",
+      "$ref": "#/$defs/objModel",
+      "properties": {
+        "~": {
+          "description": "Meta Model URL",
+          "type": "string",
+          "format": "uri"
+        },
+        "$": {
+          "description": "local definitions",
+          "type": "object",
+          "properties": {
+            "": {"type": "string"}
+          },
+          "patternProperties": { "^#": {"type": "string"} },
+          "additionalProperties": { "$ref": "#/$defs/Model" }
+        },
+        "%": {
+          "description": "renames and rewrites",
+          "type": "object",
+          "properties": {
+            "<": {
+              "anyOf": [
+                { "type": "string", "pattern": "^\\$" },
+                { "type": "array", "items": { "type": "string", "pattern": "^\\$" } }
+              ]
+            }
+          },
+          "patternProperties": {
+            "^\\.": { "type": "string" },
+            "^#": { "type": "string" }
+          },
+          "additionalProperties": {
+            "$comment": "TODO improve",
+            "anyOf": [
+              { "$ref": "#/$defs/Model" },
+              { "?*": "$ANY", "?/": "$ANY", "?#": {"type": "string"} }
+            ]
+          }
+        }
+      }
+    },
+    "rootModel": {
+      "oneOf": [
+        { "$ref": "#/$defs/simpleModel" },
+        { "$ref": "#/$defs/stringModel" },
+        { "$ref": "#/$defs/arrayModel" },
+        { "$ref": "#/$defs/defsModel" }
+      ]
+    }
+  },
+  "$ref": "#/$defs/rootModel"
+}
