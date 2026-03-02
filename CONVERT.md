@@ -35,6 +35,8 @@ only one of these keywords.
 Expression _allOf(L1) oneOf(L2) anyOf(L3) ref others_ is converted to
 _allOf(L1, oneOf(L2), anyOf(L3), ref, others)_.
 
+FIXME: this does **not** apply to `unevaluatedProperties`?
+
 ## Dynamic Stuff
 
 How to handle `$dynamicAnchor` and `$dynamicRef`.
