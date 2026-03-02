@@ -531,7 +531,7 @@ def schema2model(
     # FIXME adhoc handling for table-schema.json and ADEME and others
     # FIXME maybe this is not needed anymore?
     if "type" in schema and schema["type"] == "object" and ("anyOf" in schema or "oneOf" in schema):
-        log.warning(f"distributing object on anyOf/oneOf at [{spath}]")
+        log.info(f"distributing object on anyOf/oneOf at [{spath}]")
         # special case for Ademe
         if "anyOf" in schema:
             assert "oneOf" not in schema
@@ -635,7 +635,7 @@ def schema2model(
                     pass
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # try building an "allOf" layer
-            log.warning(f"keyword oneOf intermixed with other keywords at [{spath}]")
+            log.info(f"keyword oneOf intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "oneOf")
             model = schema2model(ao, lid or url, path + ("oneOf",), defs, strict, fix, False, resilient)
             return buildModel(model, {}, defs, sharp, is_root)
@@ -656,7 +656,7 @@ def schema2model(
                     pass
             return buildModel(model, {}, defs, sharp, is_root)
         else:
-            log.warning(f"keyword anyOf intermixed with other keywords at [{spath}]")
+            log.info(f"keyword anyOf intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "anyOf")
             model = schema2model(ao, lid or url, path + ("anyOf",), defs, strict, fix, False, resilient)
             return buildModel(model, {}, defs, sharp, is_root)
@@ -677,7 +677,7 @@ def schema2model(
                     pass
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # build another allOf layer
-            log.warning(f"keyword allOf intermixed with other keywords at [{spath}]")
+            log.info(f"keyword allOf intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "allOf")
             model = schema2model(ao, lid or url, path + ("allOf", ), defs, strict, fix, False, resilient)
             return buildModel(model, {}, defs, sharp, is_root)
@@ -695,7 +695,7 @@ def schema2model(
                 model = {"^": ["$ANY", schema2model(val, lid or url, path + ("not", ), defs, strict, fix, False, resilient)]}
             return buildModel(model, {}, defs, sharp, is_root)
         else:  # add a allOf layer
-            log.warning(f"keyword not intermixed with other keywords at [{spath}]")
+            log.info(f"keyword not intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "not")
             model = schema2model(ao, lid or url, path + ("not", ), defs, strict, fix, False, resilient)
             return buildModel(model, {}, defs, sharp, is_root)
@@ -759,7 +759,7 @@ def schema2model(
             else:
                 assert False, f"$ref handling not implemented: {ref}"
         else:
-            log.warning(f"$ref intermixed with other keywords at [{spath}]")
+            log.info(f"$ref intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "$ref")
             model = schema2model(ao, lid or url, path, defs, strict, fix, False, resilient)
             return buildModel(model, {}, defs, sharp, is_root)
