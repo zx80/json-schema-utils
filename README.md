@@ -80,23 +80,28 @@ You could also use `jq .` for this purpose.
 ## JSON Schema to JSON Model Conversion
 
 Convert a subset of JSON Schema to JSON Model.
-The subset should comply with some restrictions described in Section 6 of
-[An Analysis of Defects in Public JSON Schemas](https://minesparis-psl.hal.science/hal-04415517/file/A-794-DepotHAL.pdf)
-by Claire Yannou-Medrala and Fabien Coelho:
 
-- `const`, `enum`, `$ref`, `type`, `allOf`, `anyOf`, `oneOf` should be exclusive.
-- some keywords are not supported: `multipleOf`, `contains`
-- conditions `if then else` are translated to the logical equivalent:
-  `{if: C, then: T, else: E}` is _(C and T) or (not C and E)_
+This conversion does not fully support draft 2019-09 and 2020-12,
+only trivial cases are supported for:
+
+- _dynamic_ anchors and references;
+- _unevaluated_ stuff;
+- _vocabularies_;
+- some cases of anchor/ref/defs, contains and not still fail.
+
+Moreover, this is a software, hence there may be bugs.
 
 ```sh
-jsu-model test/foo.schema.json
+jsu-model -o foo.model.json foo.schema.json
 ```
 
 ## JSON Schema Compiler
 
-Convert the input schema and generate C, JS, Python, Java, Perl or even PL/pgSQL code
-using the [JSON Model Compiler](https://json-model.org/) as a backend.
+Convert the input schema and generate C, JS, Python, Java, Perl or even PL/pgSQL code.
+
+The compiler first converts the schema to a model (see previous command), then
+proceeds to compile the generated model to actual code using the
+[JSON Model Compiler](https://json-model.org/) as a backend.
 
 ```sh
 # generate a python script
