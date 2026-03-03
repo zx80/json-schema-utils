@@ -56,6 +56,7 @@ class JSUError(BaseException):
     pass
 
 
+# similar to has_only but with a message
 def only(schema, *props) -> bool:
     """Tell whether schema only contains these props."""
     assert isinstance(schema, dict)
@@ -71,14 +72,46 @@ def used_props(schema, *props) -> set[str]:
     return set(props) & schema.keys()
 
 
-def has(schema, *props):
-    """Tell whether schema has any of these props."""
+def has_all(schema, *props) -> bool:
+    """Tell whether schema has all of these props."""
     assert isinstance(schema, dict)
-    for p in schema.keys():
+    for p in props:
+        if p not in schema:
+            return False
+    return True
+
+def has_only(schema, *props) -> bool:
+    """Tell whether schema has only these props."""
+    assert isinstance(schema, dict)
+    for p in schema:
         if p not in props:
             return False
     return True
 
+def has_none(schema, *props) -> bool:
+    """Tell whether schema has none of these props."""
+    assert isinstance(schema, dict)
+    for p in props:
+        if p in schema:
+            return False
+    return True
+
+def has_any(schema, *props) -> bool:
+    """Tell whether schema has any of these props (reverse of previous)."""
+    assert isinstance(schema, dict)
+    for p in props:
+        if p in schema:
+            return True
+    return False
+
+def has_count(schema, *props) -> int:
+    """Tell the number of props found in schema."""
+    assert isinstance(schema, dict)
+    count: int = 0
+    for p in props:
+        if p in schema:
+            count += 1
+    return count
 
 def openfiles(args: list[str] = []):
     if not args:  # empty list is same as stdin
@@ -110,14 +143,26 @@ def schemapath_to_urlpath(path: SchemaPath) -> str:
 _IS_ABS_URL = re.compile(r"((https?|file)://|urn:)").match
 
 def is_abs_url(s: str) -> bool:
+    """Guess if a reference is some kind of absolute URL."""
     return _IS_ABS_URL(s) is not None
 
 def is_any(schema: JsonSchema) -> bool:
+    """Tell whether this schema accepts anything."""
     if isinstance(schema, bool):
         return schema
-    elif only(schema, "type", *IGNORE):
+    assert isinstance(schema, dict)
+    if only(schema, "type", *IGNORE):
         if "type" in schema:
             types = schema["type"]
             return isinstance(types, list) and set(types) == ALL_TYPES
         else:
             return True
+
+def is_none(schema: JsonSchema) -> bool:
+    """Tell if this schema accepts nothing at all."""
+    if isinstance(schema, bool):
+        return not schema
+    assert isinstance(schema, dict)
+    if "type" in schema and isinstance(schema["type"], list) and not schema["type"]:
+        return True
+    return False

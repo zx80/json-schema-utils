@@ -8,7 +8,7 @@ import json
 import re
 
 from .utils import JsonSchema, SchemaPath, JSUError
-from .utils import only, schemapath_to_urlpath, decode_url, encode_url
+from .utils import only, schemapath_to_urlpath, decode_url, encode_url, has_none, is_any
 from .utils import ALL_TYPES, IGNORE
 from .recurse import recurseSchema
 from .inline import mergeProperty, mergeSchemas
@@ -467,15 +467,16 @@ def simplifySchema(
                     local["then"] = selse
                     del local["else"]
 
-        # properties
-        # FIXME consider more in-place stuff?
-        if ("unevaluatedProperties" in local and "additionalProperties" not in local and
-                ("$ref" not in local and "allOf" not in local and "anyOf" not in local and
-                 "oneOf" not in local and "$dynamicRef" not in local)):
-            local["additionalProperties"] = local.pop("unevaluatedProperties")
-        if "additionalProperties" in local and "unevaluatedProperties" in local:
-            # second is shadowed by first thus can be dropped
-            del local["unevaluatedProperties"]
+        if "unevaluatedProperties" in local:
+            up = local["unevaluatedProperties"]
+            # NOTE cannot remove up as it may be shadowing another up
+            # thus cleanup is delayed to convert
+            if ("additionalProperties" not in local and
+                  has_none(local, "allOf", "anyOf", "oneOf", "$ref", "$dynamicRef",
+                           "if", "then", "else", "patternProperties")):
+                # FIXME consider more in-place stuff? if/then/else
+                local["additionalProperties"] = local.pop("unevaluatedProperties")
+                # NOTE cannot move to additionalProperties in constructed cases
 
         # short type list
         if "type" in local and isinstance(local["type"], list):
