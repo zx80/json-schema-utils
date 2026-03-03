@@ -5,9 +5,11 @@ import logging
 import hashlib
 import json
 
-from .utils import JsonSchema, SchemaPath, SchemaPathSegment, Jsonable
-from .utils import only, decode_url, schemapath_to_urlpath, is_abs_url
 from .utils import TYPED_KEYWORDS, KEYWORD_TYPE, META_KEYS, IGNORE, ALL_TYPES
+from .utils import JsonSchema, SchemaPath, SchemaPathSegment, Jsonable
+from .utils import decode_url, schemapath_to_urlpath, is_abs_url
+from .utils import only, has_none, has_any, has_count, is_none, is_any
+from .inline import mergeProperty
 from .recurse import recurseSchema, log as rec_log
 
 # wrapper may use a simplification step
@@ -95,7 +97,6 @@ def sesc(s: SchemaPathSegment) -> str:
         assert False, f"s={s}"
 
 def jpath(path: SchemaPath):
-    log.debug(f"path = {path}")
     return "." + ".".join(sesc(s) for s in path)
 
 def numberConstraints(schema):
@@ -235,6 +236,219 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
     # log.debug(f"splitted: {schemas}")
     return schemas
 
+#
+# UNEVALUATED PROPERTIES
+#
+
+def collectProps(schema: JsonSchema, path: SchemaPath) -> dict[str, JsonSchema]:
+    """Recursion to collect checked properties."""
+    # log.debug(f"collecting props at {path} on {schema}")
+    spath: str = jpath(path)
+    props: dict[str, JsonSchema] = {}
+    if isinstance(schema, bool):
+        return props
+    assert isinstance(schema, dict)
+    if "patternProperties" in schema:
+        log.error(f"FIXME possibly ignoring patternProperty for unvaluatedProperties at {spath}")
+        pass
+    if has_any(schema, "oneOf", "$ref", "$dynamicRef"):
+        log.error(f"FIXME possibly ignoring some strutures for unvaluatedProperties at {spath}")
+        pass
+    if "properties" in schema:
+        sprops = schema["properties"]
+        assert isinstance(sprops, dict)
+        for p, v in sprops.items():
+            if not is_none(v):  # ah…
+                props[p] = copy.deepcopy(v)
+            # else: warn? info?
+            else:
+                log.warning(f"skipping prop {p}")
+    if "allOf" in schema:
+        for i, s in enumerate(schema["allOf"]):
+            props.update(collectProps(s, path + (("allOf", i), )))
+    # this one only leads to approximations and is not safe in general?
+    # TODO combinatorial handling?
+    if "anyOf" in schema:
+        for i, s in enumerate(schema["anyOf"]):
+            props.update(collectProps(s, path + (("anyOf", i), )))
+    return props
+
+# usual object keywords WITHOUT unevaluatedProperties
+_OBJECT_KW = [
+    "properties", "maxProperties", "minProperties", "required", "additionalProperties",
+    "patternProperties", "propertyNames"
+]
+
+def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
+    """Try to remove an unevaluatedProperties from a schema in a safe way.
+
+    NOTE unevaluatedProperties is seldom used, but necessary to implement closed inheritance
+    NOTE when actually used, its contents is most of the timee "false",
+         as it is hard to think of a legitimate case with anything else?
+    NOTE the schema is already simplified, see related stuff there.
+    NOTE consider that limit case, if any, should be safe, i.e. validate?
+    NOTE this would be easier if we could assume this is cleanup to object only?
+         ensure this by separating stuff at an earlier stage?
+    TODO patternProperties: create an corresponding antipattern in some cases…
+    """
+
+    assert isinstance(schema, dict) and "unevaluatedProperties" in schema
+    spath: str = jpath(path)
+
+    # not an object, nothing to do!
+    if "type" in schema and has_any(schema, *_OBJECT_KW):
+        ts = schema["type"]
+        if (isinstance(ts, str) and ts != "object" or
+            isinstance(ts, list) and "object" not in ts):
+            for p in _OBJECT_KW:
+                if p in schema:
+                    del schema[p]
+            del schema["unevaluatedProperties"]
+            return schema
+
+    #
+    # PREPROCESSING
+    #
+    # FIXME is this redundant with a similar propagation in the convertion function?
+    # NOTE this is currently executed
+    if (only(schema, "anyOf", "oneOf", *_OBJECT_KW, "unevaluatedProperties", "type", *IGNORE) and
+            has_any(schema, *_OBJECT_KW) and has_any(schema, "anyOf", "oneOf")):
+        # we need to merge the local props into the branches to handle
+        lof = schema["anyOf"] if "anyOf" in schema else schema["oneOf"]
+        try:
+            lofc = copy.deepcopy(lof)
+            moved = []
+            for prop in _OBJECT_KW:
+                if prop not in schema:  # skip
+                    continue
+                # we merge prop into all subschemas
+                for i, s in enumerate(lofc):
+                    lofc[i] = mergeProperty(s, prop, copy.deepcopy(schema[prop]))
+                moved.append(prop)
+            # success, let's cleanup and reintegrate the initial list
+            for p in moved:
+                del schema[p]
+            for i in range(len(lof)):
+                lof[i] = lofc[i]
+        except Exception as e:
+            log.warning(f"FIXME anyOf merging for unevaluatedProperties at {spath} failed: {e}")
+            # what is safe? additionalProperties?
+            del schema["unevaluatedProperties"]
+            return schema
+
+    #
+    # SANITY CHECKS
+    #
+
+    # NOTE should not get there, to be handled before calling…
+    assert has_none(schema, "if", "then", "else", "not")
+    if has_count(schema, "anyOf", "oneOf", "allOf", "$ref", "$dynamicRef") > 1:
+        log.error(f"FIXME: multiple structures unexpected for unevaluatedProperties at {spath}")
+        del schema["unevaluatedProperties"]
+        return schema
+
+    #
+    # HANDLING
+    #
+
+    # shortcut if no structure (FIXME already in simplify?)
+    if has_none(schema, "anyOf", "oneOf", "allOf", "$ref", "$dynamicRef"):
+        if "patternProperties" in schema and not is_any(schema["unevaluatedProperties"]):
+            # FIXME this does not really work if patternProperties
+            log.error(f"FIXME patternProperties with unevaluatedProperties at {spath}")
+        if "additionalProperties" not in schema:
+            schema["additionalProperties"] = schema["unevaluatedProperties"]
+        del schema["unevaluatedProperties"]
+        return schema
+
+    # special cases where all props are already covered somehow
+    if "allOf" in schema:
+        # if ONE of allOf as an "additionalProperties" or "unevaluatedProperties"
+        # everything is accounted for already
+        assert isinstance(schema["allOf"], list)
+        for s in schema["allOf"]:
+            if (isinstance(s, dict) and
+                has_any(s, "additionalProperties", "unevaluatedProperties")):
+                del schema["unevaluatedProperties"]
+                return schema
+    if "oneOf" in schema or "anyOf" in schema:
+        lof = schema["oneOf"] if "oneOf" in schema else schema["anyOf"]
+        assert isinstance(lof, list)
+        # if all alternates are completed, it is done
+        complete = True
+        for s in lof:
+            if not (isinstance(s, dict) and
+                    has_any(s, "additionalProperties", "unevaluatedProperties")):
+                complete = False
+                break
+        if complete:
+            del schema["unevaluatedProperties"]
+            return schema
+
+    # - $ref: inline?
+
+    # - allOf: collection with $ANY is okay for known props
+    #   - unless there are "foo": false
+    #   - and NOT patternProperties involved…
+    if only(schema, "allOf", "type", "unevaluatedProperties", *IGNORE) and "allOf" in schema:
+        # add another check to absorb up
+        props = collectProps(schema, path)
+        schema["allOf"].append({
+            "$comment": "unevaluatedProperties handling",
+            "type": copy.deepcopy(schema.get("type", sorted(ALL_TYPES))),
+            "properties": { p: "$ANY" for p in sorted(props.keys()) },
+            "additionalProperties": schema.pop("unevaluatedProperties")
+        })
+        return schema
+
+    # - anyOf: collection of **all** that could have succeeded, which is combinatorial?
+    if only(schema, "anyOf", "type", "unevaluatedProperties", *IGNORE) and "anyOf" in schema:
+        log.warning(f"FIXME rough approximation of unevaluatedProperties with anyOf at {spath}")
+        props = collectProps(schema, path)
+        # add an allOf layer
+        schema["allOf"] = [
+            {
+                "type": copy.deepcopy(schema.get("type", sorted(ALL_TYPES))),
+                "anyOf": schema.pop("anyOf")
+            },
+            {
+                "$comment": "unevaluatedProperties handling",
+                "type": copy.deepcopy(schema.get("type", sorted(ALL_TYPES))),
+                "properties": { p: props[p] for p in sorted(props.keys()) },
+                "additionalProperties": schema.pop("unevaluatedProperties")
+            }
+        ]
+        # log.info(f"anyOf result {json.dumps(schema)}")
+        return schema
+
+    # - oneOf: handling by propagation is okay is only one is expected to match
+    if only(schema, "oneOf", "type", "unevaluatedProperties", *IGNORE) and "oneOf" in schema:
+        lof = schema["oneOf"]
+        # let us propagate by merging
+        ups = schema["unevaluatedProperties"]
+        try:
+            lofcop = copy.deepcopy(lof)
+            # add up to subschemas
+            for s in lofcop:
+                if isinstance(s, dict) and "unevaluatedProperties" not in s:
+                    s["unevaluatedProperties"] = copy.deepcopy(ups)
+            # then recurse?
+            # FIXME should be just do one level and wait for the conversion recursion instead?
+            for i in range(len(lofcop)):
+                lofcop[i] = handleUnevaluatedProp(lofcop[i], path + ("allOf",))
+            # success!
+            del schema["unevaluatedProperties"]
+            schema["oneOf"] = lofcop
+            return schema
+        except Exception as e:
+            log.warning(f"anyOf handling for unevaluatedProperties at {spath} failed: {e}")
+            # what is safe? additionalProperties? NOPE
+            del schema["unevaluatedProperties"]
+            return schema
+
+    log.warning(f"no handling of unevaluatedProperties at {spath}")
+    del schema["unevaluatedProperties"]
+    return schema
 
 # global identifiers
 # TODO use a cleaner context for that!
@@ -309,10 +523,10 @@ def allOfLayer(schema: dict, operator: str):
     # log.debug(f"ao {operator} in: {schema}")
     schemas = copy.deepcopy(schema[operator])
     del schema[operator]
-    # extract ignoreables
+    # extract ignoreables, keep unevaluatedProperties
     nschema = {}
     for k, v in list(schema.items()):
-        if k in IGNORE:
+        if k in IGNORE + ["unevaluatedProperties"]:
             nschema[k] = v
             del schema[k]
     # forward type just in case for *Of
@@ -516,9 +730,11 @@ def schema2model(
             if "allOf" not in schema:
                 schema["allOf"] = []
             schema["allOf"].append(subschema)
+            # try to help later handling of unevaluatedProperties
+            altern = "oneOf" if "unevaluatedProperties" in schema else "anyOf"
             schema["allOf"].append(
                 {
-                    "anyOf": [
+                    altern: [
                         { "allOf": [ sif, sthen ] },
                         { "allOf": [ { "not": copy.deepcopy(sif) }, selse ] }
                     ]
@@ -529,8 +745,8 @@ def schema2model(
         del schema["if"]
 
     # FIXME adhoc handling for table-schema.json and ADEME and others
-    # FIXME maybe this is not needed anymore?
     if "type" in schema and schema["type"] == "object" and ("anyOf" in schema or "oneOf" in schema):
+        # FIXME this is some reimplementation of mergeProperty?
         log.info(f"distributing object on anyOf/oneOf at [{spath}]")
         # special case for Ademe
         if "anyOf" in schema:
@@ -574,6 +790,7 @@ def schema2model(
             for s in lof:
                 # FIXME cold overwrite, should warn
                 s["patternProperties"] = pp
+        # NOTE unevaluatedProperties is not handled here
 
     # if "type" in schema and ("allOf" in schema or "anyOf" in schema or "oneOf" in schema or
     #                          "enum" in schema or "$ref" in schema):
@@ -617,6 +834,13 @@ def schema2model(
                 ]
             else:
                 assert False, "FIXME not implemented yet"
+
+    # remove unevaluated properties here, or it might be done in the struct recursion
+    # FIXME $ref? $dynamicRef?
+    if ("unevaluatedProperties" in schema and
+            has_count(schema, "allOf", "anyOf", "oneOf") <= 1):
+        schema = handleUnevaluatedProp(schema, path)
+        log.info(f"UP: {json.dumps(schema)}")
 
     # structures
     if "oneOf" in schema:
@@ -702,6 +926,7 @@ def schema2model(
 
     # handle simpler schemas
     # TODO "ref" for older versions?
+    # TODO ref combined with unevaluatedProperties
     if "$ref" in schema:
         if only(schema, "$ref", *IGNORE):
             ref = schema["$ref"]
@@ -764,7 +989,7 @@ def schema2model(
             model = schema2model(ao, lid or url, path, defs, strict, fix, False, resilient)
             return buildModel(model, {}, defs, sharp, is_root)
 
-    elif "type" in schema:
+    if "type" in schema:
         ts = schema["type"]
         if isinstance(ts, (list, tuple)):
 
