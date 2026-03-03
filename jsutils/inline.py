@@ -108,18 +108,20 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             schema[prop] = value
     elif prop == "patternProperties":
         assert isinstance(value, dict)
+        # NOTE patternProperties is pretty orthogonal to properties/additionalProperties
         # NOTE unevaluatedProperties can be ignored as it is processed later
-        # it is mergeable with properties if these is only a trivial additionalProperties (true)
-        if "additionalProperties" in schema and not is_any(schema["additionalProperties"]):
-            raise JSUError(f"cannot merge prop {prop} with existing additionalProperties")
-        # properties: not an issue?
-        if "patternProperties" in schema:
-            if value == schema["patternProperties"]:  # unlikely
-                pass
-            else:
-                raise JSUError(f"cannot merge prop {prop} with existing patternProperties")
+        if value and "patternProperties" not in schema:
+            schema["patternProperties"] = value
+        elif value and "patternProperties" in schema:
+            pp = schema["patternProperties"]
+            for p, s in value.items():
+                if p in pp:
+                    pp[p] = {"allOf": [ pp[p], value] }
+                else:
+                    pp[p] = s
         else:
-            schema[prop] = value
+            # ignore empty patternProperties
+            pass
     elif prop in ("allOf", "anyOf", "oneOf"):
         assert isinstance(value, list)
         if prop in schema:

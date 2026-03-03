@@ -4,6 +4,7 @@
 
 - [x] improve conversion of int/float enums and consts
 - [x] improve conversion with mixed minContains/maxContains and other array constraints
+- [x] improve handling of patternProperties merging
 - [ ] discuss strategies to address version 9 (2020) specific features
 - [ ] fix conversion of `json-model.schema.json`
 - [ ] move typing out to simplify the generated code
