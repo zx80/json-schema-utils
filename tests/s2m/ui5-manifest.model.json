@@ -8557,7 +8557,7 @@
         }
       ]
     },
-    "resourceRoot": "/^((\\.(?!\\.)\\/)?\\w+\\/?)+$/",
+    "resourceRoot": "/^((\\./)?\\w+/?)+$/",
     "rootView_def": {
       "#": "Represents the root view definition being either the name of the view or the view definition object",
       "&": [

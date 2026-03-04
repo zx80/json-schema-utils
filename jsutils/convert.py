@@ -541,11 +541,14 @@ def allOfLayer(schema: dict, operator: str):
 
 # (STRANGE) PATTERNS
 # manually simplify some patterns for re2 compatibility
-# TODO implement some automatic simplifications?
+# TODO implement some automatic simplification instead, or find some re optimizer
 PATTERN: dict[str, str] = {
     # cspell
     "^(?=[^!*,;{}[\\]~\\n]+$)(?=(.*\\w)).+$": "^[^\\[\\]!*,;{}~\\n]*\\w[^\\[\\]!*,;{}~\\n]*$",
-    "^(?=!+[^!*,;{}[\\]~\\n]+$)(?=(.*\\w)).+$": "^!+[^\\[\\]!*,;{}~\\n]*\\w[^\\[\\]!*,;{}~\\n]*$"
+    "^(?=!+[^!*,;{}[\\]~\\n]+$)(?=(.*\\w)).+$": "^!+[^\\[\\]!*,;{}~\\n]*\\w[^\\[\\]!*,;{}~\\n]*$",
+    # ui5-manifest
+    # (?!\.) "the next char is not a dot" is always true when it is a slash
+    "^((\\.(?!\\.)\\/)?\\w+\\/?)+$": "^((\\./)?\\w+/?)+$",
 }
 
 def schema2model(
