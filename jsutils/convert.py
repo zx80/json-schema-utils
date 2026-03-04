@@ -1736,8 +1736,14 @@ def schema_to_model(
         # else unknown id, proceed
     if model is None:
         try:
+            # schema identifier
+            url = schema.get("$id", ".") if isinstance(schema, dict) else "."
+            assert isinstance(url, str)
+            # run all passes
             if resolve and isinstance(schema, dict):
-                schema = resolveExternalRefs(schema, version=version, cache=cache,
+                log.debug(f"resolving external refs")
+                schema = resolveExternalRefs(
+                    schema, url=url, version=version, cache=cache,
                     modernize=modernize, mapping=mapping, level=level,
                 )
             if typer and isinstance(schema, dict):
@@ -1746,13 +1752,11 @@ def schema_to_model(
             if simpler and isinstance(schema, dict):
                 log.debug("simplifying schema")
                 scopeDefs(schema, version=version, level=level)
-                url = schema.get("$id", ".")
-                assert isinstance(url, str)
                 schema = simplifySchema(schema, url, sversion=version, level=level)
             # then actually convert to model
             if level == logging.DEBUG:
                 log.debug(f"convert in: {json.dumps(schema, indent=2)}")
-            model = schema2model(schema, ".", strict=strict, fix=fix, resilient=resilient)
+            model = schema2model(schema, url, strict=strict, fix=fix, resilient=resilient)
             if level == logging.DEBUG:
                 log.debug(f"model: {json.dumps(model, indent=2)}")
         except BaseException as e:
