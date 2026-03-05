@@ -651,6 +651,9 @@ def jsu_runner():
         try:
             # load and sanity check
             cases = json.loads(open(fname).read())
+            # accept a single test for resilience
+            if isinstance(cases, dict):
+                cases = [ cases ]
             assert check_cases(cases)
 
             for ic, case in enumerate(cases):
