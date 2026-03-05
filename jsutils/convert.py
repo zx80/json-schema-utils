@@ -6,7 +6,7 @@ import hashlib
 import json
 
 from .utils import TYPED_KEYWORDS, KEYWORD_TYPE, META_KEYS, IGNORE, ALL_TYPES
-from .utils import JsonSchema, SchemaPath, SchemaPathSegment, Jsonable
+from .utils import JsonSchema, SchemaPath, SchemaPathSegment, Jsonable, JSUError
 from .utils import decode_url, schemapath_to_urlpath, is_abs_url
 from .utils import only, has_none, has_any, has_count, is_none, is_any
 from .inline import mergeProperty
@@ -19,6 +19,8 @@ from .types import computeTypes
 
 log = logging.getLogger("convert")
 log.setLevel(logging.DEBUG)
+
+MAX_RECURSION: int = 64
 
 def tname(v) -> str:
     return (
@@ -282,14 +284,16 @@ _OBJECT_KW = [
 def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
     """Try to remove an unevaluatedProperties from a schema in a safe way.
 
-    NOTE unevaluatedProperties is seldom used, but necessary to implement closed inheritance
-    NOTE when actually used, its contents is most of the timee "false",
+    NOTE unevaluatedProperties is seldom used, but necessary to implement closed inheritance.
+         this suggests a "allOf" of open objects, possibly through references, closed by an
+         outside "unevaluatedProperties".
+    NOTE thus when actually used, its contents is most of the time "false",
          as it is hard to think of a legitimate case with anything else?
     NOTE the schema is already simplified, see related stuff there.
     NOTE consider that limit case, if any, should be safe, i.e. validate?
     NOTE this would be easier if we could assume this is cleanup to object only?
          ensure this by separating stuff at an earlier stage?
-    TODO patternProperties: create an corresponding antipattern in some cases…
+    TODO patternProperties: create a corresponding antipattern in some cases…
     """
 
     assert isinstance(schema, dict) and "unevaluatedProperties" in schema
@@ -313,7 +317,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
     # NOTE this is currently executed
     if (only(schema, "anyOf", "oneOf", *_OBJECT_KW, "unevaluatedProperties", "type", *IGNORE) and
             has_any(schema, *_OBJECT_KW) and has_any(schema, "anyOf", "oneOf")):
-        # we need to merge the local props into the branches to handle
+        # we need to merge the local props into the branches
         lof = schema["anyOf"] if "anyOf" in schema else schema["oneOf"]
         try:
             lofc = copy.deepcopy(lof)
@@ -336,6 +340,32 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
             del schema["unevaluatedProperties"]
             return schema
 
+    # FIXME maybe this generic preprocessing should be elsewhere to simplify convert assumptions
+    if (only(schema, "$ref", *_OBJECT_KW, "unevaluatedProperties", "type", *IGNORE) and
+            "$ref" in schema and has_any(schema, *_OBJECT_KW)):
+        # let us try to merge
+        try:
+            refs = resolve_ref_rec(schema["$ref"])
+            if only(refs, *_OBJECT_KW, "unevaluatedProperties", "type", *IGNORE):
+                # if shadowed, we are done!
+                if has_any(refs, "additionalProperties", "unevaluatedProperties"):
+                    del schema["unevaluatedProperties"]
+                    return schema
+                # else merge
+                mschema = copy.deepcopy(schema)
+                del mschema["$ref"]
+                for p, s in refs.items():
+                    if p not in IGNORE:
+                        mergeProperty(mschema, p, s)
+                # merge succeeded
+                schema = mschema
+        except JSUError as e:
+            log.warning(f"merging of object props failed for unevaluatedProperties at {spath}: {e}")
+            del schema["unevaluatedProperties"]
+            return schema
+
+        # FIXME improve handling, possibly with a recursion
+
     #
     # SANITY CHECKS
     #
@@ -343,7 +373,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
     # NOTE should not get there, to be handled before calling…
     assert has_none(schema, "if", "then", "else", "not")
     if has_count(schema, "anyOf", "oneOf", "allOf", "$ref", "$dynamicRef") > 1:
-        log.error(f"FIXME: multiple structures unexpected for unevaluatedProperties at {spath}")
+        log.error(f"FIXME: unexpected multiple structures for unevaluatedProperties at {spath}")
         del schema["unevaluatedProperties"]
         return schema
 
@@ -385,7 +415,23 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
             del schema["unevaluatedProperties"]
             return schema
 
-    # - $ref: inline?
+    if "$ref" in schema and only(schema, "$ref", *IGNORE):
+        # FIXME improve recursion detection
+        if len(path) > 64:
+            log.warning(f"doubtful depth for unevaluatedProperties at {spath}")
+            del schema["unresolvedProperties"]
+            return schema
+        # cold copy on $ref for now
+        try:
+            refs = resolve_ref(schema["$ref"])
+        except JSUError as e:
+            log.warning(f"$ref resolution failed for unevaluatedProperties at {spath}: {e}")
+            del schema["unresolvedProperties"]
+            return schema
+        # else we got something, let recurse on it
+        del schema["$ref"]
+        schema["allOf"] = [ handleUnevaluatedProp(copy.deepcopy(refs), path + ("$ref",)) ]
+        return schema
 
     # - allOf: collection with $ANY is okay for known props
     #   - unless there are "foo": false
@@ -467,6 +513,36 @@ def reset():
     global CURRENT_SCHEMA, SCHEMA, IDS, RENAMES, N_RENAMES, IDS_STACK
     CURRENT_SCHEMA, SCHEMA = None, None
     IDS, ID_TO_PATH, RENAMES, N_RENAMES = {}, {}, {}, 0
+
+# FIXME this is probably quite insufficient
+def resolve_ref(ref: str, schema: JsonSchema|None = None) -> JsonSchema:
+    """Return the schema at $ref."""
+    # log.debug(f"resolving $ref {ref}")
+    if schema is None:
+        schema = SCHEMA
+    if ref.startswith("#/"):
+        path = [ decode_url(s) for s in ref[2:].split("/") ]
+        for p in path:
+            if isinstance(schema, list):
+                schema = schema[int(p)]
+            elif isinstance(schema, dict):
+                schema = schema[p]
+            else:
+                raise JSUError(f"$ref {ref} not found")
+    else:
+        raise JSUError(f"FIXME improve $ref {ref} resolution")
+    return schema
+
+def resolve_ref_rec(ref: str, schema: JsonSchema|None = None) -> JsonSchema:
+    schema = resolve_ref(ref, schema)
+    # direct infinite recursion should be detected elsewhere?
+    nsteps = 0
+    while only(schema, "$ref", *IGNORE):
+        nsteps += 1
+        if nsteps >= MAX_RECURSION:
+            raise JSUError(f"probable direct infinite recursion on $ref {ref}")
+        schema = resolve_ref(ref)
+    return schema
 
 def get_new_name() -> str:
     """Get an unused name."""

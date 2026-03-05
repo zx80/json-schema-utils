@@ -48,10 +48,10 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: errors=0 cases=8/29 (27.6%) tests=43/71 (60.6%, 28 fails)
-- `/unevaluatedProperties.json`: errors=0 cases=31/42 (73.8%) tests=104/125 (83.2%, 21 fails)
+- `/unevaluatedProperties.json`: errors=0 cases=33/42 (78.6%) tests=106/125 (84.8%, 19 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=321/377 (85.1%) tests=1200/1277 (94.0%, 77 fails)
+- summary: files=46 errors=0 cases=323/377 (85.7%) tests=1202/1277 (94.1%, 75 fails)
 
 ## Results for _draft2019-09_
 
@@ -98,10 +98,10 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: errors=0 cases=11/26 (42.3%) tests=39/56 (69.6%, 17 fails)
-- `/unevaluatedProperties.json`: errors=0 cases=27/42 (64.3%) tests=99/125 (79.2%, 26 fails)
+- `/unevaluatedProperties.json`: errors=0 cases=29/42 (69.0%) tests=101/125 (80.8%, 24 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=320/368 (87.0%) tests=1178/1242 (94.8%, 64 fails)
+- summary: files=46 errors=0 cases=322/368 (87.5%) tests=1180/1242 (95.0%, 62 fails)
 
 ## Results for _draft7_
 
@@ -291,7 +291,7 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `/unevaluatedItems.json`: errors=0 cases=8/29 (27.6%) tests=43/71 (60.6%, 28 fails)
-- `/unevaluatedProperties.json`: errors=0 cases=27/42 (64.3%) tests=99/125 (79.2%, 26 fails)
+- `/unevaluatedProperties.json`: errors=0 cases=29/42 (69.0%) tests=101/125 (80.8%, 24 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- summary: files=44 errors=0 cases=284/343 (82.8%) tests=1031/1113 (92.6%, 82 fails)
+- summary: files=44 errors=0 cases=286/343 (83.4%) tests=1033/1113 (92.8%, 80 fails)
 
