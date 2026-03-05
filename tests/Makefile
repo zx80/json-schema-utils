@@ -8,7 +8,11 @@ F.inline    = $(F.schema:%.schema.json=%.inline.json)
 F.simpler   = $(F.schema:%.schema.json=%.simpler.json)
 F.stats     = $(F.schema:%.schema.json=%.stats.json)
 F.pretty    = $(F.schema:%.schema.json=%.pretty.json)
-F.check     = person.check1.out person.check2.out author.check1.out author.check2.out
+
+VALIDATIONS = person author
+F.check     = $(addsuffix .check0.out, $(VALIDATIONS)) \
+              $(addsuffix .check1.out, $(VALIDATIONS)) \
+              $(addsuffix .check2.out, $(VALIDATIONS))
 
 # all
 F.gen       = $(F.inline) $(F.simpler) $(F.stats) $(F.pretty) $(F.check)
@@ -68,6 +72,13 @@ pretty:
 	jsu-pretty $< > $@
 
 # schema validation
+%.check0.out: %.schema.json
+	set -o pipefail
+	shopt -s nullglob
+	jsu-check --engine jmc $< $*.*.{true,false}.json 2> $@.err | sort > $@
+	sed -e 's/uuid:[-0-9a-f]*#/uuid:<uuid>#/' $@.err >> $@
+	$(RM) $@.err
+
 %.check1.out: %.schema.json
 	set -o pipefail
 	shopt -s nullglob

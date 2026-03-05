@@ -1,0 +1,18 @@
+author.0.true.json: PASS
+author.1.true.json: PASS
+author.2.true.json: PASS
+author.3.false.json: FAIL
+ERROR:JSU:[
+  [
+    "unexpected value for model \"/./\" [.nom]",
+    [
+      "nom"
+    ]
+  ],
+  [
+    "invalid mandatory prop value [.nom]",
+    [
+      "nom"
+    ]
+  ]
+]
