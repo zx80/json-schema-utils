@@ -363,7 +363,7 @@ def jsu_model():
     arg("--id", action="store_true", default=False, help="enable $id lookup")
     arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
     arg("--cache", type=str, default=None, help="cache directory")
-    arg("--strict", action="store_true", default=True, help="reject doubtful schemas")
+    arg("--strict", action="store_true", default=False, help="reject doubtful schemas")
     arg("--no-strict", dest="strict", action="store_false", help="accept doubtful schemas")
     arg("--fix", "-F", action="store_true", default=True, help="fix common schema issues")
     arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")

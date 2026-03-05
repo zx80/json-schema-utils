@@ -5,12 +5,15 @@
 - [x] improve conversion of int/float enums and consts
 - [x] improve conversion with mixed minContains/maxContains and other array constraints
 - [x] improve handling of patternProperties merging
-- [x] make jsu-test-runner accepts a single test object
-- [ ] improve support for `unevaluatedProperties` (wip)
+- [x] fix conversion of `json-model.schema.json`
+- [x] be listed on [bowtie](https://bowtie.report/)
+- [x] make `jsu-test-runner` accepts a single test object
+- [x] make `jsu-model` not pedantic by default (`--no-strict`)
+- [x] improve support for `unevaluatedProperties` on common use cases
+- [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
+- [ ] improve support for `unevaluatedProperties` with `patternProperties`?
 - [ ] discuss strategies to address version 9 (2020) specific features
-- [ ] fix conversion of `json-model.schema.json`
 - [ ] move typing out to simplify the generated code
-- [ ] be listed on [bowtie](https://bowtie.report/)
 - [ ] get 100% on _draft2019-09_
 - [ ] get 100% on _draft2020-12_
 - [ ] add `.in` support with constraints

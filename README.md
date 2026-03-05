@@ -81,13 +81,14 @@ You could also use `jq .` for this purpose.
 
 Convert a subset of JSON Schema to JSON Model.
 
-This conversion does not fully support draft 2019-09 and 2020-12,
-only trivial cases are supported for:
+The converter is expected to _fully_ supports JSON Schema draft3 to draft7.
+
+It _partially_ supports draft 2019-09 and 2020-12, in particular
+there is a limited support for some features:
 
 - _dynamic_ anchors and references;
 - _unevaluated_ stuff;
 - _vocabularies_;
-- some cases of anchor/ref/defs, contains and not still fail.
 
 Moreover, this is a software, hence there may be bugs.
 
@@ -118,9 +119,6 @@ see [JSON Model HOWTO](https://json-model.org/#/HOWTO).
 
 ## TODO
 
-- improve model conversion resilience by ignoring unexpected stuff
-- stats: warn instead of errors on unsure issues under `if`/`then`/`else`/`not`.
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)
   to reduce false positive errors/warnings.
 - simplify: deduplicate constants in enum?
-- Testing. CI.
