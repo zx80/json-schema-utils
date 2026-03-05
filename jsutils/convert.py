@@ -346,7 +346,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
             for i in range(len(lof)):
                 lof[i] = lofc[i]
         except Exception as e:
-            log.warning(f"FIXME anyOf merging for unevaluatedProperties at {spath} failed: {e}")
+            log.warning(f"FIXME anyOf/oneOf merging for unevaluatedProperties at {spath} failed: {e}")
             # what is safe? additionalProperties?
             del schema["unevaluatedProperties"]
             return schema
@@ -426,7 +426,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
             del schema["unevaluatedProperties"]
             return schema
 
-    if "$ref" in schema and only(schema, "$ref", *IGNORE):
+    if "$ref" in schema and only(schema, "$ref", "unevaluatedProperties", "type", *IGNORE):
         # FIXME improve recursion detection
         if len(path) > 64:
             log.warning(f"doubtful depth for unevaluatedProperties at {spath}")
@@ -441,7 +441,9 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
             return schema
         # else we got something, let recurse on it
         del schema["$ref"]
-        schema["allOf"] = [ handleUnevaluatedProp(copy.deepcopy(refs), path + ("$ref",)) ]
+        if "allOf" not in schema:
+            schema["allOf"] = []
+        schema.append(handleUnevaluatedProp(copy.deepcopy(refs), path + ("$ref",)))
         return schema
 
     # - allOf: collection with $ANY is okay for known props
@@ -492,7 +494,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
             # then recurse?
             # FIXME should be just do one level and wait for the conversion recursion instead?
             for i in range(len(lofcop)):
-                lofcop[i] = handleUnevaluatedProp(lofcop[i], path + ("allOf",))
+                lofcop[i] = handleUnevaluatedProp(lofcop[i], path + (("allOf", i), ))
             # success!
             del schema["unevaluatedProperties"]
             schema["oneOf"] = lofcop
