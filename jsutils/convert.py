@@ -443,7 +443,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
         del schema["$ref"]
         if "allOf" not in schema:
             schema["allOf"] = []
-        schema.append(handleUnevaluatedProp(copy.deepcopy(refs), path + ("$ref",)))
+        schema["allOf"].append(handleUnevaluatedProp(copy.deepcopy(refs), path + ("$ref",)))
         return schema
 
     # - allOf: collection with $ANY is okay for known props
