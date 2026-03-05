@@ -252,10 +252,14 @@ def collectProps(schema: JsonSchema, path: SchemaPath) -> dict[str, JsonSchema]:
     assert isinstance(schema, dict)
     if "patternProperties" in schema:
         log.error(f"FIXME possibly ignoring patternProperty for unvaluatedProperties at {spath}")
+        # TODO also collect pp
         pass
-    if has_any(schema, "oneOf", "$ref", "$dynamicRef"):
+    if has_any(schema, "$dynamicRef"):
         log.error(f"FIXME possibly ignoring some strutures for unvaluatedProperties at {spath}")
         pass
+    if "$ref" in schema:
+        refs = resolve_ref_rec(schema["$ref"])
+        props.update(collectProps(refs, path + ("$ref",)))
     if "properties" in schema:
         sprops = schema["properties"]
         assert isinstance(sprops, dict)
@@ -271,8 +275,13 @@ def collectProps(schema: JsonSchema, path: SchemaPath) -> dict[str, JsonSchema]:
     # this one only leads to approximations and is not safe in general?
     # TODO combinatorial handling?
     if "anyOf" in schema:
+        log.warning(f"approximated unevaluatedProperties with anyOf at {spath}")
         for i, s in enumerate(schema["anyOf"]):
             props.update(collectProps(s, path + (("anyOf", i), )))
+    if "oneOf" in schema:
+        log.warning(f"approximated unevaluatedProperties with oneOf at {spath}")
+        for i, s in enumerate(schema["oneOf"]):
+            props.update(collectProps(s, path + (("oneOf", i), )))
     return props
 
 # usual object keywords WITHOUT unevaluatedProperties
@@ -298,6 +307,8 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
 
     assert isinstance(schema, dict) and "unevaluatedProperties" in schema
     spath: str = jpath(path)
+
+    # log.debug(f"UP in: path={spath} kw={sorted(schema.keys())}")
 
     # not an object, nothing to do!
     if "type" in schema and has_any(schema, *_OBJECT_KW):
@@ -442,7 +453,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
         schema["allOf"].append({
             "$comment": "unevaluatedProperties handling",
             "type": copy.deepcopy(schema.get("type", sorted(ALL_TYPES))),
-            "properties": { p: "$ANY" for p in sorted(props.keys()) },
+            "properties": { p: True for p in sorted(props.keys()) },
             "additionalProperties": schema.pop("unevaluatedProperties")
         })
         return schema
@@ -641,12 +652,12 @@ def schema2model(
 
     global CURRENT_SCHEMA, SCHEMA
 
+    spath: str = jpath(path)
+    # log.debug(f"s2m: path={spath} schema={json.dumps(schema)}")
+
     # 4.3.2 Boolean JSON Schemas
     if isinstance(schema, bool):
         return "$ANY" if schema else "$NONE"
-
-    spath: str = jpath(path)
-
     assert isinstance(schema, dict), f"is an object at [{spath}]"
 
     if "$schema" in schema:
@@ -918,8 +929,9 @@ def schema2model(
     # FIXME $ref? $dynamicRef?
     if ("unevaluatedProperties" in schema and
             has_count(schema, "allOf", "anyOf", "oneOf") <= 1):
+        # log.debug(f"UP in: {json.dumps(schema)}")
         schema = handleUnevaluatedProp(schema, path)
-        log.info(f"UP: {json.dumps(schema)}")
+        # log.debug(f"UP out: {json.dumps(schema)}")
 
     # structures
     if "oneOf" in schema:
