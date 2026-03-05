@@ -1,0 +1,53 @@
+person.0.true.json: PASS
+person.1.true.json: PASS
+person.2.true.json: PASS
+person.3.false.json: FAIL
+person.4.false.json: FAIL
+person.5.false.json: FAIL
+person.6.false.json: FAIL
+ERROR:JSU:[
+  [
+    "missing mandatory prop <age> [.]",
+    []
+  ],
+  [
+    "missing mandatory prop <name> [.]",
+    []
+  ]
+]
+ERROR:JSU:[
+  [
+    "unexpected value for model \"/./\" [.name]",
+    [
+      "name"
+    ]
+  ],
+  [
+    "invalid mandatory prop value [.name]",
+    [
+      "name"
+    ]
+  ]
+]
+ERROR:JSU:[
+  [
+    "not a 0 strict int [.age]",
+    [
+      "age"
+    ]
+  ],
+  [
+    "invalid mandatory prop value [.age]",
+    [
+      "age"
+    ]
+  ]
+]
+ERROR:JSU:[
+  [
+    "unexpected prop [.]",
+    [
+      "no-such-property"
+    ]
+  ]
+]
