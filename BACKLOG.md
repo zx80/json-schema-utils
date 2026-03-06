@@ -10,6 +10,7 @@
 - [x] make `jsu-test-runner` accepts a single test object
 - [x] make `jsu-model` not pedantic by default (`--no-strict`)
 - [x] improve support for `unevaluatedProperties` on common use cases
+- [x] show default values on `--help`
 - [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
 - [ ] improve support for `unevaluatedProperties` with `patternProperties`?
 - [ ] discuss strategies to address version 9 (2020) specific features
@@ -21,6 +22,7 @@
 - [ ] list compiler current limitations
 - [ ] run some optional tests, eg _format_
 - [ ] put typing result in "$type" instead of "type" to help with fixing?
+- [ ] add an `--auto` flag to set options depending on schema versions?
 
 ## Dones
 

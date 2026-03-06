@@ -27,11 +27,16 @@ def ap_common(arg, with_json=True):
     arg("--debug", "-d", action="store_true", help="debug mode")
     arg("--quiet", "-q", action="store_true", help="quiet mode")
     if with_json:
-        arg("--indent", "-i", type=int, default=2, help="json indentation")
-        arg("--sort-keys", "-s", default=True, action="store_true", help="json sort keys")
-        arg("--no-sort-keys", "-ns", dest="sort_keys", action="store_false", help="json sort keys")
-        arg("--ascii", action="store_true", default=False, help="json ensure ascii")
-        arg("--no-ascii", dest="ascii", action="store_false", help="no json ensure ascii")
+        arg("--indent", "-i", type=int, default=2,
+            help="json indentation (2)")
+        arg("--sort-keys", "-s", default=True, action="store_true",
+            help="sort json keys (*)")
+        arg("--no-sort-keys", "-ns", dest="sort_keys", action="store_false",
+            help="do not sort json keys")
+        arg("--ascii", action="store_true", default=False,
+            help="ensure json ascii")
+        arg("--no-ascii", dest="ascii", action="store_false",
+            help="do not ensure json ascii (*)")
 
 
 def json_dumps(j: Any, args):
@@ -55,7 +60,7 @@ def jsu_inline():
     arg = ap.add_argument
     ap_common(arg)
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
-    arg("--auto", "-a", action="store_true", help="automatic url mapping")
+    arg("--auto", "-a", action="store_true", default=False, help="automatic url mapping")
     arg("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args()
 
@@ -110,8 +115,8 @@ def jsu_simpler():
     arg = ap.add_argument
     ap_common(arg)
     arg("schemas", nargs="*", help="schemas to simplify")
-    arg("--type", default=False, action="store_true",
-        help="type schema before simplification")
+    arg("--type", default=True, action="store_true",
+        help="type schema before simplification (*)")
     arg("--no-type", dest="type", action="store_false",
         help="do not type schema before simplification")
     args = ap.parse_args()
@@ -147,12 +152,14 @@ def jsu_check():
     arg("--engine", "-e", choices=["jmc", "jsonschema", "jschon"], default="jmc",
         help="select JSON Schema implementation, default is 'jmc'")
     arg("--force", action="store_true", help="accept any JSON as a schema")
+
     arg("--resilient", default=False, action="store_true", help="return something whatever")
-    arg("--no-resilient", dest="resilient", action="store_false", help="may fail")
-    arg("--predef", default=True, action="store_true", help="check formats")
-    arg("--no-predef", dest="predef", action="store_false", help="do not check formats")
-    arg("--extend", default=True, action="store_true", help="use jmc extensions")
+    arg("--no-resilient", dest="resilient", action="store_false", help="may fail (*)")
+    arg("--format", default=True, action="store_true", help="check formats (*)")
+    arg("--no-format", dest="format", action="store_false", help="do not check formats")
+    arg("--extend", default=True, action="store_true", help="use jmc extensions (*)")
     arg("--no-extend", dest="extend", action="store_false", help="do not use jmc extensions")
+
     arg("--pass-through", action="store_true", default=False,
         help="revert to pass through on compilation error")
     arg("--test", "-t", action="store_true", help="test vector mode")
@@ -218,7 +225,9 @@ def jsu_check():
             import json_model
             # TODO safest options?
             jmodel = schema_to_model(jschema, args.schema, simpler=True, typer=True)
-            checker = json_model.model_checker_from_json(jmodel, predef=args.predef, extend=args.extend)
+            checker = json_model.model_checker_from_json(
+                jmodel, predef=args.format, extend=args.extend
+            )
 
             def check(data):
                 errors = []
@@ -360,21 +369,38 @@ def jsu_model():
     )
     arg = ap.add_argument
     ap_common(arg)
-    arg("--id", action="store_true", default=False, help="enable $id lookup")
-    arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
     arg("--cache", type=str, default=None, help="cache directory")
-    arg("--strict", action="store_true", default=False, help="reject doubtful schemas")
-    arg("--no-strict", dest="strict", action="store_false", help="accept doubtful schemas")
-    arg("--fix", "-F", action="store_true", default=True, help="fix common schema issues")
-    arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")
-    arg("--resilient", default=False, action="store_true", help="return something whatever")
-    arg("--no-resilient", dest="resilient", action="store_false", help="may fail")
-    arg("--type", default=True, action="store_true", help="type schema before conversion")
-    arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
-    arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
-    arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
-    arg("--modernize", default=True, action="store_true", help="modernize schema")
-    arg("--no-modernize", dest="modernize", action="store_false", help="do not modernize schema")
+
+    arg("--id", action="store_true", default=False,
+        help="enable $id lookup")
+    arg("--no-id", dest="id", action="store_false",
+        help="disable $id lookup (*)")
+    arg("--strict", action="store_true", default=False,
+        help="reject doubtful schemas")
+    arg("--no-strict", dest="strict", action="store_false",
+        help="accept doubtful schemas (*)")
+    arg("--fix", "-F", action="store_true", default=True,
+        help="fix common schema issues (*)")
+    arg("--no-fix", "-nF", dest="fix", action="store_false",
+        help="do not fix common schema issues")
+    arg("--resilient", default=False, action="store_true",
+        help="return something whatever")
+    arg("--no-resilient", dest="resilient", action="store_false",
+        help="may fail (*)")
+    arg("--type", default=True, action="store_true",
+        help="type schema before conversion (*)")
+    arg("--no-type", dest="type", action="store_false",
+        help="do not type schema before conversion")
+    arg("--simple", default=True, action="store_true",
+        help="simplify schema before conversion (*)")
+    arg("--no-simple", dest="simple", action="store_false",
+        help="do not simplify schema before conversion")
+    # NOTE this is necessary to handle older schema versions
+    arg("--modernize", default=True, action="store_true",
+        help="modernize schema (*)")
+    arg("--no-modernize", dest="modernize", action="store_false",
+        help="do not modernize schema")
+
     arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("--out", "-o", default="-", help="set model output file")
@@ -437,21 +463,37 @@ def jsu_compile():
     ap_common(arg)
 
     # schema to model conversion
-    arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
-    arg("--id", action="store_true", default=False, help="enable $id lookup")
-    arg("--no-id", dest="id", action="store_false", help="disable $id lookup")
-    arg("--strict", action="store_true", default=True, help="reject doubtful schemas")
-    arg("--no-strict", dest="strict", action="store_false", help="accept doubtful schemas")
-    arg("--fix", "-F", action="store_true", default=True, help="fix common schema issues")
-    arg("--no-fix", "-nF", dest="fix", action="store_false", help="do not fix common schema issues")
-    arg("--resilient", default=False, action="store_true", help="return something whatever")
-    arg("--no-resilient", dest="resilient", action="store_false", help="may fail")
-    arg("--modernize", default=True, action="store_true", help="modernize schema")
-    arg("--no-modernize", dest="modernize", action="store_false", help="do not modernize schema")
-    arg("--type", default=True, action="store_true", help="type schema before conversion")
-    arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
-    arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
-    arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
+    arg("--schema-version", "-V", dest="sversion", type=int, default=0,
+        help="set JSON Schema version")
+
+    arg("--id", action="store_true", default=False,
+        help="enable $id lookup")
+    arg("--no-id", dest="id", action="store_false",
+        help="disable $id lookup (*)")
+    arg("--strict", action="store_true", default=True,
+        help="reject doubtful schemas (*)")
+    arg("--no-strict", dest="strict", action="store_false",
+        help="accept doubtful schemas")
+    arg("--fix", "-F", action="store_true", default=True,
+        help="fix common schema issues (*)")
+    arg("--no-fix", "-nF", dest="fix", action="store_false",
+        help="do not fix common schema issues")
+    arg("--resilient", default=False, action="store_true",
+        help="return something whatever")
+    arg("--no-resilient", dest="resilient", action="store_false",
+        help="may fail (*)")
+    arg("--modernize", default=True, action="store_true",
+        help="modernize schema (*)")
+    arg("--no-modernize", dest="modernize", action="store_false",
+        help="do not modernize schema")
+    arg("--type", default=True, action="store_true",
+        help="type schema before conversion (*)")
+    arg("--no-type", dest="type", action="store_false",
+        help="do not type schema before conversion")
+    arg("--simple", default=True, action="store_true",
+        help="simplify schema before conversion (*)")
+    arg("--no-simple", dest="simple", action="store_false",
+        help="do not simplify schema before conversion")
 
     # remote schemas
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
@@ -459,12 +501,19 @@ def jsu_compile():
 
     # forwarded to backend
     arg("--out", "-o", default=None, help="set output file")
-    arg("--loose", default=True, action="store_true", help="accept loose numbers")
-    arg("--no-loose", dest="loose", action="store_false", help="be strict about numbers")
-    arg("--reporting", action="store_true", default=True, help="enable reporting")
-    arg("--no-reporting", dest="reporting", action="store_false", help="disable reporting")
-    arg("--format", action="store_true", default=False, help="ignore formats")
-    arg("--no-format", dest="format", action="store_false", help="do not ignore formats")
+
+    arg("--loose", default=True, action="store_true",
+        help="accept loose numbers (*)")
+    arg("--no-loose", dest="loose", action="store_false",
+        help="be strict about numbers")
+    arg("--reporting", action="store_true", default=True,
+        help="enable reporting (*)")
+    arg("--no-reporting", dest="reporting", action="store_false",
+        help="disable reporting")
+    arg("--format", action="store_true", default=False,
+        help="do not ignore formats")
+    arg("--no-format", dest="format", action="store_false",
+        help="ignore formats (*)")
 
     # schema to consider
     arg("schema", default="-", nargs="?", help="schema to process")
@@ -481,6 +530,7 @@ def jsu_compile():
         sys.exit(0)
 
     # forward some options to back-end
+    # TODO formats should be simply removed from the input schema instead?
     args.others.append("--predef" if args.format else "--no-predef")
     args.others.append("--reporting" if args.reporting else "--no-reporting")
     if args.out is not None:
@@ -588,22 +638,34 @@ def jsu_runner():
     arg = ap.add_argument
     ap_common(arg)
     arg("--cache", type=str, default=None, help="cache directory")
-    arg("--dump", default=False, action="store_true", help="show generated model as debug")
-    arg("--no-dump", dest="dump", action="store_false", help="do not show generated model as debug")
-    arg("--modernize", default=True, action="store_true", help="modernize schema")
-    arg("--no-modernize", dest="modernize", action="store_false", help="do not modernize schema")
-    arg("--type", default=True, action="store_true", help="type schema before conversion")
-    arg("--no-type", dest="type", action="store_false", help="do not type schema before conversion")
-    arg("--simple", default=True, action="store_true", help="simplify schema before conversion")
-    arg("--no-simple", dest="simple", action="store_false", help="do not simplify schema before conversion")
-    arg("--strict", action="store_true", default=False, help="reject doubtful schemas")
-    arg("--no-strict", dest="strict", action="store_false", help="accept doubtful schemas")
-    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
-    arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
+
+    arg("--dump", default=False, action="store_true",
+        help="show generated model as debug")
+    arg("--no-dump", dest="dump", action="store_false",
+        help="do not show generated model as debug (*)")
+    arg("--modernize", default=True, action="store_true",
+        help="modernize schema (*)")
+    arg("--no-modernize", dest="modernize", action="store_false",
+        help="do not modernize schema")
+    arg("--type", default=True, action="store_true",
+        help="type schema before conversion (*)")
+    arg("--no-type", dest="type", action="store_false",
+        help="do not type schema before conversion")
+    arg("--simple", default=True, action="store_true",
+        help="simplify schema before conversion (*)")
+    arg("--no-simple", dest="simple", action="store_false",
+        help="do not simplify schema before conversion")
+    arg("--strict", action="store_true", default=False,
+        help="reject doubtful schemas")
+    arg("--no-strict", dest="strict", action="store_false",
+        help="accept doubtful schemas (*)")
     arg("--resilient", default=False, action="store_true",
         help="enable model conversion resilience")
     arg("--no-resilient", dest="resilient", default=False, action="store_true",
-        help="disnable model conversion resilience")
+        help="disable model conversion resilience (*)")
+
+    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
+    arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("cases", nargs="*", help="test cases to process")
     args = ap.parse_args()
 
