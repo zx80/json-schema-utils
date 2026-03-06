@@ -113,12 +113,12 @@ def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
     # recursiveAnchor/Ref to dynamicAnchor/Ref
     if "recursiveAnchor" in schema:
         assert "dynamicAnchor" not in schema
-        schema["dynamicAnchor"] = schema["recursiveAnchor"]
-        del schema["recursiveAnchor"]
+        schema["dynamicAnchor"] = schema.pop("recursiveAnchor")
     if "recursiveRef" in schema:
         assert "dynamicRef" not in schema
-        schema["dynamicRef"] = schema["recursiveRef"]
-        del schema["recursiveRef"]
+        schema["dynamicRef"] = schema.pop("recursiveRef")
+
+    # NOTE additionalItems/items -> items/prefixItems? No, or need fixing references…
 
     return True
 

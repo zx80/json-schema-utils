@@ -336,8 +336,9 @@ def simplifySchema(
         for prop in ("anyOf", "oneOf", "allOf"):
             if (isinstance(local, dict) and prop in local and
                     len(local[prop]) == 1):  # type: ignore
-                # NOTE filter out older versions in some cases
+                saved = copy.deepcopy(local)
                 xofs = local[prop][0]
+                # NOTE filter out older versions in some cases
                 if isinstance(xofs, dict) and "$ref" in xofs and version <= 7:
                     if only(local, prop, *IGNORE):
                         pass
@@ -348,23 +349,20 @@ def simplifySchema(
                         continue
                 # merge attempt
                 try:
-                    nschema = copy.deepcopy(local)
-                    sub = local[prop][0]  # pyright: ignore
+                    sub = local.pop(prop)[0]  # pyright: ignore
                     if isinstance(sub, bool):
                         if sub:
                             nschema = local
                         else:
                             nschema = False
                     else:
-                        for p, v in sub.items():  # pyright: ignore
-                            nschema = mergeProperty(nschema, p, v)
+                        nschema = mergeSchemas(local, sub)
                     # success!
                     local = nschema
-                    if isinstance(local, dict):
-                        del local[prop]
                 except JSUError as e:
                     log.debug(e)
                     log.warning(f"{prop} of one merge failed")
+                    local = saved
 
         if isinstance(local, bool):
             return local
@@ -466,6 +464,27 @@ def simplifySchema(
                     assert selse is not None
                     local["then"] = selse
                     del local["else"]
+
+        if "not" in local:
+            nots = local["not"]
+            if isinstance(nots, bool):
+                if nots:  # "not true"
+                    del local["not"]
+                    if "allOf" not in local:
+                        local["allOf"] = []
+                    local["allOf"].append(False)
+                else:  # ignore "not false"
+                    del local["not"]
+            # else:
+            #     assert isinstance(nots, dict)
+            #     if only(nots, "not", "type", *_IGNORABLE):
+            #         # not not X = X (is this true with schemas)
+            #         notnots = nots["not"]
+            #         del local["not"]
+            #         if "allOf" not in local:
+            #             local["allOf"] = []
+            #         local["allOf"].append(notnots)
+            #     # else keep it
 
         if "unevaluatedProperties" in local:
             up = local["unevaluatedProperties"]

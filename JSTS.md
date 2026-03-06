@@ -24,7 +24,7 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/format.json`: errors=0 cases=19/19 (100.0%) tests=133/133 (100.0%, 0 fails)
 - `/if-then-else.json`: errors=0 cases=12/12 (100.0%) tests=30/30 (100.0%, 0 fails)
 - `/infinite-loop-detection.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
-- `/items.json`: errors=0 cases=9/10 (90.0%) tests=28/29 (96.6%, 1 fails)
+- `/items.json`: errors=0 cases=10/10 (100.0%) tests=29/29 (100.0%, 0 fails)
 - `/maxContains.json`: errors=0 cases=4/4 (100.0%) tests=12/12 (100.0%, 0 fails)
 - `/maximum.json`: errors=0 cases=2/2 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `/maxItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
@@ -47,11 +47,11 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/refRemote.json`: errors=0 cases=14/15 (93.3%) tests=30/31 (96.8%, 1 fails)
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
-- `/unevaluatedItems.json`: errors=0 cases=8/29 (27.6%) tests=43/71 (60.6%, 28 fails)
+- `/unevaluatedItems.json`: errors=0 cases=15/29 (51.7%) tests=52/71 (73.2%, 19 fails)
 - `/unevaluatedProperties.json`: errors=0 cases=34/42 (81.0%) tests=115/125 (92.0%, 10 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=324/377 (85.9%) tests=1211/1277 (94.8%, 66 fails)
+- summary: files=46 errors=0 cases=332/377 (88.1%) tests=1221/1277 (95.6%, 56 fails)
 
 ## Results for _draft2019-09_
 
@@ -97,11 +97,11 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/refRemote.json`: errors=0 cases=14/15 (93.3%) tests=30/31 (96.8%, 1 fails)
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
-- `/unevaluatedItems.json`: errors=0 cases=11/26 (42.3%) tests=39/56 (69.6%, 17 fails)
-- `/unevaluatedProperties.json`: errors=0 cases=30/42 (71.4%) tests=110/125 (88.0%, 15 fails)
+- `/unevaluatedItems.json`: errors=0 cases=16/26 (61.5%) tests=44/56 (78.6%, 12 fails)
+- `/unevaluatedProperties.json`: errors=0 cases=31/42 (73.8%) tests=112/125 (89.6%, 13 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=323/368 (87.8%) tests=1189/1242 (95.7%, 53 fails)
+- summary: files=46 errors=0 cases=329/368 (89.4%) tests=1196/1242 (96.3%, 46 fails)
 
 ## Results for _draft7_
 
@@ -267,7 +267,7 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/exclusiveMinimum.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `/if-then-else.json`: errors=0 cases=10/10 (100.0%) tests=26/26 (100.0%, 0 fails)
 - `/infinite-loop-detection.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
-- `/items.json`: errors=0 cases=9/10 (90.0%) tests=28/29 (96.6%, 1 fails)
+- `/items.json`: errors=0 cases=10/10 (100.0%) tests=29/29 (100.0%, 0 fails)
 - `/maxContains.json`: errors=0 cases=4/4 (100.0%) tests=12/12 (100.0%, 0 fails)
 - `/maximum.json`: errors=0 cases=2/2 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `/maxItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
@@ -290,8 +290,8 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/refRemote.json`: errors=0 cases=11/15 (73.3%) tests=27/31 (87.1%, 4 fails)
 - `/required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `/type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
-- `/unevaluatedItems.json`: errors=0 cases=8/29 (27.6%) tests=43/71 (60.6%, 28 fails)
-- `/unevaluatedProperties.json`: errors=0 cases=30/42 (71.4%) tests=110/125 (88.0%, 15 fails)
+- `/unevaluatedItems.json`: errors=0 cases=15/29 (51.7%) tests=52/71 (73.2%, 19 fails)
+- `/unevaluatedProperties.json`: errors=0 cases=31/42 (73.8%) tests=112/125 (89.6%, 13 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- summary: files=44 errors=0 cases=287/343 (83.7%) tests=1042/1113 (93.6%, 71 fails)
+- summary: files=44 errors=0 cases=296/343 (86.3%) tests=1054/1113 (94.7%, 59 fails)
 

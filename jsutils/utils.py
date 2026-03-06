@@ -150,7 +150,7 @@ def is_any(schema: JsonSchema) -> bool:
     """Tell whether this schema accepts anything."""
     if isinstance(schema, bool):
         return schema
-    assert isinstance(schema, dict)
+    assert isinstance(schema, dict), f"unexpected schema={schema}"
     if only(schema, "type", *IGNORE):
         if "type" in schema:
             types = schema["type"]

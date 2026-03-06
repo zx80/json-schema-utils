@@ -9,7 +9,7 @@ import json
 import logging
 
 from .utils import JsonSchema, SchemaPath, JSUError, KEYWORD_TYPE, NO_SEMANTICS
-from .utils import only, is_abs_url, schemapath_to_urlpath, is_any
+from .utils import only, is_abs_url, schemapath_to_urlpath, is_any, is_none, has_any
 from .schemas import Schemas
 from .restruct import modernizeOldDraft
 from .recurse import recurseSchema
@@ -19,10 +19,15 @@ log.setLevel(logging.INFO)
 
 # TODO fix recursion handling
 
+#
+# FIXME merge success is order dependent or could be improved if the order is controlled
+#
+# { prop: { foo: any } } U { addPro: X } may okay if there are no other props in the second.
+#
 def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     """Merge an additional property into en existing schema.
 
-    Note: this is in a best effort basis, on failure a backup plan is required.
+    NOTE this is in a best effort basis, on failure a backup plan is required.
     """
     # handle boolean schema
     if isinstance(schema, bool):
@@ -256,7 +261,36 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             raise JSUError(f"merging of prop {prop} is not supported (yet)")
     # TODO
     # - $ref pattern with allOf?
-    elif prop in ("$ref", "pattern", "additionalItems", "prefixItems", "items", "uniqueItems"):
+    elif prop == "prefixItems":
+        # simplistic handling, advanced handling in next function
+        if prop in schema:
+            if schema[prop] == value:
+                pass
+            else:
+                raise JSUError(f"cannot merge prop {prop}")
+        else:
+            schema[prop] = value
+    elif prop == "items":
+        if "items" not in schema or is_any(schema["items"]):
+            schema[prop] = value
+        elif "items" in schema and is_none(schema["items"]):
+            # probably optimistic
+            pass
+        elif schema[prop] == value:
+            pass
+        else:
+            # allOf?
+            raise JSUError(f"cannot merge prop {prop}")
+    elif prop == "unevaluatedItems":
+        # FIXME may not always ok
+        # if unevaluatedItems is above it is indeed shadowed, however
+        # if there are at the "same" level items is shadowed, which seems to be
+        # the reverse of unevaluatedProperties? see 11.2
+        if "items" in schema:  # shadowed?!
+            pass
+        else:
+            schema["items"] = value
+    elif prop in ("$ref", "pattern", "additionalItems", "items", "uniqueItems"):
         # allow identical values only (for now)
         if prop in schema:
             if schema[prop] == value:
@@ -285,9 +319,12 @@ _KEEP_PROPS = {
     "definitions",
 }
 
-
 def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
-    """Merge two schemas."""
+    """Merge two schemas.
+
+    NOTE this always succeeds, either as a unified schema, in the worst case as
+    a allOf of the two initial schemas.
+    """
 
     if isinstance(refschema, bool):
         return schema if refschema else False
@@ -295,12 +332,93 @@ def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
         return refschema if schema else False
     assert isinstance(schema, dict) and isinstance(refschema, dict)
 
-    saved = schema
-    schema = copy.deepcopy(schema)
+    saved, refsaved = schema, refschema
+    schema, refschema = copy.deepcopy(schema), copy.deepcopy(refschema)
 
     try:
+        # special handing of prefixItems/items(/additionalItems)
+        if (has_any(schema, "prefixItems", "items", "additionalItems") or
+                has_any(refschema, "prefixItems", "items", "additionalItems")):
+
+            pil, pir = schema.pop("prefixItems", []), refschema.pop("prefixItems", [])
+            itl, itr = schema.pop("items", True), refschema.pop("items", True)
+
+            # handle old schemas, should be elsewhere
+            if isinstance(itl, list):
+                pil = itl
+                itl = schema.pop("additionalItems", True)
+            if isinstance(itr, list):
+                pir = itr
+                itr = refschema.pop("additionalItems", True)
+
+            common = min(len(pil), len(pir))
+            extent = max(len(pil), len(pir))
+            # log.debug(f"IN1 pil={pil} itl={itl}")
+            # log.debug(f"IN2 pir={pir} itr={itr}")
+
+            # NOTE about memory management: we just copy in the end
+            pi = []
+            for i in range(extent):
+                lpi, truncated = [], False
+                # commons
+                pili = pil[i] if i < len(pil) else True
+                piri = pir[i] if i < len(pir) else True
+                if not is_any(pili):
+                    if not is_any(pili):
+                        lpi.append(pili)
+                if not is_any(piri) and piri != pili:
+                    if not is_any(piri):
+                        lpi.append(piri)
+                # handle items
+                if i >= len(pil):
+                    if is_none(itl):  # truncate!
+                        lpi, truncated = [], True
+                    elif not is_any(itl):
+                        lpi.append(itl)
+                    # else do not add a useless true
+                if i >= len(pir) and not truncated:
+                    if is_none(itr):  # truncate!
+                        lpi, truncated = [], True
+                    elif not is_any(itr):
+                        lpi.append(itr)
+                    # else do not add a useless true
+                # generate subschema
+                if not truncated:
+                    match len(lpi):
+                        case 0:
+                            pi.append(True)
+                        case 1:
+                            pi.append(copy.deepcopy(lpi[0]))
+                        case _:
+                            pi.append({"allOf": copy.deepcopy(lpi)})
+                else:
+                    break
+
+            # generate merged prefixItems/items
+            if pi:
+                schema["prefixItems"] = pi
+
+            if not is_any(itl):
+                if not is_any(itr):
+                    schema["items"] = {"allOf": [ copy.deepcopy(itl), copy.deepcopy(itr) ]}
+                else:
+                    schema["items"] = copy.deepcopy(itl)
+            elif not is_any(itr):
+                schema["items"] = copy.deepcopy(itr)
+            else:
+                # both are true
+                pass
+
+            pi_done = True
+        else:
+            pi_done = False
+
+        # log.debug(f"OUT pi={schema.get('prefixItems', [])} it={schema.get('prefixItems', True)}")
+
         # best effort
         for p, v in refschema.items():
+            if pi_done and p in ("prefixItems", "items", "additionalItems"):  # skip
+                continue
             schema = mergeProperty(schema, p, v)
 
         # log.debug(f"merged: {schema}")
@@ -309,7 +427,7 @@ def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
         # backup merge with allOf
         log.warning(f"merge error: {e}")
         log.info("merging schemas with allOf")
-        schema = saved
+        schema, refschema = saved, refsaved
         separate = {}
         for p in list(schema.keys()):
             if p not in _KEEP_PROPS:
