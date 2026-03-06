@@ -8,8 +8,8 @@ import json
 from .utils import TYPED_KEYWORDS, KEYWORD_TYPE, META_KEYS, IGNORE, ALL_TYPES
 from .utils import JsonSchema, SchemaPath, SchemaPathSegment, Jsonable, JSUError
 from .utils import decode_url, schemapath_to_urlpath, is_abs_url
-from .utils import only, has_none, has_any, has_count, is_none, is_any
-from .inline import mergeProperty
+from .utils import only, has_none, has_any, has_count, is_none, is_any, has_all
+from .inline import mergeProperty, mergeSchemas
 from .recurse import recurseSchema, log as rec_log
 
 # wrapper may use a simplification step
@@ -239,6 +239,173 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return schemas
 
 #
+# UNEVALUATED ITEMS
+#
+
+_ARRAY_KW = [
+    "prefixItems", "items", "contains",
+    "minItems", "maxItems", "minContains", "maxContains", "uniqueItems",
+]
+
+def handleUnevaluatedItems(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
+    """Handle unevaluatedItems.
+
+    [spec](https://json-schema.org/draft/2020-12/draft-bhutton-json-schema-01#name-unevaluateditems)
+
+    The specification breaks with "keyword independence" in a bad way.
+    Alone is same as "items".
+    FIXME Where there is a true, it must be ignored.
+    When used with "items", the behavior is _not_ clearly specified. It seems to suggest
+    that when items is at the same level unevaluatedItems takes precedence, whereas if
+    it is downwards it is the other way around!?
+    """
+    assert isinstance(schema, dict) and "unevaluatedItems" in schema
+    spath = jpath(path)
+
+    if "type" in schema:
+        ts = schema["type"]
+        # filter out non arrays
+        if (isinstance(ts, str) and ts != "array" or
+                isinstance(ts, list) and "array" not in ts):
+            # simplify?
+            for p in _ARRAY_KW:
+                if p in schema:
+                    del schema[p]
+            del schema["unevaluatedItems"]
+            return schema
+
+    # PREPROCESSING?
+    # FIXME maybe this generic preprocessing should be elsewhere to simplify convert assumptions
+    # FIXME similar to unevaluatedProperties, create a function?
+    if (only(schema, "$ref", *_ARRAY_KW, "unevaluatedItems", "type", *IGNORE) and
+            "$ref" in schema and has_any(schema, *_ARRAY_KW)):
+        # let us try to merge
+        try:
+            refs = resolve_ref_rec(schema["$ref"])
+            if only(refs, *_ARRAY_KW, "unevaluatedItems", "type", *IGNORE):
+                # if shadowed, we are done!
+                # FIXME it is very unclear which overshadows which, depends on the version?!
+                # 2020 11.2 vs 2019 9.3.1.3?
+                if has_any(refs, "items", "unevaluatedItems"):
+                    # FIXME del schema["items"]
+                    del schema["unevaluatedItems"]
+                    return schema
+                # else merge
+                mschema = copy.deepcopy(schema)
+                del mschema["$ref"]
+                schema = mergeSchemas(refs, mschema)
+
+        except JSUError as e:
+            # NOTE merge should work? maybe an infinite ref chain
+            log.warning(f"merging of object props failed for unevaluatedItems at {spath}: {e}")
+            del schema["unevaluatedItems"]
+            return schema
+
+        # TODO else: allOf layer?
+
+    # TODO anyOf + array keywords
+    # TODO oneOf + array keywords
+
+    if (only(schema, "allOf", *_ARRAY_KW, "unevaluatedItems", "type", *IGNORE) and
+            "allOf" in schema and has_any(schema, *_ARRAY_KW)):
+        # try to merge into allof subschemas
+        try:
+            lof = copy.deepcopy(schema["allOf"])
+            for i in range(len(lof)):
+                lofi = lof[i]
+                for p, v in schema.items():
+                    if p not in IGNORE and p != "allOf":
+                        lofi = mergeProperty(lofi, p, copy.deepcopy(v))
+                lof[i] = lofi
+            # success
+            schema["allOf"] = lof
+            for p in _ARRAY_KW:
+                if p in schema:
+                    del schema[p]
+            # hmmm...
+            if len(lof) == 1:
+                del schema["allOf"]
+                schema.update(lof[0])
+            # proceed to later management
+        except JSUError as e:
+            # else what?
+            log.warning(f"merging of object props failed for unevaluatedItems at {spath}: {e}")
+            del schema["unevaluatedItems"]
+            return schema
+
+    #
+    # SANITY
+    #
+
+    # NOTE should not get there, to be handled before calling…
+    assert has_none(schema, "if", "then", "else", "not")
+    if has_count(schema, "anyOf", "oneOf", "allOf", "$ref", "$dynamicRef") > 1:
+        log.error(f"FIXME: unexpected multiple structures for unevaluatedItems at {spath}")
+        del schema["unevaluatedItems"]
+        return schema
+
+    # HANDLING
+    # shortcut if array only keywords
+    if has_none(schema, "$ref", "allOf", "anyOf", "oneOf", "$dynamicRef"):
+        if "items" in schema:  # shadowed
+            del schema["unevaluatedItems"]
+        else:  # transfer?
+            if "contains" in schema:
+                # TODO build secondary check with either contains or ui
+                log.warning("FIXME unevaluatedItems with contains at {spath}")
+            schema["items"] = schema.pop("unevaluatedItems")
+        return schema
+
+    # shortcut if one subschema in allOf
+    # TODO recursive check?
+    if "allOf" in schema:
+        allof = schema["allOf"]
+        assert isinstance(allof, list)
+        for s in allof:
+            if has_any(s, "items", "unevaluatedItems"):
+                del schema["unevaluatedItems"]
+                return schema
+
+    # shortcut if all subschemas of anyOf/oneOf
+    # TODO recursive check?
+    if has_any(schema, "anyOf", "oneOf"):
+        lof = schema["anyOf"] if "anyOf" in schema else schema["oneOf"]
+        covered = True
+        for s in lof:
+            # TODO more cases?
+            if not isinstance(s, dict):
+                covered = False
+                break
+            if has_all(s, "prefixItems", "maxItems"):
+                if len(s["prefixItems"]) >= s["maxItems"]:
+                    continue
+            if not has_any(s, "items", "unevaluatedItems"):
+                covered = False
+                break
+        if covered:
+            del schema["unevaluatedItems"]
+            return schema
+
+    # push into oneOf
+    if "oneOf" in schema and only(schema, "oneOf", "unevaluatedItems", *IGNORE):
+        ui, lof = schema.pop("unevaluatedItems"), schema["oneOf"]
+        for i in range(len(lof)):
+            si = lof[i]
+            if isinstance(si, bool):
+                assert si, "false schema should be removed from oneOf"
+                lof[i] = {
+                    "items": copy.deepcopy(ui)
+                }
+            else:
+                assert isinstance(si, dict)
+                si.update("unevaluatedItems", copy.deepcopy(ui))
+        return schema
+
+    log.warning(f"no handling of unevaluatedItems for {list(schema.keys())} at {spath}")
+    del schema["unevaluatedItems"]
+    return schema
+
+#
 # UNEVALUATED PROPERTIES
 #
 
@@ -314,7 +481,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
     if "type" in schema and has_any(schema, *_OBJECT_KW):
         ts = schema["type"]
         if (isinstance(ts, str) and ts != "object" or
-            isinstance(ts, list) and "object" not in ts):
+                isinstance(ts, list) and "object" not in ts):
             for p in _OBJECT_KW:
                 if p in schema:
                     del schema[p]
@@ -375,7 +542,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
             del schema["unevaluatedProperties"]
             return schema
 
-        # FIXME improve handling, possibly with a recursion
+        # FIXME improve handling, possibly with a recursion? create a allOf?
 
     #
     # SANITY CHECKS
@@ -430,14 +597,14 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
         # FIXME improve recursion detection
         if len(path) > 64:
             log.warning(f"doubtful depth for unevaluatedProperties at {spath}")
-            del schema["unresolvedProperties"]
+            del schema["unevaluatedProperties"]
             return schema
         # cold copy on $ref for now
         try:
             refs = resolve_ref(schema["$ref"])
         except JSUError as e:
             log.warning(f"$ref resolution failed for unevaluatedProperties at {spath}: {e}")
-            del schema["unresolvedProperties"]
+            del schema["unevaluatedProperties"]
             return schema
         # else we got something, let recurse on it
         del schema["$ref"]
@@ -480,7 +647,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
         # log.info(f"anyOf result {json.dumps(schema)}")
         return schema
 
-    # - oneOf: handling by propagation is okay is only one is expected to match
+    # - oneOf: handling by propagation is okay as only one is expected to match
     if only(schema, "oneOf", "type", "unevaluatedProperties", *IGNORE) and "oneOf" in schema:
         lof = schema["oneOf"]
         # let us propagate by merging
@@ -612,10 +779,10 @@ def allOfLayer(schema: dict, operator: str):
     # log.debug(f"ao {operator} in: {schema}")
     schemas = copy.deepcopy(schema[operator])
     del schema[operator]
-    # extract ignoreables, keep unevaluatedProperties
+    # extract ignoreables, keep unevaluatedProperties and unevaluatedItems
     nschema = {}
     for k, v in list(schema.items()):
-        if k in IGNORE + ["unevaluatedProperties"]:
+        if k in IGNORE + ["unevaluatedProperties", "unevaluatedItems"]:
             nschema[k] = v
             del schema[k]
     # forward type just in case for *Of
@@ -927,13 +1094,48 @@ def schema2model(
             else:
                 assert False, "FIXME not implemented yet"
 
-    # remove unevaluated properties here, or it might be done in the struct recursion
-    # FIXME $ref? $dynamicRef?
+    # remove unevaluatedProperties here, or it might be done in the struct recursion
+    # FIXME $dynamicRef?
     if ("unevaluatedProperties" in schema and
             has_count(schema, "allOf", "anyOf", "oneOf") <= 1):
         # log.debug(f"UP in: {json.dumps(schema)}")
         schema = handleUnevaluatedProp(schema, path)
         # log.debug(f"UP out: {json.dumps(schema)}")
+
+    # change <= 8 syntax to >= 9 to streamline translations
+    # up to 7:
+    # - items: schema = array of schema
+    #   - additionalItems = MUST BE IGNORED
+    # - items: list[schema] = tuple of schemas
+    #   - additionalItems: schema = remainder
+    # from 8:
+    # - prefixItems: array[schema] = tuple
+    # - items: schema = remainder
+    # - unevaluatedItems: schema = try again if it fails
+    if "additionalItems" in schema:
+        assert "prefixItems" not in schema  # <= 8 vs > 8
+        if "items" in schema:
+            items = schema["items"]
+            if isinstance(items, list):
+                schema["prefixItems"] = items
+                schema["items"] = schema["additionalItems"]
+            else:
+                # TODO add to simplify
+                log.warning("ignoring additionalItems because items is a schema")
+                assert isinstance(items, (bool, dict))
+        else:
+            log.warning("ignoring additionalItems with empty items")
+            # draft2019-09 9.3.1.2 §3
+        del schema["additionalItems"]
+    elif "items" in schema and isinstance(schema["items"], list):
+        assert "prefixItems" not in schema
+        schema["prefixItems"] = schema["items"]
+        del schema["items"]
+
+    if ("unevaluatedItems" in schema and
+            has_count(schema, "allOf", "anyOf", "oneOf") <= 1):
+        schema = handleUnevaluatedItems(schema, path)
+        log.debug(f"UI out: {json.dumps(schema)}")
 
     # structures
     if "oneOf" in schema:
@@ -1365,44 +1567,6 @@ def schema2model(
                 if unique:
                     constraints["!"] = True
 
-            # up to 7:
-            # - items: schema = array of schema
-            #   - additionalItems = MUST BE IGNORED
-            # - items: list[schema] = tuple of schemas
-            #   - additionalItems: schema = remainder
-            if "unevaluatedItems" in schema:
-                log.warning(f"TODO handle unevaluatedItems")
-                # quick approximate fix in one case
-                # TODO move to simplify?
-                if "additionalItems" not in schema:
-                    schema["additionalItems"] = schema["unevaluatedItems"]
-                    del schema["unevaluatedItems"]
-
-            # change <= 8 syntax to >= 9 to streamline translation in the next block
-            if "additionalItems" in schema:
-                assert "prefixItems" not in schema  # <= 8 vs > 8
-                if "items" in schema:
-                    items = schema["items"]
-                    if isinstance(items, list):
-                        schema["prefixItems"] = items
-                        schema["items"] = schema["additionalItems"]
-                    else:
-                        # TODO add to simplify
-                        log.warning("ignoring additionalItems because items is a schema")
-                        assert isinstance(items, (bool, dict))
-                else:
-                    log.warning("ignoring additionalItems with empty items")
-                    # schema["items"] = schema["additionalItems"]
-                del schema["additionalItems"]
-            elif "items" in schema and isinstance(schema["items"], list):
-                assert "prefixItems" not in schema
-                schema["prefixItems"] = schema["items"]
-                del schema["items"]
-
-            # from 8:
-            # - prefixItems: array[schema] = tuple
-            # - items: schema = remainder
-            # - unevaluatedItems: schema = try again if it fails
             if "prefixItems" in schema:
                 doubt(only(schema, "type", "prefixItems", "items", "minItems", "maxItems",
                            "uniqueItems", *IGNORE),
