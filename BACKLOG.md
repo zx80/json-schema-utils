@@ -14,6 +14,7 @@
 - [ ] improve `unevaluatedItems` support (wip)
 - [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
 - [ ] improve support for `unevaluatedProperties` with `patternProperties`?
+- [ ] improve support for `unevaluatedProperties` by merging `allOf` subschemas
 - [ ] discuss strategies to address version 9 (2020) specific features
 - [ ] move typing out to simplify the generated code
 - [ ] get 100% on _draft2019-09_
