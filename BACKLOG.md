@@ -16,6 +16,7 @@
 - [ ] improve `unevaluatedItems` support (wip)
 - [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
 - [ ] improve support for `unevaluatedProperties` with `patternProperties`?
+- [ ] fixme `unevaluatedProperties: false` is simpler for jm vs js…
 - [ ] improve support for `unevaluatedProperties` by merging `allOf` subschemas
 - [ ] discuss strategies to address version 9 (2020) specific features
 - [ ] move typing out to simplify the generated code
