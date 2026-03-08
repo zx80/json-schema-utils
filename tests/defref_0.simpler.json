@@ -22,7 +22,8 @@
       "const": "c"
     },
     "_psub_1_": {
-      "$ref": "#/$defs/A"
+      "$ref": "#/$defs/A",
+      "type": "string"
     },
     "_psub_2_": {
       "const": "i"
@@ -36,7 +37,8 @@
   },
   "properties": {
     "A": {
-      "$ref": "#/$defs/A"
+      "$ref": "#/$defs/A",
+      "type": "string"
     },
     "A2": {
       "$ref": "#/$defs/_psub_1_"

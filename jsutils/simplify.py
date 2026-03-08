@@ -192,6 +192,7 @@ def simplifySchema(
             url: str,
             sversion: int = 0,
             level: int = logging.INFO,
+            remove_all_types: bool = False,
         ):
     """Simplify a JSON Schema with various rules."""
 
@@ -613,6 +614,10 @@ def simplifySchema(
                 del local["maxContains"]
             elif isinstance(local["maxContains"], float):
                 local["maxContains"] = int(local["maxContains"])
+
+        if remove_all_types and "type" in local and isinstance(local["type"], list):
+            if len(local["type"]) == 7:
+                del local["type"]
 
         return local
 

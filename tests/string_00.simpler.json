@@ -13,10 +13,13 @@
   },
   "allOf": [
     {
-      "$ref": "#/$defs/CAP"
+      "$ref": "#/$defs/CAP",
+      "type": "string"
     },
     {
-      "$ref": "#/$defs/SHORT"
+      "$ref": "#/$defs/SHORT",
+      "type": "string"
     }
-  ]
+  ],
+  "type": "string"
 }

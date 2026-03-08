@@ -133,7 +133,7 @@ def jsu_simpler():
             schema = computeTypes(schema)
         if isinstance(schema, dict):
             scopeDefs(schema)
-            schema = simplifySchema(schema, schema.get("$id", "."))
+            schema = simplifySchema(schema, schema.get("$id", "."), remove_all_types=True)
 
         print(json_dumps(schema, args))
 
@@ -454,6 +454,7 @@ def jsu_model():
     sys.exit(1 if errors else 0)
 
 def jsu_compile():
+    """Compile schema into script or executable."""
 
     ap = argparse.ArgumentParser(
         prog="jsu-compile",
@@ -501,6 +502,7 @@ def jsu_compile():
 
     # forwarded to backend
     arg("--out", "-o", default=None, help="set output file")
+    arg("--regex-engine", "-re", default=None, help="set regex engine")
 
     arg("--loose", default=True, action="store_true",
         help="accept loose numbers (*)")
@@ -536,6 +538,8 @@ def jsu_compile():
     if args.out is not None:
         args.others += [ "-o", args.out ]
     args.others.append("--loose-number" if args.loose else "--strict-number")
+    if args.regex_engine is not None:
+        args.others += ["--regex-engine", args.regex_engine]
 
     mapping = {}
     if args.map:
@@ -579,7 +583,7 @@ def jsu_compile():
 
         # launch jmc
         # TODO invoke the internal interface? or not?
-        done = subprocess.run(["jmc", "--model", tmp.name, "--extend"] + args.others)
+        done = subprocess.run(["jmc", "--model", tmp.name, "--extend", *args.others])
 
         # exit status
         if done.returncode:

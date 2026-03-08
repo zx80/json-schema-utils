@@ -10,5 +10,6 @@
     }
   },
   "$id": "/rec_03",
-  "$ref": "#./$defs/A"
+  "$ref": "#./$defs/A",
+  "type": "object"
 }

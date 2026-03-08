@@ -3,7 +3,8 @@
   "if": {
     "required": [
       "age"
-    ]
+    ],
+    "type": "object"
   },
   "properties": {
     "age": {

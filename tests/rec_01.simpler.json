@@ -3,10 +3,12 @@
   "$defs": {
     "X": {
       "items": {
-        "$ref": "#./$defs/X"
+        "$ref": "#./$defs/X",
+        "type": "array"
       },
       "type": "array"
     }
   },
-  "$ref": "#./$defs/X"
+  "$ref": "#./$defs/X",
+  "type": "array"
 }
