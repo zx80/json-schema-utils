@@ -4,5 +4,6 @@
       "type": "number"
     }
   },
-  "$ref": "#/$defs/NUMBER"
+  "$ref": "#/$defs/NUMBER",
+  "type": "number"
 }

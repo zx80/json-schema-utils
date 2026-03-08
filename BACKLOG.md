@@ -11,6 +11,8 @@
 - [x] make `jsu-model` not pedantic by default (`--no-strict`)
 - [x] improve support for `unevaluatedProperties` on common use cases
 - [x] show default values on `--help`
+- [x] simpler possibly remove all-types lists
+- [ ] simpler remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] improve `unevaluatedItems` support (wip)
 - [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
 - [ ] improve support for `unevaluatedProperties` with `patternProperties`?

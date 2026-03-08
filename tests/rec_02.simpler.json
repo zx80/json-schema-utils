@@ -3,7 +3,8 @@
     "X": {
       "properties": {
         "y": {
-          "$ref": "#/$defs/Y"
+          "$ref": "#/$defs/Y",
+          "type": "object"
         }
       },
       "type": "object"
@@ -11,11 +12,13 @@
     "Y": {
       "properties": {
         "x": {
-          "$ref": "#/$defs/X"
+          "$ref": "#/$defs/X",
+          "type": "object"
         }
       },
       "type": "object"
     }
   },
-  "$ref": "#/$defs/X"
+  "$ref": "#/$defs/X",
+  "type": "object"
 }

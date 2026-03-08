@@ -4,12 +4,15 @@
       "pattern": "^A"
     }
   },
-  "$ref": "#/$defs/A",
   "allOf": [
     {
-      "pattern": "A$"
+      "$ref": "#/$defs/A",
+      "pattern": "B",
+      "type": "string"
+    },
+    {
+      "pattern": "A$",
+      "type": "string"
     }
-  ],
-  "pattern": "B",
-  "type": "string"
+  ]
 }

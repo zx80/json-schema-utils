@@ -3,7 +3,8 @@
   "if": {
     "properties": {
       "age": true
-    }
+    },
+    "type": "object"
   },
   "properties": {
     "age": {
