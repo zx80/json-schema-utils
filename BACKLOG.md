@@ -2,16 +2,7 @@
 
 ## JSU schema compilation with JMC backend
 
-- [x] improve conversion of int/float enums and consts
-- [x] improve conversion with mixed minContains/maxContains and other array constraints
-- [x] improve handling of patternProperties merging
-- [x] fix conversion of `json-model.schema.json`
-- [x] be listed on [bowtie](https://bowtie.report/)
-- [x] make `jsu-test-runner` accepts a single test object
-- [x] make `jsu-model` not pedantic by default (`--no-strict`)
-- [x] improve support for `unevaluatedProperties` on common use cases
-- [x] show default values on `--help`
-- [x] simpler possibly remove all-types lists
+- [ ] convert merge `allOf` before proceeding when possible
 - [ ] simpler remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] improve `unevaluatedItems` support (wip)
 - [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
@@ -42,3 +33,13 @@
 - [x] cleanup direct uses of quote/unquote in simplify
 - [x] add `--loose` option for numbers
 - [x] add `--out file` option to `jsu-model`
+- [x] improve conversion of int/float enums and consts
+- [x] improve conversion with mixed minContains/maxContains and other array constraints
+- [x] improve handling of patternProperties merging
+- [x] fix conversion of `json-model.schema.json`
+- [x] be listed on [bowtie](https://bowtie.report/)
+- [x] make `jsu-test-runner` accepts a single test object
+- [x] make `jsu-model` not pedantic by default (`--no-strict`)
+- [x] improve support for `unevaluatedProperties` on common use cases
+- [x] show default values on `--help`
+- [x] simpler possibly remove all-types lists
