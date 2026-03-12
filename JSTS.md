@@ -1,7 +1,7 @@
 # JSON Schema Test Suite Report
 
-JSTS version: `601aa7084d903022922fd7159fd2b72981df719c`
-JSU version: `0.9.1 (backend jmc 2.0b38)`
+JSTS version: `06481b143722c8c06671bd40dcde99b422ffd531`
+JSU version: `0.9.2 (backend jmc 2.0b41)`
 
 ## Results for _draft2020-12_
 
@@ -38,8 +38,8 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/multipleOf.json`: errors=0 cases=5/5 (100.0%) tests=10/10 (100.0%, 0 fails)
 - `/not.json`: errors=0 cases=9/9 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `/oneOf.json`: errors=0 cases=11/11 (100.0%) tests=27/27 (100.0%, 0 fails)
-- `/pattern.json`: errors=0 cases=2/2 (100.0%) tests=9/9 (100.0%, 0 fails)
-- `/patternProperties.json`: errors=0 cases=5/5 (100.0%) tests=23/23 (100.0%, 0 fails)
+- `/pattern.json`: errors=0 cases=2/3 (66.7%) tests=11/12 (91.7%, 1 fails)
+- `/patternProperties.json`: errors=0 cases=6/6 (100.0%) tests=25/25 (100.0%, 0 fails)
 - `/prefixItems.json`: errors=0 cases=4/4 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `/properties.json`: errors=0 cases=6/6 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/propertyNames.json`: errors=0 cases=6/6 (100.0%) tests=20/20 (100.0%, 0 fails)
@@ -51,7 +51,7 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/unevaluatedProperties.json`: errors=0 cases=34/42 (81.0%) tests=115/125 (92.0%, 10 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=332/377 (88.1%) tests=1221/1277 (95.6%, 56 fails)
+- summary: files=46 errors=0 cases=333/379 (87.9%) tests=1225/1282 (95.6%, 57 fails)
 
 ## Results for _draft2019-09_
 
@@ -281,8 +281,8 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/multipleOf.json`: errors=0 cases=5/5 (100.0%) tests=10/10 (100.0%, 0 fails)
 - `/not.json`: errors=0 cases=9/9 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `/oneOf.json`: errors=0 cases=11/11 (100.0%) tests=27/27 (100.0%, 0 fails)
-- `/pattern.json`: errors=0 cases=2/2 (100.0%) tests=9/9 (100.0%, 0 fails)
-- `/patternProperties.json`: errors=0 cases=5/5 (100.0%) tests=23/23 (100.0%, 0 fails)
+- `/pattern.json`: errors=0 cases=2/3 (66.7%) tests=11/12 (91.7%, 1 fails)
+- `/patternProperties.json`: errors=0 cases=5/6 (83.3%) tests=25/26 (96.2%, 1 fails)
 - `/prefixItems.json`: errors=0 cases=4/4 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `/properties.json`: errors=0 cases=6/6 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `/propertyNames.json`: errors=0 cases=3/3 (100.0%) tests=10/10 (100.0%, 0 fails)
@@ -293,5 +293,5 @@ JSU version: `0.9.1 (backend jmc 2.0b38)`
 - `/unevaluatedItems.json`: errors=0 cases=15/29 (51.7%) tests=52/71 (73.2%, 19 fails)
 - `/unevaluatedProperties.json`: errors=0 cases=31/42 (73.8%) tests=112/125 (89.6%, 13 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- summary: files=44 errors=0 cases=296/343 (86.3%) tests=1054/1113 (94.7%, 59 fails)
+- summary: files=44 errors=0 cases=296/345 (85.8%) tests=1058/1119 (94.5%, 61 fails)
 
