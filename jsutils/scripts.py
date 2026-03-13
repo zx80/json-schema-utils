@@ -517,6 +517,8 @@ def jsu_compile():
     arg("--no-format", dest="format", action="store_false",
         help="ignore formats (*)")
 
+    arg("--runtime", default=False, action="store_true", help="output runtime directory and exit")
+
     # schema to consider
     arg("schema", default="-", nargs="?", help="schema to process")
 
@@ -529,6 +531,10 @@ def jsu_compile():
     if args.version:
         backend = pkg_version("json_model_compiler")
         print(f"{__version__} (backend jmc {backend})")
+        sys.exit(0)
+
+    if args.runtime:
+        subprocess.run(["jmc", "--runtime"], check=True)
         sys.exit(0)
 
     # forward some options to back-end
