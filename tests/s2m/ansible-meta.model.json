@@ -469,25 +469,21 @@
                           "?standalone": "=false"
                         },
                         {
-                          "&": [
-                            {
-                              "^": [
-                                "$ANY",
-                                {
-                                  "": "$ANY",
-                                  "_cloud_platforms": "$ANY",
-                                  "_galaxy_tags": "$ANY",
-                                  "_min_ansible_version": "$ANY",
-                                  "_namespace": "$ANY",
-                                  "_platforms": "$ANY",
-                                  "_role_name": "$ANY",
-                                  "_video_links": "$ANY"
-                                }
-                              ]
-                            },
+                          "^": [
                             {
                               "": "$ANY",
                               "_description": "$ANY"
+                            },
+                            {
+                              "": "$ANY",
+                              "_cloud_platforms": "$ANY",
+                              "_description": "$ANY",
+                              "_galaxy_tags": "$ANY",
+                              "_min_ansible_version": "$ANY",
+                              "_namespace": "$ANY",
+                              "_platforms": "$ANY",
+                              "_role_name": "$ANY",
+                              "_video_links": "$ANY"
                             }
                           ]
                         }

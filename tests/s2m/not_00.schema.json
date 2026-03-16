@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/stuff",
+  "$defs": {
+    "stuff": {
+      "type": "object",
+      "properties": {
+        "foo": true,
+        "bla": true
+      },
+      "not": {
+        "required": [
+          "foo",
+          "bla"
+        ]
+      },
+      "$ref": "#/$defs/whatever",
+      "unevaluatedProperties": false
+    },
+    "whatever": true
+  }
+}

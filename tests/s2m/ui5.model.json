@@ -218,54 +218,53 @@
                 {
                   "&": [
                     {
-                      "&": [
+                      "^": [
                         {
-                          "^": [
-                            "$ANY",
+                          "": "$ANY"
+                        },
+                        {
+                          "|": [
                             {
-                              "|": [
+                              "": "$ANY",
+                              "?optional": {
+                                "|": [
+                                  null,
+                                  "=false"
+                                ]
+                              }
+                            },
+                            {
+                              "": "$ANY",
+                              "?development": {
+                                "|": [
+                                  null,
+                                  "=false"
+                                ]
+                              }
+                            },
+                            {
+                              "^": [
                                 {
-                                  "": "$ANY",
-                                  "?optional": {
-                                    "|": [
-                                      null,
-                                      "=false"
-                                    ]
-                                  }
+                                  "": "$ANY"
                                 },
                                 {
                                   "": "$ANY",
-                                  "?development": {
-                                    "|": [
-                                      null,
-                                      "=false"
-                                    ]
-                                  }
+                                  "?optional": true
+                                }
+                              ]
+                            },
+                            {
+                              "^": [
+                                {
+                                  "": "$ANY"
                                 },
                                 {
-                                  "^": [
-                                    "$ANY",
-                                    {
-                                      "": "$ANY",
-                                      "?optional": true
-                                    }
-                                  ]
-                                },
-                                {
-                                  "^": [
-                                    "$ANY",
-                                    {
-                                      "": "$ANY",
-                                      "?development": true
-                                    }
-                                  ]
+                                  "": "$ANY",
+                                  "?development": true
                                 }
                               ]
                             }
                           ]
-                        },
-                        {
-                          "": "$ANY"
                         }
                       ]
                     },
@@ -278,54 +277,53 @@
                   "^": [
                     "$ANY",
                     {
-                      "&": [
+                      "^": [
                         {
-                          "^": [
-                            "$ANY",
+                          "": "$ANY"
+                        },
+                        {
+                          "|": [
                             {
-                              "|": [
+                              "": "$ANY",
+                              "?optional": {
+                                "|": [
+                                  null,
+                                  "=false"
+                                ]
+                              }
+                            },
+                            {
+                              "": "$ANY",
+                              "?development": {
+                                "|": [
+                                  null,
+                                  "=false"
+                                ]
+                              }
+                            },
+                            {
+                              "^": [
                                 {
-                                  "": "$ANY",
-                                  "?optional": {
-                                    "|": [
-                                      null,
-                                      "=false"
-                                    ]
-                                  }
+                                  "": "$ANY"
                                 },
                                 {
                                   "": "$ANY",
-                                  "?development": {
-                                    "|": [
-                                      null,
-                                      "=false"
-                                    ]
-                                  }
+                                  "?optional": true
+                                }
+                              ]
+                            },
+                            {
+                              "^": [
+                                {
+                                  "": "$ANY"
                                 },
                                 {
-                                  "^": [
-                                    "$ANY",
-                                    {
-                                      "": "$ANY",
-                                      "?optional": true
-                                    }
-                                  ]
-                                },
-                                {
-                                  "^": [
-                                    "$ANY",
-                                    {
-                                      "": "$ANY",
-                                      "?development": true
-                                    }
-                                  ]
+                                  "": "$ANY",
+                                  "?development": true
                                 }
                               ]
                             }
                           ]
-                        },
-                        {
-                          "": "$ANY"
                         }
                       ]
                     }

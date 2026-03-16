@@ -7304,17 +7304,17 @@
         "&": [
           {
             "^": [
-              "$ANY",
+              "",
               {
                 "|": [
-                  "_OData",
-                  "_ODataAnnotation",
-                  "_INA",
-                  "_XML",
-                  "_JSON",
-                  "_FHIR",
-                  "_WebSocket",
-                  "_http"
+                  "OData",
+                  "ODataAnnotation",
+                  "INA",
+                  "XML",
+                  "JSON",
+                  "FHIR",
+                  "WebSocket",
+                  "http"
                 ]
               }
             ]

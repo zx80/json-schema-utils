@@ -6188,16 +6188,6 @@
                 "#": " The URL to the JWK endpoint with the private keys used to sign the token.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
                 "@": ""
               },
-              "?keys_to_sign": {
-                "#": "List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?kid": {
-                "#": "The key ID purpose is to match a specific key, as the jwk_url might contain several keys.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
-                "@": ""
-              },
               "?leeway": {
                 "#": "A margin of extra time where you will still accept the token after its expiration date. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
                 "@": "$_defs_0_timeunit"
@@ -6230,6 +6220,16 @@
               },
               "_jwk_local_path": {
                 "#": "Local path to the JWK public keys, has preference over `jwk_url`. Instead of pointing to an external URL (with `jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add `secret_url` and `cypher_key`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
+                "@": ""
+              },
+              "_keys_to_sign": {
+                "#": "List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+                "@": [
+                  "$ANY"
+                ]
+              },
+              "_kid": {
+                "#": "The key ID purpose is to match a specific key, as the jwk_url might contain several keys.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
                 "@": ""
               }
             },
@@ -6301,16 +6301,6 @@
                 "#": "Local path to the JWK public keys, has preference over `jwk_url`. Instead of pointing to an external URL (with `jwk_url`), public keys are kept locally, in a plain JWK file (security alert!), or encrypted. When encrypted, also add `secret_url` and `cypher_key`.\n\nSee: https://www.krakend.io/docs/authorization/jwt-validation/",
                 "@": ""
               },
-              "?keys_to_sign": {
-                "#": "List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
-                "@": [
-                  "$ANY"
-                ]
-              },
-              "?kid": {
-                "#": "The key ID purpose is to match a specific key, as the jwk_url might contain several keys.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
-                "@": ""
-              },
               "?leeway": {
                 "#": "A margin of extra time where you will still accept the token after its expiration date. You should not accept expired tokens other than enabling two environments that are not perfectly synchronized and have minor clock drifts to accept each other differences. Any value specified here will be rounded to seconds, with a minimum of one second.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
                 "@": "$_defs_0_timeunit"
@@ -6339,6 +6329,16 @@
               },
               "_jwk_url": {
                 "#": " The URL to the JWK endpoint with the private keys used to sign the token.\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+                "@": ""
+              },
+              "_keys_to_sign": {
+                "#": "List of all the specific keys that need signing (e.g., `refresh_token` and `access_token`).\n\nSee: https://www.krakend.io/docs/authorization/jwt-signing/",
+                "@": [
+                  "$ANY"
+                ]
+              },
+              "_kid": {
+                "#": "The key ID purpose is to match a specific key, as the jwk_url might contain several keys.\n\nSee: https://www.krakend.io/docs/enterprise/authorization/jwt-validation/",
                 "@": ""
               }
             },

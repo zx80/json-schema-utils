@@ -549,7 +549,7 @@ def handleUnevaluatedProp(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
     #
 
     # NOTE should not get there, to be handled before calling…
-    assert has_none(schema, "if", "then", "else", "not")
+    assert has_none(schema, "if", "then", "else", "not"), f"no conditions at {spath}"
     if has_count(schema, "anyOf", "oneOf", "allOf", "$ref", "$dynamicRef") > 1:
         log.error(f"FIXME: unexpected multiple structures for unevaluatedProperties at {spath}")
         del schema["unevaluatedProperties"]
@@ -903,7 +903,7 @@ def schema2model(
             # provide a local converted version as well? not enough??
             defs[new_name] = schema2model(val, lid or url, path + ((dname, name),), defs, strict, fix, False, resilient)
             # result
-            log.debug(f"def {new_name}: {json.dumps(defs[new_name])}")
+            # log.debug(f"def {new_name}: {json.dumps(defs[new_name])}")
 
     # FIXME cleanup OpenAPI extentions "x-*", nullable
     for prop in list(schema.keys()):
@@ -947,6 +947,7 @@ def schema2model(
     if "then" in schema or "else" in schema:
         if "if" not in schema:
             # no if => then/else are ignored (10.2.2)
+            # FIXME maybe it is not ignored for unevaluatedPropertieS?
             log.warning(f"ignoring then/else without if at [{spath}]")
             if "else" in schema:
                 del schema["else"]
@@ -1003,6 +1004,28 @@ def schema2model(
         log.warning(f"ignoring lone if at [{spath}]")
         del schema["if"]
 
+    # TODO explore special cases, eg {"not": {"required": ["X", "Y"]}}
+    if "not" in schema:
+        #
+        # { **props, not { **props_not  } -> { **props, oneOf (any, props_not } }
+        #
+        snot = schema.pop("not")
+        # shortcuts
+        # if is_any(snot):
+        #     return "$NONE"
+        # elif is_none(snot):
+        #     return "$ANY"
+        # generate a "oneOf" to be handled by the next pass
+        oneof = [ {}, snot ]
+        if "oneOf" not in schema:
+            schema["oneOf"] = oneof
+        else:
+            if "allOf" not in schema:
+                schema["allOf"] = []
+            schema["allOf"].append({"oneOf": oneof})
+
+        log.debug(f"not: schema={schema}")
+
     # FIXME adhoc handling for table-schema.json and ADEME and others
     if "type" in schema and schema["type"] == "object" and ("anyOf" in schema or "oneOf" in schema):
         # FIXME this is some reimplementation of mergeProperty?
@@ -1026,7 +1049,7 @@ def schema2model(
             del schema["required"]
             for s in lof:
                 if "required" in s:
-                    s["required"].append(required)
+                    s["required"].extend(required)
                 else:
                     s["required"] = required
         if "properties" in schema:
@@ -1813,7 +1836,8 @@ def schema2model(
                 doubt(only(schema, "type", "required", "maxProperties", "minProperties",
                            "patternProperties", *IGNORE), f"object props at [{spath}]", strict)
                 required = schema["required"]
-                assert isinstance(required, list) and all(isinstance(s, str) for s in required)
+                assert isinstance(required, list) and all(isinstance(s, str) for s in required), \
+                    f"well-formed required: {required}"
                 model[""] = "$ANY"
                 model.update({ f"_{k}": "$ANY" for k in required })
                 # what about other props?

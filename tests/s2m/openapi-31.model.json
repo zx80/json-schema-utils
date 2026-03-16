@@ -1,0 +1,2522 @@
+{
+  "#": "The description of OpenAPI v3.1.x documents without schema validation, as defined by https://spec.openapis.org/oas/v3.1.0",
+  "$": {
+    "_defs_0_styles-for-cookie": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_in": "_cookie"
+            },
+            {
+              "": "$ANY",
+              "?style": {
+                "@": "_form"
+              }
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_in": "_cookie"
+            }
+          ]
+        }
+      ]
+    },
+    "_defs_0_styles-for-header": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_in": "_header"
+            },
+            {
+              "": "$ANY",
+              "?style": {
+                "@": "_simple"
+              }
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_in": "_header"
+            }
+          ]
+        }
+      ]
+    },
+    "_defs_0_styles-for-path": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_in": "_path"
+            },
+            {
+              "": "$ANY",
+              "?style": {
+                "|": [
+                  "_matrix",
+                  "_label",
+                  "_simple"
+                ]
+              },
+              "_required": "=true"
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_in": "_path"
+            }
+          ]
+        }
+      ]
+    },
+    "_defs_0_styles-for-query": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_in": "_query"
+            },
+            {
+              "": "$ANY",
+              "?allowReserved": {
+                "@": true
+              },
+              "?style": {
+                "|": [
+                  "_form",
+                  "_spaceDelimited",
+                  "_pipeDelimited",
+                  "_deepObject"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_in": "_query"
+            }
+          ]
+        }
+      ]
+    },
+    "_defs_1_type-apikey": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_type": "_apiKey"
+            },
+            {
+              "": "$ANY",
+              "_in": {
+                "|": [
+                  "_query",
+                  "_header",
+                  "_cookie"
+                ]
+              },
+              "_name": ""
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_type": "_apiKey"
+            }
+          ]
+        }
+      ]
+    },
+    "_defs_1_type-http": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_type": "_http"
+            },
+            {
+              "": "$ANY",
+              "_scheme": ""
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_type": "_http"
+            }
+          ]
+        }
+      ]
+    },
+    "_defs_1_type-http-bearer": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_scheme": "/^[Bb][Ee][Aa][Rr][Ee][Rr]$/",
+              "_type": "_http"
+            },
+            {
+              "": "$ANY",
+              "?bearerFormat": ""
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_scheme": "/^[Bb][Ee][Aa][Rr][Ee][Rr]$/",
+              "_type": "_http"
+            }
+          ]
+        }
+      ]
+    },
+    "_defs_1_type-oauth2": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_type": "_oauth2"
+            },
+            {
+              "": "$ANY",
+              "_flows": {
+                "&": [
+                  "$oauth-flows",
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_type": "_oauth2"
+            }
+          ]
+        }
+      ]
+    },
+    "_defs_1_type-oidc": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_type": "_openIdConnect"
+            },
+            {
+              "": "$ANY",
+              "_openIdConnectUrl": "$URI"
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_type": "_openIdConnect"
+            }
+          ]
+        }
+      ]
+    },
+    "_defs_2_authorization-code": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?refreshUrl": "$URI",
+          "_authorizationUrl": "$URI",
+          "_scopes": {
+            "&": [
+              "$map-of-strings",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "_tokenUrl": "$URI"
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "_defs_2_client-credentials": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?refreshUrl": "$URI",
+          "_scopes": {
+            "&": [
+              "$map-of-strings",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "_tokenUrl": "$URI"
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "_defs_2_implicit": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?refreshUrl": "$URI",
+          "_authorizationUrl": "$URI",
+          "_scopes": {
+            "&": [
+              "$map-of-strings",
+              {
+                "": "$ANY"
+              }
+            ]
+          }
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "_defs_2_password": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?refreshUrl": "$URI",
+          "_scopes": {
+            "&": [
+              "$map-of-strings",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "_tokenUrl": "$URI"
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "_psub_10_": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_type": "_oauth2"
+            },
+            {
+              "": "$ANY",
+              "_flows": {
+                "&": [
+                  "$oauth-flows",
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_type": "_oauth2"
+            }
+          ]
+        }
+      ]
+    },
+    "_psub_11_": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_type": "_openIdConnect"
+            },
+            {
+              "": "$ANY",
+              "_openIdConnectUrl": "$URI"
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_type": "_openIdConnect"
+            }
+          ]
+        }
+      ]
+    },
+    "_psub_12_": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?refreshUrl": "$URI",
+          "_authorizationUrl": "$URI",
+          "_scopes": {
+            "&": [
+              "$map-of-strings",
+              {
+                "": "$ANY"
+              }
+            ]
+          }
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "_psub_13_": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?refreshUrl": "$URI",
+          "_scopes": {
+            "&": [
+              "$map-of-strings",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "_tokenUrl": "$URI"
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "_psub_14_": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?refreshUrl": "$URI",
+          "_scopes": {
+            "&": [
+              "$map-of-strings",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "_tokenUrl": "$URI"
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "_psub_15_": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?refreshUrl": "$URI",
+          "_authorizationUrl": "$URI",
+          "_scopes": {
+            "&": [
+              "$map-of-strings",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "_tokenUrl": "$URI"
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "_psub_3_": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_in": "_path"
+            },
+            {
+              "": "$ANY",
+              "?style": {
+                "|": [
+                  "_matrix",
+                  "_label",
+                  "_simple"
+                ]
+              },
+              "_required": "=true"
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_in": "_path"
+            }
+          ]
+        }
+      ]
+    },
+    "_psub_4_": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_in": "_header"
+            },
+            {
+              "": "$ANY",
+              "?style": {
+                "@": "_simple"
+              }
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_in": "_header"
+            }
+          ]
+        }
+      ]
+    },
+    "_psub_5_": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_in": "_query"
+            },
+            {
+              "": "$ANY",
+              "?allowReserved": {
+                "@": true
+              },
+              "?style": {
+                "|": [
+                  "_form",
+                  "_spaceDelimited",
+                  "_pipeDelimited",
+                  "_deepObject"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_in": "_query"
+            }
+          ]
+        }
+      ]
+    },
+    "_psub_6_": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_in": "_cookie"
+            },
+            {
+              "": "$ANY",
+              "?style": {
+                "@": "_form"
+              }
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_in": "_cookie"
+            }
+          ]
+        }
+      ]
+    },
+    "_psub_7_": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_type": "_apiKey"
+            },
+            {
+              "": "$ANY",
+              "_in": {
+                "|": [
+                  "_query",
+                  "_header",
+                  "_cookie"
+                ]
+              },
+              "_name": ""
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_type": "_apiKey"
+            }
+          ]
+        }
+      ]
+    },
+    "_psub_8_": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_type": "_http"
+            },
+            {
+              "": "$ANY",
+              "_scheme": ""
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_type": "_http"
+            }
+          ]
+        }
+      ]
+    },
+    "_psub_9_": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_scheme": "/^[Bb][Ee][Aa][Rr][Ee][Rr]$/",
+              "_type": "_http"
+            },
+            {
+              "": "$ANY",
+              "?bearerFormat": ""
+            }
+          ]
+        },
+        {
+          "^": [
+            "$ANY",
+            {
+              "": "$ANY",
+              "_scheme": "/^[Bb][Ee][Aa][Rr][Ee][Rr]$/",
+              "_type": "_http"
+            }
+          ]
+        }
+      ]
+    },
+    "callbacks": {
+      "&": [
+        "$specification-extensions",
+        {
+          "": "$path-item-or-reference"
+        }
+      ]
+    },
+    "callbacks-or-reference": {
+      "&": [
+        {
+          "": "$ANY"
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_$ref": "$ANY"
+                },
+                {
+                  "&": [
+                    "$reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_$ref": "$ANY"
+                    }
+                  ]
+                },
+                {
+                  "&": [
+                    "$callbacks",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "components": {
+      "&": [
+        {
+          "/^(schemas|responses|parameters|examples|requestBodies|headers|securitySchemes|links|callbacks|pathItems)$/": "$ANY",
+          "/^x-/": "$ANY",
+          "?callbacks": {
+            "": {
+              "&": [
+                "$callbacks-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?examples": {
+            "": {
+              "&": [
+                "$example-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?headers": {
+            "": {
+              "&": [
+                "$header-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?links": {
+            "": {
+              "&": [
+                "$link-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?parameters": {
+            "": {
+              "&": [
+                "$parameter-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?pathItems": {
+            "": {
+              "&": [
+                "$path-item-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?requestBodies": {
+            "": {
+              "&": [
+                "$request-body-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?responses": {
+            "": {
+              "&": [
+                "$response-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?schemas": {
+            "": {
+              "|": [
+                true,
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?securitySchemes": {
+            "": {
+              "&": [
+                "$security-scheme-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "": "$ANY",
+          "/^(schemas|responses|parameters|examples|requestBodies|headers|securitySchemes|links|callbacks|pathItems)$/": {
+            "|": [
+              null,
+              true,
+              -1,
+              -1.0,
+              "",
+              [
+                "$ANY"
+              ],
+              {
+                "&": [
+                  {
+                    "": "$ANY"
+                  },
+                  {
+                    "/^[a-zA-Z0-9._-]+$/": "$ANY"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "contact": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?email": "$EMAIL",
+          "?name": "",
+          "?url": "$URI"
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "content": {
+      "": {
+        "&": [
+          "$media-type",
+          {
+            "": "$ANY"
+          }
+        ]
+      }
+    },
+    "encoding": {
+      "&": [
+        {
+          "&": [
+            {
+              "&": [
+                "$specification-extensions",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$styles-for-form",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "": "$ANY",
+          "?allowReserved": {
+            "@": true
+          },
+          "?contentType": "",
+          "?explode": true,
+          "?headers": {
+            "": {
+              "&": [
+                "$header-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?style": {
+            "|": [
+              "_form",
+              "_spaceDelimited",
+              "_pipeDelimited",
+              "_deepObject"
+            ]
+          }
+        }
+      ]
+    },
+    "example": {
+      "&": [
+        {
+          "^": [
+            {
+              "": "$ANY",
+              "?description": "",
+              "?externalValue": "$URI",
+              "?summary": "",
+              "?value": "$ANY"
+            },
+            {
+              "": "$ANY",
+              "?description": "",
+              "?summary": "",
+              "_externalValue": "$URI",
+              "_value": "$ANY"
+            }
+          ]
+        },
+        "$specification-extensions"
+      ]
+    },
+    "example-or-reference": {
+      "&": [
+        {
+          "": "$ANY"
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_$ref": "$ANY"
+                },
+                {
+                  "&": [
+                    "$reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_$ref": "$ANY"
+                    }
+                  ]
+                },
+                {
+                  "&": [
+                    "$example",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "examples": {
+      "": "$ANY",
+      "?example": "$ANY",
+      "?examples": {
+        "": "$example-or-reference"
+      }
+    },
+    "external-documentation": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?description": "",
+          "_url": "$URI"
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "header": {
+      "&": [
+        {
+          "&": [
+            {
+              "^": [
+                {
+                  "": "$ANY",
+                  "?content": {
+                    "&": [
+                      "$content",
+                      {
+                        "": "$ANY"
+                      }
+                    ]
+                  },
+                  "?deprecated": {
+                    "@": true
+                  },
+                  "?description": "",
+                  "?required": {
+                    "@": true
+                  },
+                  "_schema": {
+                    "|": [
+                      true,
+                      {
+                        "": "$ANY"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "": "$ANY",
+                  "?deprecated": {
+                    "@": true
+                  },
+                  "?description": "",
+                  "?required": {
+                    "@": true
+                  },
+                  "?schema": {
+                    "|": [
+                      true,
+                      {
+                        "": "$ANY"
+                      }
+                    ]
+                  },
+                  "_content": {
+                    "": "$ANY"
+                  }
+                }
+              ]
+            },
+            "$specification-extensions"
+          ]
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_schema": "$ANY"
+                },
+                {
+                  "&": [
+                    "$examples",
+                    {
+                      "": "$ANY",
+                      "?explode": {
+                        "@": true
+                      },
+                      "?style": {
+                        "@": "_simple"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "^": [
+                "$ANY",
+                {
+                  "": "$ANY",
+                  "_schema": "$ANY"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "header-or-reference": {
+      "&": [
+        {
+          "": "$ANY"
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_$ref": "$ANY"
+                },
+                {
+                  "&": [
+                    "$reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_$ref": "$ANY"
+                    }
+                  ]
+                },
+                {
+                  "&": [
+                    "$header",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "info": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?contact": {
+            "&": [
+              "$contact",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?description": "",
+          "?license": {
+            "&": [
+              "$license",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?summary": "",
+          "?termsOfService": "$URI",
+          "_title": "",
+          "_version": ""
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "license": {
+      "&": [
+        {
+          "&": [
+            {
+              "/^x-/": "$ANY",
+              "?identifier": "",
+              "?url": "$URI",
+              "_name": ""
+            },
+            {
+              "": "$ANY",
+              "/^x-/": "$ANY"
+            }
+          ]
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_identifier": "$ANY"
+                },
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_url": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "^": [
+                "$ANY",
+                {
+                  "": "$ANY",
+                  "_identifier": "$ANY"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "link": {
+      "&": [
+        {
+          "^": [
+            {
+              "": "$ANY",
+              "?body": {
+                "&": [
+                  "$server",
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              },
+              "?description": "",
+              "?operationId": "",
+              "?parameters": {
+                "&": [
+                  "$map-of-strings",
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              },
+              "?requestBody": "$ANY",
+              "_operationRef": "$URI"
+            },
+            {
+              "": "$ANY",
+              "?body": {
+                "": "$ANY"
+              },
+              "?description": "",
+              "?operationRef": "$URI",
+              "?parameters": {
+                "": "$ANY"
+              },
+              "?requestBody": "$ANY",
+              "_operationId": ""
+            }
+          ]
+        },
+        "$specification-extensions"
+      ]
+    },
+    "link-or-reference": {
+      "&": [
+        {
+          "": "$ANY"
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_$ref": "$ANY"
+                },
+                {
+                  "&": [
+                    "$reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_$ref": "$ANY"
+                    }
+                  ]
+                },
+                {
+                  "&": [
+                    "$link",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "map-of-strings": {
+      "": ""
+    },
+    "media-type": {
+      "&": [
+        {
+          "&": [
+            {
+              "&": [
+                "$specification-extensions",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$examples",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "": "$ANY",
+          "?encoding": {
+            "": {
+              "&": [
+                "$encoding",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?schema": {
+            "|": [
+              true,
+              {
+                "": "$ANY"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "oauth-flows": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?authorizationCode": "$_psub_15_",
+          "?clientCredentials": "$_psub_14_",
+          "?implicit": "$_psub_12_",
+          "?password": "$_psub_13_"
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "operation": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?callbacks": {
+            "": {
+              "&": [
+                "$callbacks-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?deprecated": {
+            "@": true
+          },
+          "?description": "",
+          "?externalDocs": {
+            "&": [
+              "$external-documentation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?operationId": "",
+          "?parameters": [
+            {
+              "&": [
+                "$parameter-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ],
+          "?requestBody": {
+            "&": [
+              "$request-body-or-reference",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?responses": {
+            "&": [
+              "$responses",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?security": [
+            {
+              "&": [
+                "$security-requirement",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ],
+          "?servers": [
+            {
+              "&": [
+                "$server",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ],
+          "?summary": "",
+          "?tags": [
+            ""
+          ]
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "parameter": {
+      "&": [
+        {
+          "&": [
+            {
+              "^": [
+                {
+                  "": "$ANY",
+                  "?content": {
+                    "&": [
+                      "$content",
+                      {
+                        "": "$ANY"
+                      }
+                    ]
+                  },
+                  "?deprecated": {
+                    "@": true
+                  },
+                  "?description": "",
+                  "?required": {
+                    "@": true
+                  },
+                  "_in": {
+                    "|": [
+                      "_query",
+                      "_header",
+                      "_path",
+                      "_cookie"
+                    ]
+                  },
+                  "_name": "",
+                  "_schema": {
+                    "|": [
+                      true,
+                      {
+                        "": "$ANY"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "": "$ANY",
+                  "?deprecated": {
+                    "@": true
+                  },
+                  "?description": "",
+                  "?required": {
+                    "@": true
+                  },
+                  "?schema": {
+                    "|": [
+                      true,
+                      {
+                        "": "$ANY"
+                      }
+                    ]
+                  },
+                  "_content": {
+                    "": "$ANY"
+                  },
+                  "_in": {
+                    "|": [
+                      "_query",
+                      "_header",
+                      "_path",
+                      "_cookie"
+                    ]
+                  },
+                  "_name": ""
+                }
+              ]
+            },
+            "$specification-extensions"
+          ]
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_schema": "$ANY"
+                },
+                {
+                  "&": [
+                    {
+                      "&": [
+                        "$examples",
+                        "$_psub_3_",
+                        "$_psub_4_",
+                        "$_psub_5_",
+                        "$_psub_6_",
+                        "$styles-for-form"
+                      ]
+                    },
+                    {
+                      "": "$ANY",
+                      "?explode": true,
+                      "?style": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "^": [
+                "$ANY",
+                {
+                  "": "$ANY",
+                  "_schema": "$ANY"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "parameter-or-reference": {
+      "&": [
+        {
+          "": "$ANY"
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_$ref": "$ANY"
+                },
+                {
+                  "&": [
+                    "$reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_$ref": "$ANY"
+                    }
+                  ]
+                },
+                {
+                  "&": [
+                    "$parameter",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "path-item": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?delete": {
+            "&": [
+              "$operation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?description": "",
+          "?get": {
+            "&": [
+              "$operation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?head": {
+            "&": [
+              "$operation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?options": {
+            "&": [
+              "$operation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?parameters": [
+            {
+              "&": [
+                "$parameter-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ],
+          "?patch": {
+            "&": [
+              "$operation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?post": {
+            "&": [
+              "$operation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?put": {
+            "&": [
+              "$operation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?servers": [
+            {
+              "&": [
+                "$server",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ],
+          "?summary": "",
+          "?trace": {
+            "&": [
+              "$operation",
+              {
+                "": "$ANY"
+              }
+            ]
+          }
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "path-item-or-reference": {
+      "&": [
+        {
+          "": "$ANY"
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_$ref": "$ANY"
+                },
+                {
+                  "&": [
+                    "$reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_$ref": "$ANY"
+                    }
+                  ]
+                },
+                {
+                  "&": [
+                    "$path-item",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "paths": {
+      "&": [
+        {
+          "/^//": "$ANY",
+          "/^x-/": "$ANY"
+        },
+        {
+          "": "$ANY",
+          "/^//": {
+            "&": [
+              "$path-item",
+              {
+                "": "$ANY"
+              }
+            ]
+          }
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "reference": {
+      "": "$ANY",
+      "?$ref": "$URI",
+      "?description": "",
+      "?summary": ""
+    },
+    "request-body": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?description": "",
+          "?required": {
+            "@": true
+          },
+          "_content": {
+            "&": [
+              "$content",
+              {
+                "": "$ANY"
+              }
+            ]
+          }
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "request-body-or-reference": {
+      "&": [
+        {
+          "": "$ANY"
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_$ref": "$ANY"
+                },
+                {
+                  "&": [
+                    "$reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_$ref": "$ANY"
+                    }
+                  ]
+                },
+                {
+                  "&": [
+                    "$request-body",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "response": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?content": {
+            "&": [
+              "$content",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?headers": {
+            "": {
+              "&": [
+                "$header-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "?links": {
+            "": {
+              "&": [
+                "$link-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "_description": ""
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "response-or-reference": {
+      "&": [
+        {
+          "": "$ANY"
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_$ref": "$ANY"
+                },
+                {
+                  "&": [
+                    "$reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_$ref": "$ANY"
+                    }
+                  ]
+                },
+                {
+                  "&": [
+                    "$response",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "responses": {
+      "&": [
+        {
+          ">=": 1,
+          "@": {
+            "&": [
+              {
+                "/^[1-5](?:[0-9]{2}|XX)$/": "$ANY",
+                "/^x-/": "$ANY",
+                "?default": {
+                  "&": [
+                    "$response-or-reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              },
+              {
+                "": "$ANY",
+                "/^[1-5](?:[0-9]{2}|XX)$/": {
+                  "&": [
+                    "$response-or-reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              },
+              {
+                "": "$ANY",
+                "/^x-/": "$ANY"
+              }
+            ]
+          }
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "&": [
+                    {
+                      "": "$ANY",
+                      "/^[1-5](?:[0-9]{2}|XX)$/": "$ANY"
+                    },
+                    {
+                      "": "$ANY",
+                      "/^[1-5](?:[0-9]{2}|XX)$/": "$NONE"
+                    }
+                  ]
+                },
+                {
+                  "": "$ANY",
+                  "_default": "$ANY"
+                }
+              ]
+            },
+            {
+              "^": [
+                "$ANY",
+                {
+                  "&": [
+                    {
+                      "": "$ANY",
+                      "/^[1-5](?:[0-9]{2}|XX)$/": "$ANY"
+                    },
+                    {
+                      "": "$ANY",
+                      "/^[1-5](?:[0-9]{2}|XX)$/": "$NONE"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "schema": {
+      "|": [
+        true,
+        {
+          "": "$ANY"
+        }
+      ]
+    },
+    "security-requirement": {
+      "": [
+        ""
+      ]
+    },
+    "security-scheme": {
+      "&": [
+        {
+          "&": [
+            {
+              "&": [
+                "$specification-extensions",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$_psub_7_",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$_psub_8_",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$_psub_9_",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$_psub_10_",
+                {
+                  "": "$ANY"
+                }
+              ]
+            },
+            {
+              "&": [
+                "$_psub_11_",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "": "$ANY",
+          "?description": "",
+          "_type": {
+            "|": [
+              "_apiKey",
+              "_http",
+              "_mutualTLS",
+              "_oauth2",
+              "_openIdConnect"
+            ]
+          }
+        }
+      ]
+    },
+    "security-scheme-or-reference": {
+      "&": [
+        {
+          "": "$ANY"
+        },
+        {
+          "|": [
+            {
+              "&": [
+                {
+                  "": "$ANY",
+                  "_$ref": "$ANY"
+                },
+                {
+                  "&": [
+                    "$reference",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "&": [
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_$ref": "$ANY"
+                    }
+                  ]
+                },
+                {
+                  "&": [
+                    "$security-scheme",
+                    {
+                      "": "$ANY"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "server": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?description": "",
+          "?variables": {
+            "": {
+              "&": [
+                "$server-variable",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "_url": "$URI"
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "server-variable": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?description": "",
+          "?enum": {
+            ">=": 1,
+            "@": [
+              ""
+            ]
+          },
+          "_default": ""
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    },
+    "specification-extensions": {
+      "|": [
+        null,
+        true,
+        -1,
+        -1.0,
+        "",
+        [
+          "$ANY"
+        ],
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "/^x-/": "$ANY"
+            },
+            {
+              "": "$ANY",
+              "/^x-/": "$ANY"
+            }
+          ]
+        }
+      ]
+    },
+    "styles-for-form": {
+      "|": [
+        {
+          "&": [
+            {
+              "": "$ANY",
+              "_style": "_form"
+            },
+            {
+              "": "$ANY",
+              "?explode": {
+                "@": "$ANY"
+              }
+            }
+          ]
+        },
+        {
+          "&": [
+            {
+              "^": [
+                "$ANY",
+                {
+                  "": "$ANY",
+                  "_style": "_form"
+                }
+              ]
+            },
+            {
+              "": "$ANY",
+              "?explode": {
+                "@": "$ANY"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "tag": {
+      "&": [
+        {
+          "/^x-/": "$ANY",
+          "?description": "",
+          "?externalDocs": {
+            "&": [
+              "$external-documentation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "_name": ""
+        },
+        {
+          "": "$ANY",
+          "/^x-/": "$ANY"
+        }
+      ]
+    }
+  },
+  "&": [
+    {
+      "|": [
+        {
+          "": "$ANY",
+          "?components": {
+            "&": [
+              "$components",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?externalDocs": {
+            "&": [
+              "$external-documentation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?jsonSchemaDialect": {
+            "@": "$URI"
+          },
+          "?security": [
+            {
+              "&": [
+                "$security-requirement",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ],
+          "?servers": {
+            "@": [
+              {
+                "&": [
+                  "$server",
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              }
+            ]
+          },
+          "?tags": [
+            {
+              "&": [
+                "$tag",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ],
+          "?webhooks": {
+            "": {
+              "&": [
+                "$path-item-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          },
+          "_info": {
+            "&": [
+              "$info",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "_openapi": "/^3\\.1\\.\\d+(-.+)?$/",
+          "_paths": {
+            "&": [
+              "$paths",
+              {
+                "": "$ANY"
+              }
+            ]
+          }
+        },
+        {
+          "": "$ANY",
+          "?externalDocs": {
+            "": "$ANY"
+          },
+          "?jsonSchemaDialect": {
+            "@": "$URI"
+          },
+          "?paths": {
+            "": "$ANY"
+          },
+          "?security": [
+            {
+              "": "$ANY"
+            }
+          ],
+          "?servers": {
+            "@": [
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?tags": [
+            {
+              "": "$ANY"
+            }
+          ],
+          "?webhooks": {
+            "": {
+              "": "$ANY"
+            }
+          },
+          "_components": {
+            "": "$ANY"
+          },
+          "_info": {
+            "": "$ANY"
+          },
+          "_openapi": "/^3\\.1\\.\\d+(-.+)?$/"
+        },
+        {
+          "": "$ANY",
+          "?components": {
+            "": "$ANY"
+          },
+          "?externalDocs": {
+            "": "$ANY"
+          },
+          "?jsonSchemaDialect": {
+            "@": "$URI"
+          },
+          "?paths": {
+            "": "$ANY"
+          },
+          "?security": [
+            {
+              "": "$ANY"
+            }
+          ],
+          "?servers": {
+            "@": [
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?tags": [
+            {
+              "": "$ANY"
+            }
+          ],
+          "_info": {
+            "": "$ANY"
+          },
+          "_openapi": "/^3\\.1\\.\\d+(-.+)?$/",
+          "_webhooks": {
+            "": {
+              "": "$ANY"
+            }
+          }
+        }
+      ]
+    },
+    "$specification-extensions"
+  ]
+}

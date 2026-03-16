@@ -90,7 +90,7 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
             # append in order and without duplicates
             for p in value:
                 if p not in schema["required"]:
-                    schema["required"].append(p)  # pyright: ignore
+                    schema["required"].append(p)  # type: ignore
         else:
             schema["required"] = value  # type: ignore
     elif prop == "properties":
