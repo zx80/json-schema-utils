@@ -3,6 +3,7 @@
 ## JSU schema compilation with JMC backend
 
 - [x] convert handle `not` by switching to `oneOf`
+- [x] convert fix missing escaping on string constants
 - [ ] convert merge `allOf` before proceeding when possible
 - [ ] simpler remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] improve `unevaluatedItems` support (wip)

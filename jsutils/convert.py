@@ -76,7 +76,7 @@ def toconst(val):
 
 def esc(s):
     """Escape a string if necessary."""
-    if isinstance(s, str) and (len(s) == 0 or s[0] in ("$", "?", "_", "!", "=", "^")):
+    if isinstance(s, str) and (len(s) == 0 or not s[0].isalnum() or s[0] == "_"):
         return "_" + s
     else:
         return s
