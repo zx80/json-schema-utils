@@ -1,6 +1,6 @@
 # JSON Schema Test Suite Report
 
-JSTS version: `06481b143722c8c06671bd40dcde99b422ffd531`
+JSTS version: `54ed4d1fb0ac8ab16c453df5db8b5e81689c6fed`
 JSU version: `0.9.3 (backend jmc 2.0b42)`
 
 ## Results for _draft2020-12_
@@ -18,7 +18,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `/dependentRequired.json`: errors=0 cases=4/4 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `/dependentSchemas.json`: errors=0 cases=4/4 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `/dynamicRef.json`: errors=0 cases=7/21 (33.3%) tests=26/44 (59.1%, 18 fails)
-- `/enum.json`: errors=0 cases=14/14 (100.0%) tests=45/45 (100.0%, 0 fails)
+- `/enum.json`: errors=0 cases=15/15 (100.0%) tests=51/51 (100.0%, 0 fails)
 - `/exclusiveMaximum.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `/exclusiveMinimum.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `/format.json`: errors=0 cases=19/19 (100.0%) tests=133/133 (100.0%, 0 fails)
@@ -51,7 +51,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `/unevaluatedProperties.json`: errors=0 cases=34/42 (81.0%) tests=115/125 (92.0%, 10 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=334/379 (88.1%) tests=1226/1282 (95.6%, 56 fails)
+- summary: files=46 errors=0 cases=335/380 (88.2%) tests=1232/1288 (95.7%, 56 fails)
 
 ## Results for _draft2019-09_
 
@@ -68,7 +68,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `/defs.json`: errors=0 cases=0/1 (0.0%) tests=1/2 (50.0%, 1 fails)
 - `/dependentRequired.json`: errors=0 cases=4/4 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `/dependentSchemas.json`: errors=0 cases=4/4 (100.0%) tests=20/20 (100.0%, 0 fails)
-- `/enum.json`: errors=0 cases=14/14 (100.0%) tests=45/45 (100.0%, 0 fails)
+- `/enum.json`: errors=0 cases=15/15 (100.0%) tests=51/51 (100.0%, 0 fails)
 - `/exclusiveMaximum.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `/exclusiveMinimum.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `/format.json`: errors=0 cases=19/19 (100.0%) tests=114/114 (100.0%, 0 fails)
@@ -101,7 +101,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `/unevaluatedProperties.json`: errors=0 cases=30/42 (71.4%) tests=111/125 (88.8%, 14 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=329/368 (89.4%) tests=1196/1242 (96.3%, 46 fails)
+- summary: files=46 errors=0 cases=330/369 (89.4%) tests=1202/1248 (96.3%, 46 fails)
 
 ## Results for _draft7_
 
@@ -262,7 +262,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `/dependentRequired.json`: errors=0 cases=4/4 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `/dependentSchemas.json`: errors=0 cases=4/4 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `/dynamicRef.json`: errors=0 cases=5/12 (41.7%) tests=17/27 (63.0%, 10 fails)
-- `/enum.json`: errors=0 cases=14/14 (100.0%) tests=45/45 (100.0%, 0 fails)
+- `/enum.json`: errors=0 cases=15/15 (100.0%) tests=51/51 (100.0%, 0 fails)
 - `/exclusiveMaximum.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `/exclusiveMinimum.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `/if-then-else.json`: errors=0 cases=10/10 (100.0%) tests=26/26 (100.0%, 0 fails)
@@ -293,5 +293,5 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `/unevaluatedItems.json`: errors=0 cases=16/29 (55.2%) tests=53/71 (74.6%, 18 fails)
 - `/unevaluatedProperties.json`: errors=0 cases=30/42 (71.4%) tests=111/125 (88.8%, 14 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- summary: files=44 errors=0 cases=296/345 (85.8%) tests=1058/1119 (94.5%, 61 fails)
+- summary: files=44 errors=0 cases=297/346 (85.8%) tests=1064/1125 (94.6%, 61 fails)
 
