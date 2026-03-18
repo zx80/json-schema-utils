@@ -537,15 +537,21 @@ def jsu_compile():
         subprocess.run(["jmc", "--runtime"], check=True)
         sys.exit(0)
 
-    # forward some options to back-end
+    # forward some options to back-end, but do not overwrite explicit options
     # TODO formats should be simply removed from the input schema instead?
-    args.others.append("--predef" if args.format else "--no-predef")
-    args.others.append("--reporting" if args.reporting else "--no-reporting")
+    args.others.insert(0, "--predef" if args.format else "--no-predef")
+    args.others.insert(0, "--reporting" if args.reporting else "--no-reporting")
     if args.out is not None:
         args.others += [ "-o", args.out ]
-    args.others.append("--loose-number" if args.loose else "--strict-number")
+    args.others.insert(0, "--loose-number" if args.loose else "--strict-number")
     if args.regex_engine is not None:
-        args.others += ["--regex-engine", args.regex_engine]
+        args.others = ["--regex-engine", args.regex_engine, *args.others]
+
+    # also forward verbosity options, debug wins
+    if args.debug:
+        args.others.insert(0, "--debug")
+    if args.quiet:
+        args.others.insert(0, "--quiet")
 
     mapping = {}
     if args.map:
@@ -587,9 +593,14 @@ def jsu_compile():
         tmp.write(smodel.encode("UTF8"))
         tmp.flush()
 
-        # launch jmc
+        # launch jmc command
+        jmc = ["jmc", "--model", tmp.name, "--extend", *args.others]
+
+        if args.debug:
+            log.debug(f"jmc: {' '.join(jmc)}")
+
         # TODO invoke the internal interface? or not?
-        done = subprocess.run(["jmc", "--model", tmp.name, "--extend", *args.others])
+        done = subprocess.run(jmc, check=False)
 
         # exit status
         if done.returncode:
