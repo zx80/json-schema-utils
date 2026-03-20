@@ -14,6 +14,7 @@ from .schemas import Schemas
 from .restruct import modernizeOldDraft
 from .recurse import recurseSchema
 from .resolver import Resolver
+from .vocab import vocabularizeSchema
 
 log = logging.getLogger("inline")
 log.setLevel(logging.INFO)
@@ -486,6 +487,7 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
 def resolveExternalRefs(
             schema: JsonSchema, *,
             url: str = ".",
+            vocabularize: bool = True,
             modernize: bool = True,
             resolver: Resolver = None,
             version: int = 0,
@@ -523,6 +525,9 @@ def resolveExternalRefs(
                   0  # take a guess
         if version == 0:
             log.warning(f"unexpected $schema: {sversion}")
+
+    if vocabularize:
+        vocabularizeSchema(schema, resolver)
 
     # we need to do that here in order to manage external refs reliably
     if modernize:

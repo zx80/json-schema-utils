@@ -1995,7 +1995,8 @@ def schema2id(schema: JsonSchema, keep_format: bool = True) -> str:
 
 def schema_to_model(
             schema: JsonSchema, schema_name: str, resolver: Resolver,
-            typer: bool = False, simpler: bool = False, fix: bool = True, modernize: bool = True,
+            vocabularize: bool = True, modernize: bool = True,
+            typer: bool = False, simpler: bool = False, fix: bool = True,
             use_id: bool = False, strict: bool = True, resolve: bool = True,
             resilient: bool = False, version: int = 0, level: int = logging.INFO,
         ):
@@ -2022,7 +2023,7 @@ def schema_to_model(
                 log.debug(f"resolving external refs")
                 schema = resolveExternalRefs(
                     schema, url=url, version=version, resolver=resolver,
-                    modernize=modernize, level=level,
+                    vocabularize=vocabularize, modernize=modernize, level=level,
                 )
             if typer and isinstance(schema, dict):
                 log.debug("typing schema")

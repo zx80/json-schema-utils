@@ -50,8 +50,8 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `/unevaluatedItems.json`: errors=0 cases=16/29 (55.2%) tests=53/71 (74.6%, 18 fails)
 - `/unevaluatedProperties.json`: errors=0 cases=34/42 (81.0%) tests=115/125 (92.0%, 10 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=335/380 (88.2%) tests=1232/1288 (95.7%, 56 fails)
+- `/vocabulary.json`: errors=0 cases=2/2 (100.0%) tests=5/5 (100.0%, 0 fails)
+- summary: files=46 errors=0 cases=336/380 (88.4%) tests=1233/1288 (95.7%, 55 fails)
 
 ## Results for _draft2019-09_
 
@@ -100,8 +100,8 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `/unevaluatedItems.json`: errors=0 cases=17/26 (65.4%) tests=45/56 (80.4%, 11 fails)
 - `/unevaluatedProperties.json`: errors=0 cases=30/42 (71.4%) tests=111/125 (88.8%, 14 fails)
 - `/uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- `/vocabulary.json`: errors=0 cases=1/2 (50.0%) tests=4/5 (80.0%, 1 fails)
-- summary: files=46 errors=0 cases=330/369 (89.4%) tests=1202/1248 (96.3%, 46 fails)
+- `/vocabulary.json`: errors=0 cases=2/2 (100.0%) tests=5/5 (100.0%, 0 fails)
+- summary: files=46 errors=0 cases=331/369 (89.7%) tests=1203/1248 (96.4%, 45 fails)
 
 ## Results for _draft7_
 

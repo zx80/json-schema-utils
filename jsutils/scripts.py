@@ -398,6 +398,10 @@ def jsu_model():
         help="simplify schema before conversion (*)")
     arg("--no-simple", dest="simple", action="store_false",
         help="do not simplify schema before conversion")
+    arg("--vocab", default=True, action="store_true",
+        help="apply vocabulary filter (*)")
+    arg("--no-vocab", dest="vocab", action="store_false",
+        help="do not apply vocabulary filter")
     # NOTE this is necessary to handle older schema versions
     arg("--modernize", default=True, action="store_true",
         help="modernize schema (*)")
@@ -428,7 +432,8 @@ def jsu_model():
             schema = json.load(open(fn) if fn != "-" else sys.stdin)
             model = schema_to_model(
                 schema, fn,
-                use_id=args.id, strict=args.strict, fix=args.fix, modernize=args.modernize,
+                use_id=args.id, strict=args.strict, fix=args.fix,
+                vocabularize=args.vocab, modernize=args.modernize,
                 simpler=args.simple, typer=args.type, resilient=args.resilient,
                 version=args.sversion, resolver=resolver,
                 level=logging.DEBUG if args.debug else logging.INFO,
@@ -478,6 +483,10 @@ def jsu_compile():
         help="return something whatever")
     arg("--no-resilient", dest="resilient", action="store_false",
         help="may fail (*)")
+    arg("--vocab", default=True, action="store_true",
+        help="apply vocabulary filter (*)")
+    arg("--no-vocab", dest="vocab", action="store_false",
+        help="do not apply vocabulary filter")
     arg("--modernize", default=True, action="store_true",
         help="modernize schema (*)")
     arg("--no-modernize", dest="modernize", action="store_false",
@@ -558,7 +567,8 @@ def jsu_compile():
         resolver = Resolver(cache=args.cache, mapping=args.map)
         model = schema_to_model(
             schema, args.schema,
-            use_id=args.id, strict=args.strict, fix=args.fix, modernize=args.modernize,
+            use_id=args.id, strict=args.strict, fix=args.fix,
+            vocabularize=args.vocab, modernize=args.modernize,
             typer=args.type, simpler=args.simple, resilient=args.resilient,
             version=args.sversion, resolver=resolver,
             level=logging.DEBUG if args.debug else logging.INFO,
@@ -603,6 +613,7 @@ def json_schema_to_python_checker(
         version: int = 0,
         strict: bool = True,
         fix: bool = False,
+        vocabularize: bool = True,
         modernize: bool = True,
         typer: bool = True,
         simpler: bool = True,
@@ -621,7 +632,7 @@ def json_schema_to_python_checker(
         # build the intermediate model
         model = schema_to_model(
             schema, name, strict=strict, fix=fix, modernize=modernize, typer=typer,
-            simpler=simpler, version=version, resilient=resilient,
+            simpler=simpler, version=version, resilient=resilient, vocabularize=vocabularize,
             resolver=resolver, level=level,
         )
         if level == logging.DEBUG:
@@ -656,6 +667,10 @@ def jsu_runner():
         help="show generated model as debug")
     arg("--no-dump", dest="dump", action="store_false",
         help="do not show generated model as debug (*)")
+    arg("--vocab", default=True, action="store_true",
+        help="apply vocabulary filter (*)")
+    arg("--no-vocab", dest="vocab", action="store_false",
+        help="do not apply vocabulary filter")
     arg("--modernize", default=True, action="store_true",
         help="modernize schema (*)")
     arg("--no-modernize", dest="modernize", action="store_false",
@@ -677,7 +692,6 @@ def jsu_runner():
     arg("--no-resilient", dest="resilient", default=False, action="store_true",
         help="disable model conversion resilience (*)")
 
-    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("cases", nargs="*", help="test cases to process")
     args = ap.parse_args()
@@ -738,8 +752,10 @@ def jsu_runner():
                 try:
                     checker = json_schema_to_python_checker(
                         case["schema"], scase, strict=args.strict, fix=False,
-                        modernize=args.modernize, typer=args.type, simpler=args.simple,
-                        version=args.sversion, resilient=args.resilient, resolver=resolver,
+                        vocabularize=args.vocab, modernize=args.modernize, typer=args.type,
+                        simpler=args.simple,
+                        version=args.sversion, resilient=args.resilient,
+                        cache=args.cache, mapping=args.map,
                         level = logging.DEBUG if args.debug else logging.INFO,
                         # hardcoded expectations
                         loose_int=True, loose_float=True, predef=False, extend=True,

@@ -6,6 +6,7 @@
 - [x] convert fix missing escaping on string constants
 - [x] fix unintentional override of jmc options on forwarding
 - [x] refactor resolver stuff to reuse it for vocabularies
+- [x] support for $vocabulary by removing disactivated keywords
 - [ ] convert merge `allOf` before proceeding when possible
 - [ ] simpler remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] improve `unevaluatedItems` support (wip)
