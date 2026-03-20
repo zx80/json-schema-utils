@@ -7,7 +7,9 @@ import re
 log = logging.getLogger("JSU")
 
 # simplistic typing
-type Jsonable = None|bool|int|float|str|list[Jsonable]|dict[str, Jsonable]
+type JsonArray = list[Jsonable]
+type JsonObject = dict[str, Jsonable]
+type Jsonable = None|bool|int|float|str|JsonArray|JsonObject
 type JsonSchema = dict[str, Jsonable]|bool
 # type JsonPath = tuple[str|int, ...]
 type SchemaPathSegment = str|tuple[str, str]|tuple[str, int]
