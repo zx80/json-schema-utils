@@ -13,6 +13,7 @@ from .utils import only, is_abs_url, schemapath_to_urlpath, is_any, is_none, has
 from .schemas import Schemas
 from .restruct import modernizeOldDraft
 from .recurse import recurseSchema
+from .resolver import Resolver
 
 log = logging.getLogger("inline")
 log.setLevel(logging.INFO)
@@ -482,14 +483,11 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
 
     return recurseSchema(schema, url, rwt=rwtRef)
 
-FILE_URL = "file://"
-
 def resolveExternalRefs(
             schema: JsonSchema, *,
             url: str = ".",
             modernize: bool = True,
-            cache: str|None = None,
-            mapping: dict[str, str] = {},
+            resolver: Resolver = None,
             version: int = 0,
             level: int = logging.INFO,
         ) -> JsonSchema:
@@ -683,55 +681,12 @@ def resolveExternalRefs(
                 elif url in resolved:  # retrieve local name or path
                     dest = f"#/{defs}/{resolved[url]}"
                 else:  # or create one
-                    js, loaded, filed, cached, cfn = None, False, False, False, None
-
-                    if cache:  # we cache the **initial** url only
-                        uh = hashlib.sha3_256(url.encode()).hexdigest()[:16]
-                        cfn = f"{cache}/{uh}.json"
-                        try:
-                            with open(cfn) as f:
-                                js = json.load(f)
-                            log.info(f"# loaded from cache: {url}")
-                            loaded, cached = True, True
-                        except Exception as e:
-                            log.debug(f"not found in cache: {url}")
-                    else:
-                        uh = None
-
-                    if not loaded and mapping:
-                        for src, dst in mapping.items():
-                            if url.startswith(src):
-                                init_url = url
-                                url = dst + url[len(src):]
-                                log.warning(f"remapping {init_url} to {url}")
-                                break  # stop on first match
-
-                    if not loaded and url.startswith(FILE_URL):
-                        fn = url[len(FILE_URL):]
-                        try:
-                            with open(fn) as f:
-                                js = json.load(f)
-                            log.info(f"# loaded from file: {url}")
-                            loaded, filed = True, True
-                        except Exception as e:
-                            log.debug(f"file not found for: {url}")
-
-                    if not loaded:
-                        res = requests.get(url)
-                        log.info(f"# loaded from net: {url!r}")
-                        js, loaded = res.json(), True
-
-                        # store in cache
-                        if cache and not cached:
-                            assert isinstance(cfn, str)  # pyright
-                            with open(cfn, "w") as f:
-                                f.write(res.text)
+                    js = resolver.get(url)
+                    assert isinstance(js, dict)  # pyright
 
                     # find next available name
                     while (name := f"_extern_{externs}_") in schema[defs]:  # type: ignore
                         externs += 1
-
-                    assert isinstance(js, dict)  # pyright
 
                     # upgrade schema for later processing
                     if modernize:

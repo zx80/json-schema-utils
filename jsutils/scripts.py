@@ -18,6 +18,7 @@ from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
 from .convert import schema_to_model
+from .resolver import Resolver
 from .types import computeTypes
 
 __version__ = pkg_version("json_schema_utils")
@@ -59,6 +60,7 @@ def jsu_inline():
     )
     arg = ap.add_argument
     ap_common(arg)
+    arg("--cache", type=str, default=None, help="cache directory for remote schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("--auto", "-a", action="store_true", default=False, help="automatic url mapping")
     arg("schemas", nargs="*", help="schemas to inline")
@@ -69,13 +71,8 @@ def jsu_inline():
     if not args.schemas:
         args.schemas = ["-"]
 
-    schemas = Schemas()
+    schemas = Schemas(resolver=Resolver(cache=args.cache, mapping=args.map))
     schemas.addProcess(lambda s, u: inlineRefs(s, u, schemas))
-
-    if args.map:
-        for m in args.map:
-            url, target = m.split("=", 1)
-            schemas.addMap(url, target)
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
@@ -148,6 +145,8 @@ def jsu_check():
     )
     arg = ap.add_argument
     ap_common(arg)
+    arg("--cache", type=str, default=None, help="cache directory for remote schemas")
+    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("--draft", "-D", default="2020-12", help="JSON Schema draft")
     arg("--engine", "-e", choices=["jmc", "jsonschema", "jschon"], default="jmc",
         help="select JSON Schema implementation, default is 'jmc'")
@@ -224,7 +223,10 @@ def jsu_check():
         elif args.engine == "jmc":
             import json_model
             # TODO safest options?
-            jmodel = schema_to_model(jschema, args.schema, simpler=True, typer=True)
+            resolver = Resolver(cache=args.cache, mapping=args.map)
+            jmodel = schema_to_model(
+                jschema, args.schema, simpler=True, typer=True, resolver=resolver
+            )
             checker = json_model.model_checker_from_json(
                 jmodel, predef=args.format, extend=args.extend
             )
@@ -369,7 +371,8 @@ def jsu_model():
     )
     arg = ap.add_argument
     ap_common(arg)
-    arg("--cache", type=str, default=None, help="cache directory")
+    arg("--cache", type=str, default=None, help="cache directory for remote schemas")
+    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
 
     arg("--id", action="store_true", default=False,
         help="enable $id lookup")
@@ -402,7 +405,6 @@ def jsu_model():
         help="do not modernize schema")
 
     arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
-    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("--out", "-o", default="-", help="set model output file")
     arg("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args()
@@ -413,14 +415,7 @@ def jsu_model():
         print(__version__)
         sys.exit(0)
 
-    mapping = {}
-    if args.map:
-        for m in args.map:
-            src, dst = m.split("=", 1)
-            mapping[src] = dst
-        if args.debug:
-            log.debug(f"url mapping: {mapping}")
-
+    resolver = Resolver(cache=args.cache, mapping=args.map)
 
     if not args.schemas:
         args.schemas = ["-"]
@@ -435,7 +430,7 @@ def jsu_model():
                 schema, fn,
                 use_id=args.id, strict=args.strict, fix=args.fix, modernize=args.modernize,
                 simpler=args.simple, typer=args.type, resilient=args.resilient,
-                version=args.sversion, mapping=mapping,
+                version=args.sversion, resolver=resolver,
                 level=logging.DEBUG if args.debug else logging.INFO,
             )
         except Exception as e:
@@ -497,8 +492,8 @@ def jsu_compile():
         help="do not simplify schema before conversion")
 
     # remote schemas
-    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
+    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
 
     # forwarded to backend
     arg("--out", "-o", default=None, help="set output file")
@@ -528,6 +523,8 @@ def jsu_compile():
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
+    resolver = Resolver(cache=args.cache, mapping=args.map)
+
     if args.version:
         backend = pkg_version("json_model_compiler")
         print(f"{__version__} (backend jmc {backend})")
@@ -553,24 +550,17 @@ def jsu_compile():
     if args.quiet:
         args.others.insert(0, "--quiet")
 
-    mapping = {}
-    if args.map:
-        for m in args.map:
-            src, dst = m.split("=", 1)
-            mapping[src] = dst
-        if args.debug:
-            log.debug(f"url mapping: {mapping}")
-
     # intermediate model
     model = None
 
     try:
         schema = json.load(open(args.schema) if args.schema != "-" else sys.stdin)
+        resolver = Resolver(cache=args.cache, mapping=args.map)
         model = schema_to_model(
             schema, args.schema,
             use_id=args.id, strict=args.strict, fix=args.fix, modernize=args.modernize,
             typer=args.type, simpler=args.simple, resilient=args.resilient,
-            cache=args.cache, version=args.sversion, mapping=mapping,
+            version=args.sversion, resolver=resolver,
             level=logging.DEBUG if args.debug else logging.INFO,
         )
     except Exception as e:
@@ -627,11 +617,12 @@ def json_schema_to_python_checker(
     ) -> Callable[[Jsonable], bool]:
     """Build a dynamic python checker function from a schema."""
     try:
+        resolver = Resolver(cache=cache, mapping=mapping)
         # build the intermediate model
         model = schema_to_model(
             schema, name, strict=strict, fix=fix, modernize=modernize, typer=typer,
             simpler=simpler, version=version, resilient=resilient,
-            cache=cache, mapping=mapping, level=level,
+            resolver=resolver, level=level,
         )
         if level == logging.DEBUG:
             log.debug(f"intermediate model: {model}")
@@ -658,7 +649,8 @@ def jsu_runner():
     )
     arg = ap.add_argument
     ap_common(arg)
-    arg("--cache", type=str, default=None, help="cache directory")
+    arg("--cache", type=str, default=None, help="cache directory for remote schemas")
+    arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
 
     arg("--dump", default=False, action="store_true",
         help="show generated model as debug")
@@ -697,13 +689,7 @@ def jsu_runner():
         print(f"{__version__} (backend jmc {backend})")
         sys.exit(0)
 
-    mapping = {}
-    if args.map:
-        for m in args.map:
-            src, dst = m.split("=", 1)
-            mapping[src] = dst
-        if args.debug:
-            log.debug(f"url mapping: {mapping}")
+    resolver = Resolver(cache=args.cache, mapping=args.map)
 
     import json_model
 
@@ -753,8 +739,7 @@ def jsu_runner():
                     checker = json_schema_to_python_checker(
                         case["schema"], scase, strict=args.strict, fix=False,
                         modernize=args.modernize, typer=args.type, simpler=args.simple,
-                        version=args.sversion, resilient=args.resilient,
-                        cache=args.cache, mapping=mapping,
+                        version=args.sversion, resilient=args.resilient, resolver=resolver,
                         level = logging.DEBUG if args.debug else logging.INFO,
                         # hardcoded expectations
                         loose_int=True, loose_float=True, predef=False, extend=True,

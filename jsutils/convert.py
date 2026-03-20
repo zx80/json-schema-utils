@@ -11,6 +11,7 @@ from .utils import decode_url, schemapath_to_urlpath, is_abs_url
 from .utils import only, has_none, has_any, has_count, is_none, is_any, has_all
 from .inline import mergeProperty, mergeSchemas
 from .recurse import recurseSchema, log as rec_log
+from .resolver import Resolver
 
 # wrapper may use a simplification step
 from .inline import resolveExternalRefs
@@ -1993,11 +1994,10 @@ def schema2id(schema: JsonSchema, keep_format: bool = True) -> str:
     return shid
 
 def schema_to_model(
-            schema: JsonSchema, schema_name: str,
+            schema: JsonSchema, schema_name: str, resolver: Resolver,
             typer: bool = False, simpler: bool = False, fix: bool = True, modernize: bool = True,
             use_id: bool = False, strict: bool = True, resolve: bool = True,
-            resilient: bool = False, cache: str|None = None, version: int = 0,
-            mapping: dict[str, str] = {}, level: int = logging.INFO,
+            resilient: bool = False, version: int = 0, level: int = logging.INFO,
         ):
     """Convert a JSON Schema to a JSON Model."""
     log.setLevel(level)
@@ -2021,8 +2021,8 @@ def schema_to_model(
             if resolve and isinstance(schema, dict):
                 log.debug(f"resolving external refs")
                 schema = resolveExternalRefs(
-                    schema, url=url, version=version, cache=cache,
-                    modernize=modernize, mapping=mapping, level=level,
+                    schema, url=url, version=version, resolver=resolver,
+                    modernize=modernize, level=level,
                 )
             if typer and isinstance(schema, dict):
                 log.debug("typing schema")

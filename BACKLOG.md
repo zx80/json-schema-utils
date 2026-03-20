@@ -5,6 +5,7 @@
 - [x] convert handle `not` by switching to `oneOf`
 - [x] convert fix missing escaping on string constants
 - [x] fix unintentional override of jmc options on forwarding
+- [x] refactor resolver stuff to reuse it for vocabularies
 - [ ] convert merge `allOf` before proceeding when possible
 - [ ] simpler remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] improve `unevaluatedItems` support (wip)

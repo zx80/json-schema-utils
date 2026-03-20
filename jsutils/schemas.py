@@ -1,10 +1,10 @@
 from typing import Callable
-import os.path
+from pathlib import Path
 from urllib.parse import urlsplit
 import json
-import requests
 from .utils import JsonSchema, SchemaPath, JSUError, log
 from .recurse import recurseSchema
+from .resolver import Resolver
 
 ProcessFun = Callable[[JsonSchema, str], JsonSchema]
 
@@ -52,10 +52,9 @@ def _fullURL(schema: JsonSchema, url: str) -> JsonSchema:
 class Schemas:
     """Hold a set of identified schemas and sub-schemas."""
 
-    def __init__(self):
-        # url mapping for local storage: https://schema.psl.eu -> .
-        self._urlmap: dict[str, str] = {}
-        # cache of schema references
+    def __init__(self, resolver: Resolver):
+        self._resolver = resolver
+        # cache of schema references (in memory)
         self._schemas: dict[str, JsonSchema] = {}
         # additional processing on store
         self._process: list[ProcessFun] = [_fullURL]
@@ -65,7 +64,7 @@ class Schemas:
 
     def addMap(self, url: str, target: str):
         """Add local mapping for URLs."""
-        self._urlmap[url] = target
+        self._resolver._mapping[url] = target
 
     def store(self, url: str, schema: JsonSchema):
         """Store schema associated to URL."""
@@ -91,32 +90,10 @@ class Schemas:
     def _load(self, url: str):
         """Load schema from URL if needed."""
         log.info(f"loading schema: {url}")
-
         assert "#" not in url
-
-        # rewrite url for local search
-        path = url
-        for u, t in self._urlmap.items():
-            if path.startswith(u):
-                path = t + path[len(u):]
-                break
-
-        # FIXME what about actual http download?
-        schema: JsonSchema|None
-        if path.startswith("http://") or path.startswith("https://"):
-            schema = requests.get(path).json  # type: ignore
-        else:
-            schema = None
-            for suffix in ("", ".json", ".schema.json"):
-                fn = f"{path}{suffix}"
-                if os.path.isfile(fn):
-                    log.debug(f"loading file: {fn}")
-                    schema = json.load(open(fn))
-                    break
-
+        schema = self._resolver.get(url)
         if schema is None:
             raise JSUError(f"schema {url} not found")
-
         self.store(url, schema)
 
     def _resolve(self, schema: JsonSchema, lpath: str) -> JsonSchema:
