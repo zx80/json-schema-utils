@@ -729,7 +729,7 @@ def jsu_runner():
                     "?comment": ""
                 }
             ],
-            "?specification": [ {"?core": "", "?quote": ""} ],
+            "?specification": [ {"?core": "", "?quote": "", "/^rfc[0-9]+$/": ""} ],
             "?comment": ""
         }
     ]
