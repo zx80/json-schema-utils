@@ -17,6 +17,33 @@ function err()
   exit $status
 }
 
+# globals: $debug $err $jsu_runner $jsu_opts
+function process_dir()
+{
+  local name=$1 root=$2 dir=$3
+  shift 3
+
+  echo -n "$name: " >&2
+
+  # per case
+  for file in ${dir}/*.json ; do
+    test=${file#$root/}
+    echo -n "- \`$test\`: "
+    [ "$debug" ] && echo "# command: $jsu_runner $jsu_opts $file" >> $err
+    $jsu_runner $jsu_opts "$@" $file 2>> $err | tail -1 | sed -e 's/files=1 //'
+    [ $? -eq 0 ] && echo -n "." >&2 || echo -n "*" >&2
+  done
+
+  # and summary with a full rerun
+  echo -n "- summary: "
+  summary=$($jsu_runner $jsu_opts "$@" ${dir}/*.json 2>> $err | tail -1)
+  echo $summary
+  percent="(${summary##* \(}"
+  echo ". $percent" >&2
+
+  echo
+}
+
 test -d "$root_dir" || err 1 "no such directory: $root_dir"
 
 echo "# JSON Schema Test Suite Report"
@@ -48,27 +75,13 @@ for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 ; do
   test_dir="${root_dir}/tests/${draft}"
   test -d "$test_dir" || err 2 "no such case directory: $test_dir"
 
-  echo "## Results for _${draft}_"
-  echo
-  echo -n "$draft: " >&2
-
   [ "$debug" ] && echo "$jsu_runner $jsu_opts ..." >&2
 
-  # per case
-  for file in ${test_dir}/*.json ; do
-    test=${file#$test_dir}
-    echo -n "- \`$test\`: "
-    [ "$debug" ] && echo "# command: $jsu_runner $jsu_opts $file" >> $err
-    $jsu_runner $jsu_opts $file 2>> $err | tail -1 | sed -e 's/files=1 //'
-    [ $? -eq 0 ] && echo -n "." >&2 || echo -n "*" >&2
-  done
-
-  # and summary
-  echo -n "- summary: "
-  summary=$($jsu_runner $jsu_opts ${test_dir}/*.json 2>> $err | tail -1)
-  echo $summary
-  percent="(${summary##* \(}"
-  echo ". $percent" >&2
-
+  echo "## Results for _${draft}_"
   echo
+
+  process_dir "$draft" "$test_dir" "$test_dir"
+
+  format_dir="$test_dir/optional/format"
+  [ -d "$format_dir" ] && process_dir "$draft/format" "$test_dir/optional" "$format_dir" --format
 done
