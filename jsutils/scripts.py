@@ -660,13 +660,22 @@ def jsu_runner():
     )
     arg = ap.add_argument
     ap_common(arg)
+
+    # resolver settings
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
 
+    # debug
     arg("--dump", default=False, action="store_true",
         help="show generated model as debug")
     arg("--no-dump", dest="dump", action="store_false",
         help="do not show generated model as debug (*)")
+
+    # model and code generation options
+    arg("--format", action="store_true", default=False,
+        help="do not ignore formats")
+    arg("--no-format", dest="format", action="store_false",
+        help="ignore formats (*)")
     arg("--vocab", default=True, action="store_true",
         help="apply vocabulary filter (*)")
     arg("--no-vocab", dest="vocab", action="store_false",
@@ -692,7 +701,8 @@ def jsu_runner():
     arg("--no-resilient", dest="resilient", default=False, action="store_true",
         help="disable model conversion resilience (*)")
 
-    arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
+    arg("--schema-version", "-V", dest="sversion", type=int, default=0,
+        help="set JSON Schema version")
     arg("cases", nargs="*", help="test cases to process")
     args = ap.parse_args()
 
@@ -753,12 +763,12 @@ def jsu_runner():
                     checker = json_schema_to_python_checker(
                         case["schema"], scase, strict=args.strict, fix=False,
                         vocabularize=args.vocab, modernize=args.modernize, typer=args.type,
-                        simpler=args.simple,
+                        simpler=args.simple, predef=args.format,
                         version=args.sversion, resilient=args.resilient,
                         cache=args.cache, mapping=args.map,
                         level = logging.DEBUG if args.debug else logging.INFO,
                         # hardcoded expectations
-                        loose_int=True, loose_float=True, predef=False, extend=True,
+                        loose_int=True, loose_float=True, extend=True,
                     )
 
                     n_tests_ok = 0
@@ -797,3 +807,6 @@ def jsu_runner():
     report += f" tests={n_tests_passed}/{n_tests}"
     report += f" ({100.0 * n_tests_passed / max(n_tests, 1):.1f}%, {n_tests_failed} fails)"
     print(report)
+
+    # tell whether all was well
+    sys.exit(0 if n_errors == 0 and n_tests_failed == 0 else 1)

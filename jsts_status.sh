@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -o pipefail
+
 debug= err=/dev/null
 # debug=1 err=jsts.err
 
@@ -58,7 +60,7 @@ for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 ; do
     echo -n "- \`$test\`: "
     [ "$debug" ] && echo "# command: $jsu_runner $jsu_opts $file" >> $err
     $jsu_runner $jsu_opts $file 2>> $err | tail -1 | sed -e 's/files=1 //'
-    echo -n "." >&2
+    [ $? -eq 0 ] && echo -n "." >&2 || echo -n "*" >&2
   done
 
   # and summary
