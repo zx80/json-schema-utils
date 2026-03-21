@@ -10,6 +10,7 @@
 - [ ] convert merge `allOf` before proceeding when possible
 - [ ] simpler remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] improve `unevaluatedItems` support (wip)
+- [ ] tests with more languages: bowtie with C, JS, java, perl (wip)
 - [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
 - [ ] improve support for `unevaluatedProperties` with `patternProperties`?
 - [ ] fixme `unevaluatedProperties: false` is simpler for jm vs js…
@@ -18,8 +19,6 @@
 - [ ] move typing out to simplify the generated code
 - [ ] get 100% on _draft2019-09_
 - [ ] get 100% on _draft2020-12_
-- [ ] add `.in` support with constraints
-- [ ] tests with all languages, not just Python
 - [ ] list compiler current limitations
 - [ ] run some optional tests, eg _format_
 - [ ] put typing result in "$type" instead of "type" to help with fixing?
