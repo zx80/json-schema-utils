@@ -338,13 +338,13 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=6/7 (85.7%, 1 fails)
 - `format/ecmascript-regex.json`: errors=0 cases=0/1 (0.0%) tests=0/2 (0.0%, 2 fails)
 - `format/email.json`: errors=0 cases=1/1 (100.0%) tests=11/11 (100.0%, 0 fails)
-- `format/host-name.json`: errors=0 cases=0/1 (0.0%) tests=2/12 (16.7%, 10 fails)
-- `format/ip-address.json`: errors=0 cases=0/1 (0.0%) tests=1/3 (33.3%, 2 fails)
+- `format/host-name.json`: errors=0 cases=1/1 (100.0%) tests=12/12 (100.0%, 0 fails)
+- `format/ip-address.json`: errors=0 cases=1/1 (100.0%) tests=3/3 (100.0%, 0 fails)
 - `format/ipv6.json`: errors=0 cases=1/1 (100.0%) tests=12/12 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=1/1 (100.0%) tests=3/3 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
-- summary: files=11 errors=0 cases=6/11 (54.5%) tests=77/95 (81.1%, 18 fails)
+- summary: files=11 errors=0 cases=8/11 (72.7%) tests=89/95 (93.7%, 6 fails)
 
 ## Results for _v1_
 

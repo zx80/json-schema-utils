@@ -752,8 +752,10 @@ _FMT2MODEL = {
     "email": "$EMAIL",
     "idn-email": "$EMAIL",
     "hostname": "$HOST",
+    "host-name": "$HOST",  # v3
     "idn-hostname": "$HOST",
     "ipv4": "$IP4",
+    "ip-address": "$IP4",  # v3
     "ipv6": "$IP6",
     "uri": "$URI",
     "iri": "$URI",
