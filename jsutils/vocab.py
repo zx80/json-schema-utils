@@ -1,7 +1,7 @@
 #
 # $vocabulary handling
 #
-# vocabularies are URIs associated to set of keywords 
+# vocabularies are URIs associated to set of keywords
 # this is a meta-schema specific stuff
 #
 
@@ -80,6 +80,7 @@ VOCABULARIES = {
     f"{V8}/vocab/meta-data": {
         "title", "default", "description", "deprecated", "readOnly", "writeOnly", "examples",
     },
+    # true means active check, false means ignore silently
     f"{V8}/vocab/format": {
         "format"
     },
@@ -109,6 +110,8 @@ META_SCHEMA_VOCABULARIES = {
         f"{V8}/vocab/content": True,
     }
 }
+
+_FORMAT = "$__format__"
 
 def getMetaSchemaKeywords(
             schema: JsonSchema,
@@ -150,7 +153,7 @@ def getMetaSchemaKeywords(
     else:
         log.warning(f"no $vocabulary for {ms_url}")
         return {}
-    assert isinstance(vocabulary, dict), "$vocabularies is an object" 
+    assert isinstance(vocabulary, dict), "$vocabularies is an object"
 
     # whether a keyword is active or to be ignored
     keywords: dict[str, bool] = {}
@@ -162,6 +165,11 @@ def getMetaSchemaKeywords(
             continue
         for k in VOCABULARIES[voc]:
             keywords[k] = active
+        # whether to assert formats
+        if voc.endswith("/format") or voc.endswith("/format-assertion"):
+            keywords[_FORMAT] = active
+        elif voc.endswith("/format-annotation") and active:
+            keywords[_FORMAT] = False
 
     # missing standard vocabularies are considered false, unless core
     if ms_ms_version:
@@ -188,7 +196,8 @@ def cleanupKeywords(schema: JsonSchema, keywords: dict[str, bool]):
 
     recurseSchema(schema, ".", goFlt, rmKeywords)
 
-def vocabularizeSchema(schema: JsonSchema, resolver: Resolver):
-    """Handle $vocabulary by coldly removing inactive keywords."""
+def vocabularizeSchema(schema: JsonSchema, resolver: Resolver) -> bool|None:
+    """Handle $vocabulary by coldly removing inactive keywords, return format assert."""
     if active_kws := getMetaSchemaKeywords(schema, resolver):
         cleanupKeywords(schema, active_kws)
+    return active_kws.get(_FORMAT, None)

@@ -5,7 +5,7 @@ import logging
 import hashlib
 import json
 
-from .utils import TYPED_KEYWORDS, KEYWORD_TYPE, META_KEYS, IGNORE, ALL_TYPES
+from .utils import TYPED_KEYWORDS, KEYWORD_TYPE, META_KEYS, IGNORE, ALL_TYPES, FORMAT_HINT
 from .utils import JsonSchema, SchemaPath, SchemaPathSegment, Jsonable, JSUError
 from .utils import decode_url, schemapath_to_urlpath, is_abs_url
 from .utils import only, has_none, has_any, has_count, is_none, is_any, has_all
@@ -130,7 +130,13 @@ def numberConstraints(schema):
     return constraints
 
 
-def buildModel(model, constraints: dict[str, Any], defs: dict[str, Jsonable], sharp: dict, is_root: bool = False):
+def buildModel(
+            model,
+            constraints: dict[str, Any],
+            defs: dict[str, Jsonable],
+            sharp: dict[str, Jsonable],
+            is_root: bool = False
+        ):
     """Build a model."""
 
     if constraints or sharp or is_root and defs:
@@ -143,8 +149,11 @@ def buildModel(model, constraints: dict[str, Any], defs: dict[str, Jsonable], sh
         else:
             m = {"@": model}
 
-        if sharp and "description" in sharp:
-            m["#"] = sharp["description"]
+        if sharp:
+            if "description" in sharp:
+                m["#"] = sharp["description"]
+            if FORMAT_HINT in sharp and sharp[FORMAT_HINT]:  # only forward on true
+                m["#.format"] = sharp[FORMAT_HINT]
         if is_root and defs:
             m["$"] = defs
         if is_root and "#" not in m:

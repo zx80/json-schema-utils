@@ -527,7 +527,10 @@ def resolveExternalRefs(
             log.warning(f"unexpected $schema: {sversion}")
 
     if vocabularize:
-        vocabularizeSchema(schema, resolver)
+        fmt_assert = vocabularizeSchema(schema, resolver)
+        # keep track of whether formats are expected to be asserted
+        if fmt_assert is not None:
+            schema["$__jsu_format__"] = fmt_assert
 
     # we need to do that here in order to manage external refs reliably
     if modernize:

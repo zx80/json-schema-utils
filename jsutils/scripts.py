@@ -12,7 +12,7 @@ from importlib.metadata import version as pkg_version
 logging.basicConfig()
 
 from .schemas import Schemas
-from .utils import log, JSUError, JsonSchema, Jsonable
+from .utils import log, JSUError, JsonSchema, Jsonable, FORMAT_HINT
 from .recurse import hasDirectRef, recurseSchema
 from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
@@ -516,10 +516,11 @@ def jsu_compile():
         help="enable reporting (*)")
     arg("--no-reporting", dest="reporting", action="store_false",
         help="disable reporting")
-    arg("--format", action="store_true", default=False,
+    # on None, will try to take hints from vacabulary, if any
+    arg("--format", default=None, action="store_true",
         help="do not ignore formats")
     arg("--no-format", dest="format", action="store_false",
-        help="ignore formats (*)")
+        help="ignore formats, this is the default unless $vocabulary enables format")
 
     arg("--runtime", default=False, action="store_true", help="output runtime directory and exit")
 
@@ -543,22 +544,6 @@ def jsu_compile():
         subprocess.run(["jmc", "--runtime"], check=True)
         sys.exit(0)
 
-    # forward some options to back-end, but do not overwrite explicit options
-    # TODO formats should be simply removed from the input schema instead?
-    args.others.insert(0, "--predef" if args.format else "--no-predef")
-    args.others.insert(0, "--reporting" if args.reporting else "--no-reporting")
-    if args.out is not None:
-        args.others += [ "-o", args.out ]
-    args.others.insert(0, "--loose-number" if args.loose else "--strict-number")
-    if args.regex_engine is not None:
-        args.others = ["--regex-engine", args.regex_engine, *args.others]
-
-    # also forward verbosity options, debug wins
-    if args.debug:
-        args.others.insert(0, "--debug")
-    if args.quiet:
-        args.others.insert(0, "--quiet")
-
     # intermediate model
     model = None
 
@@ -581,6 +566,27 @@ def jsu_compile():
     # TODO
     # - use standard input with jmc?
     # - skip command and call jmc internal machinery directly in some cases?
+
+    # forward some options to back-end, but do not overwrite explicit options
+    if args.format is None:
+        # set default depending on $vocabulary, else ignore formats
+        if isinstance(model, dict) and "#.format" in model:
+            args.format = model["#.format"]
+        else:
+            args.format = False
+    args.others.insert(0, "--predef" if args.format else "--no-predef")
+    args.others.insert(0, "--reporting" if args.reporting else "--no-reporting")
+    if args.out is not None:
+        args.others += [ "-o", args.out ]
+    args.others.insert(0, "--loose-number" if args.loose else "--strict-number")
+    if args.regex_engine is not None:
+        args.others = ["--regex-engine", args.regex_engine, *args.others]
+
+    # also forward verbosity options, debug wins
+    if args.debug:
+        args.others.insert(0, "--debug")
+    if args.quiet:
+        args.others.insert(0, "--quiet")
 
     # compile intermediate model through a temporary file
     with tempfile.NamedTemporaryFile(suffix=".model.json") as tmp:

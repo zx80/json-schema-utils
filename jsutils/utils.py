@@ -38,6 +38,8 @@ NO_SEMANTICS = [
     "$comment",
 ]
 
+FORMAT_HINT = "$__jsu_format__"
+
 # FIXME ref should be out
 META_KEYS = NO_SEMANTICS + [
     "$schema", "$id", "id", "$dynamicAnchor", "$dynamicRef",
@@ -45,6 +47,8 @@ META_KEYS = NO_SEMANTICS + [
     "context", "notes", "$recursiveAnchor", "$recursiveRef",
     # extensions and strange stuff?
     "markdownDescription", "deprecationMessage", "scope", "body", "example", "private",
+    # internal information about format assertion
+    FORMAT_HINT,
 ]
 
 IGNORE = META_KEYS + ["$defs", "definitions"]
