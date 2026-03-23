@@ -177,8 +177,11 @@ def getMetaSchemaKeywords(
             if voc not in vocabulary:
                 active = voc.endswith("/core")
                 for k in VOCABULARIES[voc]:
-                    if k not in keywords:
+                    if k not in keywords:  # do not override "format"
                         keywords[k] = active
+
+    # always keep "format", which is manage differently
+    keywords["format"] = True
 
     return keywords
 

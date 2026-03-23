@@ -1,6 +1,6 @@
 # JSON Schema Test Suite Report
 
-JSTS version: `54ed4d1fb0ac8ab16c453df5db8b5e81689c6fed`
+JSTS version: `ee3fc3d8048c10d810b86848c8d380ca2ece5c99`
 JSU version: `0.9.3 (backend jmc 2.0b42)`
 
 ## Results for _draft2020-12_
@@ -25,7 +25,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `if-then-else.json`: errors=0 cases=12/12 (100.0%) tests=30/30 (100.0%, 0 fails)
 - `infinite-loop-detection.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
 - `items.json`: errors=0 cases=10/10 (100.0%) tests=29/29 (100.0%, 0 fails)
-- `maxContains.json`: errors=0 cases=4/4 (100.0%) tests=12/12 (100.0%, 0 fails)
+- `maxContains.json`: errors=0 cases=5/5 (100.0%) tests=14/14 (100.0%, 0 fails)
 - `maximum.json`: errors=0 cases=2/2 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `maxItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `maxLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
@@ -51,7 +51,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `unevaluatedProperties.json`: errors=0 cases=34/42 (81.0%) tests=115/125 (92.0%, 10 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `vocabulary.json`: errors=0 cases=2/2 (100.0%) tests=5/5 (100.0%, 0 fails)
-- summary: files=46 errors=0 cases=336/380 (88.4%) tests=1233/1288 (95.7%, 55 fails)
+- summary: files=46 errors=0 cases=337/381 (88.5%) tests=1235/1290 (95.7%, 55 fails)
 
 - `format/date.json`: errors=0 cases=0/1 (0.0%) tests=44/48 (91.7%, 4 fails)
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=25/29 (86.2%, 4 fails)
@@ -98,7 +98,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `if-then-else.json`: errors=0 cases=12/12 (100.0%) tests=30/30 (100.0%, 0 fails)
 - `infinite-loop-detection.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
 - `items.json`: errors=0 cases=9/9 (100.0%) tests=28/28 (100.0%, 0 fails)
-- `maxContains.json`: errors=0 cases=4/4 (100.0%) tests=12/12 (100.0%, 0 fails)
+- `maxContains.json`: errors=0 cases=5/5 (100.0%) tests=14/14 (100.0%, 0 fails)
 - `maximum.json`: errors=0 cases=2/2 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `maxItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `maxLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
@@ -124,29 +124,29 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `unevaluatedProperties.json`: errors=0 cases=30/42 (71.4%) tests=111/125 (88.8%, 14 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - `vocabulary.json`: errors=0 cases=2/2 (100.0%) tests=5/5 (100.0%, 0 fails)
-- summary: files=46 errors=0 cases=331/369 (89.7%) tests=1203/1248 (96.4%, 45 fails)
+- summary: files=46 errors=0 cases=332/370 (89.7%) tests=1205/1250 (96.4%, 45 fails)
 
-- `format/date.json`: errors=0 cases=0/1 (0.0%) tests=21/48 (43.8%, 27 fails)
-- `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=13/29 (44.8%, 16 fails)
-- `format/duration.json`: errors=0 cases=0/1 (0.0%) tests=25/42 (59.5%, 17 fails)
-- `format/email.json`: errors=0 cases=0/1 (0.0%) tests=11/20 (55.0%, 9 fails)
-- `format/hostname.json`: errors=0 cases=0/2 (0.0%) tests=28/61 (45.9%, 33 fails)
-- `format/idn-email.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
-- `format/idn-hostname.json`: errors=0 cases=0/2 (0.0%) tests=35/77 (45.5%, 42 fails)
-- `format/ipv4.json`: errors=0 cases=0/1 (0.0%) tests=9/33 (27.3%, 24 fails)
-- `format/ipv6.json`: errors=0 cases=0/1 (0.0%) tests=17/40 (42.5%, 23 fails)
-- `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=11/15 (73.3%, 4 fails)
-- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/13 (84.6%, 2 fails)
-- `format/json-pointer.json`: errors=0 cases=0/1 (0.0%) tests=26/38 (68.4%, 12 fails)
-- `format/regex.json`: errors=0 cases=0/1 (0.0%) tests=7/8 (87.5%, 1 fails)
+- `format/date.json`: errors=0 cases=0/1 (0.0%) tests=44/48 (91.7%, 4 fails)
+- `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=25/29 (86.2%, 4 fails)
+- `format/duration.json`: errors=0 cases=1/1 (100.0%) tests=42/42 (100.0%, 0 fails)
+- `format/email.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
+- `format/hostname.json`: errors=0 cases=0/2 (0.0%) tests=36/61 (59.0%, 25 fails)
+- `format/idn-email.json`: errors=0 cases=0/1 (0.0%) tests=9/10 (90.0%, 1 fails)
+- `format/idn-hostname.json`: errors=0 cases=0/2 (0.0%) tests=55/77 (71.4%, 22 fails)
+- `format/ipv4.json`: errors=0 cases=1/1 (100.0%) tests=33/33 (100.0%, 0 fails)
+- `format/ipv6.json`: errors=0 cases=0/1 (0.0%) tests=39/40 (97.5%, 1 fails)
+- `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=13/15 (86.7%, 2 fails)
+- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=8/13 (61.5%, 5 fails)
+- `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=38/38 (100.0%, 0 fails)
+- `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `format/relative-json-pointer.json`: errors=0 cases=0/1 (0.0%) tests=11/18 (61.1%, 7 fails)
-- `format/time.json`: errors=0 cases=0/1 (0.0%) tests=18/46 (39.1%, 28 fails)
+- `format/time.json`: errors=0 cases=0/1 (0.0%) tests=35/46 (76.1%, 11 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
-- `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=21/44 (47.7%, 23 fails)
-- `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=13/17 (76.5%, 4 fails)
-- `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=9/10 (90.0%, 1 fails)
-- `format/uuid.json`: errors=0 cases=0/1 (0.0%) tests=14/22 (63.6%, 8 fails)
-- summary: files=20 errors=0 cases=1/22 (4.5%) tests=315/598 (52.7%, 283 fails)
+- `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=33/44 (75.0%, 11 fails)
+- `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
+- `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
+- `format/uuid.json`: errors=0 cases=1/1 (100.0%) tests=22/22 (100.0%, 0 fails)
+- summary: files=20 errors=0 cases=7/22 (31.8%) tests=497/598 (83.1%, 101 fails)
 
 ## Results for _draft7_
 
@@ -367,7 +367,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `if-then-else.json`: errors=0 cases=10/10 (100.0%) tests=26/26 (100.0%, 0 fails)
 - `infinite-loop-detection.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
 - `items.json`: errors=0 cases=10/10 (100.0%) tests=29/29 (100.0%, 0 fails)
-- `maxContains.json`: errors=0 cases=4/4 (100.0%) tests=12/12 (100.0%, 0 fails)
+- `maxContains.json`: errors=0 cases=5/5 (100.0%) tests=14/14 (100.0%, 0 fails)
 - `maximum.json`: errors=0 cases=2/2 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `maxItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `maxLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
@@ -392,5 +392,5 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `unevaluatedItems.json`: errors=0 cases=16/29 (55.2%) tests=53/71 (74.6%, 18 fails)
 - `unevaluatedProperties.json`: errors=0 cases=30/42 (71.4%) tests=111/125 (88.8%, 14 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- summary: files=44 errors=0 cases=297/346 (85.8%) tests=1064/1125 (94.6%, 61 fails)
+- summary: files=44 errors=0 cases=298/347 (85.9%) tests=1066/1127 (94.6%, 61 fails)
 
