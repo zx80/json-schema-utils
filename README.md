@@ -82,6 +82,9 @@ You could also use `jq .` for this purpose.
 Convert a subset of JSON Schema to JSON Model.
 
 The converter is expected to _fully_ supports JSON Schema draft3 to draft7.
+Note that our tools include a significant support for _format_ assertions,
+with 80-95% of optional format tests being validated, usually in a safe way
+(i.e. false positives may occur, false negatives are avoided).
 
 It _partially_ supports draft 2019-09 and 2020-12.
 In particular, _vocabularies_ are fully supported.
@@ -93,7 +96,7 @@ However, there is a limited support for some features:
 Moreover, this is a software, hence there may be bugs.
 
 ```sh
-jsu-model -o foo.model.json foo.schema.json
+jsu-model --format -o foo.model.json foo.schema.json
 ```
 
 ## JSON Schema Compiler
