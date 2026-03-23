@@ -767,7 +767,7 @@ _FMT2MODEL = {
     "relative-json-pointer": "$JSONPT",
     "regex": "$REGEX",
     # hmmm…
-    "color": "$STRING",
+    "color": "$__EXTENSION_COLOR",  # v3
     "phone": "$STRING",
 }
 

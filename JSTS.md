@@ -333,7 +333,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=62/62 (100.0%, 0 fails)
 - summary: files=25 errors=0 cases=104/104 (100.0%) tests=434/434 (100.0%, 0 fails)
 
-- `format/color.json`: errors=0 cases=0/1 (0.0%) tests=3/6 (50.0%, 3 fails)
+- `format/color.json`: errors=0 cases=1/1 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `format/date.json`: errors=0 cases=1/1 (100.0%) tests=33/33 (100.0%, 0 fails)
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=6/7 (85.7%, 1 fails)
 - `format/ecmascript-regex.json`: errors=0 cases=0/1 (0.0%) tests=0/2 (0.0%, 2 fails)
@@ -344,7 +344,7 @@ JSU version: `0.9.3 (backend jmc 2.0b42)`
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=2/2 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=1/1 (100.0%) tests=3/3 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
-- summary: files=11 errors=0 cases=8/11 (72.7%) tests=89/95 (93.7%, 6 fails)
+- summary: files=11 errors=0 cases=9/11 (81.8%) tests=92/95 (96.8%, 3 fails)
 
 ## Results for _v1_
 
