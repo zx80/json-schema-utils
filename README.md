@@ -83,12 +83,12 @@ Convert a subset of JSON Schema to JSON Model.
 
 The converter is expected to _fully_ supports JSON Schema draft3 to draft7.
 
-It _partially_ supports draft 2019-09 and 2020-12, in particular
-there is a limited support for some features:
+It _partially_ supports draft 2019-09 and 2020-12.
+In particular, _vocabularies_ are fully supported.
+However, there is a limited support for some features:
 
-- _dynamic_ anchors and references;
-- _unevaluated_ stuff;
-- _vocabularies_;
+- _dynamic_ anchors and references
+- _unevaluated_ items and properties
 
 Moreover, this is a software, hence there may be bugs.
 
