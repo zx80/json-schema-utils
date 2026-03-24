@@ -19,7 +19,7 @@ class Resolver:
             ):
         self._cache = cache
         if cache is not None:
-            Path(cache).mkdir(parents=True, exists_ok=True)
+            Path(cache).mkdir(parents=True, exist_ok=True)
         self._mapping = {}
         for m in mapping:
             src, dst = m.split("=", 1)
