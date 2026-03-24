@@ -7,7 +7,7 @@ debug= err=/dev/null
 
 # provide JSON Schema Test Suite root directory from env, parameter or genua default
 default_root="../dsv/json-model/tests/JSON-Schema-Test-Suite"
-root_dir=${1:-${JSTS_ROOT:-$default_root}}
+root_dir=${1:-${JSTS_HOME:-$default_root}}
 
 function err()
 {
