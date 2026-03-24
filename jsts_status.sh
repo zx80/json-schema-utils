@@ -22,8 +22,9 @@ function process_dir()
 {
   local name=$1 root=$2 dir=$3
   shift 3
-
   echo -n "$name: " >&2
+
+  local status file test summary percent
 
   # per case
   for file in ${dir}/*.json ; do
@@ -31,7 +32,14 @@ function process_dir()
     echo -n "- \`$test\`: "
     [ "$debug" ] && echo "# command: $jsu_runner $jsu_opts $file" >> $err
     $jsu_runner $jsu_opts "$@" $file 2>> $err | tail -1 | sed -e 's/files=1 //'
-    [ $? -eq 0 ] && echo -n "." >&2 || echo -n "*" >&2
+    status=$?
+    if [ $status -eq 0 ] ; then
+      echo -n "."
+    elif [ $status -eq 1 ] ; then
+      echo -n ","
+    else
+      echo -n "*"
+    fi >&2
   done
 
   # and summary with a full rerun

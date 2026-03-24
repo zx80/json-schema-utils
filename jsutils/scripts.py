@@ -743,8 +743,9 @@ def jsu_runner():
     check_cases = json_model.model_checker_from_json(CASES_MODEL)
 
     # stats counters
-    n_args, n_cases, n_cases_passed, n_tests, n_tests_passed, n_errors = 0, 0, 0, 0, 0, 0
+    n_cases, n_cases_passed, n_tests, n_tests_passed, n_errors, n_unsafe = 0, 0, 0, 0, 0, 0
 
+    n_args = 0
     for fname in args.cases:
         n_args += 1
         try:
@@ -777,13 +778,17 @@ def jsu_runner():
                         loose_int=True, loose_float=True, extend=True,
                     )
 
-                    n_tests_ok = 0
+                    n_case_tests_ok = 0
                     for it, test in enumerate(case["tests"]):
                         try:
-                            if checker(test["data"]) == test["valid"]:
+                            valid = checker(test["data"])
+                            if valid == test["valid"]:
                                 n_tests_passed += 1
-                                n_tests_ok += 1
+                                n_case_tests_ok += 1
                             else:
+                                # count wrong rejects as unsafe false negative
+                                if not valid:
+                                    n_unsafe += 1
                                 log.error(f"unexpected result on {scase}[{it}]: {test['description']}")
                         except BaseException as e:
                             n_errors += 1
@@ -791,7 +796,7 @@ def jsu_runner():
                                 log.error(e, exc_info=args.debug)
                             log.error(f"case {description}/{test['description']}: FAILED")
 
-                    if n_tests_ok == len(case["tests"]):
+                    if n_case_tests_ok == len(case["tests"]):
                         n_cases_passed += 1
 
                 except BaseException as e:
@@ -815,4 +820,4 @@ def jsu_runner():
     print(report)
 
     # tell whether all was well
-    sys.exit(0 if n_errors == 0 and n_tests_failed == 0 else 1)
+    sys.exit(2 if n_unsafe else 1 if n_tests_failed else 0)
