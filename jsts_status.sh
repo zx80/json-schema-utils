@@ -56,8 +56,10 @@ test -d "$root_dir" || err 1 "no such directory: $root_dir"
 
 echo "# JSON Schema Test Suite Report"
 echo
-echo "JSTS version: \`$(pushd "$root_dir" > /dev/null 2>&1 && git log -1 | head -1 | cut -d' ' -f2)\`"
-echo "JSU version: \`$(jsu-test-runner --version)\` (with Python backend)"
+echo "Versions:"
+echo
+echo "- JSTS: \`$(pushd "$root_dir" > /dev/null 2>&1 && git log -1 | head -1 | cut -d' ' -f2)\`"
+echo "- JSU: \`$(jsu-test-runner --version)\` (with Python backend)"
 echo
 
 if ! [ -d $root_dir/remotes ] ; then
@@ -87,9 +89,16 @@ for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 ; do
 
   echo "## Results for _${draft}_"
   echo
+  echo "Main test suite:"
+  echo
 
   process_dir "$draft" "$test_dir" "$test_dir"
 
   format_dir="$test_dir/optional/format"
-  [ -d "$format_dir" ] && process_dir "$draft/format" "$test_dir/optional" "$format_dir" --format
+  if [ -d "$format_dir" ] ; then
+    echo
+    echo "Optional format tests:"
+    echo
+    process_dir "$draft/format" "$test_dir/optional" "$format_dir" --format
+  fi
 done

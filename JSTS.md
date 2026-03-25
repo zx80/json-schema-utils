@@ -1,9 +1,13 @@
 # JSON Schema Test Suite Report
 
-JSTS version: `ee3fc3d8048c10d810b86848c8d380ca2ece5c99`
-JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
+Versions:
+
+- JSTS: `78048eadfc76180feadea1e2783d7f54ffaa2e6d`
+- JSU: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 
 ## Results for _draft2020-12_
+
+Main test suite:
 
 - `additionalProperties.json`: errors=0 cases=9/9 (100.0%) tests=21/21 (100.0%, 0 fails)
 - `allOf.json`: errors=0 cases=12/12 (100.0%) tests=30/30 (100.0%, 0 fails)
@@ -53,6 +57,9 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - `vocabulary.json`: errors=0 cases=2/2 (100.0%) tests=5/5 (100.0%, 0 fails)
 - summary: files=46 errors=0 cases=337/381 (88.5%) tests=1235/1290 (95.7%, 55 fails)
 
+
+Optional format tests:
+
 - `format/date.json`: errors=0 cases=0/1 (0.0%) tests=44/48 (91.7%, 4 fails)
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=25/29 (86.2%, 4 fails)
 - `format/duration.json`: errors=0 cases=1/1 (100.0%) tests=42/42 (100.0%, 0 fails)
@@ -68,15 +75,17 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `format/relative-json-pointer.json`: errors=0 cases=0/1 (0.0%) tests=11/18 (61.1%, 7 fails)
-- `format/time.json`: errors=0 cases=0/1 (0.0%) tests=35/46 (76.1%, 11 fails)
+- `format/time.json`: errors=0 cases=0/1 (0.0%) tests=36/47 (76.6%, 11 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=33/44 (75.0%, 11 fails)
 - `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
 - `format/uuid.json`: errors=0 cases=1/1 (100.0%) tests=22/22 (100.0%, 0 fails)
-- summary: files=21 errors=0 cases=6/23 (26.1%) tests=500/606 (82.5%, 106 fails)
+- summary: files=21 errors=0 cases=6/23 (26.1%) tests=501/607 (82.5%, 106 fails)
 
 ## Results for _draft2019-09_
+
+Main test suite:
 
 - `additionalItems.json`: errors=0 cases=10/10 (100.0%) tests=19/19 (100.0%, 0 fails)
 - `additionalProperties.json`: errors=0 cases=9/9 (100.0%) tests=21/21 (100.0%, 0 fails)
@@ -126,6 +135,9 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - `vocabulary.json`: errors=0 cases=2/2 (100.0%) tests=5/5 (100.0%, 0 fails)
 - summary: files=46 errors=0 cases=332/370 (89.7%) tests=1205/1250 (96.4%, 45 fails)
 
+
+Optional format tests:
+
 - `format/date.json`: errors=0 cases=0/1 (0.0%) tests=44/48 (91.7%, 4 fails)
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=25/29 (86.2%, 4 fails)
 - `format/duration.json`: errors=0 cases=1/1 (100.0%) tests=42/42 (100.0%, 0 fails)
@@ -140,15 +152,17 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `format/relative-json-pointer.json`: errors=0 cases=0/1 (0.0%) tests=11/18 (61.1%, 7 fails)
-- `format/time.json`: errors=0 cases=0/1 (0.0%) tests=35/46 (76.1%, 11 fails)
+- `format/time.json`: errors=0 cases=0/1 (0.0%) tests=36/47 (76.6%, 11 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=33/44 (75.0%, 11 fails)
 - `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
 - `format/uuid.json`: errors=0 cases=1/1 (100.0%) tests=22/22 (100.0%, 0 fails)
-- summary: files=20 errors=0 cases=7/22 (31.8%) tests=497/598 (83.1%, 101 fails)
+- summary: files=20 errors=0 cases=7/22 (31.8%) tests=498/599 (83.1%, 101 fails)
 
 ## Results for _draft7_
+
+Main test suite:
 
 - `additionalItems.json`: errors=0 cases=10/10 (100.0%) tests=19/19 (100.0%, 0 fails)
 - `additionalProperties.json`: errors=0 cases=7/7 (100.0%) tests=16/16 (100.0%, 0 fails)
@@ -189,6 +203,9 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - summary: files=37 errors=0 cases=257/257 (100.0%) tests=922/922 (100.0%, 0 fails)
 
+
+Optional format tests:
+
 - `format/date.json`: errors=0 cases=0/1 (0.0%) tests=44/48 (91.7%, 4 fails)
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=25/29 (86.2%, 4 fails)
 - `format/email.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
@@ -202,14 +219,16 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `format/relative-json-pointer.json`: errors=0 cases=0/1 (0.0%) tests=11/18 (61.1%, 7 fails)
-- `format/time.json`: errors=0 cases=0/1 (0.0%) tests=35/46 (76.1%, 11 fails)
+- `format/time.json`: errors=0 cases=0/1 (0.0%) tests=36/47 (76.6%, 11 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=33/44 (75.0%, 11 fails)
 - `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
-- summary: files=18 errors=0 cases=5/20 (25.0%) tests=432/533 (81.1%, 101 fails)
+- summary: files=18 errors=0 cases=5/20 (25.0%) tests=433/534 (81.1%, 101 fails)
 
 ## Results for _draft6_
+
+Main test suite:
 
 - `additionalItems.json`: errors=0 cases=10/10 (100.0%) tests=19/19 (100.0%, 0 fails)
 - `additionalProperties.json`: errors=0 cases=7/7 (100.0%) tests=16/16 (100.0%, 0 fails)
@@ -249,6 +268,9 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - summary: files=36 errors=0 cases=232/232 (100.0%) tests=834/834 (100.0%, 0 fails)
 
+
+Optional format tests:
+
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=25/29 (86.2%, 4 fails)
 - `format/email.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `format/hostname.json`: errors=0 cases=0/1 (0.0%) tests=26/27 (96.3%, 1 fails)
@@ -262,6 +284,8 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - summary: files=10 errors=0 cases=4/10 (40.0%) tests=240/265 (90.6%, 25 fails)
 
 ## Results for _draft4_
+
+Main test suite:
 
 - `additionalItems.json`: errors=0 cases=9/9 (100.0%) tests=17/17 (100.0%, 0 fails)
 - `additionalProperties.json`: errors=0 cases=7/7 (100.0%) tests=16/16 (100.0%, 0 fails)
@@ -295,6 +319,9 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - summary: files=30 errors=0 cases=160/160 (100.0%) tests=615/615 (100.0%, 0 fails)
 
+
+Optional format tests:
+
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=25/29 (86.2%, 4 fails)
 - `format/email.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `format/hostname.json`: errors=0 cases=0/1 (0.0%) tests=26/27 (96.3%, 1 fails)
@@ -305,6 +332,8 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - summary: files=7 errors=0 cases=3/7 (42.9%) tests=183/200 (91.5%, 17 fails)
 
 ## Results for _draft3_
+
+Main test suite:
 
 - `additionalItems.json`: errors=0 cases=7/7 (100.0%) tests=14/14 (100.0%, 0 fails)
 - `additionalProperties.json`: errors=0 cases=7/7 (100.0%) tests=16/16 (100.0%, 0 fails)
@@ -333,6 +362,9 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=62/62 (100.0%, 0 fails)
 - summary: files=25 errors=0 cases=104/104 (100.0%) tests=434/434 (100.0%, 0 fails)
 
+
+Optional format tests:
+
 - `format/color.json`: errors=0 cases=1/1 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `format/date.json`: errors=0 cases=1/1 (100.0%) tests=33/33 (100.0%, 0 fails)
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=6/7 (85.7%, 1 fails)
@@ -347,6 +379,8 @@ JSU version: `0.9.3 (backend jmc 2.0b42)` (with Python backend)
 - summary: files=11 errors=0 cases=9/11 (81.8%) tests=92/95 (96.8%, 3 fails)
 
 ## Results for _v1_
+
+Main test suite:
 
 - `additionalProperties.json`: errors=0 cases=9/9 (100.0%) tests=21/21 (100.0%, 0 fails)
 - `allOf.json`: errors=0 cases=12/12 (100.0%) tests=30/30 (100.0%, 0 fails)
