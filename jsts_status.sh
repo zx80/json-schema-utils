@@ -8,6 +8,7 @@ debug= err=/dev/null
 # provide JSON Schema Test Suite root directory from env, parameter or genua default
 default_root="../dsv/json-model/tests/JSON-Schema-Test-Suite"
 root_dir=${1:-${JSTS_HOME:-$default_root}}
+cache_dir=.cache
 
 function err()
 {
@@ -66,7 +67,10 @@ if ! [ -d $root_dir/remotes ] ; then
   err 2 "remotes directory is missing"
 fi
 
-jsu_runner="jsu-test-runner --resilient --cache=. --map http://localhost:1234/=file://$root_dir/remotes/"
+mkdir -p "$cache_dir"
+test -d "$cache_dir" || err 3 "no such directory: $cache_dir"
+
+jsu_runner="jsu-test-runner --resilient --cache=$cache_dir --map http://localhost:1234/=file://$root_dir/remotes/"
 
 for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 ; do
 
@@ -83,7 +87,7 @@ for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 ; do
   [ "$debug" ] && jsu_opts+=" --debug"
 
   test_dir="${root_dir}/tests/${draft}"
-  test -d "$test_dir" || err 2 "no such case directory: $test_dir"
+  test -d "$test_dir" || err 4 "no such case directory: $test_dir"
 
   [ "$debug" ] && echo "$jsu_runner $jsu_opts ..." >&2
 
