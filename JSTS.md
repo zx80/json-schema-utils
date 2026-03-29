@@ -63,7 +63,7 @@ Main test suite:
 - `vocabulary.json`: errors=0 cases=2/2 (100.0%) tests=5/5 (100.0%, 0 fails)
 - summary: files=46 errors=0 cases=337/381 (88.5%) tests=1235/1290 (95.7%, 55 fails)
 
-Optional format tests:
+Format tests:
 
 - `format/date.json`: errors=0 cases=1/1 (100.0%) tests=48/48 (100.0%, 0 fails)
 - `format/date-time.json`: errors=0 cases=1/1 (100.0%) tests=29/29 (100.0%, 0 fails)
@@ -140,7 +140,7 @@ Main test suite:
 - `vocabulary.json`: errors=0 cases=2/2 (100.0%) tests=5/5 (100.0%, 0 fails)
 - summary: files=46 errors=0 cases=332/370 (89.7%) tests=1205/1250 (96.4%, 45 fails)
 
-Optional format tests:
+Format tests:
 
 - `format/date.json`: errors=0 cases=1/1 (100.0%) tests=48/48 (100.0%, 0 fails)
 - `format/date-time.json`: errors=0 cases=1/1 (100.0%) tests=29/29 (100.0%, 0 fails)
@@ -207,7 +207,7 @@ Main test suite:
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - summary: files=37 errors=0 cases=257/257 (100.0%) tests=922/922 (100.0%, 0 fails)
 
-Optional format tests:
+Format tests:
 
 - `format/date.json`: errors=0 cases=1/1 (100.0%) tests=48/48 (100.0%, 0 fails)
 - `format/date-time.json`: errors=0 cases=1/1 (100.0%) tests=29/29 (100.0%, 0 fails)
@@ -271,7 +271,7 @@ Main test suite:
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - summary: files=36 errors=0 cases=232/232 (100.0%) tests=834/834 (100.0%, 0 fails)
 
-Optional format tests:
+Format tests:
 
 - `format/date-time.json`: errors=0 cases=1/1 (100.0%) tests=29/29 (100.0%, 0 fails)
 - `format/email.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
@@ -321,7 +321,7 @@ Main test suite:
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
 - summary: files=30 errors=0 cases=160/160 (100.0%) tests=615/615 (100.0%, 0 fails)
 
-Optional format tests:
+Format tests:
 
 - `format/date-time.json`: errors=0 cases=1/1 (100.0%) tests=29/29 (100.0%, 0 fails)
 - `format/email.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
@@ -363,7 +363,7 @@ Main test suite:
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=62/62 (100.0%, 0 fails)
 - summary: files=25 errors=0 cases=104/104 (100.0%) tests=434/434 (100.0%, 0 fails)
 
-Optional format tests:
+Format tests:
 
 - `format/color.json`: errors=0 cases=1/1 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `format/date.json`: errors=0 cases=1/1 (100.0%) tests=33/33 (100.0%, 0 fails)

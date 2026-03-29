@@ -106,7 +106,7 @@ for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 ; do
 
   format_dir="$test_dir/optional/format"
   if [ -d "$format_dir" ] ; then
-    echo "Optional format tests:"
+    echo "Format tests:"
     echo
     process_dir "$draft/format" "$test_dir/optional" "$format_dir" --format
   fi
