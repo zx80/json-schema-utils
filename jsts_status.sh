@@ -60,7 +60,13 @@ echo
 echo "Versions:"
 echo
 echo "- JSTS: \`$(pushd "$root_dir" > /dev/null 2>&1 && git log -1 | head -1 | cut -d' ' -f2)\`"
-echo "- JSU: \`$(jsu-test-runner --version)\` (with Python backend)"
+echo "- JSU: \`$(jsu-test-runner --version)\` (Python backend)"
+echo
+echo "Note about \`format\` with the Python backend:"
+echo
+echo "- still searching for a good _hostname_ validator."
+echo "- checking for _emacscript regex_ intricacies will only ever work with JavaScript."
+echo "- draft3 allows time without a timezone, whereas later drafts do not"
 echo
 
 if ! [ -d $root_dir/remotes ] ; then
@@ -100,7 +106,6 @@ for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 ; do
 
   format_dir="$test_dir/optional/format"
   if [ -d "$format_dir" ] ; then
-    echo
     echo "Optional format tests:"
     echo
     process_dir "$draft/format" "$test_dir/optional" "$format_dir" --format
