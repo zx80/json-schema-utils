@@ -79,14 +79,14 @@ Format tests:
 - `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=8/13 (61.5%, 5 fails)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
-- `format/relative-json-pointer.json`: errors=0 cases=0/1 (0.0%) tests=11/18 (61.1%, 7 fails)
+- `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=1/1 (100.0%) tests=47/47 (100.0%, 0 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=33/44 (75.0%, 11 fails)
 - `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
 - `format/uuid.json`: errors=0 cases=1/1 (100.0%) tests=22/22 (100.0%, 0 fails)
-- summary: files=21 errors=2 cases=10/23 (43.5%) tests=519/606 (85.6%, 87 fails)
+- summary: files=21 errors=2 cases=11/23 (47.8%) tests=526/606 (86.8%, 80 fails)
 
 ## Results for _draft2019-09_
 
@@ -155,14 +155,14 @@ Format tests:
 - `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=8/13 (61.5%, 5 fails)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
-- `format/relative-json-pointer.json`: errors=0 cases=0/1 (0.0%) tests=11/18 (61.1%, 7 fails)
+- `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=1/1 (100.0%) tests=47/47 (100.0%, 0 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=33/44 (75.0%, 11 fails)
 - `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
 - `format/uuid.json`: errors=0 cases=1/1 (100.0%) tests=22/22 (100.0%, 0 fails)
-- summary: files=20 errors=2 cases=11/22 (50.0%) tests=516/598 (86.3%, 82 fails)
+- summary: files=20 errors=2 cases=12/22 (54.5%) tests=523/598 (87.5%, 75 fails)
 
 ## Results for _draft7_
 
@@ -221,13 +221,13 @@ Format tests:
 - `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=8/13 (61.5%, 5 fails)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
-- `format/relative-json-pointer.json`: errors=0 cases=0/1 (0.0%) tests=11/18 (61.1%, 7 fails)
+- `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=1/1 (100.0%) tests=47/47 (100.0%, 0 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=33/44 (75.0%, 11 fails)
 - `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
-- summary: files=18 errors=2 cases=9/20 (45.0%) tests=451/533 (84.6%, 82 fails)
+- summary: files=18 errors=2 cases=10/20 (50.0%) tests=458/533 (85.9%, 75 fails)
 
 ## Results for _draft6_
 

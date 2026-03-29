@@ -10,6 +10,7 @@
 - [x] make test runner report failures with status
 - [x] add `--format` to test runner
 - [x] compiler: set format default depending on vocabularies
+- [ ] format rely on extensions (color, rel jsonpt…) [wip]
 - [ ] convert merge `allOf` before proceeding when possible
 - [ ] simpler remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] improve `unevaluatedItems` support (wip)

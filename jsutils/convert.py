@@ -764,7 +764,7 @@ _FMT2MODEL = {
     "uri-template": "$URI",
     "uuid": "$UUID",
     "json-pointer": "$JSONPT",
-    "relative-json-pointer": "$JSONPT",
+    "relative-json-pointer": "$__EXTENSION_REL_JSONPT",
     "regex": "$REGEX",
     # hmmm…
     "color": "$__EXTENSION_COLOR",  # v3
