@@ -2,6 +2,7 @@
 
 ## JSU schema compilation with JMC backend
 
+- [x] tests with more languages: bowtie with C, JS, java, perl
 - [x] convert handle `not` by switching to `oneOf`
 - [x] convert fix missing escaping on string constants
 - [x] fix unintentional override of jmc options on forwarding
@@ -10,11 +11,15 @@
 - [x] make test runner report failures with status
 - [x] add `--format` to test runner
 - [x] compiler: set format default depending on vocabularies
+- [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
+- [ ] format: iri or iri-reference (RFC3987)
+- [ ] format: regex see [Section 6.4](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#name-regular-expressions) for restrictions
+- [ ] format: email (RFC5321), idn-email (RFC6531)
+- [ ] format: hostname (RFC1123) with punycode (RFC5890), idn-hostname (add RFC5890)
 - [ ] format rely on extensions (color, rel jsonpt…) [wip]
 - [ ] convert merge `allOf` before proceeding when possible
 - [ ] simpler remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] improve `unevaluatedItems` support (wip)
-- [ ] tests with more languages: bowtie with C, JS, java, perl (wip)
 - [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
 - [ ] improve support for `unevaluatedProperties` with `patternProperties`?
 - [ ] fixme `unevaluatedProperties: false` is simpler for jm vs js…
