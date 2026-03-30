@@ -165,10 +165,10 @@ def getMetaSchemaKeywords(
             continue
         for k in VOCABULARIES[voc]:
             keywords[k] = active
-        # whether to assert formats
+        # whether to assert formats, with assertion a priority if set
         if voc.endswith("/format") or voc.endswith("/format-assertion"):
             keywords[_FORMAT] = active
-        elif voc.endswith("/format-annotation") and active:
+        elif voc.endswith("/format-annotation") and active and _FORMAT not in keywords:
             keywords[_FORMAT] = False
 
     # missing standard vocabularies are considered false, unless core
