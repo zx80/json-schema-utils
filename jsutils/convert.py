@@ -747,7 +747,7 @@ _FMT2MODEL = {
     "password": "$STRING",  # OpenAPI
     "date": "$DATE",
     "date-time": "$DATETIME",
-    "time": "$TIME",
+    "time": "$TIMETZ",
     "duration": "$DURATION",
     "email": "$EMAIL",
     "idn-email": "$EMAIL",
