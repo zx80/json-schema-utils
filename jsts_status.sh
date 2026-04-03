@@ -37,7 +37,7 @@ function process_dir()
     if [ $status -eq 0 ] ; then
       echo -n "."
     elif [ $status -eq 1 ] ; then
-      echo -n ","
+      echo -n "/"
     else
       echo -n "*"
     fi >&2
