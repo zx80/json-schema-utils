@@ -2,7 +2,7 @@
 
 Versions:
 
-- JSTS: `3b08f79ba9ad5f4cd190092f3a345c279b0d0bae`
+- JSTS: `e819f329268130e0ed5bbc87b071c83d8e02a68a`
 - JSU: `0.9.3 (backend jmc 2.0b42)` (Python backend)
 
 Note about `format` with the Python backend:
@@ -391,7 +391,6 @@ Main test suite:
 - `contains.json`: errors=0 cases=7/7 (100.0%) tests=25/25 (100.0%, 0 fails)
 - `content.json`: errors=0 cases=4/4 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `default.json`: errors=0 cases=3/3 (100.0%) tests=7/7 (100.0%, 0 fails)
-- `defs.json`: errors=0 cases=0/1 (0.0%) tests=1/2 (50.0%, 1 fails)
 - `dependentRequired.json`: errors=0 cases=4/4 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `dependentSchemas.json`: errors=0 cases=4/4 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `dynamicRef.json`: errors=0 cases=5/12 (41.7%) tests=17/27 (63.0%, 10 fails)
@@ -419,12 +418,12 @@ Main test suite:
 - `prefixItems.json`: errors=0 cases=4/4 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `properties.json`: errors=0 cases=6/6 (100.0%) tests=28/28 (100.0%, 0 fails)
 - `propertyNames.json`: errors=0 cases=3/3 (100.0%) tests=10/10 (100.0%, 0 fails)
-- `ref.json`: errors=0 cases=28/37 (75.7%) tests=69/80 (86.2%, 11 fails)
+- `ref.json`: errors=0 cases=28/36 (77.8%) tests=69/79 (87.3%, 10 fails)
 - `refRemote.json`: errors=0 cases=11/15 (73.3%) tests=27/31 (87.1%, 4 fails)
 - `required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `unevaluatedItems.json`: errors=0 cases=16/29 (55.2%) tests=53/71 (74.6%, 18 fails)
 - `unevaluatedProperties.json`: errors=0 cases=30/42 (71.4%) tests=111/125 (88.8%, 14 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=69/69 (100.0%, 0 fails)
-- summary: files=44 errors=0 cases=298/347 (85.9%) tests=1066/1127 (94.6%, 61 fails)
+- summary: files=43 errors=0 cases=298/345 (86.4%) tests=1065/1124 (94.8%, 59 fails)
 
