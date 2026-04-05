@@ -1409,6 +1409,7 @@ def schema2model(
                             pat += char
                         i += 1
                     pattern = pat
+                    # FIXME should consider unicode and [.-.] which contains letters?
                     # [aA]... -> /a/i (maybe)
                     pat, i, bracket = "", 0, False
                     while i < len(pattern):
