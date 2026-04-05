@@ -255,7 +255,7 @@
   },
   "_EngineAssociation": {
     "#": "The engine to open this project with. Denotes by <major>.<minor> convention e.g. 4.20, 5.0 or source engine hash.",
-    "@": "/(^([0-9]+)\\.([0-9]+)$)|(^\\{[A-F0-9]{8}(-[A-F0-9]{4}){3}-[A-F0-9]{12}\\}$)/"
+    "@": "/^[0-9]+\\.[0-9]+$|(^\\{[A-F0-9]{8}(-[A-F0-9]{4}){3}-[A-F0-9]{12}\\}$)/"
   },
   "_FileVersion": {
     "#": "Descriptor version number.",

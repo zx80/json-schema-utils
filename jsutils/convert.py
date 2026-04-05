@@ -1374,10 +1374,132 @@ def schema2model(
                     model = {"|": [esc(v) for v in ve]}
             if "pattern" in schema:
                 pattern = schema["pattern"]
-                pattern = PATTERN.get(pattern, pattern)
+                pattern = PATTERN.get(pattern, pattern)  # simplify in some cases
                 assert isinstance(pattern, str), f"string pattern at [{spath}]"
                 assert model in ("", "$STRING"), f"string pattern for string at [{spath}]"
-                model = f"/{pattern}/"
+                if fix:  # common errors, regex mangling
+                    # [x|X] -> [xX]
+                    pat, i, bracket = "", 0, False
+                    while i < len(pattern):
+                        char = pattern[i]
+                        if bracket and char == "]":
+                            bracket = False
+                            pat += "]"
+                        elif not bracket and char == "[":
+                            bracket = True
+                            if pattern[i+1] == "]":
+                                pat += "[]"
+                                i += 1
+                            else:
+                                x = pattern[i+1] if i+1 < len(pattern) else ""
+                                p = pattern[i+2] if i+2 < len(pattern) else ""
+                                X = pattern[i+3] if i+3 < len(pattern) else ""
+                                C = pattern[i+4] if i+4 < len(pattern) else ""
+                                if x.isalpha() and X.isalpha() and x != X and x.lower() == X.lower() and C == "]":
+                                    log.warning(f"fixing pattern {pattern[i:i+5]}")
+                                    pat += f"[{x}{X}]"
+                                    bracket = False
+                                    i += 4
+                                else:
+                                    pat += "["
+                        elif char == "\\":
+                            pat += pattern[i:i+2]
+                            i += 1
+                        else:
+                            pat += char
+                        i += 1
+                    pattern = pat
+                    # [aA]... -> /a/i (maybe)
+                    pat, i, bracket = "", 0, False
+                    while i < len(pattern):
+                        char = pattern[i]
+                        if bracket and char == "]":
+                            bracket = False
+                            pat += "]"
+                        elif not bracket and char == "[":
+                            bracket = True
+                            if pattern[i+1] == "]":
+                                pat += "[]"
+                                i += 1
+                            else:
+                                x = pattern[i+1] if i+1 < len(pattern) else ""
+                                X = pattern[i+2] if i+2 < len(pattern) else ""
+                                C = pattern[i+3] if i+3 < len(pattern) else ""
+                                if x.isalpha() and X.isalpha() and x != X and x.lower() == X.lower() and C == "]":
+                                    pat += x.lower()
+                                    bracket = False
+                                    i += 3
+                                else:
+                                    pat += "["
+                        elif char == "\\":
+                            pat += pattern[i:i+2]
+                            i += 1
+                        else:
+                            if char.isalpha():  # lone letter
+                                pat = None
+                                break
+                            pat += char
+                        i += 1
+                    if pat is not None and pattern != pat:
+                        opts = "i"
+                        pattern = pat
+                    else:
+                        opts = ""
+                    # remove useless parentheses, add missing "^a|b$" -> "^(a|b)$"
+                    # needs to take care of [], (|), (?...), (...)* \\
+                    i, bracket, stack, candidates, keep = 0, False, [], [], set()
+                    missing_par = False
+                    while i < len(pattern):
+                        # current and next characters
+                        cp = pattern[i-1] if i >= 1 else ""
+                        ci = pattern[i]
+                        cn = pattern[i+1] if i+1 < len(pattern) else ""
+                        # parser state
+                        if bracket and ci == "]":
+                            bracket = False
+                        elif not bracket and ci == "[":
+                            bracket = True
+                            if cn == "]":  # skip []...]
+                                i += 1
+                        elif ci == "\\":  # escape
+                            i += 1
+                        elif not bracket and ci == "(":
+                            candidates.append(i)
+                            stack.append(i)
+                            if cn == "?":  # (?...
+                                keep.add(i)
+                        elif not bracket and ci == ")":
+                            candidates.append(i)
+                            iopen = stack.pop()
+                            if cn in "?*+{":  # ) followed by a repeat
+                                keep.add(i)
+                                keep.add(iopen)
+                            if iopen in keep:  # keep ) if corresponding ( is kept
+                                keep.add(i)
+                        elif not bracket and ci == "|":
+                            if stack:
+                                keep.add(stack[-1])
+                            elif cp != "$" and cn != "^" and pattern[0] == "^" and pattern[-1] == "$":
+                                # probable… should improve the decision
+                                missing_par = True
+                        i += 1
+                    for i in reversed(candidates):
+                        if i not in keep:
+                            pattern = pattern[:i] + pattern[i+1:]
+                    if missing_par:
+                        # probably missing ()
+                        log.warning(f"anchored pattern with alt: {pattern}")
+                        if pattern[0] == "^":
+                            pattern = f"^({pattern[1:]}"
+                        else:
+                            pattern = "(" + pattern
+                        if pattern[-1] == "$":
+                            pattern = f"{pattern[:-1]})$"
+                        else:
+                            pattern = ")"
+                else:
+                    opts = ""
+                model = f"/{pattern}/{opts}"
             if "minLength" in schema and "maxLength" in schema and \
                     schema["minLength"] == schema["maxLength"]:
                 ival = schema["minLength"]

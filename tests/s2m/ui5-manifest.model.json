@@ -3060,7 +3060,7 @@
                 "_secondary"
               ]
             },
-            "/^([p|P][r|R][i|I][m|M][a|A][r|R][y|Y])|([s|S][e|E][c|C][o|O][n|N][d|D][a|A][r|R][y|Y])$/"
+            "/^(primary|secondary)$/i"
           ]
         },
         {
@@ -3124,7 +3124,7 @@
                 "_destructive"
               ]
             },
-            "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([p|P][o|O][s|S][i|I][t|T][i|I][v|V][e|E])|([d|D][e|E][s|S][t|T][r|R][u|U][c|C][t|T][i|I][v|V][e|E])$/"
+            "/^(default|positive|destructive)$/i"
           ]
         },
         {
@@ -3257,7 +3257,7 @@
             "_None"
           ]
         },
-        "/^([a|A][u|U][t|T][o|O])|([n|N][o|O][n|N][e|E])$/"
+        "/^(auto|none)$/i"
       ]
     },
     "_defs_3_AuthCardButton": {
@@ -3335,7 +3335,7 @@
             "_stretch"
           ]
         },
-        "/^([a|A][u|U][t|T][o|O])|([s|S][t|T][r|R][e|E][t|T][c|C][h|H])$/"
+        "/^(auto|stretch)$/i"
       ]
     },
     "_defs_3_ChoiceInputStyle": {
@@ -3347,7 +3347,7 @@
             "_expanded"
           ]
         },
-        "/^([c|C][o|O][m|M][p|P][a|A][c|C][t|T])|([e|E][x|X][p|P][a|A][n|N][d|D][e|E][d|D])$/"
+        "/^(compact|expanded)$/i"
       ]
     },
     "_defs_3_Colors": {
@@ -3363,7 +3363,7 @@
             "_attention"
           ]
         },
-        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([d|D][a|A][r|R][k|K])|([l|L][i|I][g|G][h|H][t|T])|([a|A][c|C][c|C][e|E][n|N][t|T])|([g|G][o|O][o|O][d|D])|([w|W][a|A][r|R][n|N][i|I][n|N][g|G])|([a|A][t|T][t|T][e|E][n|N][t|T][i|I][o|O][n|N])$/"
+        "/^(default|dark|light|accent|good|warning|attention)$/i"
       ]
     },
     "_defs_3_Column": {
@@ -3748,7 +3748,7 @@
             "_accent"
           ]
         },
-        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([e|E][m|M][p|P][h|H][a|A][s|S][i|I][s|S])|([g|G][o|O][o|O][d|D])|([a|A][t|T][t|T][e|E][n|N][t|T][i|I][o|O][n|N])|([w|W][a|A][r|R][n|N][i|I][n|N][g|G])|([a|A][c|C][c|C][e|E][n|N][t|T])$/"
+        "/^(default|emphasis|good|attention|warning|accent)$/i"
       ]
     },
     "_defs_3_Extendable.Action": {
@@ -4024,7 +4024,7 @@
     "_defs_3_FallbackOption": {
       "|": [
         "_drop",
-        "/^([d|D][r|R][o|O][p|P])$/"
+        "/^drop$/i"
       ]
     },
     "_defs_3_FontSize": {
@@ -4038,7 +4038,7 @@
             "_extraLarge"
           ]
         },
-        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([s|S][m|M][a|A][l|L][l|L])|([m|M][e|E][d|D][i|I][u|U][m|M])|([l|L][a|A][r|R][g|G][e|E])|([e|E][x|X][t|T][r|R][a|A][l|L][a|A][r|R][g|G][e|E])$/"
+        "/^(default|small|medium|large|extralarge)$/i"
       ]
     },
     "_defs_3_FontType": {
@@ -4049,7 +4049,7 @@
             "_monospace"
           ]
         },
-        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([m|M][o|O][n|N][o|O][s|S][p|P][a|A][c|C][e|E])$/"
+        "/^(default|monospace)$/i"
       ]
     },
     "_defs_3_FontWeight": {
@@ -4061,7 +4061,7 @@
             "_bolder"
           ]
         },
-        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([l|L][i|I][g|G][h|H][t|T][e|E][r|R])|([b|B][o|O][l|L][d|D][e|E][r|R])$/"
+        "/^(default|lighter|bolder)$/i"
       ]
     },
     "_defs_3_HorizontalAlignment": {
@@ -4074,7 +4074,7 @@
             "_right"
           ]
         },
-        "/^([l|L][e|E][f|F][t|T])|([c|C][e|E][n|N][t|T][e|E][r|R])|([r|R][i|I][g|G][h|H][t|T])$/"
+        "/^(left|center|right)$/i"
       ]
     },
     "_defs_3_Image": {
@@ -4201,7 +4201,7 @@
             "_repeat"
           ]
         },
-        "/^([c|C][o|O][v|V][e|E][r|R])|([r|R][e|E][p|P][e|E][a|A][t|T][h|H][o|O][r|R][i|I][z|Z][o|O][n|N][t|T][a|A][l|L][l|L][y|Y])|([r|R][e|E][p|P][e|E][a|A][t|T][v|V][e|E][r|R][t|T][i|I][c|C][a|A][l|L][l|L][y|Y])|([r|R][e|E][p|P][e|E][a|A][t|T])$/"
+        "/^(cover|repeathorizontally|repeatvertically|repeat)$/i"
       ]
     },
     "_defs_3_ImageSet": {
@@ -4252,7 +4252,7 @@
             "_large"
           ]
         },
-        "/^([a|A][u|U][t|T][o|O])|([s|S][t|T][r|R][e|E][t|T][c|C][h|H])|([s|S][m|M][a|A][l|L][l|L])|([m|M][e|E][d|D][i|I][u|U][m|M])|([l|L][a|A][r|R][g|G][e|E])$/"
+        "/^(auto|stretch|small|medium|large)$/i"
       ]
     },
     "_defs_3_ImageStyle": {
@@ -4264,7 +4264,7 @@
             "_person"
           ]
         },
-        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([p|P][e|E][r|R][s|S][o|O][n|N])$/"
+        "/^(default|person)$/i"
       ]
     },
     "_defs_3_ImplementationsOf.Action": {
@@ -5860,7 +5860,7 @@
             "_padding"
           ]
         },
-        "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([n|N][o|O][n|N][e|E])|([s|S][m|M][a|A][l|L][l|L])|([m|M][e|E][d|D][i|I][u|U][m|M])|([l|L][a|A][r|R][g|G][e|E])|([e|E][x|X][t|T][r|R][a|A][l|L][a|A][r|R][g|G][e|E])|([p|P][a|A][d|D][d|D][i|I][n|N][g|G])$/"
+        "/^(default|none|small|medium|large|extralarge|padding)$/i"
       ]
     },
     "_defs_3_Table": {
@@ -6281,7 +6281,7 @@
                 "_heading"
               ]
             },
-            "/^([d|D][e|E][f|F][a|A][u|U][l|L][t|T])|([h|H][e|E][a|A][d|D][i|I][n|N][g|G])$/"
+            "/^(default|heading)$/i"
           ]
         },
         {
@@ -6313,7 +6313,7 @@
             "_password"
           ]
         },
-        "/^([t|T][e|E][x|X][t|T])|([t|T][e|E][l|L])|([u|U][r|R][l|L])|([e|E][m|M][a|A][i|I][l|L])|([p|P][a|A][s|S][s|S][w|W][o|O][r|R][d|D])$/"
+        "/^(text|tel|url|email|password)$/i"
       ]
     },
     "_defs_3_TextRun": {
@@ -6440,7 +6440,7 @@
             "_bottom"
           ]
         },
-        "/^([t|T][o|O][p|P])|([c|C][e|E][n|N][t|T][e|E][r|R])|([b|B][o|O][t|T][t|T][o|O][m|M])$/"
+        "/^(top|center|bottom)$/i"
       ]
     },
     "_defs_3_VerticalContentAlignment": {
@@ -6452,7 +6452,7 @@
             "_bottom"
           ]
         },
-        "/^([t|T][o|O][p|P])|([c|C][e|E][n|N][t|T][e|E][r|R])|([b|B][o|O][t|T][t|T][o|O][m|M])$/"
+        "/^(top|center|bottom)$/i"
       ]
     },
     "_name_0_": {
@@ -7121,7 +7121,7 @@
       },
       "_name": {
         "#": "Represents name of reuse component",
-        "@": "/^([a-zA-Z_$][a-zA-Z0-9_$]{0,39}\\.)*([a-zA-Z_$][a-zA-Z0-9_$]{0,39})$/"
+        "@": "/^([a-zA-Z_$][a-zA-Z0-9_$]{0,39}\\.)*[a-zA-Z_$][a-zA-Z0-9_$]{0,39}$/"
       }
     },
     "component_binding_def": {
@@ -7136,7 +7136,7 @@
       "?settings": "$component_setting_def",
       "_name": {
         "#": "The name of the component",
-        "@": "/^([a-zA-Z][a-zA-Z0-9]{0,39})(\\.[a-zA-Z][a-zA-Z0-9]{0,39})*$/"
+        "@": "/^[a-zA-Z][a-zA-Z0-9]{0,39}(\\.[a-zA-Z][a-zA-Z0-9]{0,39})*$/"
       }
     },
     "component_pages_def": {
@@ -7487,7 +7487,7 @@
                     },
                     "_id": {
                       "#": "Represents an unique id for the instance of the reuse component inside of the object page",
-                      "@": "/^([A-Za-z_][-A-Za-z0-9_.:]*)$/"
+                      "@": "/^[A-Za-z_][-A-Za-z0-9_.:]*$/"
                     },
                     "_title": {
                       "#": "Represents the title for the content of the reuse component",
@@ -7500,7 +7500,7 @@
                         "": "$ANY",
                         "_componentName": {
                           "#": "Represents the name of the reuse component ",
-                          "@": "/^([a-zA-Z][a-zA-Z0-9_]{0,39})(\\.[a-zA-Z][a-zA-Z0-9_]{0,39})*$/"
+                          "@": "/^[a-zA-Z][a-zA-Z0-9_]{0,39}(\\.[a-zA-Z][a-zA-Z0-9_]{0,39})*$/"
                         }
                       },
                       {
@@ -7959,7 +7959,7 @@
           "?settings": "$component_setting_def",
           "_componentName": {
             "#": "Represents the name of the component to be loaded inside the canvas",
-            "@": "/^([a-zA-Z][a-zA-Z0-9_]{0,39})(\\.[a-zA-Z][a-zA-Z0-9_]{0,39})*$/"
+            "@": "/^[a-zA-Z][a-zA-Z0-9_]{0,39}(\\.[a-zA-Z][a-zA-Z0-9_]{0,39})*$/"
           }
         },
         {
@@ -9169,7 +9169,7 @@
       },
       "_factoryName": {
         "#": "Represents the name of the service factory ",
-        "@": "/^([a-z_$][a-z0-9_$]{0,39}\\.)*([a-zA-Z_$][a-zA-Z0-9_$]{0,39})$/"
+        "@": "/^([a-z_$][a-z0-9_$]{0,39}\\.)*[a-zA-Z_$][a-zA-Z0-9_$]{0,39}$/"
       }
     },
     "service_0": {
@@ -11345,7 +11345,7 @@
             },
             "?componentName": {
               "#": "Represents a name of the UI5 component",
-              "@": "/^([a-zA-Z_$][a-zA-Z0-9_$]{0,39}\\.)*([a-zA-Z_$][a-zA-Z0-9_$]{0,39})$/"
+              "@": "/^([a-zA-Z_$][a-zA-Z0-9_$]{0,39}\\.)*[a-zA-Z_$][a-zA-Z0-9_$]{0,39}$/"
             },
             "?componentUsages": {
               "#": "Represents the explicit usage declaration for UI5 reuse components",
@@ -11759,7 +11759,7 @@
     },
     "?ach": {
       "#": "Represents application component hierarchy",
-      "@": "/^([a-zA-Z0-9]{2,3})(-[a-zA-Z0-9]{1,6})*$/"
+      "@": "/^[a-zA-Z0-9]{2,3}(-[a-zA-Z0-9]{1,6})*$/"
     },
     "?cdsViews": {
       "#": "Represents array of directly used CDS views, which only to be added if directly used via INA protocol and not if used via OData service",

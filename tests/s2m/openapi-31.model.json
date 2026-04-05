@@ -185,7 +185,7 @@
           "&": [
             {
               "": "$ANY",
-              "_scheme": "/^[Bb][Ee][Aa][Rr][Ee][Rr]$/",
+              "_scheme": "/^bearer$/i",
               "_type": "_http"
             },
             {
@@ -199,7 +199,7 @@
             "$ANY",
             {
               "": "$ANY",
-              "_scheme": "/^[Bb][Ee][Aa][Rr][Ee][Rr]$/",
+              "_scheme": "/^bearer$/i",
               "_type": "_http"
             }
           ]
@@ -674,7 +674,7 @@
           "&": [
             {
               "": "$ANY",
-              "_scheme": "/^[Bb][Ee][Aa][Rr][Ee][Rr]$/",
+              "_scheme": "/^bearer$/i",
               "_type": "_http"
             },
             {
@@ -688,7 +688,7 @@
             "$ANY",
             {
               "": "$ANY",
-              "_scheme": "/^[Bb][Ee][Aa][Rr][Ee][Rr]$/",
+              "_scheme": "/^bearer$/i",
               "_type": "_http"
             }
           ]

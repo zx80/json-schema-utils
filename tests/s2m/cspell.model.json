@@ -738,15 +738,15 @@
     },
     "LanguageIdMultiple": {
       "#": "This can be 'typescript,cpp,json,literal haskell', etc.",
-      "@": "/^([-\\w_\\s]+)(,[-\\w_\\s]+)*$/"
+      "@": "/^[-\\w_\\s]+(,[-\\w_\\s]+)*$/"
     },
     "LanguageIdMultipleNeg": {
       "#": "This can be 'typescript,cpp,json,literal haskell', etc.",
-      "@": "/^(![-\\w_\\s]+)(,![-\\w_\\s]+)*$/"
+      "@": "/^![-\\w_\\s]+(,![-\\w_\\s]+)*$/"
     },
     "LanguageIdSingle": {
       "#": "This can be '*', 'typescript', 'cpp', 'json', etc.",
-      "@": "/^(!?[-\\w_\\s]+)|(\\*)$/"
+      "@": "/^(!?[-\\w_\\s]+|\\*)$/"
     },
     "LanguageSetting": {
       "?allowCompoundWords": {
