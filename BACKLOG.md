@@ -11,6 +11,7 @@
 - [x] make test runner report failures with status
 - [x] add `--format` to test runner
 - [x] compiler: set format default depending on vocabularies
+- [ ] fix regex `[a|A]`… to `[aA]` or `/a/i`
 - [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] format: regex see [Section 6.4](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#name-regular-expressions) for restrictions
