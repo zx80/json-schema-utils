@@ -13,7 +13,7 @@
 - [x] compiler: set format default depending on vocabularies
 - [x] fix regex `[a|A]`… to `[aA]` to possibly `/a/i`
 - [x] fix regex with useless or missing parentheses
-- [ ] stats: detect regex fixes `^foo|bla$`, `[x|X]`…
+- [x] stats: detect regex fixes `^foo|bla$`, `[x|X]`…
 - [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] format: regex see [Section 6.4](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#name-regular-expressions) for restrictions

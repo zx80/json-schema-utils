@@ -489,9 +489,9 @@ def collectErr(collection, cat, what, path):
     collectSet(collection, "<errors>", (cat, what, path))
 
 
-def collectTypo(collection, what, path):
-    collectSet(collection, "<typos-keywords>", what)
-    collectSet(collection, "<typos-keywords-where>", (what, path))
+def collectTypo(collection, what, path, source="keywords"):
+    collectSet(collection, f"<typos-{source}>", what)
+    collectSet(collection, f"<typos-{source}-where>", (what, path))
 
 
 def ap(path: str, key: str):
@@ -499,6 +499,82 @@ def ap(path: str, key: str):
         return f"{path}.{key}"
     else:
         return f'{path}."{key}"'
+
+#
+# REGEX
+#
+
+def check_regex(regex: str, collection, path):
+    if not regex:  # no point
+        collectErr(collection, "empty regex", "", path)
+        return
+    if not is_regex(regex):
+        collectErr(collection, "invalid regex", regex, path)
+        return
+    if len(regex) == 2 and regex[1] in "*?" and regex[0] != "\\":
+        collectErr(collection, "uneffective regex", regex, path)
+        return
+    # accept typical "not empty" checks
+    if regex in (".", ".+", "..*"):
+        return
+    if regex[-1] in "*?":
+        # no point in  repeating something at the end…
+        collectErr(collection, "doubtful unanchored ending regex", regex, path)
+    # regex parser that could be improved
+    i, pars, bracket, missing_par = 0, 0, False, False
+    chars = 0
+    while i < len(regex):
+        # previous, current and next characters
+        cp = regex[i-1] if i-1 >= 0 else ""
+        cu = regex[i]
+        cn = regex[i+1] if i+1 < len(regex) else ""
+        if not bracket and cu == "[":
+            bracket = True
+            if cn == "]":
+                i += 1
+            else:  # [x|X] detection
+                if xX := re.match(r"\[(.)\|(.)]", regex[i:]):
+                    x, X = xX.group(1), xX.group(2)
+                    if x.lower() == X.lower():  # useless | allowed
+                        collectErr(collection, "bad ignorecase brackets", xX.group(0), path)
+        elif bracket and cu == "]":
+            bracket = False
+            chars += 1
+        elif bracket and cu == "\\":  # NOTE escaping rules are regex flavour dependent
+            i += 1
+        elif not bracket:
+            if cu == "\\":  # NOTE idem
+                i += 1
+            elif cu == "(":
+                pars += 1
+            elif cu == ")":
+                pars -= 1
+            elif cu == "|":
+                if pars == 0 and cp != "$" and cn != "^" and regex[0] == "^" and regex[-1] == "$":
+                    if not missing_par:
+                        collectErr(collection, "missing parentheses in regex", regex, path)
+                        missing_par = True  # report only once
+            elif cu in "*?":
+                chars -= 1
+            elif cu == "+":
+                pass
+            elif cu == "{":
+                braces = re.match(r"\{(\d+)(,\d*)?}", pattern[i:])
+                if braces:
+                    i += len(braces.group(0)) - 1
+                    chars += int(braces.group(1))
+                # else must have been detected on compile
+            elif cu in "^$":
+                pass
+            else:
+                chars += 1
+        # TODO more checks
+        i += 1
+    # if not, must have been detected on compile
+    assert pars == 0
+    if chars > 1 and regex[0] != "^":
+        # FIXME warning?
+        collectErr(collection, "doubtful unanchored beginning regex", regex, path)
 
 #
 # TYPE RESOLUTION
@@ -987,18 +1063,17 @@ def _json_schema_stats_rec(
 
         elif prop == "pattern":
 
-            if not isinstance(val, str):
+            if isinstance(val, str):
+                check_regex(val, collection, path)
+            else:
                 collectErr(collection, "invalid pattern type", typeof(val), lpath)
-            elif not is_regex(val):
-                collectErr(collection, "invalid regex", val, lpath)
 
         elif prop == "patternProperties":
 
             if isinstance(val, dict):
                 for k, v in val.items():
                     # assert isinstance(k, str)
-                    if not is_regex(k):
-                        collectErr(collection, "invalid regex", k, lpath)
+                    check_regex(k, collection, lpath)
             else:
                 collectErr(collection, "invalid patternProperties type", typeof(val), lpath)
 

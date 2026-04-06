@@ -1,0 +1,4 @@
+{
+  "pattern": "https?://.*",
+  "type": "string"
+}

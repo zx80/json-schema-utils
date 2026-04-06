@@ -1,0 +1,4 @@
+{
+  "pattern": "^[f|F]oo|[b|B]la$",
+  "type": "string"
+}
