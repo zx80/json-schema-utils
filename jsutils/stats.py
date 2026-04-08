@@ -559,7 +559,7 @@ def check_regex(regex: str, collection, path):
             elif cu == "+":
                 pass
             elif cu == "{":
-                braces = re.match(r"\{(\d+)(,\d*)?}", pattern[i:])
+                braces = re.match(r"\{(\d+)(,\d*)?}", regex[i:])
                 if braces:
                     i += len(braces.group(0)) - 1
                     chars += int(braces.group(1))
