@@ -1422,7 +1422,10 @@ def schema2model(
                             if pattern[i+1] == "]":
                                 pat += "[]"
                                 i += 1
-                            else:
+                            elif pattern[i:].startswith("[AaUu]"):  # TODO generalize
+                                pat += "[au"
+                                i += 4
+                            else:  # [xX]
                                 x = pattern[i+1] if i+1 < len(pattern) else ""
                                 X = pattern[i+2] if i+2 < len(pattern) else ""
                                 C = pattern[i+3] if i+3 < len(pattern) else ""
