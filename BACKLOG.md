@@ -2,18 +2,6 @@
 
 ## JSU schema compilation with JMC backend
 
-- [x] tests with more languages: bowtie with C, JS, java, perl
-- [x] convert handle `not` by switching to `oneOf`
-- [x] convert fix missing escaping on string constants
-- [x] fix unintentional override of jmc options on forwarding
-- [x] refactor resolver stuff to reuse it for vocabularies
-- [x] support for $vocabulary by removing disactivated keywords
-- [x] make test runner report failures with status
-- [x] add `--format` to test runner
-- [x] compiler: set format default depending on vocabularies
-- [x] fix regex `[a|A]`… to `[aA]` to possibly `/a/i`
-- [x] fix regex with useless or missing parentheses
-- [x] stats: detect regex fixes `^foo|bla$`, `[x|X]`…
 - [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] format: regex see [Section 6.4](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#name-regular-expressions) for restrictions
@@ -60,3 +48,15 @@
 - [x] show default values on `--help`
 - [x] simpler possibly remove all-types lists
 - [x] add `--runtime` option to show runtime directory
+- [x] tests with more languages: bowtie with C, JS, java, perl
+- [x] convert handle `not` by switching to `oneOf`
+- [x] convert fix missing escaping on string constants
+- [x] fix unintentional override of jmc options on forwarding
+- [x] refactor resolver stuff to reuse it for vocabularies
+- [x] support for $vocabulary by removing disactivated keywords
+- [x] make test runner report failures with status
+- [x] add `--format` to test runner
+- [x] compiler: set format default depending on vocabularies
+- [x] fix regex `[a|A]`… to `[aA]` to possibly `/a/i`
+- [x] fix regex with useless or missing parentheses
+- [x] stats: detect regex fixes `^foo|bla$`, `[x|X]`…
