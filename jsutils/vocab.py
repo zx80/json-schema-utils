@@ -145,13 +145,13 @@ def getMetaSchemaKeywords(
             ms_ms_url = metaschema["$schema"]
             ms_ms_version = SCHEMA_VERSION.get(ms_ms_url, 0)
         if "$vocabulary" not in metaschema:
-            log.warning(f"no $vocabulary in {ms_url}")
+            log.info(f"no $vocabulary in {ms_url}")
             return {}
         vocabulary = metaschema["$vocabulary"]
     elif ms_version in META_SCHEMA_VOCABULARIES:
         vocabulary = META_SCHEMA_VOCABULARIES[ms_version]
     else:
-        log.warning(f"no $vocabulary for {ms_url}")
+        log.info(f"no $vocabulary for {ms_url}")
         return {}
     assert isinstance(vocabulary, dict), "$vocabularies is an object"
 
