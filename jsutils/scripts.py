@@ -9,6 +9,8 @@ import tempfile
 import subprocess
 from importlib.metadata import version as pkg_version
 
+import json_model
+
 logging.basicConfig()
 
 from .schemas import Schemas
@@ -475,6 +477,8 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     arg = ap.add_argument
     ap_common(arg)
 
+    arg("--runtime", default=False, action="store_true", help="output runtime directory and exit")
+
     # schema to model conversion
     arg("--schema-version", "-V", dest="sversion", type=int, default=0,
         help="set JSON Schema version")
@@ -516,10 +520,13 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
 
+    # how to run the jmc backend
+    arg("--backend", type=str, default="p", choices=["p", "f"],
+        help="how to run the backend: p=process, f=function")
+
     # forwarded to backend
     arg("--out", "-o", default=None, help="set output file")
     arg("--regex-engine", "-re", default=None, help="set regex engine")
-
     arg("--loose", default=True, action="store_true",
         help="accept loose numbers (*)")
     arg("--no-loose", dest="loose", action="store_false",
@@ -533,8 +540,6 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
         help="do not ignore formats")
     arg("--no-format", dest="format", action="store_false",
         help="ignore formats, this is the default unless $vocabulary enables format")
-
-    arg("--runtime", default=False, action="store_true", help="output runtime directory and exit")
 
     # schema to consider
     arg("schema", default="-", nargs="?", help="schema to process")
@@ -611,19 +616,21 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
         tmp.write(smodel.encode("UTF8"))
         tmp.flush()
 
-        # launch jmc command
+        # launch jmc command and report status
         jmc = ["jmc", "--model", tmp.name, "--extend", *args.others]
 
         if args.debug:
             log.debug(f"jmc: {' '.join(jmc)}")
 
-        # TODO invoke the internal interface? or not?
-        done = subprocess.run(jmc, check=False)
+        if args.backend == "p":
+            done = subprocess.run(jmc, check=False)
+            status = done.returncode
+        else:
+            status = json_model.jmc_script(jmc[1:])
 
-        # exit status
-        if done.returncode:
-            log.error(f"backend jmc process return code: {done.returncode}")
-        return done.returncode
+        if status:
+            log.error(f"backend jmc process return code: {status}")
+        return status
 
 def json_schema_to_python_checker(
         schema: JsonSchema,
@@ -732,8 +739,6 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
         return 0
 
     resolver = Resolver(cache=args.cache, mapping=args.map)
-
-    import json_model
 
     CASES_MODEL = [
         {
