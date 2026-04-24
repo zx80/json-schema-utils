@@ -51,7 +51,7 @@ def rm_suffix(s, *suffixes):
     return s
 
 
-def jsu_inline():
+def jsu_inline(xargs: list[str]|None = None) -> int:
     """Inline command entry point."""
 
     ap = argparse.ArgumentParser(
@@ -64,7 +64,7 @@ def jsu_inline():
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("--auto", "-a", action="store_true", default=False, help="automatic url mapping")
     arg("schemas", nargs="*", help="schemas to inline")
-    args = ap.parse_args()
+    args = ap.parse_args(xargs)
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
@@ -102,8 +102,9 @@ def jsu_inline():
 
         print(json_dumps(inlined, args))
 
+    return 0
 
-def jsu_simpler():
+def jsu_simpler(xargs: list[str]|None = None) -> int:
 
     ap = argparse.ArgumentParser(
         prog="jsu-simpler",
@@ -116,7 +117,7 @@ def jsu_simpler():
         help="type schema before simplification (*)")
     arg("--no-type", dest="type", action="store_false",
         help="do not type schema before simplification")
-    args = ap.parse_args()
+    args = ap.parse_args(xargs)
 
     if not args.schemas:
         args.schemas = ["-"]
@@ -134,8 +135,10 @@ def jsu_simpler():
 
         print(json_dumps(schema, args))
 
+    return 0
 
-def jsu_check():
+
+def jsu_check(xargs: list[str]|None = None) -> int:
 
     from .stats import SCHEMA_KEYS
 
@@ -164,7 +167,7 @@ def jsu_check():
     arg("--test", "-t", action="store_true", help="test vector mode")
     arg("schema", type=str, help="JSON Schema")
     arg("values", nargs="*", help="values to match against schema")
-    args = ap.parse_args()
+    args = ap.parse_args(xargs)
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
@@ -175,17 +178,17 @@ def jsu_check():
         if args.debug:
             log.error(e, exc_info=args.debug)
         print(f"{args.schema}: FILE ERROR ({e})")
-        sys.exit(1)
+        return 1
     except BaseException as e:
         if args.debug:
             log.error(e, exc_info=args.debug)
         print(f"{args.schema}: JSON ERROR ({e})")
-        sys.exit(2)
+        return 2
 
     # sanity check…
     if not isinstance(jschema, (bool, dict)):
         print(f"{args.schema}: SCHEMA TYPE ERROR")
-        sys.exit(3)
+        return 3
 
     if isinstance(jschema, dict) and not (SCHEMA_KEYS & jschema.keys()):
         if args.force:
@@ -194,7 +197,7 @@ def jsu_check():
         else:
             log.error(f"{args.schema}: json probably not a schema, use --force to proceed anyway")
             print(f"{args.schema}: SCHEMA ERROR - not a schema, use --force to proceed anyway")
-            sys.exit(4)
+            return 4
 
     # be nice
     if isinstance(jschema, dict) and "$schema" not in jschema:
@@ -243,7 +246,7 @@ def jsu_check():
             log.error(f"{args.schema}: SCHEMA COMPILATION ERROR ({e})")
         else:
             print(f"{args.schema}: SCHEMA COMPILATION ERROR ({e})")
-            sys.exit(5)
+            return 5
 
         def check(data):
             return { "passed": True, "errors": "unchecked value is accepted" }
@@ -290,12 +293,14 @@ def jsu_check():
                 log.debug(e, exc_info=True)
                 print(f"{fn}: ERROR ({e})")
 
+    return 1 if nerrors else 0
+
 
 def shash(s: str):
     return hashlib.sha3_256(s.encode()).hexdigest()[:20]
 
 
-def jsu_stats():
+def jsu_stats(xargs: list[str]|None = None) -> int:
 
     ap = argparse.ArgumentParser(
         prog="jsu-stats",
@@ -304,9 +309,11 @@ def jsu_stats():
     arg = ap.add_argument
     ap_common(arg)
     arg("schemas", nargs="*", help="JSON Schema to analyze")
-    args = ap.parse_args()
+    args = ap.parse_args(xargs)
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+
+    oops = False
 
     if not args.schemas:
         args.schemas = ["-"]
@@ -339,10 +346,13 @@ def jsu_stats():
                 print(json_dumps(small, args))
 
             except Exception as e:
+                oops = True
                 log.error(f"{fn}: {e}", exc_info=True)
 
+    return 1 if oops else 0
 
-def jsu_pretty():
+
+def jsu_pretty(xargs: list[str]|None = None):
 
     ap = argparse.ArgumentParser(
         prog="jsu-pretty",
@@ -351,7 +361,7 @@ def jsu_pretty():
     arg = ap.add_argument
     ap_common(arg)
     arg("schemas", nargs="*", help="schemas to inline")
-    args = ap.parse_args()
+    args = ap.parse_args(xargs)
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
@@ -363,7 +373,9 @@ def jsu_pretty():
         schema = json.load(open(fn) if fn != "-" else sys.stdin)
         print(json_dumps(schema, args))
 
-def jsu_model():
+    return 0
+
+def jsu_model(xargs: list[str]|None = None) -> int:
 
     ap = argparse.ArgumentParser(
         prog="jsu-model",
@@ -411,13 +423,13 @@ def jsu_model():
     arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
     arg("--out", "-o", default="-", help="set model output file")
     arg("schemas", nargs="*", help="schemas to process")
-    args = ap.parse_args()
+    args = ap.parse_args(xargs)
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     if args.version:
         print(__version__)
-        sys.exit(0)
+        return 0
 
     resolver = Resolver(cache=args.cache, mapping=args.map)
 
@@ -451,9 +463,9 @@ def jsu_model():
             with open(args.out, "w") as f:
                 print(output, file=f, flush=True)
 
-    sys.exit(1 if errors else 0)
+    return 1 if errors else 0
 
-def jsu_compile():
+def jsu_compile(xargs: list[str]|None = None) -> int:
     """Compile schema into script or executable."""
 
     ap = argparse.ArgumentParser(
@@ -529,7 +541,7 @@ def jsu_compile():
 
     # other stuff
     arg("others", nargs="*", help="jmc backend options and arguments")
-    args = ap.parse_args()
+    args = ap.parse_args(xargs)
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
@@ -538,11 +550,11 @@ def jsu_compile():
     if args.version:
         backend = pkg_version("json_model_compiler")
         print(f"{__version__} (backend jmc {backend})")
-        sys.exit(0)
+        return 0
 
     if args.runtime:
         subprocess.run(["jmc", "--runtime"], check=True)
-        sys.exit(0)
+        return 0
 
     # intermediate model
     model = None
@@ -561,7 +573,7 @@ def jsu_compile():
     except Exception as e:
         log.error(f"schema to model conversion for {args.schema} failed")
         log.error(e, exc_info=args.debug)
-        sys.exit(1) # conversion failed
+        return 1  # conversion failed
 
     # TODO
     # - use standard input with jmc?
@@ -611,7 +623,7 @@ def jsu_compile():
         # exit status
         if done.returncode:
             log.error(f"backend jmc process return code: {done.returncode}")
-        sys.exit(done.returncode)
+        return done.returncode
 
 def json_schema_to_python_checker(
         schema: JsonSchema,
@@ -658,7 +670,7 @@ def json_schema_to_python_checker(
         log.warning("using all-pass checker for {name} (resilient mode)")
         return lambda _: True
 
-def jsu_runner():
+def jsu_runner(xargs: list[str]|None = None) -> int:
 
     ap = argparse.ArgumentParser(
         prog="jsu-test-runner",
@@ -710,14 +722,14 @@ def jsu_runner():
     arg("--schema-version", "-V", dest="sversion", type=int, default=0,
         help="set JSON Schema version")
     arg("cases", nargs="*", help="test cases to process")
-    args = ap.parse_args()
+    args = ap.parse_args(xargs)
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     if args.version:
         backend = pkg_version("json_model_compiler")
         print(f"{__version__} (backend jmc {backend})")
-        sys.exit(0)
+        return 0
 
     resolver = Resolver(cache=args.cache, mapping=args.map)
 
@@ -820,4 +832,4 @@ def jsu_runner():
     print(report)
 
     # tell whether all was well
-    sys.exit(2 if n_unsafe else 1 if n_tests_failed else 0)
+    return 2 if n_unsafe else 1 if n_tests_failed else 0

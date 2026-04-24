@@ -3,6 +3,7 @@
 ## JSU schema compilation with JMC backend
 
 - [x] reduce verbosity about `$vocabulary`
+- [x] front: allow to call scripts as a function
 - [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] format: regex see [Section 6.4](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#name-regular-expressions) for restrictions
