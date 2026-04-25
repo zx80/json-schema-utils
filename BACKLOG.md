@@ -6,6 +6,7 @@
 - [x] front: allow to call scripts as a function
 - [x] front: add `--precompiled` option forwarded to `jmc` backend
 - [x] format rely on extensions (color, rel jsonpt…)
+- [ ] front: allow configuring from env or a file?
 - [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] format: regex see [Section 6.4](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#name-regular-expressions) for restrictions
