@@ -527,6 +527,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     # forwarded to backend
     arg("--out", "-o", default=None, help="set output file")
     arg("--regex-engine", "-re", default=None, help="set regex engine")
+    arg("--precompiled", default=False, action="store_true", help="use precompiled C runtime")
     arg("--loose", default=True, action="store_true",
         help="accept loose numbers (*)")
     arg("--no-loose", dest="loose", action="store_false",
@@ -598,6 +599,8 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     args.others.insert(0, "--loose-number" if args.loose else "--strict-number")
     if args.regex_engine is not None:
         args.others = ["--regex-engine", args.regex_engine, *args.others]
+    if args.precompiled:
+        args.others.insert(0, "--precompiled")
 
     # also forward verbosity options, debug wins
     if args.debug:
