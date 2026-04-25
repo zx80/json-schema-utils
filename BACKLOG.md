@@ -5,12 +5,12 @@
 - [x] reduce verbosity about `$vocabulary`
 - [x] front: allow to call scripts as a function
 - [x] front: add `--precompiled` option forwarded to `jmc` backend
+- [x] format rely on extensions (color, rel jsonpt…)
 - [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] format: regex see [Section 6.4](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#name-regular-expressions) for restrictions
 - [ ] format: email (RFC5321), idn-email (RFC6531)
 - [ ] format: hostname (RFC1123) with punycode (RFC5890), idn-hostname (add RFC5890)
-- [ ] format rely on extensions (color, rel jsonpt…) [wip]
 - [ ] convert merge `allOf` before proceeding when possible
 - [ ] simpler remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] improve `unevaluatedItems` support (wip)
