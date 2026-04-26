@@ -6,6 +6,7 @@
 - [x] front: allow to call scripts as a function
 - [x] front: add `--precompiled` option forwarded to `jmc` backend
 - [x] format rely on extensions (color, rel jsonpt…)
+- [ ] front: look for schema file with suffixes
 - [ ] front: allow configuring from env or a file?
 - [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
