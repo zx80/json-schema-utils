@@ -98,7 +98,9 @@ jsutils/version.py:
 	} > $@
 
 .PHONY: publish.py
-publish.py: venv/.dist jsutils/version.py
+publish.py: venv/.dist
+	$(RM) jsutils/version.py
+	$(MAKE) jsutils/version.py
 	source venv/bin/activate
 	python -m build
 	twine check dist/*
