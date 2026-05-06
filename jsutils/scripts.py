@@ -23,10 +23,42 @@ from .convert import schema_to_model
 from .resolver import Resolver
 from .types import computeTypes
 
-__version__ = pkg_version("json_schema_utils")
+#
+# Pedestrian extraction of the version
+#
+def git_hash(script: str = __file__) -> str:
+    """Return some git hash for the current script."""
+    # may get git hash
+    try:
+        from .version import HASH
+        return HASH
+    except:
+        pass
+    try:
+        dirname = Path(script).parent
+        return subprocess.check_output(["git", "-C", str(dirname), "rev-parse", "--short", "HEAD"]).decode("ASCII").strip()
+    except Exception:
+        pass
+    return "<unknown>"
 
-def ap_common(arg, with_json=True):
-    arg("--version", action="store_true", help="show version")
+def get_version(with_backend: bool = False) -> str:
+    """Build and return version string."""
+    version = pkg_version("json_schema_utils") + " [" + git_hash() + "]"
+    if with_backend:
+        version += " (jmc backend " + pkg_version("json_model_compiler")  + ")"
+    return version
+
+class VersionAction(argparse.Action):
+    """Show version on --version."""
+    def __init__(self, *args, with_backend: bool = False, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._with_backend = with_backend
+    def __call__(self, *args, **kwargs):
+        print(get_version(self._with_backend))
+        sys.exit(0)
+
+def ap_common(arg, with_json: bool =True, with_backend: bool = False):
+    arg("--version", nargs=0, action=VersionAction, with_backend=with_backend, help="show version")
     arg("--debug", "-d", action="store_true", help="debug mode")
     arg("--quiet", "-q", action="store_true", help="quiet mode")
     if with_json:
@@ -149,7 +181,7 @@ def jsu_check(xargs: list[str]|None = None) -> int:
         description="Check JSON values against a JSON Schema using various implementations",
     )
     arg = ap.add_argument
-    ap_common(arg)
+    ap_common(arg, with_backend=True)
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
     arg("--draft", "-D", default="2020-12", help="JSON Schema draft")
@@ -384,7 +416,7 @@ def jsu_model(xargs: list[str]|None = None) -> int:
         description="Convert JSON Schema to JSON Model",
     )
     arg = ap.add_argument
-    ap_common(arg)
+    ap_common(arg, with_backend=True)
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
 
@@ -429,10 +461,6 @@ def jsu_model(xargs: list[str]|None = None) -> int:
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
-    if args.version:
-        print(__version__)
-        return 0
-
     resolver = Resolver(cache=args.cache, mapping=args.map)
 
     if not args.schemas:
@@ -475,7 +503,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
         description="Compile JSON Schema: generate checkers in various languages",
     )
     arg = ap.add_argument
-    ap_common(arg)
+    ap_common(arg, with_backend=True)
 
     arg("--runtime", default=False, action="store_true", help="output runtime directory and exit")
 
@@ -552,11 +580,6 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     resolver = Resolver(cache=args.cache, mapping=args.map)
-
-    if args.version:
-        backend = pkg_version("json_model_compiler")
-        print(f"{__version__} (backend jmc {backend})")
-        return 0
 
     if args.runtime:
         subprocess.run(["jmc", "--runtime"], check=True)
@@ -687,7 +710,7 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
         description="Test runner for JSON Schema Test Suite",
     )
     arg = ap.add_argument
-    ap_common(arg)
+    ap_common(arg, with_backend=True)
 
     # resolver settings
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
@@ -735,11 +758,6 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
     args = ap.parse_args(xargs)
 
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
-
-    if args.version:
-        backend = pkg_version("json_model_compiler")
-        print(f"{__version__} (backend jmc {backend})")
-        return 0
 
     resolver = Resolver(cache=args.cache, mapping=args.map)
 

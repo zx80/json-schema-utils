@@ -6,6 +6,7 @@
 - [x] front: allow to call scripts as a function
 - [x] front: add `--precompiled` option forwarded to `jmc` backend
 - [x] format rely on extensions (color, rel jsonpt…)
+- [x] front: add git hash to `--version` output
 - [ ] stats: missing unique?
 - [ ] front: look for schema file with suffixes
 - [ ] front: allow configuring from env or a file?
