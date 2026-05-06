@@ -26,7 +26,7 @@ from .types import computeTypes
 #
 # Pedestrian extraction of the version
 #
-def git_hash(script: str = __file__) -> str:
+def jsu_hash(script: str = __file__) -> str:
     """Return some git hash for the current script."""
     # may get git hash
     try:
@@ -43,9 +43,13 @@ def git_hash(script: str = __file__) -> str:
 
 def get_version(with_backend: bool = False) -> str:
     """Build and return version string."""
-    version = pkg_version("json_schema_utils") + " [" + git_hash() + "]"
+    version = pkg_version("json_schema_utils") + " [" + jsu_hash() + "]"
     if with_backend:
-        version += " (jmc backend " + pkg_version("json_model_compiler")  + ")"
+        try:
+            jmc_hash = " [" + json_model.jmc_hash() + "]"
+        except:
+            jmc_hash = ""
+        version += " (jmc backend " + pkg_version("json_model_compiler") + jmc_hash + ")"
     return version
 
 class VersionAction(argparse.Action):
