@@ -2,9 +2,19 @@
 requires = ["setuptools>=41", "setuptools-git-versioning>=3,<4"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+zip-safe = false
+
 [tool.setuptools.packages.find]
 include = ["jsutils"]
 exclude = ["tests*"]
+
+[tool.setuptools-git-versioning]
+enabled = true
+version_file = "jsutils/VERSION"
+count_commits_from_version_file = true
+dev_template = "{tag}.{branch}{ccount}"
+dirty_template = "{tag}.{branch}{ccount}+dirty"
 
 [project]
 dynamic = ["version"]
@@ -33,13 +43,3 @@ jsu-test-runner = "jsutils:jsu_runner"
 
 [project.urls]
 repository = "https://github.com/zx80/json-schema-utils"
-
-[tool.setuptools]
-zip-safe = false
-
-[tool.setuptools-git-versioning]
-enabled = true
-version_file = "jsutils/VERSION"
-count_commits_from_version_file = true
-dev_template = "{tag}.{branch}{ccount}"
-dirty_template = "{tag}.{branch}{ccount}+dirty"
