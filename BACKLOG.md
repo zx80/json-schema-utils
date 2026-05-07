@@ -8,6 +8,7 @@
 - [x] format rely on extensions (color, rel jsonpt…)
 - [x] front: add git hash to `--version` output
 - [x] front: also show `jmc` git hash if available
+- [x] front: use dynamic version extraction
 - [ ] stats: missing unique?
 - [ ] front: look for schema file with suffixes
 - [ ] front: allow configuring from env or a file?

@@ -26,30 +26,11 @@ from .types import computeTypes
 #
 # Pedestrian extraction of the version
 #
-def jsu_hash(script: str = __file__) -> str:
-    """Return some git hash for the current script."""
-    # may get git hash
-    try:
-        from .version import HASH
-        return HASH
-    except:
-        pass
-    try:
-        dirname = Path(script).parent
-        return subprocess.check_output(["git", "-C", str(dirname), "rev-parse", "--short", "HEAD"]).decode("ASCII").strip()
-    except Exception:
-        pass
-    return "<unknown>"
-
 def get_version(with_backend: bool = False) -> str:
     """Build and return version string."""
-    version = pkg_version("json_schema_utils") + " [" + jsu_hash() + "]"
+    version = pkg_version("json_schema_utils")
     if with_backend:
-        try:
-            jmc_hash = " [" + json_model.jmc_hash() + "]"
-        except:
-            jmc_hash = ""
-        version += " (jmc backend " + pkg_version("json_model_compiler") + jmc_hash + ")"
+        version += " (jmc backend " + pkg_version("json_model_compiler") + ")"
     return version
 
 class VersionAction(argparse.Action):
