@@ -41,5 +41,5 @@ zip-safe = false
 enabled = true
 version_file = "jsutils/VERSION"
 count_commits_from_version_file = true
-dev_template = "{tag}.{branch}{ccount}+git.{sha}"
-dirty_template = "{tag}.{branch}{ccount}+git.{sha}-dirty"
+dev_template = "{tag}.{branch}{ccount}"
+dirty_template = "{tag}.{branch}{ccount}+dirty"
