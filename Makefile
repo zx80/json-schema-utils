@@ -8,7 +8,7 @@ clean:
 
 .PHONY: clean.dev
 clean.dev: clean
-	$(RM) -rf venv *.egg-info
+	$(RM) -rf venv *.egg-info *.dist-info
 
 PYTHON  = python
 

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=41", "setuptools-git-versioning>=3,<4"]
+requires = ["setuptools>=41", "setuptools-scm", "setuptools-git-versioning>=3,<4"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
@@ -7,7 +7,7 @@ zip-safe = false
 
 [tool.setuptools.packages.find]
 include = ["jsutils"]
-exclude = ["tests*"]
+exclude = ["tests", "*.md", "*.sh", "Makefile"]
 
 [tool.setuptools-git-versioning]
 enabled = true
