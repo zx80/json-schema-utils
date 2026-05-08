@@ -9,6 +9,8 @@
 - [x] front: add git hash to `--version` output
 - [x] front: also show `jmc` git hash if available
 - [x] front: use dynamic version extraction
+- [x] front: try to recompute version when under dev
+- [ ] doc: add a separate `VERSION.md` file
 - [ ] stats: missing unique?
 - [ ] front: look for schema file with suffixes
 - [ ] front: allow configuring from env or a file?

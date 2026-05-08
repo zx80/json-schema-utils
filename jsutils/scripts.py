@@ -7,6 +7,7 @@ import logging
 import argparse
 import tempfile
 import subprocess
+from pathlib import Path
 from importlib.metadata import version as pkg_version
 
 import json_model
@@ -26,11 +27,19 @@ from .types import computeTypes
 #
 # Pedestrian extraction of the version
 #
-def get_version(with_backend: bool = False) -> str:
+def jsu_version(with_backend: bool = False) -> str:
     """Build and return version string."""
     version = pkg_version("json_schema_utils")
+    version_ref = (Path(__file__).parent / "VERSION").read_text()
+    # under dev, try to recompute the version
+    if version != version_ref:
+        try:
+            from setuptools_git_versioning import get_version
+            version = get_version()
+        except:
+            pass
     if with_backend:
-        version += " (jmc backend " + pkg_version("json_model_compiler") + ")"
+        version += " (jmc backend " + json_model.jmc_version() + ")"
     return version
 
 class VersionAction(argparse.Action):
@@ -39,7 +48,7 @@ class VersionAction(argparse.Action):
         super().__init__(*args, **kwargs)
         self._with_backend = with_backend
     def __call__(self, *args, **kwargs):
-        print(get_version(self._with_backend))
+        print(jsu_version(self._with_backend))
         sys.exit(0)
 
 def ap_common(arg, with_json: bool =True, with_backend: bool = False):
