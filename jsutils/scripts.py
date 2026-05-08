@@ -410,7 +410,7 @@ def jsu_model(xargs: list[str]|None = None) -> int:
         description="Convert JSON Schema to JSON Model",
     )
     arg = ap.add_argument
-    ap_common(arg, with_backend=True)
+    ap_common(arg)
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
 
