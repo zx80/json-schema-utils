@@ -35,7 +35,7 @@ def jsu_version(with_backend: bool = False) -> str:
     if version != version_ref:
         try:
             from setuptools_git_versioning import get_version
-            version = get_version()
+            version = str(get_version())
         except:
             pass
     if with_backend:
