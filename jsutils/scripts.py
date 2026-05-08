@@ -39,7 +39,7 @@ def jsu_version(with_backend: bool = False) -> str:
         except:
             pass
     if with_backend:
-        version += " (jmc backend " + json_model.jmc_version() + ")"
+        version += " (jmc backend " + json_model.jmc_version(False) + ")"
     return version
 
 class VersionAction(argparse.Action):
