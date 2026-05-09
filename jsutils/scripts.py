@@ -30,7 +30,7 @@ from .types import computeTypes
 def jsu_version(with_backend: bool = False) -> str:
     """Build and return version string."""
     version = pkg_version("json_schema_utils")
-    version_ref = (Path(__file__).parent / "VERSION").read_text()
+    version_ref = (Path(__file__).parent / "VERSION").read_text().strip()
     # under dev, try to recompute the version
     if version != version_ref:
         try:
