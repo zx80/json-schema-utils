@@ -1,5 +1,11 @@
 # JSON Schema Utils Backlog
 
+## JSU 0.9.9
+
+- [x] front: try to recompute version when under dev
+- [x] front: do not show backend version for `jsu-model`
+- [x] doc: add a separate `VERSION.md` file
+
 ## JSU 0.9.8
 
 - [x] front: add git hash to `--version` output

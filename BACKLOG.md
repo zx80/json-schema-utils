@@ -2,9 +2,6 @@
 
 ## JSU schema compilation with JMC backend
 
-- [x] front: try to recompute version when under dev
-- [x] front: do not show backend version for `jsu-model`
-- [x] doc: add a separate `VERSION.md` file
 - [ ] stats: missing unique?
 - [ ] front: look for schema file with suffixes
 - [ ] front: allow configuring from env or a file?
