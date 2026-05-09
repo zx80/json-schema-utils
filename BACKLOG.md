@@ -2,6 +2,7 @@
 
 ## JSU schema compilation with JMC backend
 
+- [x] front: reduce version verbosity
 - [ ] stats: missing unique?
 - [ ] front: look for schema file with suffixes
 - [ ] front: allow configuring from env or a file?
