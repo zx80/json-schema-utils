@@ -35,11 +35,12 @@ def jsu_version(with_backend: bool = False) -> str:
     if version != version_ref:
         try:
             from setuptools_git_versioning import get_version
-            version = str(get_version())
-        except:
+            version = str(get_version(root=Path(__file__).parent.parent))
+        except Exception as e:
+            log.warning(f"error while recompuging version: {e}")
             pass
     if with_backend:
-        version += " (jmc backend " + json_model.jmc_version(False) + ")"
+        version += " (jmc backend " + json_model.jmc_version() + ")"
     return version
 
 class VersionAction(argparse.Action):
