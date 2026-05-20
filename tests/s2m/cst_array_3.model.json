@@ -1,0 +1,23 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "=": 8,
+  "@": [
+    null,
+    "=true",
+    "=false",
+    "=42",
+    "=3.1415927",
+    "_hello world",
+    {
+      "=": 3,
+      "@": [
+        "_hello",
+        "_world",
+        "_!"
+      ]
+    },
+    {
+      "_hello": "_world!"
+    }
+  ]
+}
