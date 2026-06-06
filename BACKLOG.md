@@ -3,6 +3,7 @@
 ## JSU schema compilation with JMC backend
 
 - [x] front: reduce version verbosity
+- [x] convert: fix property override issue when distributing object onto oneOf
 - [ ] ci: add minimal CI sanity checks
 - [ ] stats: missing unique?
 - [ ] front: look for schema file with suffixes

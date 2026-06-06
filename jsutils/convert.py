@@ -1068,10 +1068,18 @@ def schema2model(
             props = schema["properties"]
             del schema["properties"]
             for s in lof:
-                if "properties" in s:
-                    s["properties"].update(props)
-                else:
+                if "properties" not in s:
                     s["properties"] = props
+                else:
+                    eprops = s["properties"]
+                    assert isinstance(eprops, dict)
+                    for p, v in props.items():
+                        if p not in eprops:
+                            eprops[p] = v
+                        elif eprops[p] == v:
+                            pass
+                        else:
+                            eprops[p] = {"allOf": [ eprops[p], v]}
         if "additionalProperties" in schema:
             addprop = schema["additionalProperties"]
             del schema["additionalProperties"]
@@ -1314,7 +1322,7 @@ def schema2model(
             else:
                 assert False, f"$ref handling not implemented: {ref}"
         else:
-            log.info(f"$ref intermixed with other keywords at [{spath}]")
+            log.info(f"keyword $ref intermixed with other keywords at [{spath}]")
             ao = allOfLayer(schema, "$ref")
             model = schema2model(ao, lid or url, path, defs, strict, fix, False, resilient)
             return buildModel(model, {}, defs, sharp, is_root)
