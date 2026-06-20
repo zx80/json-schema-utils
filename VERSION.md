@@ -1,30 +1,37 @@
 # JSON Schema Utils Backlog
 
-## JSU 0.9.9
+## JSU 0.9.10 on 2026-06-20
+
+- [x] front: reduce version verbosity
+- [x] convert: fix property override issue when distributing object onto `oneOf`
+- [x] front: look for schema file with suffixes
+- [x] simpler: fix `propertyNames` to `patternProperties` pattern
+
+## JSU 0.9.9 on 2026-05-09
 
 - [x] front: try to recompute version when under dev
 - [x] front: do not show backend version for `jsu-model`
 - [x] doc: add a separate `VERSION.md` file
 
-## JSU 0.9.8
+## JSU 0.9.8 on 2026-05-07
 
 - [x] front: add git hash to `--version` output
 - [x] front: also show `jmc` git hash if available
 - [x] front: use dynamic version extraction
 
-## JSU 0.9.6
+## JSU 0.9.6 on 2026-04-25
 
 - [x] front: add `--precompiled` option forwarded to `jmc` backend
 
-## JSU 0.9.5
+## JSU 0.9.5 on 2026-04-24
 
 - [x] front: allow to call scripts as a function
 
-## JSU 0.9.4
+## JSU 0.9.4 on 2026-04-23
 
 - [x] reduce verbosity about `$vocabulary`
 
-## JSU 0.9.3
+## JSU 0.9.3 on 2026-04-10
 
 - [x] tests with more languages: bowtie with C, JS, java, perl
 - [x] convert handle `not` by switching to `oneOf`
@@ -40,11 +47,11 @@
 - [x] stats: detect regex fixes `^foo|bla$`, `[x|X]`…
 - [x] format rely on extensions (color, rel jsonpt…)
 
-## JSU 0.9.2
+## JSU 0.9.2 on 2026-03-13
 
 - [x] add `--runtime` option to show runtime directory
 
-## JSU 0.9.1
+## JSU 0.9.1 on 2026-03-08
 
 - [x] improve conversion of int/float enums and consts
 - [x] improve conversion with mixed minContains/maxContains and other array constraints
@@ -57,7 +64,7 @@
 - [x] show default values on `--help`
 - [x] simpler possibly remove all-types lists
 
-## JSU 0.9.0
+## JSU 0.9.0 on 2026-02-27
 
 - [x] improve _merge_ to reject some cases
 - [x] add `.in` extension support to JMC

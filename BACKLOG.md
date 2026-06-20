@@ -2,10 +2,6 @@
 
 ## JSU schema compilation with JMC backend
 
-- [x] front: reduce version verbosity
-- [x] convert: fix property override issue when distributing object onto oneOf
-- [x] front: look for schema file with suffixes
-- [x] simpler: fix `propertyNames` to `patternProperties` pattern
 - [ ] ci: add minimal CI sanity checks
 - [ ] stats: missing unique?
 - [ ] front: allow configuring from env or a file?
