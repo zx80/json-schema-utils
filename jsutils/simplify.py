@@ -408,6 +408,8 @@ def simplifySchema(
                 for k, v in subs.items():
                     if k in _IGNORABLE:
                         pass
+                    elif k in ("if", "then", "else", "not", "allOf", "anyOf", "oneOf", "$ref", "$dynamicRef"):
+                        compat = False
                     elif k in local and v == local[k]:
                         pass
                     elif k in local:
@@ -421,7 +423,7 @@ def simplifySchema(
                     else:
                         compat = False
                 if compat:
-                    log.info(f"removing ineffective {kw}")
+                    log.info(f"removing ineffective {kw} at {lpath}")
                     del local[kw]
 
         # if/then/else

@@ -1,7 +1,6 @@
 # JSON Schema Utils Backlog
 
-## JSU schema compilation with JMC backend
-
+- [x] fix overzealous `then`/`else` simplification which could ignore nested conditions
 - [ ] ci: add minimal CI sanity checks
 - [ ] stats: missing unique?
 - [ ] front: allow configuring from env or a file?
