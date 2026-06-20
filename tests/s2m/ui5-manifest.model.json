@@ -9265,41 +9265,71 @@
                 "|": [
                   {
                     "?format": {
-                      "#": "Indicates how 'value' is to be interpreted: ('plain': the 'value' is taken as a literal string value| 'reference': the 'value' is a reference to e.g. a UserDefault parameter (e.g. 'UserDefault.CostCenter'), the resolved parameter value is used)",
-                      "|": [
+                      "&": [
                         "_plain",
-                        "_reference"
+                        {
+                          "#": "Indicates how 'value' is to be interpreted: ('plain': the 'value' is taken as a literal string value| 'reference': the 'value' is a reference to e.g. a UserDefault parameter (e.g. 'UserDefault.CostCenter'), the resolved parameter value is used)",
+                          "|": [
+                            "_plain",
+                            "_reference"
+                          ]
+                        }
                       ]
                     },
                     "_value": {
-                      "#": "Represents a depending on format either a verbatim default value or a reference",
-                      "@": ""
+                      "&": [
+                        "",
+                        {
+                          "#": "Represents a depending on format either a verbatim default value or a reference",
+                          "@": ""
+                        }
+                      ]
                     }
                   },
                   {
                     "?format": {
-                      "#": "Indicates how 'value' is to be interpreted: ('plain': the 'value' is taken as a literal string value| 'reference': the 'value' is a reference to e.g. a UserDefault parameter (e.g. 'UserDefault.CostCenter'), the resolved parameter value is used)",
-                      "|": [
-                        "_plain",
-                        "_reference"
+                      "&": [
+                        "_reference",
+                        {
+                          "#": "Indicates how 'value' is to be interpreted: ('plain': the 'value' is taken as a literal string value| 'reference': the 'value' is a reference to e.g. a UserDefault parameter (e.g. 'UserDefault.CostCenter'), the resolved parameter value is used)",
+                          "|": [
+                            "_plain",
+                            "_reference"
+                          ]
+                        }
                       ]
                     },
                     "_value": {
-                      "#": "Represents a depending on format either a verbatim default value or a reference",
-                      "@": ""
+                      "&": [
+                        "/^(User[.]env|UserDefault(.extended)?)[.][^.]+$/",
+                        {
+                          "#": "Represents a depending on format either a verbatim default value or a reference",
+                          "@": ""
+                        }
+                      ]
                     }
                   },
                   {
                     "?format": {
-                      "#": "Indicates how 'value' is to be interpreted: ('plain': the 'value' is taken as a literal string value| 'reference': the 'value' is a reference to e.g. a UserDefault parameter (e.g. 'UserDefault.CostCenter'), the resolved parameter value is used)",
-                      "|": [
-                        "_plain",
-                        "_reference"
+                      "&": [
+                        null,
+                        {
+                          "#": "Indicates how 'value' is to be interpreted: ('plain': the 'value' is taken as a literal string value| 'reference': the 'value' is a reference to e.g. a UserDefault parameter (e.g. 'UserDefault.CostCenter'), the resolved parameter value is used)",
+                          "|": [
+                            "_plain",
+                            "_reference"
+                          ]
+                        }
                       ]
                     },
                     "_value": {
-                      "#": "Represents a depending on format either a verbatim default value or a reference",
-                      "@": ""
+                      "&": [
+                        "",
+                        {
+                          "#": "Represents a depending on format either a verbatim default value or a reference",
+                          "@": ""
+                        }
+                      ]
                     }
                   }
                 ]
