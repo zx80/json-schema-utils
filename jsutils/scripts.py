@@ -1,4 +1,5 @@
 import sys
+import os
 from typing import Any, Callable
 import copy
 import json
@@ -79,6 +80,16 @@ def rm_suffix(s, *suffixes):
             return s[:-len(suffix)]
     return s
 
+def read_schema(arg: str|None):
+    """Read JSON Schema from file name."""
+    if arg is None or arg == "-":
+        return json.load(sys.stdin)
+    for suffix in ("", ".json", ".schema.json"):
+        file = arg + suffix
+        if os.path.exists(file):
+            with open(file) as f:
+                return json.load(f)
+    raise Exception(f"no such schema: {arg}")
 
 def jsu_inline(xargs: list[str]|None = None) -> int:
     """Inline command entry point."""
@@ -105,7 +116,7 @@ def jsu_inline(xargs: list[str]|None = None) -> int:
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
-        schema = json.load(open(fn) if fn != "-" else sys.stdin)
+        schema = read_schema(fn)
         if isinstance(schema, bool):
             inlined = schema
         elif isinstance(schema, dict):
@@ -155,7 +166,7 @@ def jsu_simpler(xargs: list[str]|None = None) -> int:
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
-        schema = json.load(open(fn) if fn != "-" else sys.stdin)
+        schema = read_schema(fn)
         if args.type:
             schema = computeTypes(schema)
         if isinstance(schema, dict):
@@ -201,8 +212,7 @@ def jsu_check(xargs: list[str]|None = None) -> int:
     log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     try:
-        with open(args.schema) if args.schema != "-" else sys.stdin as f:
-            jschema = json.load(f)
+        jschema = read_schema(args.schema)
     except FileNotFoundError as e:
         if args.debug:
             log.error(e, exc_info=args.debug)
@@ -380,7 +390,6 @@ def jsu_stats(xargs: list[str]|None = None) -> int:
 
     return 1 if oops else 0
 
-
 def jsu_pretty(xargs: list[str]|None = None):
 
     ap = argparse.ArgumentParser(
@@ -399,7 +408,7 @@ def jsu_pretty(xargs: list[str]|None = None):
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
-        schema = json.load(open(fn) if fn != "-" else sys.stdin)
+        schema = read_schema(fn)
         print(json_dumps(schema, args))
 
     return 0
@@ -466,7 +475,7 @@ def jsu_model(xargs: list[str]|None = None) -> int:
     for fn in args.schemas:
         log.debug(f"considering: {fn}")
         try:
-            schema = json.load(open(fn) if fn != "-" else sys.stdin)
+            schema = read_schema(fn)
             model = schema_to_model(
                 schema, fn,
                 use_id=args.id, strict=args.strict, fix=args.fix,
@@ -584,7 +593,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     model = None
 
     try:
-        schema = json.load(open(args.schema) if args.schema != "-" else sys.stdin)
+        schema = read_schema(args.schema)
         resolver = Resolver(cache=args.cache, mapping=args.map)
         model = schema_to_model(
             schema, args.schema,

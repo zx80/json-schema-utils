@@ -4,9 +4,9 @@
 
 - [x] front: reduce version verbosity
 - [x] convert: fix property override issue when distributing object onto oneOf
+- [x] front: look for schema file with suffixes
 - [ ] ci: add minimal CI sanity checks
 - [ ] stats: missing unique?
-- [ ] front: look for schema file with suffixes
 - [ ] front: allow configuring from env or a file?
 - [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
