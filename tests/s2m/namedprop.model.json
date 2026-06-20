@@ -1,0 +1,12 @@
+{
+  "#": "object with capital props which are strings",
+  "&": [
+    {
+      "/^[A-Z]+$/": "$ANY"
+    },
+    {
+      "": "$ANY",
+      "/^[A-Z]+$/": ""
+    }
+  ]
+}

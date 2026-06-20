@@ -570,6 +570,15 @@ def simplifySchema(
                                 log.info(f"removing useless {kw} keyword at {lpath}")
                                 del local[kw]
 
+                # boolean propertyNames
+                if "propertyNames" in local:
+                    pn = local["propertyNames"]
+                    if isinstance(pn, bool):
+                        log.info(f"removing useless propertyNames boolean schema at {lpath}")
+                        del local["propertyNames"]
+                        if not pn:  # empty object
+                            local["maxProperties"] = 0
+
                 # simplify propertyNames + additionalProperties to patternProperties
                 if "propertyNames" in local and "additionalProperties" in local and \
                         "properties" not in local and "patternProperties" not in local:
@@ -583,6 +592,8 @@ def simplifySchema(
                         del local["additionalProperties"]
                         assert isinstance(pn["pattern"], str)
                         local["patternProperties"] = { pn["pattern"]: ap }
+                        # NOTE: ap is merged into pp, we do not want any other props
+                        local["additionalProperties"] = False
 
         # const/enum
         if "const" in local and "enum" in local:

@@ -231,7 +231,6 @@
             "#": "A string\u2192string dictionary, where the keys conform to widths of each PNG file, and the values are said files' paths",
             "&": [
               {
-                "": "$ANY",
                 "/^[1-9][0-9]*$/": "$ANY"
               },
               {
