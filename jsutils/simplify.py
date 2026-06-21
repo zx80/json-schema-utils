@@ -420,6 +420,8 @@ def simplifySchema(
                             for n in v:
                                 if n not in local["required"]:
                                     compat = False
+                        else:
+                            compat = False
                     else:
                         compat = False
                 if compat:
