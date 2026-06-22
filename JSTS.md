@@ -3,7 +3,7 @@
 Versions:
 
 - JSTS: `e491ac1126961fa56ac9523a42ac9e27c0311e78`
-- JSU: `0.9.10.dev4 (jmc backend 2.0.50.dev130)` (Python backend)
+- JSU: `0.9.11 (jmc backend 2.0.50.dev130)` (Python backend)
 
 Note about `format` with the Python backend:
 
