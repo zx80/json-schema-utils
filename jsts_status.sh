@@ -28,7 +28,7 @@ function process_dir()
   local status file test summary percent
 
   # per case
-  for file in ${dir}/*.json ; do
+  for file in $(ls ${dir}/*.json | sort) ; do
     test=${file#$root/}
     echo -n "- \`$test\`: "
     [ "$debug" ] && echo "# command: $jsu_runner $jsu_opts $file" >> $err
