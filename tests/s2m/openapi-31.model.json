@@ -1521,75 +1521,106 @@
         {
           "&": [
             {
-              "^": [
+              "&": [
                 {
-                  "": "$ANY",
-                  "?content": {
-                    "&": [
-                      "$content",
-                      {
-                        "": "$ANY"
+                  "^": [
+                    {
+                      "": "$ANY",
+                      "?content": {
+                        "&": [
+                          "$content",
+                          {
+                            "": "$ANY"
+                          }
+                        ]
+                      },
+                      "?deprecated": {
+                        "@": true
+                      },
+                      "?description": "",
+                      "?required": {
+                        "@": true
+                      },
+                      "_in": {
+                        "|": [
+                          "_query",
+                          "_header",
+                          "_path",
+                          "_cookie"
+                        ]
+                      },
+                      "_name": "",
+                      "_schema": {
+                        "|": [
+                          true,
+                          {
+                            "": "$ANY"
+                          }
+                        ]
                       }
-                    ]
-                  },
-                  "?deprecated": {
-                    "@": true
-                  },
-                  "?description": "",
-                  "?required": {
-                    "@": true
-                  },
-                  "_in": {
-                    "|": [
-                      "_query",
-                      "_header",
-                      "_path",
-                      "_cookie"
-                    ]
-                  },
-                  "_name": "",
-                  "_schema": {
-                    "|": [
-                      true,
-                      {
+                    },
+                    {
+                      "": "$ANY",
+                      "?deprecated": {
+                        "@": true
+                      },
+                      "?description": "",
+                      "?required": {
+                        "@": true
+                      },
+                      "?schema": {
+                        "|": [
+                          true,
+                          {
+                            "": "$ANY"
+                          }
+                        ]
+                      },
+                      "_content": {
                         "": "$ANY"
-                      }
-                    ]
-                  }
+                      },
+                      "_in": {
+                        "|": [
+                          "_query",
+                          "_header",
+                          "_path",
+                          "_cookie"
+                        ]
+                      },
+                      "_name": ""
+                    }
+                  ]
                 },
-                {
-                  "": "$ANY",
-                  "?deprecated": {
-                    "@": true
-                  },
-                  "?description": "",
-                  "?required": {
-                    "@": true
-                  },
-                  "?schema": {
-                    "|": [
-                      true,
-                      {
-                        "": "$ANY"
-                      }
-                    ]
-                  },
-                  "_content": {
-                    "": "$ANY"
-                  },
-                  "_in": {
-                    "|": [
-                      "_query",
-                      "_header",
-                      "_path",
-                      "_cookie"
-                    ]
-                  },
-                  "_name": ""
-                }
+                "$specification-extensions"
               ]
             },
-            "$specification-extensions"
+            {
+              "|": [
+                {
+                  "&": [
+                    {
+                      "": "$ANY",
+                      "_in": "_query"
+                    },
+                    {
+                      "": "$ANY",
+                      "?allowEmptyValue": {
+                        "@": true
+                      }
+                    }
+                  ]
+                },
+                {
+                  "^": [
+                    "$ANY",
+                    {
+                      "": "$ANY",
+                      "_in": "_query"
+                    }
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
