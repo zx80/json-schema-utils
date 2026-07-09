@@ -2,12 +2,12 @@
 
 - [x] front: add short version for `--backend`
 - [x] convert: fix property sharing which was having strange side effects
+- [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
+- [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
 - [ ] ci: add minimal CI sanity checks
 - [ ] stats: missing unique?
 - [ ] front: allow configuring from env or a file?
-- [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
-- [ ] format: iri or iri-reference (RFC3987)
 - [ ] format: regex see [Section 6.4](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#name-regular-expressions) for restrictions
 - [ ] format: email (RFC5321), idn-email (RFC6531)
 - [ ] format: hostname (RFC1123) with punycode (RFC5890), idn-hostname (add RFC5890)
