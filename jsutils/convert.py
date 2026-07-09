@@ -1069,7 +1069,7 @@ def schema2model(
             del schema["properties"]
             for s in lof:
                 if "properties" not in s:
-                    s["properties"] = props
+                    s["properties"] = copy.deepcopy(props)
                 else:
                     eprops = s["properties"]
                     assert isinstance(eprops, dict)

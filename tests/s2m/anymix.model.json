@@ -1,0 +1,30 @@
+{
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "$": {
+    "stuff": "$URI"
+  },
+  "|": [
+    {
+      "": "$ANY",
+      "?bla": "",
+      "?stuff": {
+        "&": [
+          "$stuff",
+          ""
+        ]
+      },
+      "_foo": ""
+    },
+    {
+      "": "$ANY",
+      "?foo": "",
+      "?stuff": {
+        "&": [
+          "$stuff",
+          ""
+        ]
+      },
+      "_bla": ""
+    }
+  ]
+}
