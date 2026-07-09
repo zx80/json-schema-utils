@@ -1,6 +1,7 @@
 # JSON Schema Utils Backlog
 
 - [x] convert: fix property sharing which was having strange side effects
+- [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
 - [ ] ci: add minimal CI sanity checks
 - [ ] stats: missing unique?
 - [ ] front: allow configuring from env or a file?
