@@ -553,7 +553,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
 
     # how to run the jmc backend
-    arg("--backend", type=str, default="p", choices=["p", "f"],
+    arg("--backend", "-b", type=str, default="p", choices=["p", "f"],
         help="how to run the backend: p=process, f=function")
 
     # forwarded to backend

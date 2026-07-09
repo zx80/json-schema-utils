@@ -1,5 +1,6 @@
 # JSON Schema Utils Backlog
 
+- [x] front: add short version for `--backend`
 - [x] convert: fix property sharing which was having strange side effects
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
 - [ ] ci: add minimal CI sanity checks
