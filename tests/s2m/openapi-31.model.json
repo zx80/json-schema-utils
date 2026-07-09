@@ -1103,7 +1103,12 @@
                     ]
                   },
                   "_content": {
-                    "": "$ANY"
+                    "&": [
+                      "$content",
+                      {
+                        "": "$ANY"
+                      }
+                    ]
                   }
                 }
               ]
@@ -1306,12 +1311,22 @@
             {
               "": "$ANY",
               "?body": {
-                "": "$ANY"
+                "&": [
+                  "$server",
+                  {
+                    "": "$ANY"
+                  }
+                ]
               },
               "?description": "",
               "?operationRef": "$URI",
               "?parameters": {
-                "": "$ANY"
+                "&": [
+                  "$map-of-strings",
+                  {
+                    "": "$ANY"
+                  }
+                ]
               },
               "?requestBody": "$ANY",
               "_operationId": ""
@@ -1577,7 +1592,12 @@
                         ]
                       },
                       "_content": {
-                        "": "$ANY"
+                        "&": [
+                          "$content",
+                          {
+                            "": "$ANY"
+                          }
+                        ]
                       },
                       "_in": {
                         "|": [
@@ -2467,82 +2487,162 @@
         {
           "": "$ANY",
           "?externalDocs": {
-            "": "$ANY"
-          },
-          "?jsonSchemaDialect": {
-            "@": "$URI"
-          },
-          "?paths": {
-            "": "$ANY"
-          },
-          "?security": [
-            {
-              "": "$ANY"
-            }
-          ],
-          "?servers": {
-            "@": [
+            "&": [
+              "$external-documentation",
               {
                 "": "$ANY"
               }
             ]
           },
+          "?jsonSchemaDialect": {
+            "@": "$URI"
+          },
+          "?paths": {
+            "&": [
+              "$paths",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?security": [
+            {
+              "&": [
+                "$security-requirement",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ],
+          "?servers": {
+            "@": [
+              {
+                "&": [
+                  "$server",
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              }
+            ]
+          },
           "?tags": [
             {
-              "": "$ANY"
+              "&": [
+                "$tag",
+                {
+                  "": "$ANY"
+                }
+              ]
             }
           ],
           "?webhooks": {
             "": {
-              "": "$ANY"
+              "&": [
+                "$path-item-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
             }
           },
           "_components": {
-            "": "$ANY"
+            "&": [
+              "$components",
+              {
+                "": "$ANY"
+              }
+            ]
           },
           "_info": {
-            "": "$ANY"
+            "&": [
+              "$info",
+              {
+                "": "$ANY"
+              }
+            ]
           },
           "_openapi": "/^3\\.1\\.\\d+(-.+)?$/"
         },
         {
           "": "$ANY",
           "?components": {
-            "": "$ANY"
-          },
-          "?externalDocs": {
-            "": "$ANY"
-          },
-          "?jsonSchemaDialect": {
-            "@": "$URI"
-          },
-          "?paths": {
-            "": "$ANY"
-          },
-          "?security": [
-            {
-              "": "$ANY"
-            }
-          ],
-          "?servers": {
-            "@": [
+            "&": [
+              "$components",
               {
                 "": "$ANY"
               }
             ]
           },
+          "?externalDocs": {
+            "&": [
+              "$external-documentation",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?jsonSchemaDialect": {
+            "@": "$URI"
+          },
+          "?paths": {
+            "&": [
+              "$paths",
+              {
+                "": "$ANY"
+              }
+            ]
+          },
+          "?security": [
+            {
+              "&": [
+                "$security-requirement",
+                {
+                  "": "$ANY"
+                }
+              ]
+            }
+          ],
+          "?servers": {
+            "@": [
+              {
+                "&": [
+                  "$server",
+                  {
+                    "": "$ANY"
+                  }
+                ]
+              }
+            ]
+          },
           "?tags": [
             {
-              "": "$ANY"
+              "&": [
+                "$tag",
+                {
+                  "": "$ANY"
+                }
+              ]
             }
           ],
           "_info": {
-            "": "$ANY"
+            "&": [
+              "$info",
+              {
+                "": "$ANY"
+              }
+            ]
           },
           "_openapi": "/^3\\.1\\.\\d+(-.+)?$/",
           "_webhooks": {
             "": {
-              "": "$ANY"
+              "&": [
+                "$path-item-or-reference",
+                {
+                  "": "$ANY"
+                }
+              ]
             }
           }
         }
