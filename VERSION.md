@@ -1,5 +1,10 @@
 # JSON Schema Utils Backlog
 
+## JSU 0.9.12 on 2026-07-10
+
+- front: add short option for `--backend`
+- convert: fix property sharing which was having strange side effects
+
 ## JSU 0.9.11 on 2026-06-22
 
 - fix overzealous `then`/`else` simplification which could ignore nested conditions

@@ -1,7 +1,5 @@
 # JSON Schema Utils Backlog
 
-- [x] front: add short version for `--backend`
-- [x] convert: fix property sharing which was having strange side effects
 - [ ] format: uri or uri-reference (RFC3986), uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
