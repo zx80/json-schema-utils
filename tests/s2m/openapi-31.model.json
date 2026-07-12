@@ -1306,7 +1306,7 @@
                 ]
               },
               "?requestBody": "$ANY",
-              "_operationRef": "$URI"
+              "_operationRef": "$URL_REL"
             },
             {
               "": "$ANY",
@@ -1319,7 +1319,7 @@
                 ]
               },
               "?description": "",
-              "?operationRef": "$URI",
+              "?operationRef": "$URL_REL",
               "?parameters": {
                 "&": [
                   "$map-of-strings",
@@ -1903,7 +1903,7 @@
     },
     "reference": {
       "": "$ANY",
-      "?$ref": "$URI",
+      "?$ref": "$URL_REL",
       "?description": "",
       "?summary": ""
     },
@@ -2290,7 +2290,7 @@
               ]
             }
           },
-          "_url": "$URI"
+          "_url": "$URL_REL"
         },
         {
           "": "$ANY",

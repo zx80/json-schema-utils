@@ -758,10 +758,11 @@ _FMT2MODEL = {
     "ip-address": "$IP4",  # v3
     "ipv6": "$IP6",
     "uri": "$URI",
-    "iri": "$URI",
-    "iri-reference": "$URI",
-    "uri-reference": "$URI",
+    "uri-reference": "$URL_REL",
     "uri-template": "$URI",
+    # i18n urls
+    "iri": "$URI",
+    "iri-reference": "$URL_REL",
     "uuid": "$UUID",
     "json-pointer": "$JSONPT",
     "relative-json-pointer": "$__EXTENSION_REL_JSONPT",

@@ -3,7 +3,7 @@
   "$": {
     "$schema": {
       "#": "The schema against which to verify this document.",
-      "@": "$URI"
+      "@": "$URL_REL"
     },
     "buildPresetsItemsV2": {
       "#": "An optional array of build preset objects. Used to specify arguments to cmake --build. Available in version 2 and higher.",

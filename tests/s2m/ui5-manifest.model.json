@@ -2925,7 +2925,7 @@
           },
           "_url": {
             "#": "The URL to open.",
-            "@": "$URI"
+            "@": "$URL_REL"
           }
         }
       ]
@@ -3168,7 +3168,7 @@
               "$_defs_3_BackgroundImage",
               {
                 "#": "The URL (or data url) to use as the background image. Supports data URI in version 1.2+",
-                "@": "$URI"
+                "@": "$URL_REL"
               }
             ]
           },
@@ -3324,7 +3324,7 @@
       },
       "_url": {
         "#": "The URL (or data url) of the image. Acceptable formats are PNG, JPEG, and GIF",
-        "@": "$URI"
+        "@": "$URL_REL"
       }
     },
     "_defs_3_BlockElementHeight": {
@@ -3386,7 +3386,7 @@
                   "$_defs_3_BackgroundImage",
                   {
                     "#": "The URL (or data url) to use as the background image. Supports data URI.",
-                    "@": "$URI"
+                    "@": "$URL_REL"
                   }
                 ]
               },
@@ -3633,7 +3633,7 @@
                   "$_defs_3_BackgroundImage",
                   {
                     "#": "The URL (or data url) to use as the background image. Supports data URI.",
-                    "@": "$URI"
+                    "@": "$URL_REL"
                   }
                 ]
               },
@@ -3791,7 +3791,7 @@
           },
           "?iconUrl": {
             "#": "Optional icon to be shown on the action in conjunction with the title. Supports data URI in version 1.2+",
-            "@": "$URI"
+            "@": "$URL_REL"
           },
           "?id": {
             "#": "A unique identifier associated with this Action.",
@@ -4188,7 +4188,7 @@
       },
       "_url": {
         "#": "The URL to the image. Supports data URI in version 1.2+",
-        "@": "$URI"
+        "@": "$URL_REL"
       }
     },
     "_defs_3_ImageFillMode": {
@@ -5757,7 +5757,7 @@
           "?isVisible": "$ANY",
           "?poster": {
             "#": "URL of an image to display before playing. Supports data URI in version 1.2+",
-            "@": "$URI"
+            "@": "$URL_REL"
           },
           "?requires": "$ANY",
           "?separator": "$ANY",
@@ -5787,7 +5787,7 @@
       },
       "_url": {
         "#": "URL to media. Supports data URI in version 1.2+",
-        "@": "$URI"
+        "@": "$URL_REL"
       }
     },
     "_defs_3_Refresh": {
@@ -5940,7 +5940,7 @@
               "$_defs_3_BackgroundImage",
               {
                 "#": "The URL (or data url) to use as the background image. Supports data URI.",
-                "@": "$URI"
+                "@": "$URL_REL"
               }
             ]
           },
@@ -6461,8 +6461,8 @@
         {
           "": "$ANY",
           "?$comment": "",
-          "?$id": "$URI",
-          "?$ref": "$URI",
+          "?$id": "$URL_REL",
+          "?$ref": "$URL_REL",
           "?$schema": "$URI",
           "?additionalItems": "$_name_0_",
           "?additionalProperties": "$_name_0_",
