@@ -1,5 +1,9 @@
 # JSON Schema Utils Backlog
 
+## JSU 0.9.13 on 2026-07-13
+
+- format: uri or uri-reference (RFC3986)
+
 ## JSU 0.9.12 on 2026-07-10
 
 - front: add short option for `--backend`
