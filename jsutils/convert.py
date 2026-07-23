@@ -2160,9 +2160,10 @@ def schema_to_model(
                schema["id"] if "id" in schema else
                schema2id(schema))
         if sid in ID2MODEL:
-            model = ID2MODEL[sid][0 if strict else 1]
-            if model is not None:
+            url = ID2MODEL[sid][0 if strict else 1]
+            if url is not None:
                 log.info(f"using predefined model for {sid}")
+                model = f"${url}"
         # else unknown id, proceed
     if model is None:
         try:
