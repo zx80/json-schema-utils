@@ -2164,7 +2164,11 @@ def schema_to_model(
             if url is not None:
                 log.info(f"using predefined model for {sid}")
                 model = f"${url}"
-        # else unknown id, proceed
+        else:
+            log.debug(f"no predefined model for {sid}")
+    else:
+        # unknown id, proceed
+        log.debug("no id for schema")
     if model is None:
         try:
             # schema identifier
