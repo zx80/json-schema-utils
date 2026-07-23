@@ -749,6 +749,7 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
         help="do not simplify schema before conversion")
     arg("--strict", action="store_true", default=False,
         help="reject doubtful schemas")
+    # under --id, no-strict may selects weaker models compatible with official schemas
     arg("--no-strict", dest="strict", action="store_false",
         help="accept doubtful schemas (*)")
     arg("--resilient", default=False, action="store_true",

@@ -2062,7 +2062,7 @@ SS = "https://json.schemastore.org"
 JM = "https://json-model.org/models"
 
 # Schema $id/id to Model URL
-ID2MODEL: dict[str, tuple[str, str]] = {
+ID2MODEL: dict[str, tuple[str|None, str|None]] = {
     # JSON Schema drafts
     "http://json-schema.org/draft-04/schema": (
         f"{JM}/json-schema-draft-04.model.json",
@@ -2087,7 +2087,7 @@ ID2MODEL: dict[str, tuple[str, str]] = {
     # Miscellaneous models
     f"{GH}/ansible/ansible-lint/main/src/ansiblelint/schemas/meta.json": (
         f"{JM}/ansiblelint-meta.model.json",
-        f"{JM}/ansiblelint-meta.model.json",
+        f"{JM}/ansiblelint-meta-compat.model.json",
     ),
     "https://geojson.org/schema/GeoJSON.json": (
         f"{JM}/geo.model.json",
@@ -2099,11 +2099,15 @@ ID2MODEL: dict[str, tuple[str, str]] = {
     ),
     "https://spec.openapis.org/oas/3.1/schema/2022-10-07": (
         f"{JM}/openapi-311.model.json",
-        f"{JM}/openapi-311.model.json",  # TODO fuzzy
+        None,  # TODO fuzzy cross-version
+    ),
+    "https://json.schemastore.org/yamllint.json": (
+        None,
+        f"{JM}/yamllint-compat.model.json",  # compatible with JSB tweaked schema/tests
     ),
     "sha3:58df1e36909f3f8033f4da3e9a6179f3d3e53c51501d7f14a557e34ecef988e1": (
         f"{JM}/cypress.model.json",
-        f"{JM}/cypress.model.json",
+        f"{JM}/cypress-compat.model.json",
     )
 }
 
@@ -2156,8 +2160,9 @@ def schema_to_model(
                schema["id"] if "id" in schema else
                schema2id(schema))
         if sid in ID2MODEL:
-            log.info(f"using predefined model for {sid}")
-            model = f"${ID2MODEL[sid][0 if strict else 1]}"
+            model = ID2MODEL[sid][0 if strict else 1]
+            if model is not None:
+                log.info(f"using predefined model for {sid}")
         # else unknown id, proceed
     if model is None:
         try:

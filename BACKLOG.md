@@ -1,5 +1,6 @@
 # JSON Schema Utils Backlog
 
+- [x] convert: use bug-compatible models under `--no-strict` with `--id`
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
@@ -9,8 +10,8 @@
 - [ ] format: regex see [Section 6.4](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#name-regular-expressions) for restrictions
 - [ ] format: email (RFC5321), idn-email (RFC6531)
 - [ ] format: hostname (RFC1123) with punycode (RFC5890), idn-hostname (add RFC5890)
-- [ ] convert merge `allOf` before proceeding when possible
-- [ ] simpler remove `tests/string_03.simpler.json` redundant `$ref` on merge
+- [ ] convert: merge `allOf` before proceeding when possible
+- [ ] simpler: remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] improve `unevaluatedItems` support (wip)
 - [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
 - [ ] improve support for `unevaluatedProperties` with `patternProperties`?
@@ -21,6 +22,5 @@
 - [ ] get 100% on _draft2019-09_
 - [ ] get 100% on _draft2020-12_
 - [ ] list compiler current limitations
-- [ ] run some optional tests, eg _format_
 - [ ] put typing result in "$type" instead of "type" to help with fixing?
 - [ ] add an `--auto` flag to set options depending on schema versions?
