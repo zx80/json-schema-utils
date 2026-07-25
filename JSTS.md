@@ -2,8 +2,8 @@
 
 Versions:
 
-- JSTS: `92acb61eb772a932c077d5ffa634ded719d2d738`
-- JSU: `0.9.11.dev8 (jmc backend 2.0.51.dev71)` (Python backend)
+- JSTS: `0c7b65dc16dd8eaa7bd83e21099c76610c3b246a`
+- JSU: `0.9.13.dev4 (jmc backend 2.0.52.dev32)` (Python backend)
 
 Note about `format` with the Python backend:
 
@@ -65,28 +65,28 @@ Main test suite:
 
 Format tests:
 
-- `format/date.json`: errors=0 cases=1/1 (100.0%) tests=69/69 (100.0%, 0 fails)
+- `format/date.json`: errors=0 cases=1/1 (100.0%) tests=75/75 (100.0%, 0 fails)
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=28/29 (96.6%, 1 fails)
 - `format/duration.json`: errors=0 cases=1/1 (100.0%) tests=42/42 (100.0%, 0 fails)
 - `format/ecmascript-regex.json`: errors=0 cases=0/1 (0.0%) tests=0/1 (0.0%, 1 fails)
 - `format/email.json`: errors=0 cases=0/1 (0.0%) tests=23/27 (85.2%, 4 fails)
 - `format/hostname.json`: errors=0 cases=1/2 (50.0%) tests=38/61 (62.3%, 23 fails)
-- `format/idn-email.json`: errors=0 cases=0/1 (0.0%) tests=9/12 (75.0%, 3 fails)
+- `format/idn-email.json`: errors=0 cases=0/1 (0.0%) tests=10/14 (71.4%, 4 fails)
 - `format/idn-hostname.json`: errors=0 cases=0/2 (0.0%) tests=64/90 (71.1%, 26 fails)
 - `format/ipv4.json`: errors=0 cases=1/1 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `format/ipv6.json`: errors=0 cases=1/1 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=13/15 (86.7%, 2 fails)
-- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=8/13 (61.5%, 5 fails)
+- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=10/13 (76.9%, 3 fails)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=0/1 (0.0%) tests=46/47 (97.9%, 1 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=34/44 (77.3%, 10 fails)
-- `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
+- `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=13/17 (76.5%, 4 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
 - `format/uuid.json`: errors=0 cases=1/1 (100.0%) tests=25/25 (100.0%, 0 fails)
-- summary: files=21 errors=0 cases=10/23 (43.5%) tests=571/655 (87.2%, 84 fails)
+- summary: files=21 errors=0 cases=10/23 (43.5%) tests=582/663 (87.8%, 81 fails)
 
 ## Results for _draft2019-09_
 
@@ -142,27 +142,27 @@ Main test suite:
 
 Format tests:
 
-- `format/date.json`: errors=0 cases=1/1 (100.0%) tests=69/69 (100.0%, 0 fails)
+- `format/date.json`: errors=0 cases=1/1 (100.0%) tests=75/75 (100.0%, 0 fails)
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=28/29 (96.6%, 1 fails)
 - `format/duration.json`: errors=0 cases=1/1 (100.0%) tests=42/42 (100.0%, 0 fails)
 - `format/email.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `format/hostname.json`: errors=0 cases=1/2 (50.0%) tests=38/61 (62.3%, 23 fails)
-- `format/idn-email.json`: errors=0 cases=0/1 (0.0%) tests=9/12 (75.0%, 3 fails)
+- `format/idn-email.json`: errors=0 cases=0/1 (0.0%) tests=10/14 (71.4%, 4 fails)
 - `format/idn-hostname.json`: errors=0 cases=0/2 (0.0%) tests=64/90 (71.1%, 26 fails)
 - `format/ipv4.json`: errors=0 cases=1/1 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `format/ipv6.json`: errors=0 cases=1/1 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=13/15 (86.7%, 2 fails)
-- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=8/13 (61.5%, 5 fails)
+- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=10/13 (76.9%, 3 fails)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=0/1 (0.0%) tests=46/47 (97.9%, 1 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=34/44 (77.3%, 10 fails)
-- `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
+- `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=13/17 (76.5%, 4 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
 - `format/uuid.json`: errors=0 cases=1/1 (100.0%) tests=25/25 (100.0%, 0 fails)
-- summary: files=20 errors=0 cases=11/22 (50.0%) tests=568/647 (87.8%, 79 fails)
+- summary: files=20 errors=0 cases=11/22 (50.0%) tests=579/655 (88.4%, 76 fails)
 
 ## Results for _draft7_
 
@@ -209,25 +209,25 @@ Main test suite:
 
 Format tests:
 
-- `format/date.json`: errors=0 cases=1/1 (100.0%) tests=69/69 (100.0%, 0 fails)
+- `format/date.json`: errors=0 cases=1/1 (100.0%) tests=75/75 (100.0%, 0 fails)
 - `format/date-time.json`: errors=0 cases=0/1 (0.0%) tests=28/29 (96.6%, 1 fails)
 - `format/email.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `format/hostname.json`: errors=0 cases=1/2 (50.0%) tests=38/61 (62.3%, 23 fails)
-- `format/idn-email.json`: errors=0 cases=0/1 (0.0%) tests=9/12 (75.0%, 3 fails)
+- `format/idn-email.json`: errors=0 cases=0/1 (0.0%) tests=10/14 (71.4%, 4 fails)
 - `format/idn-hostname.json`: errors=0 cases=0/2 (0.0%) tests=63/89 (70.8%, 26 fails)
 - `format/ipv4.json`: errors=0 cases=1/1 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `format/ipv6.json`: errors=0 cases=1/1 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=13/15 (86.7%, 2 fails)
-- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=8/13 (61.5%, 5 fails)
+- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=10/13 (76.9%, 3 fails)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
 - `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=0/1 (0.0%) tests=46/47 (97.9%, 1 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=34/44 (77.3%, 10 fails)
-- `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
+- `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=13/17 (76.5%, 4 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
-- summary: files=18 errors=0 cases=9/20 (45.0%) tests=500/579 (86.4%, 79 fails)
+- summary: files=18 errors=0 cases=9/20 (45.0%) tests=511/587 (87.1%, 76 fails)
 
 ## Results for _draft6_
 
@@ -281,9 +281,9 @@ Format tests:
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=34/44 (77.3%, 10 fails)
-- `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=11/17 (64.7%, 6 fails)
+- `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=13/17 (76.5%, 4 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=8/10 (80.0%, 2 fails)
-- summary: files=10 errors=0 cases=6/10 (60.0%) tests=254/273 (93.0%, 19 fails)
+- summary: files=10 errors=0 cases=6/10 (60.0%) tests=256/273 (93.8%, 17 fails)
 
 ## Results for _draft4_
 
