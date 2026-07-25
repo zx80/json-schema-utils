@@ -3,7 +3,7 @@ from typing import Any
 from .utils import JsonSchema, SchemaPath, FilterFun, RewriteFun
 
 log = logging.getLogger("rec")
-log.setLevel(logging.DEBUG)
+log.setLevel(logging.INFO)
 
 def goFlt(_s: JsonSchema, _p: SchemaPath) -> bool:
     return True
