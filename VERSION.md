@@ -1,5 +1,9 @@
 # JSON Schema Utils Backlog
 
+## JSU 0.9.14 on 2026-07-27
+
+- convert: use bug-compatible models under `--no-strict` with `--id`
+
 ## JSU 0.9.13 on 2026-07-13
 
 - format: uri or uri-reference (RFC3986)

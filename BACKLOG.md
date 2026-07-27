@@ -1,6 +1,5 @@
 # JSON Schema Utils Backlog
 
-- [x] convert: use bug-compatible models under `--no-strict` with `--id`
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
