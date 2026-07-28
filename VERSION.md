@@ -1,5 +1,9 @@
 # JSON Schema Utils Backlog
 
+## JSU 0.9.15 on 2026-07-28
+
+- convert: clarify `--fix` vs `--strict` impact under `--id`
+
 ## JSU 0.9.14 on 2026-07-27
 
 - convert: use bug-compatible models under `--no-strict` with `--id`
