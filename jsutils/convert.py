@@ -2061,7 +2061,13 @@ SS = "https://json.schemastore.org"
 # JM = f"{GH}/clairey-zx81/json-model/main/models"
 JM = "https://json-model.org/models"
 
-# Schema $id/id to Model URL
+# Schema $id/id to native model URL
+#
+# Up-to 2 models per schema:
+# - best available model, including bug fixes and stricter checks
+# - official-schema compatible model, excluding fixes and additional checks,
+#   and/or more permissive models
+#
 ID2MODEL: dict[str, tuple[str|None, str|None]] = {
     # JSON Schema drafts
     "http://json-schema.org/draft-04/schema": (
@@ -2151,24 +2157,27 @@ def schema_to_model(
             resilient: bool = False, version: int = 0, level: int = logging.INFO,
         ):
     """Convert a JSON Schema to a JSON Model."""
+
     log.setLevel(level)
     rec_log.setLevel(level)
     reset()
+
     model = None
     if use_id and isinstance(schema, dict):
         sid = (schema["$id"] if "$id" in schema else
                schema["id"] if "id" in schema else
                schema2id(schema))
         if sid in ID2MODEL:
-            url = ID2MODEL[sid][0 if strict else 1]
+            url = ID2MODEL[sid][0 if fix else 1]
             if url is not None:
-                log.info(f"using predefined model for {sid}")
                 model = f"${url}"
+                log.info(f"using predefined model for {sid}: {model}")
         else:
             log.debug(f"no predefined model for {sid}")
     else:
         # unknown id, proceed
         log.debug("no id for schema")
+
     if model is None:
         try:
             # schema identifier

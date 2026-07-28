@@ -1,6 +1,6 @@
 # JSON Schema Utils Backlog
 
-- [ ] front: clarify `--strict` vs `--fix` conversion semantics
+- [x] front: clarify `--strict` vs `--fix` conversion semantics
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
