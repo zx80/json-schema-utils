@@ -1,5 +1,11 @@
 # JSON Schema Utils Backlog
 
+## JSU 0.9.16 on 2026-07-30
+
+- front: always recompute the version if possible
+- convert: also cleanup markdown when computing hash id
+- convert: add `ui5` native model
+
 ## JSU 0.9.15 on 2026-07-28
 
 - convert: clarify `--fix` vs `--strict` impact under `--id`
