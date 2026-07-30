@@ -1,6 +1,8 @@
 # JSON Schema Utils Backlog
 
 - [x] front: always recompute the version if possible
+- [x] convert: also cleanup markdown when computing hash id
+- [x] convert: add `ui5` native model
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors

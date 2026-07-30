@@ -2114,6 +2114,10 @@ ID2MODEL: dict[str, tuple[str|None, str|None]] = {
     "sha3:58df1e36909f3f8033f4da3e9a6179f3d3e53c51501d7f14a557e34ecef988e1": (
         f"{JM}/cypress.model.json",
         f"{JM}/cypress-compat.model.json",
+    ),
+    "sha3:753e55673a2954fe0132a2bc69b103feedd30fa763445b20a10f2c1aef40e9ee": (
+        f"{JM}/ui5.model.json",
+        f"{JM}/ui5.model.json",
     )
 }
 
@@ -2132,7 +2136,8 @@ def schema2id(schema: JsonSchema, keep_format: bool = True) -> str:
     def nocomment(schema: JsonSchema, _: SchemaPath) -> bool:
         if isinstance(schema, dict):
             for p in ("$comment", "title", "description", "default",
-                      "examples", "readOnly", "writeOnly", "deprecated"):
+                      "examples", "readOnly", "writeOnly", "deprecated",
+                      "markdownDescription"):
                 if p in schema:
                     del schema[p]
             if not keep_format and "format" in schema:
