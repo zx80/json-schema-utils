@@ -31,14 +31,13 @@ from .types import computeTypes
 def jsu_version(with_backend: bool = False) -> str:
     """Build and return version string."""
     try:
-        # FIXME this does not work well with symbolic links
+        # NOTE this does not work well with symbolic links
         from setuptools_git_versioning import get_version
         version = str(get_version(root=Path(__file__).parent.parent))
         # version = str(get_version())
     except Exception as e:
         log.debug(f"error while recomputing version: {e}")
         version = pkg_version("json_schema_utils")
-        # version = (Path(__file__).parent / "VERSION").read_text().strip()
     if with_backend:
         version += " (jmc backend " + json_model.jmc_version() + ")"
     return version
