@@ -120,6 +120,14 @@ Other languages require specific runtimes, which are available in the
 `docker.io/zx80/jmc` container image, or can be installed independently,
 see [JSON Model HOWTO](https://json-model.org/#/HOWTO).
 
+JSON Schema compliance [Bowtie](https://bowtie.report) badges:
+
+- C ![Supported Dialects](https://img.shields.io/endpoint?url=https%3A%2F%2Fbowtie.report%2Fbadges%2Fc-jsu-compile%2Fsupported_versions.json),
+- Python ![Supported Dialects](https://img.shields.io/endpoint?url=https%3A%2F%2Fbowtie.report%2Fbadges%2Fpython-jsu-compile%2Fsupported_versions.json),
+- JavaScript ![Supported Dialects](https://img.shields.io/endpoint?url=https%3A%2F%2Fbowtie.report%2Fbadges%2Fjavascript-jsu-compile%2Fsupported_versions.json),
+- Java ![Supported Dialects](https://img.shields.io/endpoint?url=https%3A%2F%2Fbowtie.report%2Fbadges%2Fjava-jsu-compile%2Fsupported_versions.json),
+- Perl ![Supported Dialects](https://img.shields.io/endpoint?url=https%3A%2F%2Fbowtie.report%2Fbadges%2Fperl-jsu-compile%2Fsupported_versions.json).
+
 ## TODO
 
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)

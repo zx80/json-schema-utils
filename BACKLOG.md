@@ -1,6 +1,7 @@
 # JSON Schema Utils Backlog
 
 - [x] front: try to fix (again, again, again) version display under dev
+- [x] pr: add bowtie badges
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
