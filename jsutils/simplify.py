@@ -242,7 +242,7 @@ def simplifySchema(
                 dest = local["$ref"]
                 assert isinstance(dest, str)
                 if dest.startswith("#/") and dest != "#/" and \
-                        not re.search(r"/(definitions|\$defs)/[^/]+$", dest):
+                        not re.search(r"/(definitions|\$defs|%24defs)/[^/]+$", dest):
                     log.debug(f"inlining {dest}")
                     js = schema
                     for segment in dest.split("/")[1:]:
@@ -276,7 +276,7 @@ def simplifySchema(
                                     local["type"] = []
                             else:
                                 local.update(nlocal)
-                        log.debug(f"desc schema: {local}")
+                        log.debug(f"new local schema: {local}")
 
                 # TODO keep track of used path to avoid removing stuff which is referenced
         return True
