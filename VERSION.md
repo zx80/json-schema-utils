@@ -1,4 +1,10 @@
-# JSON Schema Utils Backlog
+# JSON Schema Utils Versions
+
+## JSU 0.9.17 on 2026-08-05
+
+- front: try to fix (again, again, again) version display under dev
+- pr: add bowtie badges
+- simplify: fix bad handling of `$defs` filter while inlining
 
 ## JSU 0.9.16 on 2026-07-30
 
