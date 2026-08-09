@@ -11,6 +11,7 @@
 - [ ] format: hostname (RFC1123) with punycode (RFC5890), idn-hostname (add RFC5890)
 - [ ] convert: merge `allOf` before proceeding when possible
 - [ ] simpler: remove `tests/string_03.simpler.json` redundant `$ref` on merge
+- [ ] simpler: `anyOf` with redundant `required` (see `krakend` 608)
 - [ ] improve `unevaluatedItems` support (wip)
 - [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
 - [ ] improve support for `unevaluatedProperties` with `patternProperties`?
