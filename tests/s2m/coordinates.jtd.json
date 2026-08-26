@@ -1,0 +1,14 @@
+ {
+  "definitions": {
+    "coordinates": {
+      "properties": {
+        "lat": { "type": "float32" },
+        "lng": { "type": "float32" }
+      }
+    }
+  },
+  "properties": {
+    "user_location": { "ref": "coordinates" },
+    "server_location": { "ref": "coordinates" }
+  }
+}

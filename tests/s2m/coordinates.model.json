@@ -1,0 +1,11 @@
+{
+  "~": "https://json-model.org/models/json-model",
+  "$": {
+    "coordinates": {
+      "_lat": "$F32",
+      "_lng": "$F32"
+    }
+  },
+  "_user_location": "$coordinates",
+  "_server_location": "$coordinates"
+}

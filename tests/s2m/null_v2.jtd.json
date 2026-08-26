@@ -1,0 +1,16 @@
+{
+  "nullable": true,
+  "discriminator": "version",
+  "mapping": {
+    "v1": {
+      "properties": {
+        "a": { "type": "float32" }
+      }
+    },
+    "v2": {
+      "properties": {
+        "a": { "type": "string" }
+      }
+    }
+  }
+}

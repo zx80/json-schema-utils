@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": [
+    "object",
+    "null"
+  ],
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "number"
+        },
+        "version": {
+          "const": "v1"
+        }
+      },
+      "required": [
+        "a",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "version": {
+          "const": "v2"
+        }
+      },
+      "required": [
+        "a",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "null"
+    }
+  ]
+}

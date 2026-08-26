@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "coordinates": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number"
+        },
+        "lng": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "lat",
+        "lng"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "properties": {
+    "user_location": {
+      "$ref": "#/$defs/coordinates"
+    },
+    "server_location": {
+      "$ref": "#/$defs/coordinates"
+    }
+  },
+  "required": [
+    "user_location",
+    "server_location"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,35 @@
+{
+  "definitions": {
+    "xB": { "type": "boolean" },
+    "xI": { "type": "int8" },
+    "xU": { "type": "uint8" },
+    "xO": { "properties": {"a": {"type": "string"}}, "additionalProperties": true },
+    "xE": { "enum": [ "Susie", "Calvin", "Hobbes" ] },
+    "xR": { "ref": "xB" },
+    "xD": {
+      "discriminator": "tag",
+      "mapping": {
+        "i": {"optionalProperties": {"i": {"ref": "xI"}}},
+        "u": {"properties": {"u": {"ref": "xU"}}}
+      }
+    },
+    "xA": { "nullable": true, "elements": {"type": "int32"} },
+    "xV": { "values": {"type": "timestamp"} },
+    "Any1": { },
+    "Any2": { "nullable": true, "metadata": {"#": "null is allowed twice"} }
+  },
+  "optionalProperties": {
+    "b": { "ref": "xB" },
+    "i": { "ref": "xI" },
+    "u": { "ref": "xU" },
+    "o": { "ref": "xO" },
+    "e": { "ref": "xE" },
+    "r": { "ref": "xR" },
+    "d": { "ref": "xD" },
+    "a": { "ref": "xA" },
+    "v": { "ref": "xV" },
+    "1": { "ref": "Any1" },
+    "2": { "ref": "Any2" }
+  },
+  "additionalProperties": false
+}

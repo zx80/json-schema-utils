@@ -1,0 +1,64 @@
+{
+  "~": "https://json-model.org/models/json-model",
+  "$": {
+    "xB": true,
+    "xI": "$I8",
+    "xU": "$U8",
+    "xO": {
+      "_a": "",
+      "": "$ANY"
+    },
+    "xE": {
+      "|": [
+        "_Susie",
+        "_Calvin",
+        "_Hobbes"
+      ]
+    },
+    "xR": "$xB",
+    "xD": {
+      "^": [
+        {
+          "__tag": "_i",
+          "?i": "$xI"
+        },
+        {
+          "__tag": "_u",
+          "_u": "$xU"
+        }
+      ]
+    },
+    "xA": {
+      "|": [
+        null,
+        [
+          "$I32"
+        ]
+      ]
+    },
+    "xV": {
+      "": "$DATETIME"
+    },
+    "Any1": "$ANY",
+    "Any2": {
+      "#": {
+        "#": "null is allowed twice"
+      },
+      "|": [
+        null,
+        "$ANY"
+      ]
+    }
+  },
+  "?b": "$xB",
+  "?i": "$xI",
+  "?u": "$xU",
+  "?o": "$xO",
+  "?e": "$xE",
+  "?r": "$xR",
+  "?d": "$xD",
+  "?a": "$xA",
+  "?v": "$xV",
+  "?1": "$Any1",
+  "?2": "$Any2"
+}

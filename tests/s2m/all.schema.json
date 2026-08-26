@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "xB": {
+      "type": "boolean"
+    },
+    "xI": {
+      "type": "integer",
+      "minimum": -128,
+      "maximum": 127
+    },
+    "xU": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255
+    },
+    "xO": {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "a"
+      ],
+      "additionalProperties": true
+    },
+    "xE": {
+      "enum": [
+        "Susie",
+        "Calvin",
+        "Hobbes"
+      ]
+    },
+    "xR": {
+      "$ref": "#/$defs/xB"
+    },
+    "xD": {
+      "type": "object",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "i": {
+              "$ref": "#/$defs/xI"
+            },
+            "tag": {
+              "const": "i"
+            }
+          },
+          "required": [
+            "tag"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "u": {
+              "$ref": "#/$defs/xU"
+            },
+            "tag": {
+              "const": "u"
+            }
+          },
+          "required": [
+            "u",
+            "tag"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "xA": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "integer",
+        "minimum": -2147483648,
+        "maximum": 2147483647
+      }
+    },
+    "xV": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "datetime"
+      }
+    },
+    "Any1": {
+      "type": [
+        "null",
+        "boolean",
+        "integer",
+        "number",
+        "string",
+        "array",
+        "object"
+      ]
+    },
+    "Any2": {
+      "$comment": {
+        "#": "null is allowed twice"
+      },
+      "type": [
+        "null",
+        "boolean",
+        "integer",
+        "number",
+        "string",
+        "array",
+        "object"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "b": {
+      "$ref": "#/$defs/xB"
+    },
+    "i": {
+      "$ref": "#/$defs/xI"
+    },
+    "u": {
+      "$ref": "#/$defs/xU"
+    },
+    "o": {
+      "$ref": "#/$defs/xO"
+    },
+    "e": {
+      "$ref": "#/$defs/xE"
+    },
+    "r": {
+      "$ref": "#/$defs/xR"
+    },
+    "d": {
+      "$ref": "#/$defs/xD"
+    },
+    "a": {
+      "$ref": "#/$defs/xA"
+    },
+    "v": {
+      "$ref": "#/$defs/xV"
+    },
+    "1": {
+      "$ref": "#/$defs/Any1"
+    },
+    "2": {
+      "$ref": "#/$defs/Any2"
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

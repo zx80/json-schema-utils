@@ -1,0 +1,11 @@
+{
+  "properties": {
+    "a": { "type": "string" },
+    "b": { "type": "string" }
+  },
+  "optionalProperties": {
+    "c": { "type": "string" },
+    "d": { "type": "string" }
+  },
+  "additionalProperties": true
+}
