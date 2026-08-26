@@ -128,6 +128,16 @@ JSON Schema compliance [Bowtie](https://bowtie.report) badges:
 - Java ![Supported Dialects](https://img.shields.io/endpoint?url=https%3A%2F%2Fbowtie.report%2Fbadges%2Fjava-jsu-compile%2Fsupported_versions.json),
 - Perl ![Supported Dialects](https://img.shields.io/endpoint?url=https%3A%2F%2Fbowtie.report%2Fbadges%2Fperl-jsu-compile%2Fsupported_versions.json).
 
+## JSON Type Definition Converter
+
+Command `jsu-jtd` allows to convert a [JTD](https://datatracker.ietf.org/doc/rfc8927/) type
+declaration to JSON Schema or JSON Model:
+
+```sh
+jsu-jtd -o foo.schema.json foo.jtd.json
+jsu-jtd -o foo.model.json foo.jtd.json
+```
+
 ## TODO
 
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)
