@@ -49,7 +49,7 @@ def jtd_category(schema: Jsonable) -> str:
     else:
         return "empty"
 
-# TODO record path
+# TODO check for potential infinite recursion through ref?
 def _valid_jtd_schema(schema: Jsonable, root: bool, defs: set[str], path: list[str]) -> bool:
     """Check JTD schema validity recursively."""
     spath = "." + ".".join(path)
