@@ -14,6 +14,14 @@ from .utils import Jsonable, log
 #
 # JTD Utils
 #
+# NOTE about Claude Test (Sonnet 5 on 2026-08-27)
+#
+# - prompt: Generate a Python script which checks the validity of a JSON Type Definition (see RFC 8927) in a file.
+# - code generated in about a minute
+# - code over twice as big (260 lines), partly because of indentation rules, mostly because of heavy style
+# - code proceeds to collect "all" errors, which is debatable
+# - code in a class with methods for each node check, no "match" syntax used
+#
 
 # expected JTD schemas property names
 
