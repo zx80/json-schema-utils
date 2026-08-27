@@ -107,6 +107,7 @@ def _valid_jtd_schema(schema: Jsonable, root: bool, defs: set[str], path: list[s
                 assert len({"properties", "optionalProperties"} & set(sub)) > 0, f"JTD mapping value is properties at {lpath}."
                 assert dis not in (sub.get("properties", {}) | sub.get("optionalProperties", {})), f"JTD discriminator is set once at {lpath}"
                 assert _valid_jtd_schema(sub, False, defs, path + ["mapping", tag]), f"JTD mapping value is valid at {lpath}"
+                assert not sub.get("nullable", False), f"JTD mapping subschema must not be nullable at {lpath}"
         case _:
             assert False, f"JTD schema unknown category: {category} at {spath}"
     return True
