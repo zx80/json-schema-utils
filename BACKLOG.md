@@ -18,15 +18,15 @@
 - [ ] convert: merge `allOf` before proceeding when possible
 - [ ] simpler: remove `tests/string_03.simpler.json` redundant `$ref` on merge
 - [ ] simpler: `anyOf` with redundant `required` (see `krakend` 608)
-- [ ] improve `unevaluatedItems` support (wip)
-- [ ] improve support for `unevaluatedProperties` with `if`/`then`/`else`?
-- [ ] improve support for `unevaluatedProperties` with `patternProperties`?
-- [ ] fixme `unevaluatedProperties: false` is simpler for jm vs js…
-- [ ] improve support for `unevaluatedProperties` by merging `allOf` subschemas
-- [ ] discuss strategies to address version 9 (2020) specific features
-- [ ] move typing out to simplify the generated code
-- [ ] get 100% on _draft2019-09_
-- [ ] get 100% on _draft2020-12_
-- [ ] list compiler current limitations
-- [ ] put typing result in "$type" instead of "type" to help with fixing?
-- [ ] add an `--auto` flag to set options depending on schema versions?
+- [ ] model: improve `unevaluatedItems` support (wip)
+- [ ] model: improve support for `unevaluatedProperties` with `if`/`then`/`else`?
+- [ ] model: improve support for `unevaluatedProperties` with `patternProperties`?
+- [ ] model: fixme `unevaluatedProperties: false` is simpler for jm vs js…
+- [ ] model: improve support for `unevaluatedProperties` by merging `allOf` subschemas
+- [ ] model: discuss strategies to address version 9 (2020) specific features
+- [ ] model: move typing out to simplify the generated code
+- [ ] model: get 100% on _draft2019-09_
+- [ ] model: get 100% on _draft2020-12_
+- [ ] pr: list compiler current limitations
+- [ ] model: put typing result in "$type" instead of "type" to help with fixing?
+- [ ] model: add an `--auto` flag to set options depending on schema versions?
