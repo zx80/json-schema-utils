@@ -22,6 +22,7 @@ from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
 from .convert import schema_to_model
+from .jtd import valid_jtd_schema, _jtd2js, _jtd2jm
 from .resolver import Resolver
 from .types import computeTypes
 
@@ -56,20 +57,30 @@ class VersionAction(argparse.Action):
 
 def ap_common(arg, with_json: bool =True, with_backend: bool = False):
     arg("--version", nargs=0, action=VersionAction, with_backend=with_backend, help="show version")
-    arg("--debug", "-d", action="store_true", help="debug mode")
-    arg("--quiet", "-q", action="store_true", help="quiet mode")
+    arg("--level", "-l", choices=["error", "warn", "info", "debug"], default="info", help="set log level")
+    arg("--debug", "-d", dest="level", action="store_const", const="debug", help="debug mode")
+    arg("--quiet", "-q", dest="level", action="store_const", const="warn", help="quiet mode")
     if with_json:
         arg("--indent", "-i", type=int, default=2,
             help="json indentation (2)")
-        arg("--sort-keys", "-s", default=True, action="store_true",
+        arg("--sort-keys", "-sk", default=True, action="store_true",
             help="sort json keys (*)")
-        arg("--no-sort-keys", "-ns", dest="sort_keys", action="store_false",
+        arg("--no-sort-keys", "-nsk", dest="sort_keys", action="store_false",
             help="do not sort json keys")
         arg("--ascii", action="store_true", default=False,
             help="ensure json ascii")
         arg("--no-ascii", dest="ascii", action="store_false",
             help="do not ensure json ascii (*)")
 
+def ap_common_action(args):
+    # shamelessly override args.level
+    args.level = (
+        logging.ERROR if args.level == "error" else
+        logging.WARNING if args.level == "warn" else
+        logging.INFO if args.level == "info" else
+        logging.DEBUG
+    )
+    log.setLevel(args.level)
 
 def json_dumps(j: Any, args):
     return json.dumps(j, indent=args.indent, sort_keys=args.sort_keys, ensure_ascii=args.ascii)
@@ -107,7 +118,7 @@ def jsu_inline(xargs: list[str]|None = None) -> int:
     arg("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args(xargs)
 
-    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+    ap_common_action(args)
 
     if not args.schemas:
         args.schemas = ["-"]
@@ -160,10 +171,10 @@ def jsu_simpler(xargs: list[str]|None = None) -> int:
         help="do not type schema before simplification")
     args = ap.parse_args(xargs)
 
+    ap_common_action(args)
+
     if not args.schemas:
         args.schemas = ["-"]
-
-    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
 
     for fn in args.schemas:
         log.debug(f"considering file: {fn}")
@@ -210,18 +221,18 @@ def jsu_check(xargs: list[str]|None = None) -> int:
     arg("values", nargs="*", help="values to match against schema")
     args = ap.parse_args(xargs)
 
-    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+    ap_common_action(args)
 
     try:
         jschema = read_schema(args.schema)
     except FileNotFoundError as e:
-        if args.debug:
-            log.error(e, exc_info=args.debug)
+        if args.level == logging.DEBUG:
+            log.error(e, exc_info=True)
         print(f"{args.schema}: FILE ERROR ({e})")
         return 1
     except BaseException as e:
-        if args.debug:
-            log.error(e, exc_info=args.debug)
+        if args.level == logging.DEBUG:
+            log.error(e, exc_info=True)
         print(f"{args.schema}: JSON ERROR ({e})")
         return 2
 
@@ -280,8 +291,8 @@ def jsu_check(xargs: list[str]|None = None) -> int:
                 return { "passed": ok, "errors": None if ok else errors}
 
     except Exception as e:
-        if args.debug:
-            log.error(e, exc_info=not args.quiet)
+        if args.level == logging.DEBUG:
+            log.error(e, exc_info=True)
         if args.pass_through:
             log.error(f"{args.schema}: SCHEMA COMPILATION ERROR ({e})")
         else:
@@ -299,7 +310,7 @@ def jsu_check(xargs: list[str]|None = None) -> int:
             print(f"{name}: {'PASS' if okay else 'FAIL'}")
         else:  # res != expect
             print(f"{name}: ERROR unexpected {'PASS' if okay else 'FAIL'}")
-        if not okay and not args.quiet:
+        if not okay and args.level >= logging.INFO:
             log.error(json_dumps(res["errors"], args))
         return success
 
@@ -351,7 +362,7 @@ def jsu_stats(xargs: list[str]|None = None) -> int:
     arg("schemas", nargs="*", help="JSON Schema to analyze")
     args = ap.parse_args(xargs)
 
-    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+    ap_common_action(args)
 
     oops = False
 
@@ -402,7 +413,7 @@ def jsu_pretty(xargs: list[str]|None = None):
     arg("schemas", nargs="*", help="schemas to inline")
     args = ap.parse_args(xargs)
 
-    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+    ap_common_action(args)
 
     if not args.schemas:
         args.schemas = ["-"]
@@ -464,7 +475,7 @@ def jsu_model(xargs: list[str]|None = None) -> int:
     arg("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args(xargs)
 
-    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+    ap_common_action(args)
 
     resolver = Resolver(cache=args.cache, mapping=args.map)
 
@@ -483,10 +494,10 @@ def jsu_model(xargs: list[str]|None = None) -> int:
                 vocabularize=args.vocab, modernize=args.modernize,
                 simpler=args.simple, typer=args.type, resilient=args.resilient,
                 version=args.sversion, resolver=resolver,
-                level=logging.DEBUG if args.debug else logging.INFO,
+                level=args.level,
             )
         except Exception as e:
-            log.error(e, exc_info=args.debug)
+            log.error(e, exc_info=args.level == logging.DEBUG)
             errors += 1
             model = {"ERROR": str(e)}
 
@@ -582,7 +593,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     arg("others", nargs="*", help="jmc backend options and arguments")
     args = ap.parse_args(xargs)
 
-    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+    ap_common_action(args)
 
     resolver = Resolver(cache=args.cache, mapping=args.map)
 
@@ -602,11 +613,11 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
             vocabularize=args.vocab, modernize=args.modernize,
             typer=args.type, simpler=args.simple, resilient=args.resilient,
             version=args.sversion, resolver=resolver,
-            level=logging.DEBUG if args.debug else logging.INFO,
+            level=args.level,
         )
     except Exception as e:
         log.error(f"schema to model conversion for {args.schema} failed")
-        log.error(e, exc_info=args.debug)
+        log.error(e, exc_info=args.level == logging.DEBUG)
         return 1  # conversion failed
 
     # TODO
@@ -631,9 +642,9 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
         args.others.insert(0, "--precompiled")
 
     # also forward verbosity options, debug wins
-    if args.debug:
+    if args.level == logging.DEBUG:
         args.others.insert(0, "--debug")
-    if args.quiet:
+    if args.level == logging.WARN:
         args.others.insert(0, "--quiet")
 
     # compile intermediate model through a temporary file
@@ -641,7 +652,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
 
         smodel = json.dumps(model, sort_keys=args.sort_keys, indent=args.indent)
 
-        if args.debug:
+        if args.level == logging.DEBUG:
             log.debug(f"intermediate model: {smodel}")
 
         tmp.write(smodel.encode("UTF8"))
@@ -650,7 +661,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
         # launch jmc command and report status
         jmc = ["jmc", "--model", tmp.name, "--extend", *args.others]
 
-        if args.debug:
+        if args.level == logging.DEBUG:
             log.debug(f"jmc: {' '.join(jmc)}")
 
         if args.backend == "p":
@@ -763,7 +774,7 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
     arg("cases", nargs="*", help="test cases to process")
     args = ap.parse_args(xargs)
 
-    log.setLevel(logging.DEBUG if args.debug else logging.WARNING if args.quiet else logging.INFO)
+    ap_common_action(args)
 
     resolver = Resolver(cache=args.cache, mapping=args.map)
 
@@ -817,7 +828,7 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
                         simpler=args.simple, predef=args.format,
                         version=args.sversion, resilient=args.resilient,
                         cache=args.cache, mapping=args.map,
-                        level = logging.DEBUG if args.debug else logging.INFO,
+                        level=args.level,
                         # hardcoded expectations
                         loose_int=True, loose_float=True, extend=True,
                     )
@@ -836,8 +847,8 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
                                 log.error(f"unexpected result on {scase}[{it}]: {test['description']}")
                         except BaseException as e:
                             n_errors += 1
-                            if args.debug:
-                                log.error(e, exc_info=args.debug)
+                            if args.level == logging.DEBUG:
+                                log.error(e, exc_info=True)
                             log.error(f"case {description}/{test['description']}: FAILED")
 
                     if n_case_tests_ok == len(case["tests"]):
@@ -845,14 +856,14 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
 
                 except BaseException as e:
                     n_errors += 1
-                    if args.debug:
-                        log.error(e, exc_info=args.debug)
+                    if args.level == logging.DEBUG:
+                        log.error(e, exc_info=True)
                     log.error(f"case {scase} ({description}): FAILED")
 
         except BaseException as e:
             n_errors += 1
-            if args.debug:
-                log.error(e, exc_info=args.debug)
+            if args.level == logging.DEBUG:
+                log.error(e, exc_info=True)
             log.error(f"cases {fname}: BAD case file {e}")
 
     # final report
@@ -865,3 +876,47 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
 
     # tell whether all was well
     return 2 if n_unsafe else 1 if n_tests_failed else 0
+
+def jsu_jtd(xargs: list[str]|None = None):
+
+    logging.basicConfig()
+
+    ap = argparse.ArgumentParser(
+        prog="jsu-jtd",
+        description="Convert JSON Type Definition to JSON Schema or JSON Model"
+    )
+    arg = ap.add_argument
+    ap_common(arg, with_json=True)
+
+    arg("--output", "-o", type=str, default="-", help="Output file, defaults to standard output")
+    arg("--format", "-f", choices=["s", "m"], default=None, help="Output JSON format: s=schema, m=model")
+    arg("--schema", "-s", dest="format", action="store_const", const="s", help="Use JSON Schema format")
+    arg("--model", "-m", dest="format", action="store_const", const="m", help="Use JSON Model format")
+    arg("jtd", default="-", nargs="?", help="File to convert, defaults to standard input")
+    args = ap.parse_args(xargs)
+
+    ap_common_action(args)
+
+    if not args.format:
+        if args.output.endswith(".schema.json"):
+            args.format = "s"
+        elif args.output.endswith(".model.json"):
+            args.format = "m"
+        else:
+            args.format = "s"
+
+    if args.jtd == "-":
+        jtd = json.load(sys.stdin)
+    else:
+        with open(args.jtd) as f:
+            jtd = json.load(f)
+
+    assert valid_jtd_schema(jtd), "JTD schema is valid"
+
+    jms = _jtd2jm(jtd, True) if args.format == "m" else _jtd2js(jtd, True)
+
+    output = sys.stdout if args.output == "-" else open(args.output, "w")
+    print(json_dumps(jms, args), file=output, flush=True)
+    output.close()
+
+    return 0

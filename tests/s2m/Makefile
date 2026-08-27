@@ -10,10 +10,10 @@ MODEL.opts  = --no-strict --fix
 gen: $(F.gen)
 
 %.schema.json: %.jtd.json
-	jsu-jtd -s --debug $< | jq . > $@
+	jsu-jtd -s -nsk --debug $< > $@
 
 %.model.json: %.jtd.json
-	jsu-jtd -m --debug $< | jq . > $@
+	jsu-jtd -m -nsk --debug $< > $@
 
 %.model.json: %.schema.json
 	jsu-model --quiet $(MODEL.opts) -o $@ $<
