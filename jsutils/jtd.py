@@ -1,13 +1,131 @@
 #
-# Convert JTD (JSON Type Definition) to JSON Model
+# Convert JTD (JSON Type Definition) to JSON Model or JSON Schema
 #
 
 import argparse
 import copy
 import json
+import logging
 import sys
+import traceback
 
-from .utils import Jsonable
+from .utils import Jsonable, log
+
+#
+# JTD Utils
+#
+
+# expected JTD schemas property names
+
+JTD_SHARED_PROPS = {"metadata", "nullable"}
+
+JTD_PROPS: dict[str, set[str]] = {
+    "empty": set(),
+    "ref": {"ref"},
+    "type": {"type"},
+    "enum": {"enum"},
+    "elements": {"elements"},
+    "properties": {"properties", "optionalProperties", "additionalProperties"},
+    "values": {"values"},
+    "discriminator": {"discriminator", "mapping"}
+}
+
+def jtd_category(schema: Jsonable) -> str:
+    """Return JTD schema node category."""
+    assert isinstance(schema, dict)
+    scat = set(schema) & set(JTD_PROPS)
+    if scat:  # non empty
+        return scat.pop()
+    elif "optionalProperties" in schema:
+        return "properties"
+    else:
+        return "empty"
+
+# TODO record path
+def _valid_jtd_schema(schema: Jsonable, root: bool, defs: set[str], path: list[str]) -> bool:
+    """Check JTD schema validity recursively."""
+    spath = "." + ".".join(path)
+    assert isinstance(schema, dict), f"JTD schema is an object at {spath}"
+    category = jtd_category(schema)
+    assert all(isinstance(p, str) for p in schema), f"JTD schema uses string props at {spath}"
+    ok_props = JTD_SHARED_PROPS | JTD_PROPS[category] | ({"definitions"} if root else set())
+    assert set(schema) <= set(ok_props), f"JTD schema has valid category properties at {spath}"
+    # commons
+    if "metadata" in schema:
+        metadata = schema["metadata"]
+        assert isinstance(metadata, dict), f"JTD metadata is an object at {spath}.metadata"
+        # TODO more?
+    if "nullable" in schema:
+        assert isinstance(schema["nullable"], bool), f"JTD nullable is a boolean at {spath}.nullable"
+    # per category
+    match category:
+        case "empty":
+            pass
+        case "ref":
+            ref = schema["ref"]
+            assert isinstance(ref, str) and ref in defs, f"JTD ref target is defined at {spath}.ref"
+        case "type":
+            stype = schema["type"]
+            assert isinstance(stype, str) and stype in TYPE_MODEL, f"JTD type is known at {spath}.type"
+        case "enum":
+            enum = schema["enum"]
+            assert isinstance(enum, list) and all(isinstance(e, str) for e in enum), f"JTD enum is a list of strings at {spath}.enum"
+            assert len(enum) > 0, f"JTD enum is not empty at {spath}.enum"
+        case "elements":
+            elems = schema["elements"]
+            assert _valid_jtd_schema(elems, False, defs, path + ["elements"]), f"JTD elements is a valid schema at {spath}.elements"
+        case "properties":
+            assert isinstance(schema.get("additionalProperties", False), bool), f"JTD additional properties is a boolean at {spath}.additionalProperties"
+            mprops, oprops = {}, {}
+            if "properties" in schema:
+                mprops = schema["properties"]
+                assert isinstance(mprops, dict), f"JTD properties is an object at {spath}.properties"
+            if "optionalProperties" in schema:
+                oprops = schema["optionalProperties"]
+                assert isinstance(oprops, dict), f"JTD optional properties is an object at {spath}.optionalProperties"
+            assert len(mprops.keys() & oprops.keys()) == 0, f"JTD object prop cannot be both mandatory and optional at {spath}"
+            for prop, sub in (mprops | oprops).items():
+                assert isinstance(prop, str) and _valid_jtd_schema(sub, False, defs, path + ["*props", prop]), "JTD object property and subschemas at {spath}.*props"
+        case "values":
+            assert _valid_jtd_schema(schema["values"], False, defs, path + ["values"])
+        case "discriminator":
+            dis, mapping = schema["discriminator"], schema["mapping"]
+            assert isinstance(dis, str) and len(dis) > 0, f"JTD object tag is non empty string at {spath}.discriminator"
+            assert isinstance(mapping, dict), f"JTD discriminator mapping is an object at {spath}.mapping"
+            for tag, sub in mapping.items():
+                lval = spath + f".mapping.{tag}"
+                assert isinstance(tag, str), f"JTD mapping tag is a string at {lpath}"
+                assert isinstance(sub, dict), f"JTD mapping value is an object at {lpath}"
+                assert len({"properties", "optionalProperties"} & set(sub)) > 0, f"JTD mapping value is properties at {lpath}."
+                assert dis not in (sub.get("properties", {}) | sub.get("optionalProperties", {})), f"JTD discriminator is set once at {lpath}"
+                assert _valid_jtd_schema(sub, False, defs, path + ["mapping", tag]), f"JTD mapping value is valid at {lpath}"
+        case _:
+            assert False, f"JTD schema unknown category: {category} at {spath}"
+    return True
+
+def valid_jtd_schema(schema: Jsonable) -> bool:
+    """Tell if JTD schema is valid."""
+    try:
+        assert isinstance(schema, dict), "JTD schema is an object at ."
+        if "definitions" in schema:
+            sdefs = schema["definitions"]
+            assert isinstance(sdefs, dict), "JTD schema definitions is an object at .definitions"
+            assert all(isinstance(name, str) for name in sdefs), "JTD definitions names are strings at .definitions"
+            defs = set(sdefs)
+            assert all(_valid_jtd_schema(subs, False, defs, ["definitions", name]) for name, subs in sdefs.items())
+        else:
+            defs = set()
+        assert _valid_jtd_schema(schema, True, defs, [])
+        return True
+    except AssertionError as e:
+        log.warning(f"JTD check exception: {e}")
+        if log.isEnabledFor(logging.DEBUG):
+            traceback.print_exception(e)
+        return False
+
+#
+# JTD -> JM
+#
 
 TYPE_MODEL: dict[str, Jsonable] = {
     "boolean": True,
@@ -24,6 +142,7 @@ TYPE_MODEL: dict[str, Jsonable] = {
 }
 
 def _jtd2jm(jtd: Jsonable, root: bool = False) -> Jsonable:
+    """JTD to JM internal recursive function."""
     model = {}
     if root:
         model |= { "~": "https://json-model.org/models/json-model" }
@@ -32,6 +151,7 @@ def _jtd2jm(jtd: Jsonable, root: bool = False) -> Jsonable:
         assert root, "definitions only at root"
         defs = jtd["definitions"]
         assert isinstance(defs, dict)
+        assert all(isinstance(k, str) and isinstance(v, dict) for k, v in defs.items())
         model["$"] = {
             name: _jtd2jm(jtype)
                 for name, jtype in defs.items()
@@ -86,6 +206,10 @@ def _jtd2jm(jtd: Jsonable, root: bool = False) -> Jsonable:
 
     return model
 
+#
+# JTD -> JS
+#
+
 TYPE_SCHEMA: dict[str, Jsonable] = {
     "boolean": {"type": "boolean"},
     "float32": {"type": "number"},
@@ -101,7 +225,7 @@ TYPE_SCHEMA: dict[str, Jsonable] = {
 }
 
 def _jtd2js(jtd: Jsonable, root: bool = False) -> Jsonable:
-    """JSON Type Definition to JSON Schema conversion."""
+    """JSON Type Definition to JSON Schema conversion internal recursive function."""
 
     schema = {}
     if root:
@@ -172,15 +296,26 @@ def _jtd2js(jtd: Jsonable, root: bool = False) -> Jsonable:
 
 def jtd2jms(xargs: list[str]|None = None):
 
+    logging.basicConfig()
+
     ap = argparse.ArgumentParser(
         prog="jsu-jtd",
         description="Convert JSON Type Definition to JSON Schema or JSON Model"
     )
     arg = ap.add_argument
-    arg("--output", "-o", type=str, default="-", help="Output file, default stdout")
-    arg("--format", "-f", choices=["s", "m"], default=None, help="Output format: s=schema, m=model")
-    arg("jtd", default="-", nargs="?", help="File to convert")
+    arg("--output", "-o", type=str, default="-", help="Output file, defaults to standard output")
+    arg("--format", "-f", choices=["s", "m"], default=None, help="Output JSON format: s=schema, m=model")
+    arg("--level", "-l", choices=["error", "warn", "info", "debug"], default="warn", help="Set verbosity level")
+    arg("--debug", "-d", dest="level", action="store_const", const="debug", help="Set debug model")
+    arg("--schema", "-s", dest="format", action="store_const", const="s", help="Use JSON Schema format")
+    arg("--model", "-m", dest="format", action="store_const", const="m", help="Use JSON Model format")
+    arg("jtd", default="-", nargs="?", help="File to convert, defaults to standard input")
     args = ap.parse_args(xargs)
+
+    log.setLevel(logging.ERROR if args.level == "error" else
+                 logging.WARNING if args.level == "warn" else
+                 logging.INFO if args.level == "info" else
+                 logging.DEBUG)
 
     if not args.format:
         if args.output.endswith(".schema.json"):
@@ -196,10 +331,11 @@ def jtd2jms(xargs: list[str]|None = None):
         with open(args.jtd) as f:
             jtd = json.load(f)
 
-    output = sys.stdout if args.output == "-" else open(args.output, "w")
+    assert valid_jtd_schema(jtd), "JTD schema is valid"
 
     jms = _jtd2jm(jtd, True) if args.format == "m" else _jtd2js(jtd, True)
 
+    output = sys.stdout if args.output == "-" else open(args.output, "w")
     print(json.dumps(jms), file=output, flush=True)
     output.close()
 

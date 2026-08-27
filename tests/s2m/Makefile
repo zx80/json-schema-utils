@@ -10,10 +10,10 @@ MODEL.opts  = --no-strict --fix
 gen: $(F.gen)
 
 %.schema.json: %.jtd.json
-	jsu-jtd -f s $< | jq . > $@
+	jsu-jtd -s --debug $< | jq . > $@
 
 %.model.json: %.jtd.json
-	jsu-jtd -f m $< | jq . > $@
+	jsu-jtd -m --debug $< | jq . > $@
 
 %.model.json: %.schema.json
 	jsu-model --quiet $(MODEL.opts) -o $@ $<
@@ -25,4 +25,9 @@ clean:
 .PHONY: check
 check:
 	$(MAKE) clean
+	$(MAKE) gen
+
+.PHONY: check.jtd
+check.jtd:
+	$(RM) $(F.jtd:%.jtd.json=%.model.json) $(F.jtd:%.jtd.json=%.schema.json)
 	$(MAKE) gen
