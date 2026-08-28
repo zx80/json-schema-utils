@@ -182,7 +182,7 @@ def _jtd2jm(jtd: Jsonable, root: bool = False) -> Jsonable:
     elif "values" in jtd:
         smodel = { "": _jtd2jm(jtd["values"]) }
     elif "discriminator" in jtd:
-        dis = "_" + jtd["discriminator"]
+        dis = jtd["discriminator"]
         smodel = {
             "^": [
                 { f"_{dis}": f"_{val}" } | _jtd2jm(jtype)
