@@ -1,11 +1,5 @@
 # JSON Schema Utils Backlog
 
-- [x] sources: remove useless exec perms
-- [x] front: add jtd to jm converter
-- [x] front: add jtd to js converter
-- [x] front: improve `jsu-jtd` options
-- [x] jtd: check JTD validity before converting
-- [x] front: refactor script entry points and common options
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors

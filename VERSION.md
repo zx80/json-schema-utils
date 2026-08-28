@@ -1,5 +1,14 @@
 # JSON Schema Utils Versions
 
+## JSU 0.9.18 on 2026-08-28
+
+- sources: remove useless exec perms
+- front: add jtd to jm converter
+- front: add jtd to js converter
+- front: improve `jsu-jtd` options
+- jtd: check JTD validity before converting
+- front: refactor script entry points and common options
+
 ## JSU 0.9.17 on 2026-08-05
 
 - front: try to fix (again, again, again) version display under dev
