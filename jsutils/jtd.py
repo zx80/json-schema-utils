@@ -166,7 +166,7 @@ def _jtd2jm(jtd: Jsonable, root: bool = False) -> Jsonable:
                 for name, jtype in defs.items()
         }
     if "metadata" in jtd:
-        model["#"] = jtd["metadata"]
+        model["#.doc"] = jtd["metadata"]
     smodel: Jsonable
     if "ref" in jtd:
         smodel = f"${jtd['ref']}"
@@ -249,7 +249,7 @@ def _jtd2js(jtd: Jsonable, root: bool = False) -> Jsonable:
                 for name, jtype in defs.items()
         }
     if "metadata" in jtd:
-        schema["$comment"] = jtd["metadata"]
+        schema["x-metadata"] = jtd["metadata"]
     if "ref" in jtd:
         schema |= { "$ref": f"#/$defs/{jtd['ref']}" }
     elif "type" in jtd:

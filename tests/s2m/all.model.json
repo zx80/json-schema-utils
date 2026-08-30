@@ -41,7 +41,7 @@
     },
     "Any1": "$ANY",
     "Any2": {
-      "#": {
+      "#.doc": {
         "#": "null is allowed twice"
       },
       "|": [
