@@ -2,7 +2,6 @@
 # Convert JTD (JSON Type Definition) to JSON Model or JSON Schema
 #
 
-import argparse
 import copy
 import json
 import logging
@@ -25,8 +24,10 @@ from .utils import Jsonable, log
 
 # expected JTD schemas property names
 
+# properties which may (nearly) always appear
 JTD_SHARED_PROPS = {"metadata", "nullable"}
 
+# possible specific properties depending on jtd type
 JTD_PROPS: dict[str, set[str]] = {
     "empty": set(),
     "ref": {"ref"},
