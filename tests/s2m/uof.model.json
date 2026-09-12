@@ -1,0 +1,46 @@
+{
+  "": "$ANY",
+  "#": "JSON Model generated from a JSON Schema with json-schema-utils",
+  "?val1": {
+    "&": [
+      {
+        "^": [
+          true,
+          -1
+        ]
+      },
+      {
+        "|": [
+          true,
+          -1
+        ]
+      }
+    ]
+  },
+  "?val2": {
+    "|": [
+      true,
+      -1
+    ]
+  },
+  "?val3": {
+    "&": [
+      {
+        "^": [
+          true,
+          {
+            "<=": 51,
+            ">=": 0,
+            "@": -1
+          }
+        ]
+      },
+      {
+        "|": [
+          true,
+          -1
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "val1": {
+      "oneOf": [
+        { "type": "boolean" },
+        { "type": "integer" }
+      ]
+    },
+    "val2": {
+      "type": [ "boolean", "integer" ]
+    },
+    "val3": {
+      "oneOf": [
+        { "type": "boolean" },
+        { "type": "integer", "minimum": 0, "maximum": 51 }
+      ]
+    }
+  }
+}

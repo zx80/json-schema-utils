@@ -23,7 +23,8 @@ log.setLevel(logging.DEBUG)
 
 MAX_RECURSION: int = 64
 
-def tname(v) -> str:
+def tname(v: type|None) -> str:
+    """Type name for display purpose."""
     return (
         "null" if v is None else
         "bool" if isinstance(v, bool) else
@@ -1339,6 +1340,7 @@ def schema2model(
 
             # else split schema per type
             schemas = split_schema(schema)
+            # log.warning(f"schemas = {schemas}")
             del schemas[""]  # remove ignored stuff
             model = {
                 "|": [
@@ -1650,6 +1652,7 @@ def schema2model(
                 else:
                     assert False, f"unexpected integer format: {fmt} at [{spath}]"
             constraints = numberConstraints(schema)
+            # log.warning(f"constraints = {constraints}")
             return buildModel(model, constraints, defs, sharp, is_root)
         elif ts == "boolean":
             if "required" in schema:
