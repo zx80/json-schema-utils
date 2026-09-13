@@ -1,6 +1,7 @@
 # JSON Schema Utils Backlog
 
 - [x] jtd: fix metadata handling in jm and js conversion
+- [ ] jsts: investigate and fix current `patternProperties` failures
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
