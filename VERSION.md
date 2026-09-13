@@ -1,5 +1,9 @@
 # JSON Schema Utils Versions
 
+## JSU 0.9.19 on 2026-09-13
+
+- jtd: fix metadata handling in jm and js conversion
+
 ## JSU 0.9.18 on 2026-08-28
 
 - sources: remove useless exec perms
