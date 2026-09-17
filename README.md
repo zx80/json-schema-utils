@@ -138,6 +138,14 @@ jsu-jtd -o foo.schema.json foo.jtd.json
 jsu-jtd -o foo.model.json foo.jtd.json
 ```
 
+## JSU Test Runner
+
+Run a JSON Schema Test Suite case.
+
+```sh
+jsu-test-runner --debug --resilient --map http://localhost:1234/=file://$JSTS_HOME/remotes/ -V 7 $JSTS_HOME/tests/draft7/ref.json
+```
+
 ## TODO
 
 - propagate non type under containers (`*Of`, `if`, `then`, `else`, reference?)

@@ -659,7 +659,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
         tmp.flush()
 
         # launch jmc command and report status
-        jmc = ["jmc", "--model", tmp.name, "--extend", *args.others]
+        jmc = ["jmc", "--model", tmp.name, "--extend", "--no-caps", *args.others]
 
         if args.level == logging.DEBUG:
             log.debug(f"jmc: {' '.join(jmc)}")
@@ -692,6 +692,7 @@ def json_schema_to_python_checker(
         loose_float: bool = True,
         predef: bool = False,
         extend: bool = True,
+        caps: bool = False,
     ) -> Callable[[Jsonable], bool]:
     """Build a dynamic python checker function from a schema."""
     try:
@@ -707,7 +708,8 @@ def json_schema_to_python_checker(
         # convert model to a checker function
         import json_model
         return json_model.model_checker_from_json(
-            model, loose_int=loose_int, loose_float=loose_float, predef=predef, extend=extend,
+            model, loose_int=loose_int, loose_float=loose_float, predef=predef,
+            extend=extend, caps=caps,
         )
         return checker
     except BaseException as e:
@@ -830,7 +832,7 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
                         cache=args.cache, mapping=args.map,
                         level=args.level,
                         # hardcoded expectations
-                        loose_int=True, loose_float=True, extend=True,
+                        loose_int=True, loose_float=True, extend=True, caps=False,
                     )
 
                     n_case_tests_ok = 0

@@ -1,6 +1,7 @@
 # JSON Schema Utils Backlog
 
-- [ ] jsts: investigate and fix current `patternProperties` failures
+- [x] jsts: fix issues related to stricter backend checks
+- [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
