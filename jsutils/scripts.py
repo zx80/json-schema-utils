@@ -716,7 +716,7 @@ def json_schema_to_python_checker(
             log.debug(e, exc_info=True)
         if not resilient:
             raise
-        log.warning("using all-pass checker for {name} (resilient mode)")
+        log.warning(f"using all-pass checker for {name} (resilient mode)")
         return lambda _: True
 
 def jsu_runner(xargs: list[str]|None = None) -> int:
