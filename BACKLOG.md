@@ -1,6 +1,5 @@
 # JSON Schema Utils Backlog
 
-- [x] jsts: fix issues related to stricter backend checks
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
