@@ -1,6 +1,5 @@
 # JSON Schema Utils Backlog
 
-- [x] front: add nope mode to skip jmc call from jsu-compile
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)

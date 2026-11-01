@@ -1,5 +1,9 @@
 # JSON Schema Utils Versions
 
+## JSU 0.9.21 on 2026-11-01
+
+- front: add nope mode to skip jmc call from `jsu-compile`
+
 ## JSU 0.9.20 on 2026-09-18
 
 - jsts: fix issues related to stricter backend checks
