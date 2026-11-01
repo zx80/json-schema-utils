@@ -525,8 +525,9 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
 
     # schema to model conversion
     arg("--schema-version", "-V", dest="sversion", type=int, default=0,
-        help="set JSON Schema version")
+        help="set input JSON Schema version")
 
+    # conversion options
     arg("--id", action="store_true", default=False,
         help="enable $id lookup")
     arg("--no-id", dest="id", action="store_false",
@@ -565,11 +566,11 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
 
     # how to run the jmc backend
-    arg("--backend", "-b", type=str, default="p", choices=["p", "f"],
-        help="how to run the backend: p=process, f=function")
+    arg("--backend", "-b", type=str, default="p", choices=["p", "f", "n"],
+        help="how to run the backend: p=process, f=function, n=nope")
 
     # forwarded to backend
-    arg("--out", "-o", default=None, help="set output file")
+    arg("--out", "-o", default="-", help="set output file")
     arg("--regex-engine", "-re", default=None, help="set regex engine")
     arg("--precompiled", default=False, action="store_true", help="use precompiled C runtime")
     arg("--loose", default=True, action="store_true",
@@ -620,9 +621,20 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
         log.error(e, exc_info=args.level == logging.DEBUG)
         return 1  # conversion failed
 
-    # TODO
-    # - use standard input with jmc?
-    # - skip command and call jmc internal machinery directly in some cases?
+    if args.backend == "n":
+        log.info(f"direct model output to: {args.out if args.out else '-'}")
+        if args.out != "-" and not args.out.endswith(".model.json"):
+            log.warning(f"generated model file should have .model.json prefix: {args.output}")
+
+        smodel = json.dumps(model, sort_keys=args.sort_keys, indent=args.indent)
+
+        if args.out == "-":
+            print(smodel)
+        else:
+            with open(args.out, "w") as out:
+                print(smodel, file=out)
+
+        return 0
 
     # forward some options to back-end, but do not overwrite explicit options
     if args.format is None:
