@@ -25,15 +25,16 @@ class Resolver:
             src, dst = m.split("=", 1)
             self._mapping[src] = dst
 
-    def urlHash(self, url: str) -> str:
+    def _urlHash(self, url: str) -> str:
         return hashlib.sha3_256(url.encode()).hexdigest()[:16]
 
     def get(self, url: str) -> JsonSchema:
+        """Download JSON from URL."""
 
         js, loaded, filed, cached, cfn = None, False, False, False, None
 
         if self._cache is not None:  # we cache the **initial** url only
-            uh = self.urlHash(url)
+            uh = self._urlHash(url)
             cfn = f"{self._cache}/{uh}.json"
             try:
                 with open(cfn) as f:

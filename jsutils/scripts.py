@@ -435,6 +435,7 @@ def jsu_model(xargs: list[str]|None = None) -> int:
     ap_common(arg)
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
+    arg("--download", "-dl", default=False, action="store_true", help="download model urls")
 
     arg("--id", action="store_true", default=False,
         help="enable $id lookup")
@@ -494,7 +495,7 @@ def jsu_model(xargs: list[str]|None = None) -> int:
                 vocabularize=args.vocab, modernize=args.modernize,
                 simpler=args.simple, typer=args.type, resilient=args.resilient,
                 version=args.sversion, resolver=resolver,
-                level=args.level,
+                level=args.level, download=args.download,
             )
         except Exception as e:
             log.error(e, exc_info=args.level == logging.DEBUG)
@@ -564,6 +565,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     # remote schemas
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
+    arg("--download", "-dl", default=False, action="store_true", help="download model urls")
 
     # how to run the jmc backend
     arg("--backend", "-b", type=str, default="p", choices=["p", "f", "n"],
@@ -614,7 +616,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
             vocabularize=args.vocab, modernize=args.modernize,
             typer=args.type, simpler=args.simple, resilient=args.resilient,
             version=args.sversion, resolver=resolver,
-            level=args.level,
+            level=args.level, download=args.download,
         )
     except Exception as e:
         log.error(f"schema to model conversion for {args.schema} failed")

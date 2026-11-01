@@ -2163,6 +2163,7 @@ def schema_to_model(
             typer: bool = False, simpler: bool = False, fix: bool = True,
             use_id: bool = False, strict: bool = True, resolve: bool = True,
             resilient: bool = False, version: int = 0, level: int = logging.INFO,
+            download: bool = False,
         ):
     """Convert a JSON Schema to a JSON Model."""
 
@@ -2178,7 +2179,7 @@ def schema_to_model(
         if sid in ID2MODEL:
             url = ID2MODEL[sid][0 if fix else 1]
             if url is not None:
-                model = f"${url}"
+                model = resolver.get(url) if download else f"${url}"
                 log.info(f"using predefined model for {sid}: {model}")
         else:
             log.debug(f"no predefined model for {sid}")
