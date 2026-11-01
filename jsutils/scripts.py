@@ -570,7 +570,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
         help="how to run the backend: p=process, f=function, n=nope")
 
     # forwarded to backend
-    arg("--out", "-o", default="-", help="set output file")
+    arg("--out", "-o", default=None, help="set output file")
     arg("--regex-engine", "-re", default=None, help="set regex engine")
     arg("--precompiled", default=False, action="store_true", help="use precompiled C runtime")
     arg("--loose", default=True, action="store_true",
@@ -623,12 +623,12 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
 
     if args.backend == "n":
         log.info(f"direct model output to: {args.out if args.out else '-'}")
-        if args.out != "-" and not args.out.endswith(".model.json"):
-            log.warning(f"generated model file should have .model.json prefix: {args.output}")
+        if args.out is not None and not args.out.endswith(".model.json"):
+            log.warning(f"generated model file should have .model.json prefix: {args.out}")
 
         smodel = json.dumps(model, sort_keys=args.sort_keys, indent=args.indent)
 
-        if args.out == "-":
+        if args.out in (None, "", "-"):
             print(smodel)
         else:
             with open(args.out, "w") as out:
