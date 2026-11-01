@@ -1,6 +1,5 @@
 # JSON Schema Utils Backlog
 
-- [x] compile: fix stupid issue with overriding -o
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
