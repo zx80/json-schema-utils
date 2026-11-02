@@ -1,5 +1,6 @@
 # JSON Schema Utils Backlog
 
+- [ ] front: add `jsu` front with subcommands?
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
