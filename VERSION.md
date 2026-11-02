@@ -1,5 +1,9 @@
 # JSON Schema Utils Versions
 
+## JSU 0.9.23 on 2026-11-02
+
+- convert: allow to download target model urls through resolver
+
 ## JSU 0.9.22 on 2026-11-01
 
 - compile: fix stupid issue with overriding -o

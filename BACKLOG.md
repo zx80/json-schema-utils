@@ -1,6 +1,5 @@
 # JSON Schema Utils Backlog
 
-- [x] convert: allow to download target model urls through resolver
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
