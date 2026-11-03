@@ -45,6 +45,7 @@ jsu-model = "jsutils:jsu_model"
 jsu-compile = "jsutils:jsu_compile"
 jsu-test-runner = "jsutils:jsu_runner"
 jsu-jtd = "jsutils:jsu_jtd"
+jsu = "jsutils:jsu_command"
 
 [project.urls]
 repository = "https://github.com/zx80/json-schema-utils"

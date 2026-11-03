@@ -893,7 +893,7 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
     # tell whether all was well
     return 2 if n_unsafe else 1 if n_tests_failed else 0
 
-def jsu_jtd(xargs: list[str]|None = None):
+def jsu_jtd(xargs: list[str]|None = None) -> int:
 
     logging.basicConfig()
 
@@ -936,3 +936,46 @@ def jsu_jtd(xargs: list[str]|None = None):
     output.close()
 
     return 0
+
+#
+# master jsu command
+#
+
+_COMMANDS: dict[str, Callable[[list[str]|None], int]]
+
+def jsu_help(xargs: list[str]) -> int:
+    if xargs:
+        cmd, xargs = xargs[0], xargs[1:]
+        msg = "help " if cmd == "help" else ""
+    else:
+        cmd, msg = "help", ""
+
+    if cmd == "help" or cmd not in _COMMANDS:
+        print(f"Usage: jsu {msg}[ {' | '.join(_COMMANDS)} ]")
+        return 0 if cmd == "help" or cmd in _COMMANDS else 1
+    else:
+        return _COMMANDS[cmd](["--help"])
+
+_COMMANDS = {
+    "help": jsu_help,
+    "compile": jsu_compile,
+    "model": jsu_model,
+    "inline": jsu_inline,
+    "simpler": jsu_simpler,
+    "check": jsu_check,
+    "stats": jsu_stats,
+    "pretty": jsu_pretty,
+    "runner": jsu_runner,
+    "jtd": jsu_jtd,
+}
+
+def jsu_command(xargs: list[str]|None = None) -> int:
+    if xargs is None:
+        xargs = sys.argv
+    if len(xargs) < 2 or xargs[1] in ("-h", "--help"):
+        # global help
+        jsu_help([""])
+        return 0
+    else:
+        cmd, args = xargs[1], xargs[2:]
+        return _COMMANDS.get(cmd, jsu_help)(args)
