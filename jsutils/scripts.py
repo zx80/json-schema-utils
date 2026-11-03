@@ -976,7 +976,7 @@ def jsu_command(xargs: list[str]|None = None) -> int:
         # global help
         jsu_help([""])
         return 0
-    elif xargs[1] == "--version":
+    elif xargs[1] in ("--version", "-v"):
         print(f"JSU version {jsu_version(True)}")
         return 0
     else:
