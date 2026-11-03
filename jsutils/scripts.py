@@ -976,6 +976,9 @@ def jsu_command(xargs: list[str]|None = None) -> int:
         # global help
         jsu_help([""])
         return 0
+    elif xargs[1] == "--version":
+        print(f"JSU version {jsu_version(True)}")
+        return 0
     else:
         cmd, args = xargs[1], xargs[2:]
         return _COMMANDS.get(cmd, jsu_help)(args)
