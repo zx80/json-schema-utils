@@ -1,5 +1,11 @@
 # JSON Schema Utils Versions
 
+## JSU 0.9.24 on 2026-11-07
+
+- front: add `jsu` front with subcommands
+- front: support `jsu --version` and `jsu -v`
+- dev: mostly comply with "ruff" advices, or ignore them
+
 ## JSU 0.9.23 on 2026-11-02
 
 - convert: allow to download target model urls through resolver
