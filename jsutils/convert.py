@@ -74,7 +74,7 @@ def toconst(val):
         case dict():
             return { f"_{p}": toconst(v) for p, v in val.items() }
         case _:
-            raise Exception(f"unexpected value for a constant: {val}")
+            raise JSUError(f"unexpected value for a constant: {val}")
 
 def esc(s):
     """Escape a string if necessary."""
@@ -153,7 +153,7 @@ def buildModel(
         if sharp:
             if "description" in sharp:
                 m["#"] = sharp["description"]
-            if FORMAT_HINT in sharp and sharp[FORMAT_HINT]:  # only forward on true
+            if sharp.get(FORMAT_HINT):  # only forward on true
                 m["#.format"] = sharp[FORMAT_HINT]
         if is_root and defs:
             m["$"] = defs
@@ -227,9 +227,9 @@ def split_schema(schema: dict[str, Any]) -> dict[str, dict[str, Any]]:
                     schemas["object"]["enum"].append(v)
                 # else just ignore incompatible value…
             # if possible remove empty list or switch to const
-            for t in schemas:
-                if t != "" and "enum" in schemas[t]:
-                    enums = schemas[t]["enum"]
+            for t, tschema in schemas.items():
+                if t != "" and "enum" in tschema:
+                    enums = tschema["enum"]
                     if len(enums) == 0:
                         schemas[t] = False
                     elif len(enums) == 1:
@@ -387,9 +387,8 @@ def handleUnevaluatedItems(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
             if not isinstance(s, dict):
                 covered = False
                 break
-            if has_all(s, "prefixItems", "maxItems"):
-                if len(s["prefixItems"]) >= s["maxItems"]:
-                    continue
+            if has_all(s, "prefixItems", "maxItems") and len(s["prefixItems"]) >= s["maxItems"]:
+                continue
             if not has_any(s, "items", "unevaluatedItems"):
                 covered = False
                 break
@@ -701,7 +700,7 @@ ID_TO_PATH: dict[str, str] = {}
 
 def reset():
     """Reset global stuff."""
-    global CURRENT_SCHEMA, SCHEMA, IDS, RENAMES, N_RENAMES, IDS_STACK
+    global CURRENT_SCHEMA, SCHEMA, IDS, RENAMES, N_RENAMES, ID_TO_PATH
     CURRENT_SCHEMA, SCHEMA = None, None
     IDS, ID_TO_PATH, RENAMES, N_RENAMES = {}, {}, {}, 0
 
@@ -860,7 +859,7 @@ def schema2model(
             sharp[prop] = schema[prop]
 
     # handle some $id
-    lid = schema["$id"] if "$id" in schema else schema["id"] if "id" in schema else None
+    lid = schema["$id"] if "$id" in schema else schema.get("id", None)
     if lid:
         # FIXME uniqueness?
         if re.match("#[^/]*$", lid):
@@ -972,7 +971,7 @@ def schema2model(
             del schema["if"]
             # possibly add type to help convertion
             if isinstance(sif, dict) and "type" not in sif:
-                for t in TYPED_KEYWORDS.keys():
+                for t in TYPED_KEYWORDS:
                     if only(sif, *TYPED_KEYWORDS[t], *IGNORE):
                         sif["type"] = t
                         break
@@ -1564,7 +1563,7 @@ def schema2model(
             assert isinstance(enums, list)
             enums = list(filter(lambda f: isinstance(f, (int, float)), enums))
             # TODO filter with numerical constraints if any
-            models = sorted(set(f"={float(f)}" for f in enums))
+            models = sorted({ f"={float(f)}" for f in enums })
             match len(models):
                 case 0:
                     model = "$NONE"
@@ -1626,7 +1625,7 @@ def schema2model(
                 # FIXME numerically unsound
                 ivals = list(filter(lambda i: i % mo == 0, ivals))
             # generate model
-            models = sorted(set(f"={i}" for i in ivals))
+            models = sorted({ f"={i}" for i in ivals })
             match len(ivals):
                 case 0:
                     model = "$NONE"
@@ -1680,11 +1679,11 @@ def schema2model(
                             del subschema[kw]
                 # common misnamings
                 rename = { "minLength": "minItems", "maxLength": "maxItems" }
-                for kw in rename:
+                for kw, nkw in rename.items():
                     if kw in schema:
-                        if rename[kw] not in schema:
-                            log.warning(f"renaming {kw} to {rename[kw]} at [{spath}]")
-                            schema[rename[kw]] = schema[kw]
+                        if nkw not in schema:
+                            log.warning(f"renaming {kw} to {nkw} at [{spath}]")
+                            schema[nkw] = schema[kw]
                         else:
                             log.warning(f"removing useless {kw} at [{spath}]")
                         del schema[kw]
@@ -1833,18 +1832,16 @@ def schema2model(
                 log.warning(f"ignoring discriminator at [{spath}]")
                 del schema["discriminator"]
 
-            if fix:
+            if fix and not strict and "properties" in schema and isinstance(schema["properties"], dict):
                 # common misplacements, but not on a meta-schema!
-                if not strict and "properties" in schema and isinstance(schema["properties"], dict):
-                    properties = schema["properties"]
-                    if not is_probable_meta_schema(properties):
-                        for kw in ["additionalProperties", "unevaluatedProperties",
-                                   "minProperties", "maxProperties"]:
-                            if kw in properties:
-                                if kw not in schema:
-                                    log.warning(f"moving misplaced {kw} at [{spath}.properties]")
-                                    schema[kw] = properties[kw]
-                                    del properties[kw]
+                properties = schema["properties"]
+                if not is_probable_meta_schema(properties):
+                    for kw in ["additionalProperties", "unevaluatedProperties",
+                               "minProperties", "maxProperties"]:
+                        if kw in properties and kw not in schema:
+                            log.warning(f"moving misplaced {kw} at [{spath}.properties]")
+                            schema[kw] = properties[kw]
+                            del properties[kw]
 
             # sanity check
             doubt(only(schema, "type", "properties", "additionalProperties", "required",
@@ -2194,7 +2191,7 @@ def schema_to_model(
             assert isinstance(url, str)
             # run all passes
             if resolve and isinstance(schema, dict):
-                log.debug(f"resolving external refs")
+                log.debug("resolving external refs")
                 schema = resolveExternalRefs(
                     schema, url=url, version=version, resolver=resolver,
                     vocabularize=vocabularize, modernize=modernize, level=level,
@@ -2216,5 +2213,5 @@ def schema_to_model(
             log.error(f"schema to model conversion for {schema_name} failed: {e}")
             if resilient:
                 model = "$ANY"
-            raise e
+            raise
     return model

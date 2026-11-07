@@ -49,3 +49,7 @@ jsu = "jsutils:jsu_command"
 
 [project.urls]
 repository = "https://github.com/zx80/json-schema-utils"
+
+[tool.ruff.lint]
+# ruff rules are not always right
+ignore = ["BLE001", "B006", "I001", "SIM114", "SIM115", "PIE790"]

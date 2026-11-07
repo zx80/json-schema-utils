@@ -40,7 +40,7 @@ def oldDraftFlt(schema: JsonSchema, path: SchemaPath) -> bool:
         if (isinstance(ts, list) and "any" in ts or
             isinstance(ts, str) and ts == "any"):
             schema["type"] = sorted(ALL_TYPES)
-        elif isinstance(ts, list) and any(map(lambda t: isinstance(t, dict), ts)):
+        elif isinstance(ts, list) and any(isinstance(t, dict) for t in ts):
             # full type in type list is translated as anyOf
             del schema["type"]
             tl = [ {"type": t} if isinstance(t, str) else t for t in ts ]

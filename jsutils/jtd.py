@@ -3,9 +3,7 @@
 #
 
 import copy
-import json
 import logging
-import sys
 import traceback
 
 from .utils import Jsonable, log
@@ -102,7 +100,7 @@ def _valid_jtd_schema(schema: Jsonable, root: bool, defs: set[str], path: list[s
             assert isinstance(dis, str) and len(dis) > 0, f"JTD object tag is non empty string at {spath}.discriminator"
             assert isinstance(mapping, dict), f"JTD discriminator mapping is an object at {spath}.mapping"
             for tag, sub in mapping.items():
-                lval = spath + f".mapping.{tag}"
+                lpath = spath + f".mapping.{tag}"
                 assert isinstance(tag, str), f"JTD mapping tag is a string at {lpath}"
                 assert isinstance(sub, dict), f"JTD mapping value is an object at {lpath}"
                 assert len({"properties", "optionalProperties"} & set(sub)) > 0, f"JTD mapping value is properties at {lpath}."

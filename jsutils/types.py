@@ -1,6 +1,6 @@
 import json
 
-from .utils import JsonSchema, SchemaPath, Jsonable, log, only, IGNORE
+from .utils import JsonSchema, SchemaPath, Jsonable, log, only, IGNORE, JSUError
 from .recurse import recurseSchema, goFlt, noRwt
 
 type Types = int
@@ -50,7 +50,7 @@ def val2type(value: Jsonable) -> Types:
     if tvalue in TYPE2TYPE:
         return TYPE2TYPE[tvalue]
     else:
-        raise Exception(f"unexpected constant value for typing: {value}")
+        raise JSUError(f"unexpected constant value for typing: {value}")
 
 NAME2TYPE: dict[str, Types] = {
     "null": NULL,
@@ -69,7 +69,7 @@ def name2type(name: str) -> Types:
     if name in NAME2TYPE:
         return NAME2TYPE[name]
     else:
-        raise Exception(f"unexpected type name for typing: {name}")
+        raise JSUError(f"unexpected type name for typing: {name}")
 
 # TODO move as a context?
 _types: dict[SchemaPath, Types] = {}
@@ -145,7 +145,7 @@ def typeFlt(schema: JsonSchema, path: SchemaPath) -> bool:
                     ltypes |= name2type(tn)  # type: ignore
                 types &= ltypes
             else:
-                raise Exception("unexpected prop \"type\" value: {stype}")
+                raise JSUError("unexpected prop \"type\" value: {stype}")
 
         if "enum" in schema:
             values = schema["enum"]
@@ -165,7 +165,7 @@ def typeFlt(schema: JsonSchema, path: SchemaPath) -> bool:
                     if ltypes & types == 0:
                         todelete.append(i)
                 if todelete:
-                    for i in reversed(sorted(todelete)):
+                    for i in sorted(todelete, reverse=True):
                         del values[i]
                     schema["enum"] = values
                     todo.add(path)
@@ -207,8 +207,7 @@ def typeFlt(schema: JsonSchema, path: SchemaPath) -> bool:
         if "$dynamicRef" in schema:
             name = schema["$dynamicRef"]
             assert isinstance(name, str)
-            if name.startswith("#"):
-                name = name[1:]
+            name = name.removeprefix("#")
             if name not in dynRefs:
                 dynRefs[name] = set()
             dynRefs[name].add(path)
@@ -266,8 +265,7 @@ def updateTypes(schema: JsonSchema, path: SchemaPath):
     if "$dynamicRef" in schema:
         name = schema["$dynamicRef"]
         assert isinstance(name, str)  # pyright
-        if name.startswith("#"):
-            name = name[1:]
+        name = name.removeprefix("#")
         if name in dynAnchors:
             ntypes = NONE
             for p in sorted(dynAnchors[name]):
@@ -289,9 +287,8 @@ def updateTypes(schema: JsonSchema, path: SchemaPath):
             _types[if_path] = types & if_types  # type: ignore
 
     # NOTE propagate only if type-only
-    if "not" in schema and isinstance(schema["not"], dict):
-        if only(schema["not"], "type", *IGNORE):
-            types &= ~ _types[path + ("not",)]
+    if "not" in schema and isinstance(schema["not"], dict) and only(schema["not"], "type", *IGNORE):
+        types &= ~ _types[path + ("not",)]
 
     # on changes keep iterating
     if types != init_types:

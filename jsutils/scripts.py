@@ -1,6 +1,7 @@
 import sys
 import os
-from typing import Any, Callable
+from typing import Any
+from collections.abc import Callable
 import copy
 import json
 import hashlib
@@ -16,8 +17,8 @@ import json_model
 logging.basicConfig()
 
 from .schemas import Schemas
-from .utils import log, JSUError, JsonSchema, Jsonable, FORMAT_HINT
-from .recurse import hasDirectRef, recurseSchema
+from .utils import log, JSUError, JsonSchema, Jsonable
+from .recurse import hasDirectRef
 from .inline import inlineRefs
 from .simplify import simplifySchema, scopeDefs
 from .stats import json_schema_stats, json_metrics, normalize_ods
@@ -101,7 +102,7 @@ def read_schema(arg: str|None):
         if os.path.exists(file):
             with open(file) as f:
                 return json.load(f)
-    raise Exception(f"no such schema: {arg}")
+    raise JSUError(f"no such schema: {arg}")
 
 def jsu_inline(xargs: list[str]|None = None) -> int:
     """Inline command entry point."""
@@ -271,7 +272,7 @@ def jsu_check(xargs: list[str]|None = None) -> int:
                 jschema, format_checker=jsonschema.FormatChecker())
 
             def check(data):
-                errors = list(e.message for e in schema.iter_errors(data))
+                errors = [ e.message for e in schema.iter_errors(data) ]
                 return { "passed": len(errors) == 0, "errors": errors }
 
         elif args.engine == "jmc":
@@ -658,7 +659,7 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     # also forward verbosity options, debug wins
     if args.level == logging.DEBUG:
         args.others.insert(0, "--debug")
-    if args.level == logging.WARN:
+    if args.level == logging.WARNING:
         args.others.insert(0, "--quiet")
 
     # compile intermediate model through a temporary file
@@ -725,7 +726,6 @@ def json_schema_to_python_checker(
             model, loose_int=loose_int, loose_float=loose_float, predef=predef,
             extend=extend, caps=caps,
         )
-        return checker
     except BaseException as e:
         log.error(f"schema compilation failed: {e}")
         if level == logging.DEBUG:
@@ -791,8 +791,6 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
     args = ap.parse_args(xargs)
 
     ap_common_action(args)
-
-    resolver = Resolver(cache=args.cache, mapping=args.map)
 
     CASES_MODEL = [
         {

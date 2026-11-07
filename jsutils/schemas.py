@@ -1,7 +1,5 @@
-from typing import Callable
-from pathlib import Path
+from collections.abc import Callable
 from urllib.parse import urlsplit
-import json
 from .utils import JsonSchema, SchemaPath, JSUError, log
 from .recurse import recurseSchema
 from .resolver import Resolver
@@ -72,9 +70,8 @@ class Schemas:
 
         if isinstance(schema, dict):
             for prop in ("$id", "id"):
-                if prop in schema:
-                    if url != schema[prop]:
-                        log.warning(f"{prop}={schema[prop]} / {url}")
+                if prop in schema and url != schema[prop]:
+                    log.warning(f"{prop}={schema[prop]} / {url}")
                     # del schema["$id"]  # FIXME?
 
         # NOTE intermediate to avoid an infinite recursion

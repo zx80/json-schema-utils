@@ -31,7 +31,7 @@ class Resolver:
     def get(self, url: str) -> JsonSchema:
         """Download JSON from URL."""
 
-        js, loaded, filed, cached, cfn = None, False, False, False, None
+        js, loaded, cached, cfn = None, False, False, None
 
         if self._cache is not None:  # we cache the **initial** url only
             uh = self._urlHash(url)
@@ -41,7 +41,7 @@ class Resolver:
                     js = json.load(f)
                 log.info(f"# loaded from cache: {url}")
                 loaded, cached = True, True
-            except Exception as e:
+            except Exception:
                 log.debug(f"not found in cache: {url}")
         else:
             uh = None
@@ -55,14 +55,14 @@ class Resolver:
                     break  # stop on first match
 
         if not loaded and (not url.startswith(HTTP_URL) and not url.startswith(HTTPS_URL)):
-            fn = url[len(FILE_URL):] if url.startswith(FILE_URL) else url
+            fn = url.removeprefix(FILE_URL)
             for suffix in ("", ".json", ".schema.json"):
                 fns = fn + suffix
                 if Path(fns).exists():
                     with open(fns) as f:
                         js = json.load(f)
                     log.info(f"# loaded from file: {url}")
-                    loaded, filed = True, True
+                    loaded = True
                     break
 
         if not loaded:

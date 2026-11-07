@@ -5,9 +5,9 @@
 # this is a meta-schema specific stuff
 #
 
-from .utils import JsonSchema, SchemaPath, log
-from .resolver import Resolver
 from .recurse import recurseSchema, goFlt
+from .resolver import Resolver
+from .utils import JsonSchema, SchemaPath, log
 
 V8 = "https://json-schema.org/draft/2019-09"
 V9 = "https://json-schema.org/draft/2020-12"
@@ -123,10 +123,10 @@ def getMetaSchemaKeywords(
         return {}
     assert isinstance(schema, dict)
     if "$schema" not in schema:
-        log.info(f"no $schema found")
+        log.info("no $schema found")
         return {}
     ms_url = schema["$schema"]
-    assert isinstance(ms_url, str), f"$schema is a string"
+    assert isinstance(ms_url, str), "$schema is a string"
 
     ms_version: int = SCHEMA_VERSION.get(ms_url, 0)
     ms_ms_version: int = 0
@@ -166,7 +166,7 @@ def getMetaSchemaKeywords(
         for k in VOCABULARIES[voc]:
             keywords[k] = active
         # whether to assert formats, with assertion a priority if set
-        if voc.endswith("/format") or voc.endswith("/format-assertion"):
+        if voc.endswith(("/format", "/format-assertion")):
             keywords[_FORMAT] = active
         elif voc.endswith("/format-annotation") and active and _FORMAT not in keywords:
             keywords[_FORMAT] = False

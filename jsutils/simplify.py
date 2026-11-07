@@ -8,10 +8,10 @@ import json
 import re
 
 from .utils import JsonSchema, SchemaPath, JSUError
-from .utils import only, schemapath_to_urlpath, decode_url, encode_url, has_none, is_any
+from .utils import only, schemapath_to_urlpath, decode_url, encode_url, has_none
 from .utils import ALL_TYPES, IGNORE
 from .recurse import recurseSchema
-from .inline import mergeProperty, mergeSchemas
+from .inline import mergeSchemas
 
 log = logging.getLogger("simpler")
 # log.setLevel(logging.DEBUG)
@@ -253,7 +253,7 @@ def simplifySchema(
                         elif isinstance(js, list):
                             js = js[int(segment)]
                         else:
-                            raise Exception(f"unexpected type while following {dest}")
+                            raise JSUError(f"unexpected type while following {dest}")
                     if isinstance(js, bool):
                         del local["$ref"]
                         if not js:
@@ -301,7 +301,7 @@ def simplifySchema(
         if isinstance(dynroot, str):
             if path and "$dynamicAnchor" in local and local["$dynamicAnchor"] == dynroot:
                 log.error(f"Ooops: multiple root dynamic anchor: {dynroot}")
-                raise Exception("FIXME!")
+                raise JSUError("FIXME!")
 
             if "$dynamicRef" in local:
                 dref = local["$dynamicRef"]
@@ -491,13 +491,12 @@ def simplifySchema(
             #         local["allOf"].append(notnots)
             #     # else keep it
 
-        if "unevaluatedProperties" in local:
-            up = local["unevaluatedProperties"]
-            # NOTE cannot remove up as it may be shadowing another up
-            # thus cleanup is delayed to convert
-            if ("additionalProperties" not in local and
-                  has_none(local, "allOf", "anyOf", "oneOf", "$ref", "$dynamicRef",
-                           "if", "then", "else", "patternProperties")):
+        # NOTE cannot remove up as it may be shadowing another up
+        # thus cleanup is delayed to convert
+        # up = local["unevaluatedProperties"]
+        if ("unevaluatedProperties" in local and "additionalProperties" not in local and
+            has_none(local, "allOf", "anyOf", "oneOf", "$ref", "$dynamicRef",
+                     "if", "then", "else", "patternProperties")):
                 # FIXME consider more in-place stuff? if/then/else
                 local["additionalProperties"] = local.pop("unevaluatedProperties")
                 # NOTE cannot move to additionalProperties in constructed cases
@@ -512,10 +511,9 @@ def simplifySchema(
         # type/props…
         if "type" in local and isinstance(local["type"], str):
             stype = local["type"]
-            if stype == "number":
-                if "multipleOf" in local and local["multipleOf"] == 1:
-                    local["type"] = "integer"
-                    del local["multipleOf"]
+            if stype == "number" and "multipleOf" in local and local["multipleOf"] == 1:
+                local["type"] = "integer"
+                del local["multipleOf"]
             if stype == "integer":
                 if "multipleOf" in local and local["multipleOf"] == 1:
                     del local["multipleOf"]
@@ -630,9 +628,8 @@ def simplifySchema(
             elif isinstance(local["maxContains"], float):
                 local["maxContains"] = int(local["maxContains"])
 
-        if remove_all_types and "type" in local and isinstance(local["type"], list):
-            if len(local["type"]) == 7:
-                del local["type"]
+        if remove_all_types and "type" in local and isinstance(local["type"], list) and len(local["type"]) == 7:
+            del local["type"]
 
         return local
 
@@ -791,7 +788,7 @@ def scopeDefs(schema: JsonSchema, version: int|None = None, level: int = logging
 
     # ensure definitions root
     assert isinstance(schema, dict)
-    defn, idn = _defId(schema)
+    defn, _ = _defId(schema)
 
     if defn is None:
         defn = "$defs" if not version or version >= 8 else "definitions"
@@ -825,7 +822,7 @@ def scopeDefs(schema: JsonSchema, version: int|None = None, level: int = logging
                         elif isinstance(jdest, list):
                             jdest = jdest[int(segment)]  # TODO proper exception
                         else:
-                            raise Exception(f"cannot follow path {dpath} at {segment}")
+                            raise JSUError(f"cannot follow path {dpath} at {segment}")
                     global _SUBCOUNT
                     name = f"_psub_{_SUBCOUNT}_"
                     _SUBCOUNT += 1

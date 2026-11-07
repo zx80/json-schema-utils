@@ -3,13 +3,11 @@ import copy
 import math
 import re
 from urllib.parse import urlsplit, urljoin
-import requests
-import hashlib
 import json
 import logging
 
 from .utils import JsonSchema, SchemaPath, JSUError, KEYWORD_TYPE, NO_SEMANTICS
-from .utils import only, is_abs_url, schemapath_to_urlpath, is_any, is_none, has_any
+from .utils import is_abs_url, schemapath_to_urlpath, is_any, is_none, has_any
 from .schemas import Schemas
 from .restruct import modernizeOldDraft
 from .recurse import recurseSchema
@@ -353,7 +351,7 @@ def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
                 pir = itr
                 itr = refschema.pop("additionalItems", True)
 
-            common = min(len(pil), len(pir))
+            # common = min(len(pil), len(pir))
             extent = max(len(pil), len(pir))
             # log.debug(f"IN1 pil={pil} itl={itl}")
             # log.debug(f"IN2 pir={pir} itr={itr}")
@@ -365,12 +363,10 @@ def mergeSchemas(schema: JsonSchema, refschema: JsonSchema) -> JsonSchema:
                 # commons
                 pili = pil[i] if i < len(pil) else True
                 piri = pir[i] if i < len(pir) else True
-                if not is_any(pili):
-                    if not is_any(pili):
-                        lpi.append(pili)
-                if not is_any(piri) and piri != pili:
-                    if not is_any(piri):
-                        lpi.append(piri)
+                if not is_any(pili) and not is_any(pili):
+                    lpi.append(pili)
+                if not is_any(piri) and piri != pili and not is_any(piri):
+                    lpi.append(piri)
                 # handle items
                 if i >= len(pil):
                     if is_none(itl):  # truncate!
@@ -560,7 +556,7 @@ def resolveExternalRefs(
     externs: int = 0
 
     # url $id stack
-    pushed: list[tuple] = [ tuple() ]
+    pushed: list[tuple] = [ () ]
     urls: list[str] = [ url ]
 
     # whether to cleanup ids
@@ -753,7 +749,7 @@ def resolveExternalRefs(
 
         return rwtScanPop(local, p)
 
-    log.debug(f"initial scan")
+    log.debug("initial scan")
     # first pass to populate url_path
     keep_id = True
     schema = recurseSchema(schema, ".", flt=fltExtRef, rwt=rwtScanPop, def_first=True)
@@ -767,7 +763,7 @@ def resolveExternalRefs(
 
     while changed:
         changed = False
-        for name in list(sorted(schema[defs].keys())):  # type: ignore
+        for name in sorted(schema[defs].keys()):  # type: ignore
             if name in processed:
                 continue
             processed.add(name)

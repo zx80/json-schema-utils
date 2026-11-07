@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 from urllib.parse import quote, unquote
 import logging
 import sys
@@ -53,9 +53,9 @@ META_KEYS = NO_SEMANTICS + [
 
 IGNORE = META_KEYS + ["$defs", "definitions"]
 
-for k in TYPED_KEYWORDS.keys():
-    for n in TYPED_KEYWORDS[k]:
-        KEYWORD_TYPE[n] = k
+for t, kw in TYPED_KEYWORDS.items():
+    for n in kw:
+        KEYWORD_TYPE[n] = t
 
 
 class JSUError(BaseException):
@@ -169,6 +169,4 @@ def is_none(schema: JsonSchema) -> bool:
     if isinstance(schema, bool):
         return not schema
     assert isinstance(schema, dict)
-    if "type" in schema and isinstance(schema["type"], list) and not schema["type"]:
-        return True
-    return False
+    return "type" in schema and isinstance(schema["type"], list) and not schema["type"]

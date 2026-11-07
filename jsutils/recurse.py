@@ -1,5 +1,4 @@
 import logging
-from typing import Any
 from .utils import JsonSchema, SchemaPath, FilterFun, RewriteFun
 
 log = logging.getLogger("rec")
@@ -41,9 +40,8 @@ def _recSchema(
         return rwt(schema, path)
     assert isinstance(schema, dict), f"schema must be a dict: {type(schema).__name__}"
 
-    if def_first:
-        if isinstance(schema, dict):
-            recValue(schema, "$defs", "definitions")
+    if def_first and isinstance(schema, dict):
+        recValue(schema, "$defs", "definitions")
 
     # draft3 types… we are skipping disallow though
     if "type" in schema:
@@ -82,9 +80,8 @@ def _recSchema(
     schema = rwt(schema, path)
     assert isinstance(schema, (bool, dict))
 
-    if not def_first:
-        if isinstance(schema, dict):
-            recValue(schema, "$defs", "definitions")
+    if not def_first and isinstance(schema, dict):
+        recValue(schema, "$defs", "definitions")
 
     return schema
 

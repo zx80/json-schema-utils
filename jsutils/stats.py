@@ -2,7 +2,7 @@ from typing import Any
 import re
 from urllib.parse import unquote as url_unquote
 
-from .utils import JsonSchema, log
+from .utils import JsonSchema, log, JSUError
 
 #
 # FROM JSON MODE
@@ -69,7 +69,7 @@ def _json_metrics_rec(j, counts: dict[str, int]):
             counts["string"] += 1
             _json_metrics_rec(v, counts)
     else:
-        raise Exception(f"unexpected type: {type(j)}")
+        raise JSUError(f"unexpected type: {type(j)}")
 
 
 def json_metrics(j) -> dict[str, int]:
@@ -413,7 +413,7 @@ FORMAT_VERSIONS = {
 
 
 # add special version numbers
-for _, versions in SCHEMA_VERSION_GUESS.items():
+for versions in SCHEMA_VERSION_GUESS.values():
     if CURRENT_VERSION in versions:
         versions.append(NEXT_VERSION)
         versions.append(LATEST_VERSION)
@@ -421,7 +421,7 @@ for _, versions in SCHEMA_VERSION_GUESS.items():
 for f in FORMAT_ALL_VERSIONS:
     del FORMAT_VERSIONS[f]
 
-for _, versions in FORMAT_VERSIONS.items():
+for versions in FORMAT_VERSIONS.values():
     if CURRENT_VERSION in versions:
         versions.append(NEXT_VERSION)
         versions.append(LATEST_VERSION)
@@ -447,7 +447,7 @@ def guess_version(col: dict):
     else:
         versions = valid.difference(invalid)
 
-    col["<versions>"] = list(sorted(versions))
+    col["<versions>"] = sorted(versions)
 
     if not versions:
         collectErr(col, "incompatible version guesses", f"{keywords}", "$")
@@ -550,10 +550,9 @@ def check_regex(regex: str, collection, path):
             elif cu == ")":
                 pars -= 1
             elif cu == "|":
-                if pars == 0 and cp != "$" and cn != "^" and regex[0] == "^" and regex[-1] == "$":
-                    if not missing_par:
-                        collectErr(collection, "missing parentheses in regex", regex, path)
-                        missing_par = True  # report only once
+                if pars == 0 and cp != "$" and cn != "^" and regex[0] == "^" and regex[-1] == "$" and not missing_par:
+                    collectErr(collection, "missing parentheses in regex", regex, path)
+                    missing_par = True  # report only once
             elif cu in "*?":
                 chars -= 1
             elif cu == "+":
@@ -753,7 +752,7 @@ def getHints(
     hints = set()
 
     # handle direct hints
-    for prop in jdata.keys():
+    for prop in jdata:
         if prop in PROP_TO_TYPE:
             hints.add(PROP_TO_TYPE[prop])
 
@@ -858,7 +857,7 @@ class Defs:
 
     # vs unreachable?
     def unusedDefs(self):
-        return { p for p in self._uses.keys() if self._uses[p] == 0 }
+        return { p for p in self._uses if self._uses[p] == 0 }
 
 
 # maybe too much, it could collect the root and use the path when needed.
@@ -932,7 +931,7 @@ def _json_schema_stats_rec(
         collectErr(collection, "definition issue", "$defs/definitions mix", path)
 
     kdefs = "$defs" if "$defs" in jdata else "definitions"
-    ldefs = jdata[kdefs] if kdefs in jdata else None
+    ldefs = jdata.get(kdefs, None)
 
     if kdefs in jdata and not isinstance(jdata[kdefs], dict):
         collectErr(collection, "definition issue", f"unexpected type {typeof(ldefs)}", path)
@@ -970,9 +969,9 @@ def _json_schema_stats_rec(
     #
     # https://json-schema.org/draft-07/draft-handrews-json-schema-01#rfc.section.8.3
     # _All other properties in a "$ref" object MUST be ignored._
-    if "$ref" in jdata and 0 < collection["<version>"] <= 7:
-        if not set(jdata.keys()).issubset(IGNORABLE | {"$ref"}):
-            collectErr(collection, "ignore error", "adjacent keywords next to $ref", path)
+    if "$ref" in jdata and 0 < collection["<version>"] <= 7 and \
+        not set(jdata.keys()).issubset(IGNORABLE | {"$ref"}):
+        collectErr(collection, "ignore error", "adjacent keywords next to $ref", path)
 
     # scan all properties
     for prop, val in jdata.items():
@@ -1159,9 +1158,9 @@ def _json_schema_stats_rec(
             else:
                 log.warning(f"ignoring {prop} non-schema value")
 
-        if prop in SCHEMA_KEYS_VALUE_SCHEMA and prop in SCHEMA_KEYS_ARRAY_OF_SCHEMAS:
-            if not isinstance(val, (bool, dict, list, tuple)):
-                collectErr(collection, "unexpected type", f"{prop} / {typeof(val)}", lpath)
+        if prop in SCHEMA_KEYS_VALUE_SCHEMA and prop in SCHEMA_KEYS_ARRAY_OF_SCHEMAS and \
+            not isinstance(val, (bool, dict, list, tuple)):
+            collectErr(collection, "unexpected type", f"{prop} / {typeof(val)}", lpath)
 
         # special case for which we keep a (truncated) value
         if prop in SPECIAL_VALUES:
@@ -1250,21 +1249,18 @@ def _json_schema_stats_rec(
             else:
                 collectErr(collection, "non array enum", typeof(val), lpath)
 
-        elif prop in ("exclusiveMinimum", "exclusiveMaximum"):
-            if isinstance(val, bool):
-                collection[f"{prop}={str(val).lower()}"] += 1
+        elif prop in ("exclusiveMinimum", "exclusiveMaximum") and isinstance(val, bool):
+            collection[f"{prop}={str(val).lower()}"] += 1
 
-        if prop in SCHEMA_KEYS_ARRAY_OF_SCHEMAS:
-            # this silently ignores non lists
-            if isinstance(val, (list, tuple)):
-                collection[f"{prop}-count"] += len(val)
-                if len(val) == 0:
-                    collection[f"{prop}-empty"] += 1
-                elif len(val) == 1:
-                    collection[f"{prop}-one"] += 1
+        # this silently ignores non lists
+        if prop in SCHEMA_KEYS_ARRAY_OF_SCHEMAS and isinstance(val, (list, tuple)):
+            collection[f"{prop}-count"] += len(val)
+            if len(val) == 0:
+                collection[f"{prop}-empty"] += 1
+            elif len(val) == 1:
+                collection[f"{prop}-one"] += 1
 
-        if prop in ("type", "required", "enum") and isinstance(val, (list, tuple)):
-            if not distinct_values(val):
+        if prop in ("type", "required", "enum") and isinstance(val, (list, tuple)) and not distinct_values(val):
                 collectErr(collection, "non unique array", f"{prop} {len(val)}", lpath)
 
     # FIXME should follow references as well!
@@ -1345,7 +1341,7 @@ def json_schema_stats(jdata):
     _json_schema_stats_rec(jdata, "$", collection, defs)  # type: ignore
 
     # unused definitions
-    collection["<unused-defs>"] = list(sorted(defs.unusedDefs()))
+    collection["<unused-defs>"] = sorted(defs.unusedDefs())
 
     # do version guessing on the result
     guess_version(collection)
@@ -1367,7 +1363,7 @@ def json_schema_stats(jdata):
     # look for schema property name hints
     collection["<schema-prop>"] = False
     if isinstance(jdata, dict):
-        for prop in jdata.keys():
+        for prop in jdata:
             if prop in PROP_TO_TYPE and PROP_TO_TYPE[prop] in \
                     ["alone", "number", "string", "array", "object", "combi"]:
                 collection["<schema-prop>"] = True
@@ -1376,7 +1372,7 @@ def json_schema_stats(jdata):
     # cleanup sets
     for key in SETS:
         if key in collection:
-            collection[key] = list(sorted(collection[key]))
+            collection[key] = sorted(collection[key])
 
     return collection
 
