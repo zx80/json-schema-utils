@@ -2,8 +2,8 @@
 
 Versions:
 
-- JSTS: `3f05891cac5d51ffa068d7076d1372130e00c829`
-- JSU: `0.9.21 (jmc backend 2.0.65)` (Python backend)
+- JSTS: `245a45abc90190c0bff04d97e6d2b541b4bb9f12`
+- JSU: `0.9.23.dev6 (jmc backend 2.0.66.dev19)` (Python backend)
 
 Note about `format` with the Python backend:
 
@@ -45,7 +45,7 @@ Main test suite:
 - `minItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `minLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `minProperties.json`: errors=0 cases=2/2 (100.0%) tests=10/10 (100.0%, 0 fails)
-- `multipleOf.json`: errors=0 cases=5/5 (100.0%) tests=11/11 (100.0%, 0 fails)
+- `multipleOf.json`: errors=0 cases=6/6 (100.0%) tests=13/13 (100.0%, 0 fails)
 - `not.json`: errors=0 cases=9/9 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `oneOf.json`: errors=0 cases=11/11 (100.0%) tests=27/27 (100.0%, 0 fails)
 - `pattern.json`: errors=0 cases=2/3 (66.7%) tests=11/12 (91.7%, 1 fails)
@@ -61,7 +61,7 @@ Main test suite:
 - `unevaluatedProperties.json`: errors=0 cases=36/44 (81.8%) tests=119/129 (92.2%, 10 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=65/65 (100.0%, 0 fails)
 - `vocabulary.json`: errors=0 cases=2/2 (100.0%) tests=5/5 (100.0%, 0 fails)
-- summary: files=46 errors=1 cases=335/381 (87.9%) tests=1231/1288 (95.6%, 57 fails)
+- summary: files=46 errors=1 cases=336/382 (88.0%) tests=1233/1290 (95.6%, 57 fails)
 
 Format tests:
 
@@ -75,18 +75,18 @@ Format tests:
 - `format/idn-hostname.json`: errors=0 cases=0/2 (0.0%) tests=68/101 (67.3%, 33 fails)
 - `format/ipv4.json`: errors=0 cases=1/1 (100.0%) tests=41/41 (100.0%, 0 fails)
 - `format/ipv6.json`: errors=0 cases=1/1 (100.0%) tests=51/51 (100.0%, 0 fails)
-- `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=19/26 (73.1%, 7 fails)
-- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=14/21 (66.7%, 7 fails)
+- `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=24/32 (75.0%, 8 fails)
+- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=16/25 (64.0%, 9 fails)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=18/18 (100.0%, 0 fails)
-- `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=26/26 (100.0%, 0 fails)
+- `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=31/31 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=0/1 (0.0%) tests=52/56 (92.9%, 4 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=38/48 (79.2%, 10 fails)
 - `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=19/31 (61.3%, 12 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=28/48 (58.3%, 20 fails)
 - `format/uuid.json`: errors=0 cases=1/1 (100.0%) tests=29/29 (100.0%, 0 fails)
-- summary: files=21 errors=0 cases=9/28 (32.1%) tests=742/895 (82.9%, 153 fails)
+- summary: files=21 errors=0 cases=9/28 (32.1%) tests=754/910 (82.9%, 156 fails)
 
 ## Results for _draft2019-09_
 
@@ -122,7 +122,7 @@ Main test suite:
 - `minItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `minLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `minProperties.json`: errors=0 cases=2/2 (100.0%) tests=10/10 (100.0%, 0 fails)
-- `multipleOf.json`: errors=0 cases=5/5 (100.0%) tests=11/11 (100.0%, 0 fails)
+- `multipleOf.json`: errors=0 cases=6/6 (100.0%) tests=13/13 (100.0%, 0 fails)
 - `not.json`: errors=0 cases=9/9 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `oneOf.json`: errors=0 cases=11/11 (100.0%) tests=27/27 (100.0%, 0 fails)
 - `pattern.json`: errors=0 cases=2/2 (100.0%) tests=9/9 (100.0%, 0 fails)
@@ -138,7 +138,7 @@ Main test suite:
 - `unevaluatedProperties.json`: errors=0 cases=32/44 (72.7%) tests=115/129 (89.1%, 14 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=65/65 (100.0%, 0 fails)
 - `vocabulary.json`: errors=0 cases=2/2 (100.0%) tests=5/5 (100.0%, 0 fails)
-- summary: files=46 errors=0 cases=334/373 (89.5%) tests=1211/1257 (96.3%, 46 fails)
+- summary: files=46 errors=0 cases=335/374 (89.6%) tests=1213/1259 (96.3%, 46 fails)
 
 Format tests:
 
@@ -152,18 +152,18 @@ Format tests:
 - `format/idn-hostname.json`: errors=0 cases=0/2 (0.0%) tests=68/101 (67.3%, 33 fails)
 - `format/ipv4.json`: errors=0 cases=1/1 (100.0%) tests=41/41 (100.0%, 0 fails)
 - `format/ipv6.json`: errors=0 cases=1/1 (100.0%) tests=51/51 (100.0%, 0 fails)
-- `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=19/26 (73.1%, 7 fails)
-- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=14/21 (66.7%, 7 fails)
+- `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=24/32 (75.0%, 8 fails)
+- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=16/25 (64.0%, 9 fails)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=18/18 (100.0%, 0 fails)
-- `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=26/26 (100.0%, 0 fails)
+- `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=31/31 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=0/1 (0.0%) tests=52/56 (92.9%, 4 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=38/48 (79.2%, 10 fails)
 - `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=19/31 (61.3%, 12 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=28/48 (58.3%, 20 fails)
 - `format/uuid.json`: errors=0 cases=1/1 (100.0%) tests=29/29 (100.0%, 0 fails)
-- summary: files=21 errors=0 cases=9/28 (32.1%) tests=742/895 (82.9%, 153 fails)
+- summary: files=21 errors=0 cases=9/28 (32.1%) tests=754/910 (82.9%, 156 fails)
 
 ## Results for _draft7_
 
@@ -194,7 +194,7 @@ Main test suite:
 - `minItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `minLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `minProperties.json`: errors=0 cases=2/2 (100.0%) tests=10/10 (100.0%, 0 fails)
-- `multipleOf.json`: errors=0 cases=5/5 (100.0%) tests=11/11 (100.0%, 0 fails)
+- `multipleOf.json`: errors=0 cases=6/6 (100.0%) tests=13/13 (100.0%, 0 fails)
 - `not.json`: errors=0 cases=8/8 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `oneOf.json`: errors=0 cases=11/11 (100.0%) tests=27/27 (100.0%, 0 fails)
 - `pattern.json`: errors=0 cases=2/2 (100.0%) tests=9/9 (100.0%, 0 fails)
@@ -206,7 +206,7 @@ Main test suite:
 - `required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=65/65 (100.0%, 0 fails)
-- summary: files=37 errors=0 cases=258/258 (100.0%) tests=925/925 (100.0%, 0 fails)
+- summary: files=37 errors=0 cases=259/259 (100.0%) tests=927/927 (100.0%, 0 fails)
 
 Format tests:
 
@@ -219,17 +219,17 @@ Format tests:
 - `format/idn-hostname.json`: errors=0 cases=0/2 (0.0%) tests=68/101 (67.3%, 33 fails)
 - `format/ipv4.json`: errors=0 cases=1/1 (100.0%) tests=41/41 (100.0%, 0 fails)
 - `format/ipv6.json`: errors=0 cases=1/1 (100.0%) tests=51/51 (100.0%, 0 fails)
-- `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=19/26 (73.1%, 7 fails)
-- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=14/21 (66.7%, 7 fails)
+- `format/iri.json`: errors=0 cases=0/1 (0.0%) tests=24/32 (75.0%, 8 fails)
+- `format/iri-reference.json`: errors=0 cases=0/1 (0.0%) tests=16/25 (64.0%, 9 fails)
 - `format/json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `format/regex.json`: errors=0 cases=1/1 (100.0%) tests=18/18 (100.0%, 0 fails)
-- `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=26/26 (100.0%, 0 fails)
+- `format/relative-json-pointer.json`: errors=0 cases=1/1 (100.0%) tests=31/31 (100.0%, 0 fails)
 - `format/time.json`: errors=0 cases=0/1 (0.0%) tests=52/56 (92.9%, 4 fails)
 - `format/unknown.json`: errors=0 cases=1/1 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `format/uri.json`: errors=0 cases=0/1 (0.0%) tests=38/48 (79.2%, 10 fails)
 - `format/uri-reference.json`: errors=0 cases=0/1 (0.0%) tests=19/31 (61.3%, 12 fails)
 - `format/uri-template.json`: errors=0 cases=0/1 (0.0%) tests=28/48 (58.3%, 20 fails)
-- summary: files=19 errors=0 cases=7/26 (26.9%) tests=662/815 (81.2%, 153 fails)
+- summary: files=19 errors=0 cases=7/26 (26.9%) tests=674/830 (81.2%, 156 fails)
 
 ## Results for _draft6_
 
@@ -259,7 +259,7 @@ Main test suite:
 - `minItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `minLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `minProperties.json`: errors=0 cases=2/2 (100.0%) tests=10/10 (100.0%, 0 fails)
-- `multipleOf.json`: errors=0 cases=5/5 (100.0%) tests=11/11 (100.0%, 0 fails)
+- `multipleOf.json`: errors=0 cases=6/6 (100.0%) tests=13/13 (100.0%, 0 fails)
 - `not.json`: errors=0 cases=8/8 (100.0%) tests=38/38 (100.0%, 0 fails)
 - `oneOf.json`: errors=0 cases=11/11 (100.0%) tests=27/27 (100.0%, 0 fails)
 - `pattern.json`: errors=0 cases=2/2 (100.0%) tests=9/9 (100.0%, 0 fails)
@@ -271,7 +271,7 @@ Main test suite:
 - `required.json`: errors=0 cases=5/5 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `type.json`: errors=0 cases=11/11 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=65/65 (100.0%, 0 fails)
-- summary: files=36 errors=0 cases=233/233 (100.0%) tests=837/837 (100.0%, 0 fails)
+- summary: files=36 errors=0 cases=234/234 (100.0%) tests=839/839 (100.0%, 0 fails)
 
 Format tests:
 
@@ -310,7 +310,7 @@ Main test suite:
 - `minItems.json`: errors=0 cases=1/1 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `minLength.json`: errors=0 cases=1/1 (100.0%) tests=5/5 (100.0%, 0 fails)
 - `minProperties.json`: errors=0 cases=1/1 (100.0%) tests=8/8 (100.0%, 0 fails)
-- `multipleOf.json`: errors=0 cases=5/5 (100.0%) tests=11/11 (100.0%, 0 fails)
+- `multipleOf.json`: errors=0 cases=6/6 (100.0%) tests=13/13 (100.0%, 0 fails)
 - `not.json`: errors=0 cases=6/6 (100.0%) tests=20/20 (100.0%, 0 fails)
 - `oneOf.json`: errors=0 cases=7/7 (100.0%) tests=23/23 (100.0%, 0 fails)
 - `pattern.json`: errors=0 cases=2/2 (100.0%) tests=9/9 (100.0%, 0 fails)
@@ -321,7 +321,7 @@ Main test suite:
 - `required.json`: errors=0 cases=4/4 (100.0%) tests=17/17 (100.0%, 0 fails)
 - `type.json`: errors=0 cases=11/11 (100.0%) tests=79/79 (100.0%, 0 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=65/65 (100.0%, 0 fails)
-- summary: files=30 errors=0 cases=160/160 (100.0%) tests=614/614 (100.0%, 0 fails)
+- summary: files=30 errors=0 cases=161/161 (100.0%) tests=616/616 (100.0%, 0 fails)
 
 Format tests:
 
@@ -343,7 +343,7 @@ Main test suite:
 - `default.json`: errors=0 cases=3/3 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `dependencies.json`: errors=0 cases=3/3 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `disallow.json`: errors=0 cases=3/3 (100.0%) tests=9/9 (100.0%, 0 fails)
-- `divisibleBy.json`: errors=0 cases=3/3 (100.0%) tests=9/9 (100.0%, 0 fails)
+- `divisibleBy.json`: errors=0 cases=4/4 (100.0%) tests=11/11 (100.0%, 0 fails)
 - `enum.json`: errors=0 cases=6/6 (100.0%) tests=18/18 (100.0%, 0 fails)
 - `extends.json`: errors=0 cases=3/3 (100.0%) tests=10/10 (100.0%, 0 fails)
 - `format.json`: errors=0 cases=10/10 (100.0%) tests=60/60 (100.0%, 0 fails)
@@ -363,7 +363,7 @@ Main test suite:
 - `required.json`: errors=0 cases=3/3 (100.0%) tests=4/4 (100.0%, 0 fails)
 - `type.json`: errors=0 cases=12/12 (100.0%) tests=80/80 (100.0%, 0 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=62/62 (100.0%, 0 fails)
-- summary: files=25 errors=0 cases=105/105 (100.0%) tests=437/437 (100.0%, 0 fails)
+- summary: files=25 errors=0 cases=106/106 (100.0%) tests=439/439 (100.0%, 0 fails)
 
 Format tests:
 
@@ -412,7 +412,7 @@ Main test suite:
 - `minItems.json`: errors=0 cases=2/2 (100.0%) tests=6/6 (100.0%, 0 fails)
 - `minLength.json`: errors=0 cases=2/2 (100.0%) tests=7/7 (100.0%, 0 fails)
 - `minProperties.json`: errors=0 cases=2/2 (100.0%) tests=10/10 (100.0%, 0 fails)
-- `multipleOf.json`: errors=0 cases=5/5 (100.0%) tests=11/11 (100.0%, 0 fails)
+- `multipleOf.json`: errors=0 cases=6/6 (100.0%) tests=13/13 (100.0%, 0 fails)
 - `not.json`: errors=0 cases=9/9 (100.0%) tests=40/40 (100.0%, 0 fails)
 - `oneOf.json`: errors=0 cases=11/11 (100.0%) tests=27/27 (100.0%, 0 fails)
 - `pattern.json`: errors=0 cases=2/3 (66.7%) tests=11/12 (91.7%, 1 fails)
@@ -427,5 +427,5 @@ Main test suite:
 - `unevaluatedItems.json`: errors=0 cases=15/29 (51.7%) tests=52/71 (73.2%, 19 fails)
 - `unevaluatedProperties.json`: errors=0 cases=32/44 (72.7%) tests=115/129 (89.1%, 14 fails)
 - `uniqueItems.json`: errors=0 cases=6/6 (100.0%) tests=65/65 (100.0%, 0 fails)
-- summary: files=43 errors=0 cases=305/353 (86.4%) tests=1085/1145 (94.8%, 60 fails)
+- summary: files=43 errors=0 cases=306/354 (86.4%) tests=1087/1147 (94.8%, 60 fails)
 
