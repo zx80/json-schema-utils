@@ -23,9 +23,9 @@ Replace references `$ref` by their definitions.
 
 ```sh
 # no $id
-jsu-inline -m "file:// ./tests" tests/*.schema.json
+jsu inline -m "file:// ./tests" tests/*.schema.json
 # with $id
-jsu-inline -a tests/foo.schema.json
+jsu inline -a tests/foo.schema.json
 ```
 
 ## Simplify Schema
@@ -40,20 +40,20 @@ Apply various schema simplifications:
 - remove uneffective keywords in corner cases.
 
 ```sh
-jsu-simpler tests/*.schema.json
+jsu simpler tests/*.schema.json
 ```
 
 ## Check JSON Values against a Schema
 
 Check a JSON values match a given schema using
-`jmc` ([jsu-compile](https://github.com/zx80/json-schema-utils) with
+`jmc` ([jsu compile](https://github.com/zx80/json-schema-utils) with
 [jmc](https://json-model.org/) dynamic Python backend),
 [`jsonschema`](https://github.com/python-jsonschema/jsonschema) or
 [`jschon`](https://github.com/marksparkza/jschon)
 implementations.
 
 ```sh
-jsu-check tests/foo.schema.json tests/foo.*.value.json
+jsu check tests/foo.schema.json tests/foo.*.value.json
 ```
 
 Note: the corresponding external dependencies must be installed.
@@ -63,7 +63,7 @@ Note: the corresponding external dependencies must be installed.
 Generate a report about JSON schemas, including possible bugs.
 
 ```sh
-jsu-stats tests/*.schema.json
+jsu stats tests/*.schema.json
 ```
 
 This script is extracted from [JSON Schema Stats](https://github.com/clairey-zx81/json-schema-stats)
@@ -72,7 +72,7 @@ which has been updated to depend on this module.
 ## JSON Prettyprinter
 
 ```sh
-jsu-pretty --indent 2 --sort-keys tests/*.schema.json
+jsu pretty --indent 2 --sort-keys tests/*.schema.json
 ```
 
 You could also use `jq .` for this purpose.
@@ -96,7 +96,7 @@ However, there is a limited support for some features:
 Moreover, this is a software, hence there may be bugs.
 
 ```sh
-jsu-model --format -o foo.model.json foo.schema.json
+jsu model --format -o foo.model.json foo.schema.json
 ```
 
 ## JSON Schema Compiler
@@ -109,7 +109,7 @@ proceeds to compile the generated model to actual code using the
 
 ```sh
 # generate a python script
-jsu-compile -o some.py some.schema.json
+jsu compile -o some.py some.schema.json
 # run the script to validate values
 ./some.py val1.json val2.json
 ```
@@ -130,12 +130,12 @@ JSON Schema compliance [Bowtie](https://bowtie.report) badges:
 
 ## JSON Type Definition Converter
 
-Command `jsu-jtd` allows to convert a [JTD](https://datatracker.ietf.org/doc/rfc8927/) type
+Command `jsu jtd` converts a [JTD](https://datatracker.ietf.org/doc/rfc8927/) type
 declaration to JSON Schema or JSON Model:
 
 ```sh
-jsu-jtd -o foo.schema.json foo.jtd.json
-jsu-jtd -o foo.model.json foo.jtd.json
+jsu jtd -o foo.schema.json foo.jtd.json
+jsu jtd -o foo.model.json foo.jtd.json
 ```
 
 ## JSU Test Runner
@@ -143,7 +143,7 @@ jsu-jtd -o foo.model.json foo.jtd.json
 Run a JSON Schema Test Suite case.
 
 ```sh
-jsu-test-runner --debug --resilient --map http://localhost:1234/=file://$JSTS_HOME/remotes/ -V 7 $JSTS_HOME/tests/draft7/ref.json
+jsu runner --debug --resilient --map http://localhost:1234/=file://$JSTS_HOME/remotes/ -V 7 $JSTS_HOME/tests/draft7/ref.json
 ```
 
 ## TODO
