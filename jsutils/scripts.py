@@ -436,12 +436,15 @@ def jsu_model(xargs: list[str]|None = None) -> int:
     ap_common(arg)
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
-    arg("--download", "-dl", default=False, action="store_true", help="download model urls")
 
     arg("--id", action="store_true", default=False,
         help="enable $id lookup")
     arg("--no-id", dest="id", action="store_false",
         help="disable $id lookup (*)")
+    arg("--download", "-dl", default=False, action="store_true",
+        help="download model urls")
+    arg("--no-download", "-ndl", dest="download", action="store_true",
+        help="do not download model urls (*)")
     arg("--strict", action="store_true", default=False,
         help="reject doubtful schemas")
     arg("--no-strict", dest="strict", action="store_false",
@@ -534,6 +537,10 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
         help="enable $id lookup")
     arg("--no-id", dest="id", action="store_false",
         help="disable $id lookup (*)")
+    arg("--download", "-dl", default=False, action="store_true",
+        help="download model urls")
+    arg("--no-download", "-ndl", dest="download", action="store_true",
+        help="do not download model urls (*)")
     arg("--strict", action="store_true", default=True,
         help="reject doubtful schemas (*)")
     arg("--no-strict", dest="strict", action="store_false",
@@ -566,7 +573,6 @@ def jsu_compile(xargs: list[str]|None = None) -> int:
     # remote schemas
     arg("--cache", type=str, default=None, help="cache directory for remote schemas")
     arg("--map", "-m", default=[], action="append", help="url local mapping \"src=dst\"")
-    arg("--download", "-dl", default=False, action="store_true", help="download model urls")
 
     # how to run the jmc backend
     arg("--backend", "-b", type=str, default="p", choices=["p", "f", "n"],
