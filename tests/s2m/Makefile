@@ -1,33 +1,44 @@
-F.jtd       = $(wildcard *.jtd.json)
-F.schema    = $(wildcard *.schema.json) $(F.jtd:%.jtd.json=%.schema.json)
+SHELL   = /bin/bash
+.ONESHELL:
+
+F.schema    = $(wildcard *.schema.json)
 F.model     = $(F.schema:%.schema.json=%.model.json)
 
-F.gen       = $(F.jtd:%.jtd.json=%.schema.json) $(F.model)
+F.gen       = $(F.model)
+F.tmp       = $(F.gen:%.json=%.tmp.json)
 
 MODEL.opts  = --no-strict --fix
 
 .PHONY: gen
 gen: $(F.gen)
 
-%.schema.json: %.jtd.json
-	jsu-jtd -s -nsk --debug $< > $@
+.PHONY: tmp
+tmp: $(F.tmp)
 
-%.model.json: %.jtd.json
-	jsu-jtd -m -nsk --debug $< > $@
-
-%.model.json: %.schema.json
+%.model.tmp.json: %.schema.json
 	jsu-model --quiet $(MODEL.opts) -o $@ $<
+
+%.json: %.tmp.json
+	mv $< $@
 
 .PHONY: clean
 clean:
+	$(RM) $(F.tmp)
+
+.PHONY: cleaner
+cleaner: clean
 	$(RM) $(F.gen)
 
 .PHONY: check
-check:
-	$(MAKE) clean
-	$(MAKE) gen
-
-.PHONY: check.jtd
-check.jtd:
-	$(RM) $(F.jtd:%.jtd.json=%.model.json) $(F.jtd:%.jtd.json=%.schema.json)
-	$(MAKE) gen
+check: $(F.tmp)
+	bad=
+	for tmp in $(F.tmp) ; do
+	  ref=$${tmp/.tmp./.}
+	  if ! cmp $$ref $$tmp ; then
+	    echo "# $$ref KO"
+	    bad=1
+	  else
+	    $(RM) $$tmp
+	  fi
+	done
+	! [ "$$bad" ]

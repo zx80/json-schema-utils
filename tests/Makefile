@@ -9,42 +9,89 @@ F.simpler   = $(F.schema:%.schema.json=%.simpler.json)
 F.stats     = $(F.schema:%.schema.json=%.stats.json)
 F.pretty    = $(F.schema:%.schema.json=%.pretty.json)
 
+F.json      = $(F.inline) $(F.simpler) $(F.stats) $(F.pretty)
+
 VALIDATIONS = person author
-F.check     = $(addsuffix .check0.out, $(VALIDATIONS)) \
+F.out       = $(addsuffix .check0.out, $(VALIDATIONS)) \
               $(addsuffix .check1.out, $(VALIDATIONS)) \
               $(addsuffix .check2.out, $(VALIDATIONS))
 
 # all
-F.gen       = $(F.inline) $(F.simpler) $(F.stats) $(F.pretty) $(F.check)
+F.gen       = $(F.json) $(F.out)
+F.tmp       = $(F.json:%.json=%.tmp.json) $(F.out:%.out=%.tmp.out)
+
+D.sub       = jtd s2m
+
+.PRECIOUS: $(F.gen)
 
 .PHONY: check
-check: check.local check.sub
+check: check.local $(SUB:%=%.check)
 
 .PHONY: check.local
-check.local:
-	$(MAKE) clean
-	$(MAKE) gen
+check.local: $(F.tmp)
+	bad=
+	for tmp in $(F.tmp) ; do
+	  ref=$${tmp//.tmp./.}
+	  if ! cmp $$tmp $$ref ; then
+	    echo "# $$ref KO"
+	    bad=1
+	  else
+	    $(RM) $$tmp
+	  fi
+	done
+	! [ "$$bad" ]
 
-.PHONY: check.sub
-check.sub:
-	$(MAKE) -C s2m check
+# forward tasks
+%.check:
+	$(MAKE) -C $* check
 
+%.clean:
+	$(MAKE) -C $* clean
+
+%.cleaner:
+	$(MAKE) -C $* cleaner
+
+#
+# CLEAN
+#
 .PHONY: clean
-clean:
+clean: clean.local $(SUB:%=%.clean)
+
+.PHONY: clean.local
+clean.local:
+	$(RM) $(F.tmp)
+
+.PHONY: cleaner
+cleaner: cleaner.local $(SUB:%=%.cleaner)
+
+.PHONY: cleaner.local
+cleaner.local:
 	$(RM) $(F.gen)
 
+#
+# GENERATE
+#
 .PHONY: gen
 gen: $(F.gen)
+
+.PHONY: tmp
+tmp: $(F.tmp)
+
+%.json: %.tmp.json
+	mv $< $@
+
+%.out: %.tmp.out
+	mv $< $@
 
 .PHONY: inline
 inline:
 	$(RM) $(F.inline)
 	$(MAKE) $(F.inline)
 
-defref_0.inline.json:
+defref_0.inline.tmp.json:
 	touch $@
 
-%.inline.json: %.schema.json
+%.inline.tmp.json: %.schema.json
 	jsu-inline -m "file://=." -m "://=." $< > $@
 
 .PHONY: simpler
@@ -52,7 +99,7 @@ simpler:
 	$(RM) $(F.simpler)
 	$(MAKE) $(F.simpler)
 
-%.simpler.json: %.schema.json
+%.simpler.tmp.json: %.schema.json
 	jsu-simpler $< > $@
 
 .PHONY: stats
@@ -60,7 +107,7 @@ stats:
 	$(RM) $(F.stats)
 	$(MAKE) $(F.stats)
 
-%.stats.json: %.schema.json
+%.stats.tmp.json: %.schema.json
 	jsu-stats $< > $@
 
 .PHONY: pretty
@@ -68,25 +115,25 @@ pretty:
 	$(RM) $(F.pretty)
 	$(MAKE) $(F.pretty)
 
-%.pretty.json: %.schema.json
+%.pretty.tmp.json: %.schema.json
 	jsu-pretty $< > $@
 
 # schema validation
-%.check0.out: %.schema.json
+%.check0.tmp.out: %.schema.json
 	set -o pipefail
 	shopt -s nullglob
 	jsu-check --engine jmc $< $*.*.{true,false}.json 2> $@.err | sort > $@
 	sed -e 's/uuid:[-0-9a-f]*#/uuid:<uuid>#/' $@.err >> $@
 	$(RM) $@.err
 
-%.check1.out: %.schema.json
+%.check1.tmp.out: %.schema.json
 	set -o pipefail
 	shopt -s nullglob
 	jsu-check --engine jsonschema $< $*.*.{true,false}.json 2> $@.err | sort > $@
 	cat $@.err >> $@
 	$(RM) $@.err
 
-%.check2.out: %.schema.json
+%.check2.tmp.out: %.schema.json
 	set -o pipefail
 	shopt -s nullglob
 	jsu-check --engine jschon $< $*.*.{true,false}.json 2> $@.err | sort > $@
