@@ -2,6 +2,7 @@
 
 - [x] front: add `--no-download` option
 - [x] python: please ruff, flake8
+- [x] tests: add github action script with Py 3.12..3.14
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)

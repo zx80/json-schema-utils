@@ -38,6 +38,9 @@ venv/.dist: venv/.dev
 	pip install -e .[dist]
 	touch $@
 
+.PHONY: venv.dev
+venv.dev: venv/.dev
+
 .PHONY: check
 check: check.inline check.simpler check.src check.tests
 

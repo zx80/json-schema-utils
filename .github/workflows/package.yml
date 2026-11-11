@@ -1,0 +1,44 @@
+name: JSON Schema Utils Package
+
+on:
+  push:
+    branches:
+    - main
+    - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python:
+        # - version: "pypy3.11"
+        - version: "3.12"
+        - version: "3.13"
+        - version: "3.14"
+        # 2026-11-11: google-re2 compilation issue
+        # - version: "3.15"
+    steps:
+    - name: Checkout Project
+      uses: actions/checkout@v7
+    - name: Set up Python ${{ matrix.python.version }}
+      uses: actions/setup-python@v7
+      with:
+        python-version: ${{ matrix.python.version }}
+        allow-prereleases: true
+        cache: "pip"
+    - name: Install Python Dependencies
+      run: make venv.dev
+    # - name: Check with pyright
+    #   run: make check.pyright
+    - name: Check with ruff
+      run: make check.ruff
+    - name: Check with flake8
+      run: make check.flake8
+    - name: Check tests
+      run: make check.tests
+    # - name: Check with coverage
+    #   run: make check.coverage
+    # - name: Check with pymarkdown
+    #   run: make check.docs
