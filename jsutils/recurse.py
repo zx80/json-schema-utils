@@ -16,9 +16,7 @@ def _recSchema(
         path: SchemaPath,
         flt: FilterFun,
         rwt: RewriteFun,
-        def_first: bool = False,
-        # TODO context?
-    ) -> JsonSchema:
+        def_first: bool = False) -> JsonSchema:
     """Recurse on a JSON Schema."""
 
     log.debug(f"recuring at {path}")
@@ -46,20 +44,23 @@ def _recSchema(
     # draft3 types… we are skipping disallow though
     if "type" in schema:
         ts = schema["type"]
+        lpath = path + ("type",)
         if isinstance(ts, dict):
-            schema["type"] = _recSchema(ts, url, path + ("type",), flt, rwt, def_first)  # type: ignore
+            schema["type"] = _recSchema(ts, url, lpath, flt, rwt, def_first)  # type: ignore
         if isinstance(ts, list):
             for i, t in enumerate(ts):
                 if isinstance(t, dict):
-                    ts[i] = _recSchema(t, url, path + (("type", i),), flt, rwt, def_first)  # type: ignore
+                    ts[i] = _recSchema(t, url, lpath + (i,), flt, rwt, def_first)  # type: ignore
 
     # list of schemas
     for prop in ("allOf", "oneOf", "anyOf", "prefixItems"):
         if prop in schema:
             subs = schema[prop]
             assert isinstance(subs, list)
-            schema[prop] = [ _recSchema(s, url, path + ((prop, i),), flt, rwt, def_first)  # type: ignore
-                             for i, s in enumerate(subs) ]
+            schema[prop] = [
+                _recSchema(s, url, path + ((prop, i),), flt, rwt, def_first)  # type: ignore
+                 for i, s in enumerate(subs)
+            ]
 
     # direct schemas
     for prop in ("additionalProperties", "unevaluatedProperties", "items",
@@ -71,8 +72,9 @@ def _recSchema(
                 schema[prop] = [ _recSchema(s, url, path + ((prop, i),), flt, rwt, def_first)
                     for i, s in enumerate(schema[prop]) ]  # type: ignore
             else:  # standard case
-                schema[prop] = _recSchema(schema[prop],  # type: ignore
-                                              url, path + (prop,), flt, rwt, def_first)
+                schema[prop] = _recSchema(
+                    schema[prop], url, path + (prop,), flt, rwt, def_first
+                )  # type: ignore
 
     recValue(schema, "properties", "dependentSchemas", "patternProperties")
 
@@ -87,12 +89,11 @@ def _recSchema(
 
 
 def recurseSchema(
-            schema: JsonSchema, url: str,
-            flt: FilterFun = lambda s, p: True,
-            rwt: RewriteFun = lambda s, p: s,
-            path: SchemaPath = (),
-            def_first: bool = False
-        ) -> JsonSchema:
+        schema: JsonSchema, url: str,
+        flt: FilterFun = lambda s, p: True,
+        rwt: RewriteFun = lambda s, p: s,
+        path: SchemaPath = (),
+        def_first: bool = False) -> JsonSchema:
     """Generic recursion on a JSON Schema.
 
     :param schema: schema to consider.

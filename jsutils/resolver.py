@@ -12,11 +12,10 @@ HTTPS_URL = "https://"
 class Resolver:
 
     def __init__(
-                self,
-                cache: str|None = None,
-                mapping: list[str] = [],
-                local_only: bool = False,
-            ):
+            self,
+            cache: str|None = None,
+            mapping: list[str] = [],
+            local_only: bool = False):
         self._cache = cache
         if cache is not None:
             Path(cache).mkdir(parents=True, exist_ok=True)

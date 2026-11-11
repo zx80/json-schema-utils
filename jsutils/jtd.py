@@ -13,9 +13,11 @@ from .utils import Jsonable, log
 #
 # NOTE about Claude Test (Sonnet 5 on 2026-08-27)
 #
-# - prompt: Generate a Python script which checks the validity of a JSON Type Definition (see RFC 8927) in a file.
+# - prompt: Generate a Python script which checks the validity of a JSON Type Definition
+#   (see RFC 8927) in a file.
 # - code generated in about a minute
-# - code over twice as big (260 lines), partly because of indentation rules, mostly because of heavy style
+# - code over twice as big (260 lines), partly because of indentation rules,
+#   mostly because of heavy style
 # - code proceeds to collect "all" errors, which is debatable
 # - code in a class with methods for each node check, no "match" syntax used
 #
@@ -63,50 +65,68 @@ def _valid_jtd_schema(schema: Jsonable, root: bool, defs: set[str], path: list[s
         assert isinstance(metadata, dict), f"JTD metadata is an object at {spath}.metadata"
         # TODO more?
     if "nullable" in schema:
-        assert isinstance(schema["nullable"], bool), f"JTD nullable is a boolean at {spath}.nullable"
+        assert isinstance(schema["nullable"], bool), \
+            f"JTD nullable is a boolean at {spath}.nullable"
     # per category
     match category:
         case "empty":
             pass
         case "ref":
             ref = schema["ref"]
-            assert isinstance(ref, str) and ref in defs, f"JTD ref target is defined at {spath}.ref"
+            assert isinstance(ref, str) and ref in defs, \
+                f"JTD ref target is defined at {spath}.ref"
         case "type":
             stype = schema["type"]
-            assert isinstance(stype, str) and stype in TYPE_MODEL, f"JTD type is known at {spath}.type"
+            assert isinstance(stype, str) and stype in TYPE_MODEL, \
+                f"JTD type is known at {spath}.type"
         case "enum":
             enum = schema["enum"]
-            assert isinstance(enum, list) and all(isinstance(e, str) for e in enum), f"JTD enum is a list of strings at {spath}.enum"
+            assert isinstance(enum, list) and all(isinstance(e, str) for e in enum), \
+                f"JTD enum is a list of strings at {spath}.enum"
             assert len(enum) > 0, f"JTD enum is not empty at {spath}.enum"
         case "elements":
             elems = schema["elements"]
-            assert _valid_jtd_schema(elems, False, defs, path + ["elements"]), f"JTD elements is a valid schema at {spath}.elements"
+            assert _valid_jtd_schema(elems, False, defs, path + ["elements"]), \
+                f"JTD elements is a valid schema at {spath}.elements"
         case "properties":
-            assert isinstance(schema.get("additionalProperties", False), bool), f"JTD additional properties is a boolean at {spath}.additionalProperties"
+            assert isinstance(schema.get("additionalProperties", False), bool), \
+                f"JTD additional properties is a boolean at {spath}.additionalProperties"
             mprops, oprops = {}, {}
             if "properties" in schema:
                 mprops = schema["properties"]
-                assert isinstance(mprops, dict), f"JTD properties is an object at {spath}.properties"
+                assert isinstance(mprops, dict), \
+                    f"JTD properties is an object at {spath}.properties"
             if "optionalProperties" in schema:
                 oprops = schema["optionalProperties"]
-                assert isinstance(oprops, dict), f"JTD optional properties is an object at {spath}.optionalProperties"
-            assert len(mprops.keys() & oprops.keys()) == 0, f"JTD object prop cannot be both mandatory and optional at {spath}"
+                assert isinstance(oprops, dict), \
+                    f"JTD optional properties is an object at {spath}.optionalProperties"
+            assert len(mprops.keys() & oprops.keys()) == 0, \
+                f"JTD object prop cannot be both mandatory and optional at {spath}"
             for prop, sub in (mprops | oprops).items():
-                assert isinstance(prop, str) and _valid_jtd_schema(sub, False, defs, path + ["*props", prop]), "JTD object property and subschemas at {spath}.*props"
+                assert \
+                    isinstance(prop, str) and \
+                    _valid_jtd_schema(sub, False, defs, path + ["*props", prop]), \
+                    "JTD object property and subschemas at {spath}.*props"
         case "values":
             assert _valid_jtd_schema(schema["values"], False, defs, path + ["values"])
         case "discriminator":
             dis, mapping = schema["discriminator"], schema["mapping"]
-            assert isinstance(dis, str) and len(dis) > 0, f"JTD object tag is non empty string at {spath}.discriminator"
-            assert isinstance(mapping, dict), f"JTD discriminator mapping is an object at {spath}.mapping"
+            assert isinstance(dis, str) and len(dis) > 0, \
+                f"JTD object tag is non empty string at {spath}.discriminator"
+            assert isinstance(mapping, dict), \
+                f"JTD discriminator mapping is an object at {spath}.mapping"
             for tag, sub in mapping.items():
                 lpath = spath + f".mapping.{tag}"
                 assert isinstance(tag, str), f"JTD mapping tag is a string at {lpath}"
                 assert isinstance(sub, dict), f"JTD mapping value is an object at {lpath}"
-                assert len({"properties", "optionalProperties"} & set(sub)) > 0, f"JTD mapping value is properties at {lpath}."
-                assert dis not in (sub.get("properties", {}) | sub.get("optionalProperties", {})), f"JTD discriminator is set once at {lpath}"
-                assert _valid_jtd_schema(sub, False, defs, path + ["mapping", tag]), f"JTD mapping value is valid at {lpath}"
-                assert not sub.get("nullable", False), f"JTD mapping subschema must not be nullable at {lpath}"
+                assert len({"properties", "optionalProperties"} & set(sub)) > 0, \
+                    f"JTD mapping value is properties at {lpath}."
+                assert dis not in (sub.get("properties", {}) | sub.get("optionalProperties", {})), \
+                    f"JTD discriminator is set once at {lpath}"
+                assert _valid_jtd_schema(sub, False, defs, path + ["mapping", tag]), \
+                    f"JTD mapping value is valid at {lpath}"
+                assert not sub.get("nullable", False), \
+                    f"JTD mapping subschema must not be nullable at {lpath}"
         case _:
             assert False, f"JTD schema unknown category: {category} at {spath}"
     return True
@@ -117,10 +137,13 @@ def valid_jtd_schema(schema: Jsonable) -> bool:
         assert isinstance(schema, dict), "JTD schema is an object at ."
         if "definitions" in schema:
             sdefs = schema["definitions"]
-            assert isinstance(sdefs, dict), "JTD schema definitions is an object at .definitions"
-            assert all(isinstance(name, str) for name in sdefs), "JTD definitions names are strings at .definitions"
+            assert isinstance(sdefs, dict), \
+                "JTD schema definitions is an object at .definitions"
+            assert all(isinstance(name, str) for name in sdefs), \
+                "JTD definitions names are strings at .definitions"
             defs = set(sdefs)
-            assert all(_valid_jtd_schema(subs, False, defs, ["definitions", name]) for name, subs in sdefs.items())
+            assert all(_valid_jtd_schema(subs, False, defs, ["definitions", name])
+                       for name, subs in sdefs.items()), "JTD schema definitions are valid"
         else:
             defs = set()
         assert _valid_jtd_schema(schema, True, defs, [])
@@ -134,6 +157,7 @@ def valid_jtd_schema(schema: Jsonable) -> bool:
 #
 # JTD -> JM
 #
+
 
 TYPE_MODEL: dict[str, Jsonable] = {
     "boolean": True,
@@ -214,6 +238,7 @@ def _jtd2jm(jtd: Jsonable, root: bool = False) -> Jsonable:
 
     return model
 
+
 #
 # JTD -> JS
 #
@@ -227,7 +252,7 @@ TYPE_SCHEMA: dict[str, Jsonable] = {
     "int16": {"type": "integer", "minimum": -32768, "maximum": 32767},
     "uint16": {"type": "integer", "minimum": 0, "maximum": 65535},
     "int32": {"type": "integer", "minimum": -2147483648, "maximum": 2147483647 },
-    "uint32": {"type": "integer", "minimum": 0, "maximum":  4294967295},
+    "uint32": {"type": "integer", "minimum": 0, "maximum": 4294967295},
     "string": {"type": "string"},
     "timestamp": {"type": "string", "format": "datetime"},
 }

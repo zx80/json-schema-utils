@@ -1,6 +1,7 @@
 # JSON Schema Utils Backlog
 
 - [x] front: add `--no-download` option
+- [x] python: please ruff, flake8
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)

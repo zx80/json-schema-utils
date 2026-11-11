@@ -114,9 +114,8 @@ META_SCHEMA_VOCABULARIES = {
 _FORMAT = "$__format__"
 
 def getMetaSchemaKeywords(
-            schema: JsonSchema,
-            resolver: Resolver,
-        ) -> dict[str, bool]:
+        schema: JsonSchema,
+        resolver: Resolver) -> dict[str, bool]:
     """Retrieve all metaschema keywords and whether they are active."""
 
     if isinstance(schema, bool):

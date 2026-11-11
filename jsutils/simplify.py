@@ -27,7 +27,7 @@ TYPED_PROPS: dict[str, set[str]] = {
     "object": {
         "additionalProperties", "unevaluatedProperties", "propertyNames", "required",
         "properties", "minProperties", "maxProperties", "patternProperties", "dependencies"
-     },
+    },
     "array": {
         "items", "minItems", "maxItems", "prefixItems", "contains", "minContains",
         "maxContains", "unevaluatedItems", "additionalItems"
@@ -168,7 +168,7 @@ def noDependencies(schema: JsonSchema, path: SchemaPath):
                 "if": {
                     "type": "object",
                     "required": [ key ]
-                 },
+                },
                 "then": {
                     "type": "object",
                     "required": val
@@ -188,12 +188,11 @@ def noDependencies(schema: JsonSchema, path: SchemaPath):
     schema["allOf"] = allOf
 
 def simplifySchema(
-            schema: JsonSchema,
-            url: str,
-            sversion: int = 0,
-            level: int = logging.INFO,
-            remove_all_types: bool = False,
-        ):
+        schema: JsonSchema,
+        url: str,
+        sversion: int = 0,
+        level: int = logging.INFO,
+        remove_all_types: bool = False):
     """Simplify a JSON Schema with various rules."""
 
     log.setLevel(level)
@@ -232,8 +231,7 @@ def simplifySchema(
     def fltSimpler(local: JsonSchema, path: SchemaPath) -> bool:
         if isinstance(local, dict):
             if ("dependencies" in local or  # <= 7
-                "dependentRequired" in local or "dependentSchemas" in local  # >= 8
-            ):
+                    "dependentRequired" in local or "dependentSchemas" in local):  # <= 8
                 noDependencies(local, path)
 
             # resolve some simple local references which may be optimized out
@@ -398,6 +396,9 @@ def simplifySchema(
                             local["enum"] = lv
 
         # void condition application
+        _NOT_COMPAT = {
+            "if", "then", "else", "not", "allOf", "anyOf", "oneOf", "$ref", "$dynamicRef"
+        }
         for kw in ("then", "else"):
             if kw in local:
                 subs = local[kw]
@@ -408,7 +409,7 @@ def simplifySchema(
                 for k, v in subs.items():
                     if k in _IGNORABLE:
                         pass
-                    elif k in ("if", "then", "else", "not", "allOf", "anyOf", "oneOf", "$ref", "$dynamicRef"):
+                    elif k in _NOT_COMPAT:
                         compat = False
                     elif k in local and v == local[k]:
                         pass
@@ -495,11 +496,11 @@ def simplifySchema(
         # thus cleanup is delayed to convert
         # up = local["unevaluatedProperties"]
         if ("unevaluatedProperties" in local and "additionalProperties" not in local and
-            has_none(local, "allOf", "anyOf", "oneOf", "$ref", "$dynamicRef",
-                     "if", "then", "else", "patternProperties")):
-                # FIXME consider more in-place stuff? if/then/else
-                local["additionalProperties"] = local.pop("unevaluatedProperties")
-                # NOTE cannot move to additionalProperties in constructed cases
+                has_none(local, "allOf", "anyOf", "oneOf", "$ref", "$dynamicRef",
+                         "if", "then", "else", "patternProperties")):
+            # FIXME consider more in-place stuff? if/then/else
+            local["additionalProperties"] = local.pop("unevaluatedProperties")
+            # NOTE cannot move to additionalProperties in constructed cases
 
         # short type list
         if "type" in local and isinstance(local["type"], list):
@@ -628,7 +629,8 @@ def simplifySchema(
             elif isinstance(local["maxContains"], float):
                 local["maxContains"] = int(local["maxContains"])
 
-        if remove_all_types and "type" in local and isinstance(local["type"], list) and len(local["type"]) == 7:
+        if (remove_all_types and "type" in local and isinstance(local["type"], list) and
+                len(local["type"]) == 7):
             del local["type"]
 
         return local
@@ -659,14 +661,13 @@ def _defId(schema) -> tuple[str|None, str|None]:
 _SUBCOUNT: int = 0
 
 def _scopeSubDefs(
-            schema: JsonSchema,
-            defs: dict[str, JsonSchema],
-            rootdef: str,
-            moved: dict[str, str],
-            ids: dict[str, str],
-            delete: list[tuple[Any, str, str|None, str|None, str|None, JsonPath]],
-            path: JsonPath = []
-        ):
+        schema: JsonSchema,
+        defs: dict[str, JsonSchema],
+        rootdef: str,
+        moved: dict[str, str],
+        ids: dict[str, str],
+        delete: list[tuple[Any, str, str|None, str|None, str|None, JsonPath]],
+        path: JsonPath = []):
     """Move definitions at the root."""
 
     log.debug(f"handing $ids/$defs at {path}")

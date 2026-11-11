@@ -96,7 +96,8 @@ def mergeProperty(schema: JsonSchema, prop: str, value: Any) -> JsonSchema:
     elif prop == "properties":
         # FIXME probably not allowed unless some conditions
         assert isinstance(schema, dict)  # pyright
-        if "additionalProperties" in schema and not is_any(schema["additionalProperties"]):  # type: ignore
+        if "additionalProperties" in schema and \
+                not is_any(schema["additionalProperties"]):  # type: ignore
             raise JSUError(f"cannot merge prop {prop} with existing additionalProperties")
         if prop in schema:
             props = schema[prop]
@@ -481,14 +482,13 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
     return recurseSchema(schema, url, rwt=rwtRef)
 
 def resolveExternalRefs(
-            schema: JsonSchema, *,
-            url: str = ".",
-            vocabularize: bool = True,
-            modernize: bool = True,
-            resolver: Resolver = None,
-            version: int = 0,
-            level: int = logging.INFO,
-        ) -> JsonSchema:
+        schema: JsonSchema, *,
+        url: str = ".",
+        vocabularize: bool = True,
+        modernize: bool = True,
+        resolver: Resolver = None,
+        version: int = 0,
+        level: int = logging.INFO) -> JsonSchema:
     """Resolution of external schema references.
 
     JSON Schema schema is updated with external references ($ref with url values)
@@ -512,13 +512,15 @@ def resolveExternalRefs(
     if not version and "$schema" in schema:
         sversion = schema["$schema"]
         assert isinstance(sversion, str)  # pyright
-        version = 8 if "/draft/2019-09/schema" in sversion else \
-                  9 if "/draft/2020-12/schema" in sversion else \
-                  7 if "/draft-07/schema" in sversion else \
-                  6 if "/draft-06/schema" in sversion else \
-                  4 if "/draft-04/schema" in sversion else \
-                  3 if "/draft-03/schema" in sversion else \
-                  0  # take a guess
+        version = (
+            8 if "/draft/2019-09/schema" in sversion else
+            9 if "/draft/2020-12/schema" in sversion else
+            7 if "/draft-07/schema" in sversion else
+            6 if "/draft-06/schema" in sversion else
+            4 if "/draft-04/schema" in sversion else
+            3 if "/draft-03/schema" in sversion else
+            0  # take a guess
+        )
         if version == 0:
             log.warning(f"unexpected $schema: {sversion}")
 
@@ -532,7 +534,7 @@ def resolveExternalRefs(
     if modernize:
         modernizeOldDraft(schema, version=version, level=level)
 
-    defs = ("$defs" if "$defs" in schema  else
+    defs = ("$defs" if "$defs" in schema else
             "definitions" if "definitions" in schema else
             "$defs" if version and version >= 8 else
             "definitions")
@@ -653,7 +655,7 @@ def resolveExternalRefs(
                         idx = -2 if "$id" in local else -1
                     dest = urljoin(urls[idx], dest)
                 # log.debug(f"join: {local['$ref']} -> {dest}")
-            elif dest and dest[0] == "#" :  # name? maybe with a path??
+            elif dest and dest[0] == "#":  # name? maybe with a path??
                 pass
             else:
                 log.error(f"cannot handle $ref: {dest}")
@@ -770,13 +772,14 @@ def resolveExternalRefs(
             changed = True
             keep_id = True
             log.debug(f"onto {name}")
-            recurseSchema(schema[defs][name], ".", path=((defs, name), ),  # type: ignore
+            recurseSchema(
+                schema[defs][name], ".", path=((defs, name), ),  # type: ignore
                 flt=fltExtRef, rwt=rwtScanPop, def_first=True,
             )
             keep_id = False
             schema[defs][name] = recurseSchema(  # type: ignore
                 schema[defs][name], f"#/{defs}/{name}", path=((defs, name), ),  # type: ignore
-                flt=fltExtRef, rwt=rwtExtRef, def_first = True,
+                flt=fltExtRef, rwt=rwtExtRef, def_first=True,
             )
 
     # remove defs if empty

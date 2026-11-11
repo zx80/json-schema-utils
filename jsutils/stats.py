@@ -525,9 +525,9 @@ def check_regex(regex: str, collection, path):
     chars = 0
     while i < len(regex):
         # previous, current and next characters
-        cp = regex[i-1] if i-1 >= 0 else ""
+        cp = regex[i - 1] if i - 1 >= 0 else ""
         cu = regex[i]
-        cn = regex[i+1] if i+1 < len(regex) else ""
+        cn = regex[i + 1] if i + 1 < len(regex) else ""
         if not bracket and cu == "[":
             bracket = True
             if cn == "]":
@@ -550,7 +550,8 @@ def check_regex(regex: str, collection, path):
             elif cu == ")":
                 pars -= 1
             elif cu == "|":
-                if pars == 0 and cp != "$" and cn != "^" and regex[0] == "^" and regex[-1] == "$" and not missing_par:
+                if (pars == 0 and cp != "$" and cn != "^" and regex[0] == "^" and
+                        regex[-1] == "$" and not missing_par):
                     collectErr(collection, "missing parentheses in regex", regex, path)
                     missing_par = True  # report only once
             elif cu in "*?":
@@ -970,7 +971,7 @@ def _json_schema_stats_rec(
     # https://json-schema.org/draft-07/draft-handrews-json-schema-01#rfc.section.8.3
     # _All other properties in a "$ref" object MUST be ignored._
     if "$ref" in jdata and 0 < collection["<version>"] <= 7 and \
-        not set(jdata.keys()).issubset(IGNORABLE | {"$ref"}):
+            not set(jdata.keys()).issubset(IGNORABLE | {"$ref"}):
         collectErr(collection, "ignore error", "adjacent keywords next to $ref", path)
 
     # scan all properties
@@ -1159,7 +1160,7 @@ def _json_schema_stats_rec(
                 log.warning(f"ignoring {prop} non-schema value")
 
         if prop in SCHEMA_KEYS_VALUE_SCHEMA and prop in SCHEMA_KEYS_ARRAY_OF_SCHEMAS and \
-            not isinstance(val, (bool, dict, list, tuple)):
+                not isinstance(val, (bool, dict, list, tuple)):
             collectErr(collection, "unexpected type", f"{prop} / {typeof(val)}", lpath)
 
         # special case for which we keep a (truncated) value
@@ -1260,8 +1261,9 @@ def _json_schema_stats_rec(
             elif len(val) == 1:
                 collection[f"{prop}-one"] += 1
 
-        if prop in ("type", "required", "enum") and isinstance(val, (list, tuple)) and not distinct_values(val):
-                collectErr(collection, "non unique array", f"{prop} {len(val)}", lpath)
+        if (prop in ("type", "required", "enum") and isinstance(val, (list, tuple)) and
+                not distinct_values(val)):
+            collectErr(collection, "non unique array", f"{prop} {len(val)}", lpath)
 
     # FIXME should follow references as well!
     # FIXME should take care of adjacent keywords in the resolution!

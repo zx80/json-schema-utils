@@ -49,18 +49,24 @@ def jsu_version(with_backend: bool = False) -> str:
 
 class VersionAction(argparse.Action):
     """Show version on --version."""
+
     def __init__(self, *args, with_backend: bool = False, **kwargs):
         super().__init__(*args, **kwargs)
         self._with_backend = with_backend
+
     def __call__(self, *args, **kwargs):
         print(jsu_version(self._with_backend))
         sys.exit(0)
 
-def ap_common(arg, with_json: bool =True, with_backend: bool = False):
-    arg("--version", nargs=0, action=VersionAction, with_backend=with_backend, help="show version")
-    arg("--level", "-l", choices=["error", "warn", "info", "debug"], default="info", help="set log level")
-    arg("--debug", "-d", dest="level", action="store_const", const="debug", help="debug mode")
-    arg("--quiet", "-q", dest="level", action="store_const", const="warn", help="quiet mode")
+def ap_common(arg, with_json: bool = True, with_backend: bool = False):
+    arg("--version", nargs=0, action=VersionAction, with_backend=with_backend,
+        help="show version")
+    arg("--level", "-l", choices=["error", "warn", "info", "debug"], default="info",
+        help="set log level")
+    arg("--debug", "-d", dest="level", action="store_const", const="debug",
+        help="debug mode")
+    arg("--quiet", "-q", dest="level", action="store_const", const="warn",
+        help="quiet mode")
     if with_json:
         arg("--indent", "-i", type=int, default=2,
             help="json indentation (2)")
@@ -475,7 +481,8 @@ def jsu_model(xargs: list[str]|None = None) -> int:
     arg("--no-modernize", dest="modernize", action="store_false",
         help="do not modernize schema")
 
-    arg("--schema-version", "-V", dest="sversion", type=int, default=0, help="set JSON Schema version")
+    arg("--schema-version", "-V", dest="sversion", type=int, default=0,
+        help="set JSON Schema version")
     arg("--out", "-o", default="-", help="set model output file")
     arg("schemas", nargs="*", help="schemas to process")
     args = ap.parse_args(xargs)
@@ -713,8 +720,7 @@ def json_schema_to_python_checker(
         loose_float: bool = True,
         predef: bool = False,
         extend: bool = True,
-        caps: bool = False,
-    ) -> Callable[[Jsonable], bool]:
+        caps: bool = False) -> Callable[[Jsonable], bool]:
     """Build a dynamic python checker function from a schema."""
     try:
         resolver = Resolver(cache=cache, mapping=mapping)
@@ -864,7 +870,8 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
                                 # count wrong rejects as unsafe false negative
                                 if not valid:
                                     n_unsafe += 1
-                                log.error(f"unexpected result on {scase}[{it}]: {test['description']}")
+                                desc = test["description"]
+                                log.error(f"unexpected result on {scase}[{it}]: {desc}")
                         except BaseException as e:
                             n_errors += 1
                             if args.level == logging.DEBUG:
@@ -908,11 +915,16 @@ def jsu_jtd(xargs: list[str]|None = None) -> int:
     arg = ap.add_argument
     ap_common(arg, with_json=True)
 
-    arg("--output", "-o", type=str, default="-", help="Output file, defaults to standard output")
-    arg("--format", "-f", choices=["s", "m"], default=None, help="Output JSON format: s=schema, m=model")
-    arg("--schema", "-s", dest="format", action="store_const", const="s", help="Use JSON Schema format")
-    arg("--model", "-m", dest="format", action="store_const", const="m", help="Use JSON Model format")
-    arg("jtd", default="-", nargs="?", help="File to convert, defaults to standard input")
+    arg("--output", "-o", type=str, default="-",
+        help="Output file, defaults to standard output")
+    arg("--format", "-f", choices=["s", "m"], default=None,
+        help="Output JSON format: s=schema, m=model")
+    arg("--schema", "-s", dest="format", action="store_const", const="s",
+        help="Use JSON Schema format")
+    arg("--model", "-m", dest="format", action="store_const", const="m",
+        help="Use JSON Model format")
+    arg("jtd", default="-", nargs="?",
+        help="File to convert, defaults to standard input")
     args = ap.parse_args(xargs)
 
     ap_common_action(args)
@@ -941,6 +953,7 @@ def jsu_jtd(xargs: list[str]|None = None) -> int:
 
     return 0
 
+
 #
 # master jsu command
 #
@@ -959,6 +972,7 @@ def jsu_help(xargs: list[str]) -> int:
         return 0 if cmd == "help" or cmd in _COMMANDS else 1
     else:
         return _COMMANDS[cmd](["--help"])
+
 
 _COMMANDS = {
     "help": jsu_help,

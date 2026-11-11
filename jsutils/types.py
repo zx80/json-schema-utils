@@ -10,7 +10,7 @@ NULL: Types = 1
 BOOLEAN: Types = 2
 INTEGER: Types = 4
 FLOAT: Types = 8
-NUMBER: Types = 8 # 12
+NUMBER: Types = 8  # 12
 STRING: Types = 16
 ARRAY: Types = 32
 OBJECT: Types = 64
@@ -35,6 +35,7 @@ def types2list(t: Types) -> list[str]:
         types.append("object")
     return types
 
+
 TYPE2TYPE: dict[type, Types] = {
     type(None): NULL,
     bool: BOOLEAN,
@@ -45,12 +46,14 @@ TYPE2TYPE: dict[type, Types] = {
     dict: OBJECT,
 }
 
+
 def val2type(value: Jsonable) -> Types:
     tvalue = type(value)
     if tvalue in TYPE2TYPE:
         return TYPE2TYPE[tvalue]
     else:
         raise JSUError(f"unexpected constant value for typing: {value}")
+
 
 NAME2TYPE: dict[str, Types] = {
     "null": NULL,
@@ -65,11 +68,13 @@ NAME2TYPE: dict[str, Types] = {
     "any": ALL,
 }
 
+
 def name2type(name: str) -> Types:
     if name in NAME2TYPE:
         return NAME2TYPE[name]
     else:
         raise JSUError(f"unexpected type name for typing: {name}")
+
 
 # TODO move as a context?
 _types: dict[SchemaPath, Types] = {}
@@ -113,6 +118,7 @@ class FILOSet:
 
 # propagation iterations
 todo: FILOSet = FILOSet()
+
 
 # type initialization
 def typeFlt(schema: JsonSchema, path: SchemaPath) -> bool:
@@ -308,6 +314,7 @@ def updateTypes(schema: JsonSchema, path: SchemaPath):
 
     return
 
+
 def recomputeTypesOnPath(root: JsonSchema, path: SchemaPath) -> None:
     schema = root
     for segment in path:
@@ -317,6 +324,7 @@ def recomputeTypesOnPath(root: JsonSchema, path: SchemaPath) -> None:
             assert isinstance(segment, tuple) and len(segment) == 2
             schema = schema[segment[0]][segment[1]]  # type: ignore
     updateTypes(schema, path)  # type: ignore
+
 
 # TODO do not set "type" in some cases
 def typeRwt(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
@@ -330,6 +338,7 @@ def typeRwt(schema: JsonSchema, path: SchemaPath) -> JsonSchema:
         else:
             schema["type"] = types  # type: ignore
     return schema
+
 
 def computeTypes(schema: JsonSchema) -> JsonSchema:
     """Set possible types everywhere."""

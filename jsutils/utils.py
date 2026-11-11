@@ -142,11 +142,14 @@ def decode_url(segment: str) -> str:
 
 def schemapath_to_urlpath(path: SchemaPath) -> str:
     """Encode a schema path as a url path."""
-    return "/".join(encode_url(s) if isinstance(s, str) else
-                    f"{encode_url(str(s[0]))}/{encode_url(str(s[1]))}"
-                        for s in path)
+    return "/".join(
+        encode_url(s) if isinstance(s, str) else
+        f"{encode_url(str(s[0]))}/{encode_url(str(s[1]))}" for s in path
+    )
+
 
 _IS_ABS_URL = re.compile(r"((https?|file)://|urn:)").match
+
 
 def is_abs_url(s: str) -> bool:
     """Guess if a reference is some kind of absolute URL."""
