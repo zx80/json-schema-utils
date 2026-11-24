@@ -23,6 +23,9 @@ jobs:
     steps:
     - name: Checkout Project
       uses: actions/checkout@v7
+      # avoid shallow checkout for git versioning
+      with:
+        fetch-depth: 0
     - name: Set up Python ${{ matrix.python.version }}
       uses: actions/setup-python@v7
       with:
