@@ -1,5 +1,9 @@
 # JSON Schema Utils Versions
 
+# JSU 1.0.1 on 2026-11-25
+
+- attempt at fixing the CI on main
+
 # JSU 1.0.0 on 2026-11-24
 
 - front: add `--no-download` option
