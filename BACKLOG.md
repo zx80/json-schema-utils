@@ -1,9 +1,5 @@
 # JSON Schema Utils Backlog
 
-- [x] front: add `--no-download` option
-- [x] python: please ruff, flake8
-- [x] tests: add github action script with Py 3.12..3.14
-- [x] pr: add a container for `jsu`
 - [ ] pr: add test count
 - [ ] pr: coverage?
 - [ ] model: handle predef collisions gracefully?

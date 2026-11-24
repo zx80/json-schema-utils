@@ -1,5 +1,12 @@
 # JSON Schema Utils Versions
 
+# JSU 1.0.0 on 2026-11-24
+
+- front: add `--no-download` option
+- python: please ruff, flake8
+- tests: add github action script with Py _3.12_ to _3.14_
+- pr: add a container for `jsu`
+
 ## JSU 0.9.24 on 2026-11-07
 
 - front: add `jsu` front with subcommands
