@@ -1,5 +1,6 @@
 # JSON Schema Utils Backlog
 
+- [x] various adjustements for github CI and git versioning
 - [ ] pr: add test count
 - [ ] pr: coverage?
 - [ ] model: handle predef collisions gracefully?
