@@ -23,7 +23,7 @@ pip install json_schema_utils
 pip install git+https://github.com/zx80/json-schema-utils.git
 ```
 
-A [docker image](https://hub.docker.com/repository/docker/zx80/jsu) is also available:
+A [docker image](https://hub.docker.com/r/zx80/jsu) is also available:
 
 ```sh
 docker run --rm -v .:/app/workspace docker.io/zx80/jsu:latest --version
