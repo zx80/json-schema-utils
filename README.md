@@ -2,7 +2,7 @@
 
 Random utilities to analyze, manipulate, simplify, convert or compile JSON Schema.
 
-![Status](https://github.com/zx80/json-schema-utils/actions/workflows/package.yml/badge.svg?branch=main&style=flat)
+![Status](https://github.com/zx80/json-schema-utils/actions/workflows/package.yml/badge.svg?branch=post&style=flat)
 ![Python](https://img.shields.io/badge/python-3-informational)
 ![Version](https://img.shields.io/pypi/v/json-schema-utils)
 ![Badges](https://img.shields.io/badge/badges-5-informational)
