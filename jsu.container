@@ -1,0 +1,2 @@
+FROM docker.io/zx80/jmc
+ENTRYPOINT ["/app/venv/bin/jsu"]

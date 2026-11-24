@@ -100,3 +100,16 @@ publish.py: venv/.dist
 	python -m build
 	twine check dist/*
 	echo "# twine upload dist/*"
+
+# publication on docker.io
+IMAGE    = docker.io/zx80/jsu
+
+.PHONY: build.docker
+build.docker:
+	docker build -t jsu -f jsu.container .
+	docker run --rm jsu --version
+
+.PHONY: publish.docker
+publish.docker: build.docker
+	docker tag jsu $(IMAGE):latest
+	docker push $(IMAGE):latest
