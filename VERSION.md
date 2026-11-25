@@ -1,6 +1,11 @@
 # JSON Schema Utils Versions
 
-# JSU 1.0.1 on 2026-11-25
+# JSU 1.0.2 on 2026-11-25
+
+- various adjustements for github CI and git versioning
+- pr: add test count
+
+# JSU 1.0.1 on 2026-11-24
 
 - attempt at fixing the CI on main
 

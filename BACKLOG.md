@@ -1,7 +1,6 @@
 # JSON Schema Utils Backlog
 
-- [x] various adjustements for github CI and git versioning
-- [x] pr: add test count
+- [ ] jsts: the schema for cases and tests has changed, the runner must be rewritten
 - [ ] pr: coverage?
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
