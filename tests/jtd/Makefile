@@ -13,6 +13,11 @@ MODEL.opts  = --no-strict --fix
 .PHONY: gen
 gen: $(F.gen)
 
+.PHONY: count
+count:
+	echo -n "# jtd generated files: "
+	ls $(F.gen) | wc -l
+
 .PHONY: tmp
 tmp: $(F.tmp)
 

@@ -1,13 +1,12 @@
 # JSON Schema Utils Backlog
 
 - [x] various adjustements for github CI and git versioning
-- [ ] pr: add test count
+- [x] pr: add test count
 - [ ] pr: coverage?
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
 - [ ] format: iri or iri-reference (RFC3987)
 - [ ] tests: make jsu-compile handle jsonl and jmc tests vectors
-- [ ] ci: add minimal CI sanity checks
 - [ ] stats: missing unique?
 - [ ] front: allow configuring from env or a file?
 - [ ] format: regex see [Section 6.4](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-01#name-regular-expressions) for restrictions

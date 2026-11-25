@@ -25,7 +25,7 @@ D.sub       = jtd s2m
 .PRECIOUS: $(F.gen)
 
 .PHONY: check
-check: check.local $(SUB:%=%.check)
+check: check.local $(D.sub:%=%.check)
 
 .PHONY: check.local
 check.local: $(F.tmp)
@@ -41,12 +41,23 @@ check.local: $(F.tmp)
 	done
 	! [ "$$bad" ]
 
+.PHONY: count
+count: count.local $(D.sub:%=%.count)
+
+.PHONY: count.local
+count.local:
+	echo -n "# generated files: "
+	ls $(F.gen) | wc -l
+
 # forward tasks
 %.check:
 	$(MAKE) -C $* check
 
 %.clean:
 	$(MAKE) -C $* clean
+
+%.count:
+	$(MAKE) -C $* count
 
 %.cleaner:
 	$(MAKE) -C $* cleaner
@@ -55,14 +66,14 @@ check.local: $(F.tmp)
 # CLEAN
 #
 .PHONY: clean
-clean: clean.local $(SUB:%=%.clean)
+clean: clean.local $(D.sub:%=%.clean)
 
 .PHONY: clean.local
 clean.local:
 	$(RM) $(F.tmp)
 
 .PHONY: cleaner
-cleaner: cleaner.local $(SUB:%=%.cleaner)
+cleaner: cleaner.local $(D.sub:%=%.cleaner)
 
 .PHONY: cleaner.local
 cleaner.local:
