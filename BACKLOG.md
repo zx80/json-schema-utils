@@ -1,6 +1,7 @@
 # JSON Schema Utils Backlog
 
-- [ ] jsts: the schema for cases and tests has changed, the runner must be rewritten
+- [x] jsts: rewrite runner for new JSTS common tests
+- [x] jsts: adapt script for handling formats
 - [ ] pr: coverage?
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)

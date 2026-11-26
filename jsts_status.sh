@@ -23,6 +23,8 @@ function process_dir()
 {
   local name=$1 root=$2 dir=$3
   shift 3
+
+  # start trace
   echo -n "$name: " >&2
 
   local status file test summary percent
@@ -30,21 +32,27 @@ function process_dir()
   # per case
   for file in $(ls ${dir}/*.json | sort) ; do
     test=${file#$root/}
-    echo -n "- \`$test\`: "
     [ "$debug" ] && echo "# command: $jsu_runner $jsu_opts $file" >> $err
-    $jsu_runner $jsu_opts "$@" $file 2>> $err | tail -1 | sed -e 's/files=1 //'
+    output=$($jsu_runner $jsu_opts "$@" $file 2>> $err | tail -1 | sed -e 's/files=1 //')
     status=$?
-    if [ $status -eq 0 ] ; then
-      echo -n "."
-    elif [ $status -eq 1 ] ; then
-      echo -n "/"
+    # only output if something to show
+    if [ "$output" ] ; then
+      echo "- \`$test\`: $output"
+      # trace
+      if [ $status -eq 0 ] ; then
+        echo -n "."
+      elif [ $status -eq 1 ] ; then
+        echo -n "/"
+      else
+        echo -n "*"
+      fi >&2
     else
-      echo -n "*"
-    fi >&2
+      echo -n "_" >&2
+    fi
   done
 
   # and summary with a full rerun
-  echo -n "- summary: "
+  echo -n "- **summary**: "
   summary=$($jsu_runner $jsu_opts "$@" ${dir}/*.json 2>> $err | tail -1)
   echo $summary
   percent="(${summary##* \(}"
@@ -53,7 +61,9 @@ function process_dir()
   echo
 }
 
-test -d "$root_dir" || err 1 "no such directory: $root_dir"
+for sub_dir in "" "/validation" "/validation/tests" ; do
+  test -d "$root_dir$sub_dir" || err 1 "no such directory: $root_dir$sub_dir"
+done
 
 echo "# JSON Schema Test Suite Report"
 echo
@@ -69,45 +79,41 @@ echo "- checking for _emacscript regex_ intricacies will only ever work with Jav
 echo "- draft3 allows time without a timezone, whereas later drafts do not"
 echo
 
-if ! [ -d $root_dir/remotes ] ; then
-  err 2 "remotes directory is missing"
-fi
-
 mkdir -p "$cache_dir"
 test -d "$cache_dir" || err 3 "no such directory: $cache_dir"
 
-jsu_runner="jsu runner --resilient --cache=$cache_dir --map http://localhost:1234/=file://$root_dir/remotes/"
+jsu_runner="jsu runner --resilient --cache=$cache_dir"
 
-for draft in draft2020-12 draft2019-09 draft7 draft6 draft4 draft3 v1 ; do
-
-  jsu_opts=""
-  case $draft in
-    draft7) jsu_opts+=" --schema-version 7" ;;
-    draft6) jsu_opts+=" --schema-version 6" ;;
-    draft4) jsu_opts+=" --schema-version 4" ;;
-    draft3) jsu_opts+=" --schema-version 3" ;;
-    # others should be retrieved automatically?
-    *) ;;
+function jsdraft()
+{
+  case $1 in
+    10) echo "draft-next" ;;
+    9) echo "draft2020-12" ;;
+    8) echo "draft2019-09" ;;
+    *) echo "draft$1" ;;
   esac
+}
+
+for draft in 9 8 7 6 4 3 10 ; do
+
+  jsu_opts=" --schema-version $draft"
+  sdraft=$(jsdraft $draft)
 
   [ "$debug" ] && jsu_opts+=" --debug"
 
-  test_dir="${root_dir}/tests/${draft}"
-  test -d "$test_dir" || err 4 "no such case directory: $test_dir"
+  test_dir="${root_dir}/validation/tests"
+  test -d "$test_dir" || err 4 "no such tests directory: $test_dir"
 
   [ "$debug" ] && echo "$jsu_runner $jsu_opts ..." >&2
 
-  echo "## Results for _${draft}_"
-  echo
-  echo "Main test suite:"
+  echo "## Results for _${sdraft}_"
   echo
 
-  process_dir "$draft" "$test_dir" "$test_dir"
+  echo "Format annotations:"
+  echo
+  process_dir "$sdraft" "$test_dir" "$test_dir" --no-format
 
-  format_dir="$test_dir/optional/format"
-  if [ -d "$format_dir" ] ; then
-    echo "Format tests:"
-    echo
-    process_dir "$draft/format" "$test_dir/optional" "$format_dir" --format
-  fi
+  echo "Format assertions:"
+  echo
+  process_dir "$sdraft/format" "$test_dir" "$test_dir" --format --tagged-only
 done

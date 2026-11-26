@@ -713,8 +713,7 @@ def json_schema_to_python_checker(
         typer: bool = True,
         simpler: bool = True,
         resilient: bool = True,
-        cache: str|None = None,
-        mapping: dict[str, str] = {},
+        resolver: Resolver|None = None,
         level: int = logging.INFO,
         loose_int: bool = True,
         loose_float: bool = True,
@@ -723,7 +722,6 @@ def json_schema_to_python_checker(
         caps: bool = False) -> Callable[[Jsonable], bool]:
     """Build a dynamic python checker function from a schema."""
     try:
-        resolver = Resolver(cache=cache, mapping=mapping)
         # build the intermediate model
         model = schema_to_model(
             schema, name, strict=strict, fix=fix, modernize=modernize, typer=typer,
@@ -746,6 +744,29 @@ def json_schema_to_python_checker(
             raise
         log.warning(f"using all-pass checker for {name} (resilient mode)")
         return lambda _: True
+
+
+VERSIONS = { 8: 2019, 9: 2020, 10: 9999 }
+
+# schema version check for tests, with an ugly semantics
+def is_compatible(version: int, compatibility: str) -> bool:
+    compatible: bool|None = None
+    version = VERSIONS.get(version, version)
+    # process in order
+    for item in compatibility.split(","):
+        if item.startswith("="):
+            if version == int(item[1:]):
+                return True
+        elif item.startswith("<="):  # section end
+            if compatible is None or compatible:
+                compatible = version <= int(item[2:])
+                if compatible:
+                    return compatible
+                else:  # proceed to another section
+                    compatible = None
+        else:  # section start
+            compatible = version >= int(item)
+    return compatible if isinstance(compatible, bool) else False
 
 def jsu_runner(xargs: list[str]|None = None) -> int:
 
@@ -797,18 +818,26 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
     arg("--no-resilient", dest="resilient", default=False, action="store_true",
         help="disable model conversion resilience (*)")
 
-    arg("--schema-version", "-V", dest="sversion", type=int, default=0,
-        help="set JSON Schema version")
+    # runner selection
+    arg("--schema-version", "-V", dest="sversion", type=int, default=9,
+        help="set JSON Schema version (3, 4, 6, 7, 8=2019, 9=2020, 10=next)")
+    arg("--tagged-only", action="store_true", default=False,
+        help="only check format tagged entries")
+
     arg("cases", nargs="*", help="test cases to process")
     args = ap.parse_args(xargs)
 
     ap_common_action(args)
 
+    # see https://json-model.org/models/json-schema-tests-validation#TestCase
     CASES_MODEL = [
         {
-            "description": "",
-            "schema": "$ANY",
-            "tests": [
+            "_description": "",
+            "_schema": "$ANY",
+            "?compatibility": "/^(<?=)?\\d+(,(<?=)?\\d+)*$/",
+            "?externalSchemas": { "$URL": "$ANY" },
+            "?tags": [ { "|": [ "_format-assertion", "_format-annotation" ] } ],
+            "_tests": [
                 {
                     "description": "",
                     "data": "$ANY",
@@ -824,43 +853,79 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
     check_cases = json_model.model_checker_from_json(CASES_MODEL)
 
     # stats counters
-    n_cases, n_cases_passed, n_tests, n_tests_passed, n_errors, n_unsafe = 0, 0, 0, 0, 0, 0
+    n_cases, n_cases_passed, n_cases_skip = 0, 0, 0
+    n_tests_raw, n_tests_passed, n_tests_skip = 0, 0, 0
+    n_errors, n_unsafe = 0, 0
 
     n_args = 0
     for fname in args.cases:
         n_args += 1
         try:
             # load and sanity check
-            cases = json.loads(open(fname).read())
-            # accept a single test for resilience
-            if isinstance(cases, dict):
-                cases = [ cases ]
-            assert check_cases(cases)
+            holder = json.loads(open(fname).read())
+            cases = holder["tests"]
+            issues = []
+            assert check_cases(cases, "", issues), f"oops: {issues}"
 
             for ic, case in enumerate(cases):
 
                 scase = f"{fname}[{ic}]"
 
+                # FIXME what is the default compatibility?
+                compat = case.get("compatibility", "3")
+                if not is_compatible(args.sversion, compat):
+                    log.info(f"skipping {scase} on compatibility {compat}")
+                    n_cases_skip += 1
+                    continue
+
+                # format related tests may be skipped
+                if "tags" in case:
+                    # NOTE no tags means both assertion and format
+                    fmt_assert = "format-assertion" in case["tags"]
+                    fmt_annote = "format-annotation" in case["tags"]
+                    if fmt_assert and not args.format or fmt_annote and args.format or \
+                            args.tagged_only and fmt_assert and fmt_annote:
+                        log.info(f"skipping {scase} on tags content")
+                        n_cases_skip += 1
+                        continue
+                elif args.tagged_only:
+                    log.info(f"skipping {scase} on tags")
+                    n_cases_skip += 1
+                    continue
+
                 n_cases += 1
-                n_tests += len(case["tests"])
+                n_tests_raw += len(case["tests"])
                 description = case["description"]
 
                 log.info(f"considering {scase}: {description}")
 
+                resolver = Resolver(cache=args.cache, mapping=args.map)
+
+                # TODO remove?
+                if "externalSchemas" in case:
+                    schemas = case["externalSchemas"]
+                    for url, schema in schemas.items():
+                        resolver.put(url, schema)
+
                 try:
+
+                    # get checker for case schema
                     checker = json_schema_to_python_checker(
                         case["schema"], scase, strict=args.strict, fix=False,
                         vocabularize=args.vocab, modernize=args.modernize, typer=args.type,
                         simpler=args.simple, predef=args.format,
                         version=args.sversion, resilient=args.resilient,
-                        cache=args.cache, mapping=args.map,
-                        level=args.level,
+                        resolver=resolver, level=args.level,
                         # hardcoded expectations
                         loose_int=True, loose_float=True, extend=True, caps=False,
                     )
 
-                    n_case_tests_ok = 0
+                    n_case_tests_ok, n_case_tests_skip = 0, 0
+
                     for it, test in enumerate(case["tests"]):
+
+                        desc = test["description"]
+
                         try:
                             valid = checker(test["data"])
                             if valid == test["valid"]:
@@ -870,39 +935,47 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
                                 # count wrong rejects as unsafe false negative
                                 if not valid:
                                     n_unsafe += 1
-                                desc = test["description"]
                                 log.error(f"unexpected result on {scase}[{it}]: {desc}")
-                        except BaseException as e:
+                        except BaseException as e:  # checker failed
                             n_errors += 1
                             if args.level == logging.DEBUG:
                                 log.error(e, exc_info=True)
-                            log.error(f"case {description}/{test['description']}: FAILED")
+                            log.error(f"case {description}/{desc}: FAILED")
 
-                    if n_case_tests_ok == len(case["tests"]):
+                    # case level summary
+                    if n_case_tests_ok + n_case_tests_skip == len(case["tests"]):
                         n_cases_passed += 1
 
-                except BaseException as e:
+                except BaseException as e:  # checker failed
                     n_errors += 1
                     if args.level == logging.DEBUG:
                         log.error(e, exc_info=True)
                     log.error(f"case {scase} ({description}): FAILED")
 
-        except BaseException as e:
+        except BaseException as e:  # invalid case file
             n_errors += 1
             if args.level == logging.DEBUG:
                 log.error(e, exc_info=True)
             log.error(f"cases {fname}: BAD case file {e}")
 
     # final report
-    n_tests_failed = n_tests - n_tests_passed
-    report = f"files={n_args} errors={n_errors} cases={n_cases_passed}/{n_cases}"
-    report += f" ({100.0 * n_cases_passed / max(n_cases, 1):.1f}%)"
-    report += f" tests={n_tests_passed}/{n_tests}"
-    report += f" ({100.0 * n_tests_passed / max(n_tests, 1):.1f}%, {n_tests_failed} fails)"
-    print(report)
+    n_tests_failed = n_tests_raw - n_tests_passed - n_tests_skip
+
+    report = (
+        f"files={n_args} errors={n_errors} cases={n_cases_passed}/{n_cases} skipped={n_cases_skip}"
+        f" ({100.0 * n_cases_passed / max(n_cases, 1):.1f}%)"
+        f" tests={n_tests_passed}/{n_tests_raw - n_tests_skip}"
+        f" ({100.0 * n_tests_passed / max(n_tests_raw - n_tests_skip, 1):.1f}%,"
+        f" {n_tests_failed} fails, {n_tests_skip} skips)"
+    )
+
+    if not args.tagged_only and n_cases != 0 or args.tagged_only and n_tests_raw > n_tests_skip:
+        print(report)
+    else:
+        log.debug(report)
 
     # tell whether all was well
-    return 2 if n_unsafe else 1 if n_tests_failed else 0
+    return 2 if n_unsafe else 1 if n_tests_failed or n_errors else 0
 
 def jsu_jtd(xargs: list[str]|None = None) -> int:
 
@@ -955,18 +1028,21 @@ def jsu_jtd(xargs: list[str]|None = None) -> int:
 
 
 #
-# master jsu command
+# main jsu command
 #
 
 _COMMANDS: dict[str, Callable[[list[str]|None], int]]
 
 def jsu_help(xargs: list[str]) -> int:
+
+    # defaults
     if xargs:
         cmd, xargs = xargs[0], xargs[1:]
         msg = "help " if cmd == "help" else ""
     else:
         cmd, msg = "help", ""
 
+    # help, errors or actual commands
     if cmd == "help" or cmd not in _COMMANDS:
         print(f"Usage: jsu {msg}[ {' | '.join(_COMMANDS)} ]")
         return 0 if cmd == "help" or cmd in _COMMANDS else 1
@@ -990,8 +1066,7 @@ _COMMANDS = {
 def jsu_command(xargs: list[str]|None = None) -> int:
     if xargs is None:
         xargs = sys.argv
-    if len(xargs) < 2 or xargs[1] in ("-h", "--help"):
-        # global help
+    if len(xargs) < 2 or xargs[1] in ("-h", "--help"):  # global help
         jsu_help([""])
         return 0
     elif xargs[1] in ("--version", "-v"):

@@ -16,9 +16,11 @@ class Resolver:
             cache: str|None = None,
             mapping: list[str] = [],
             local_only: bool = False):
+        # dir/file cache
         self._cache = cache
         if cache is not None:
             Path(cache).mkdir(parents=True, exist_ok=True)
+        # url to local file mapping
         self._mapping = {}
         for m in mapping:
             src, dst = m.split("=", 1)
@@ -27,11 +29,25 @@ class Resolver:
     def _urlHash(self, url: str) -> str:
         return hashlib.sha3_256(url.encode()).hexdigest()[:16]
 
+    def put(self, url: str, schema: JsonSchema):
+        assert self._cache
+        uh = self._urlHash(url)
+        cfn = f"{self._cache}/{uh}.json"
+        with open(cfn, "w") as f:
+            f.write(json.dumps(schema))
+
+    def delete(self, url: str):
+        assert self._cache
+        uh = self._urlHash(url)
+        cpath = Path(f"{self._cache}/{uh}.json")
+        cpath.unlink(missing_ok=True)
+
     def get(self, url: str) -> JsonSchema:
         """Download JSON from URL."""
 
         js, loaded, cached, cfn = None, False, False, None
 
+        # try loading from cache
         if self._cache is not None:  # we cache the **initial** url only
             uh = self._urlHash(url)
             cfn = f"{self._cache}/{uh}.json"
@@ -40,11 +56,14 @@ class Resolver:
                     js = json.load(f)
                 log.info(f"# loaded from cache: {url}")
                 loaded, cached = True, True
-            except Exception:
+            except FileNotFoundError:
                 log.debug(f"not found in cache: {url}")
+            except Exception as e:
+                log.error(f"ignoring invalid cache file: {url} ({e})")
         else:
             uh = None
 
+        # handle mapping
         if not loaded and self._mapping:
             for src, dst in self._mapping.items():
                 if url.startswith(src):
@@ -53,7 +72,8 @@ class Resolver:
                     log.info(f"remapping {init_url} to {url}")
                     break  # stop on first match
 
-        if not loaded and (not url.startswith(HTTP_URL) and not url.startswith(HTTPS_URL)):
+        # load file
+        if not loaded and not url.startswith((HTTP_URL, HTTPS_URL)):
             fn = url.removeprefix(FILE_URL)
             for suffix in ("", ".json", ".schema.json"):
                 fns = fn + suffix
@@ -64,6 +84,7 @@ class Resolver:
                     loaded = True
                     break
 
+        # actual url resolution
         if not loaded:
             res = requests.get(url)
             log.info(f"# loaded from net: {url!r}")
@@ -75,5 +96,6 @@ class Resolver:
                 with open(cfn, "w") as f:
                     f.write(res.text)
 
+        # sanity check
         assert isinstance(js, (bool, dict)), "JSON Schema is boolean or object"
         return js
