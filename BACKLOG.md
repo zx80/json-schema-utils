@@ -2,7 +2,7 @@
 
 - [x] jsts: rewrite runner for new JSTS common tests
 - [x] jsts: adapt script for handling formats
-- [ ] convert: fix issues with `*-legacy.json` jsts tests
+- [ ] convert: multi-file schemas id/ref not handled, eg `{"$ref":"http://remote.host/bla#foo"}`
 - [ ] pr: coverage?
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)

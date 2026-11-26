@@ -701,23 +701,52 @@ def resolveExternalRefs(
                     # ensure that hierarchical relative urls are consistent in the target
                     if "$id" not in js:
                         js["$id"] = init_url
+                    elif js["$id"] != init_url:
+                        log.warning(f"overriding $id in {init_url}")
+                        # NOTE should it be #/$defs/name instead?
+                        js["$id"] = init_url
                     else:
-                        if js["$id"] != init_url:
-                            log.warning(f"overriding $id in {init_url}")
-                            # NOTE should it be #/$defs/name instead?
-                            js["$id"] = init_url
-                        else:
-                            # consistent
-                            pass
+                        # consistent
+                        pass
 
                     assert isinstance(name, str) and isinstance(init_url, str)
 
-                    # dest = urls[0] + f"#{defs}/{name}"
+                    # dest = urls[0] + f"#/{defs}/{name}"
                     resolved[init_url] = name
                     dest = f"#/{defs}/{name}"
                     schema[defs][name] = js  # type: ignore
                     log.warning(f"url_path: {init_url} -> {dest}")
                     url_path[init_url] = str(dest)
+
+                    # FIXME what about "$id" names **inside** the schema
+                    if defs in js:
+
+                        local_ids: dict[str, str] = {}
+
+                        def collectIdFlt(schema, path) -> bool:
+                            if isinstance(schema, dict) and "$id" in schema:
+                                lid = schema.pop("$id")
+                                assert isinstance(lid, str)  # FIXME escaping
+                                loc_url = f"{dest}/{'/'.join(path)}"
+                                # log.warning(f"{init_url} + {lid} -> {loc_url}")
+                                url_path[init_url + lid] = loc_url
+                                local_ids[lid] = loc_url
+                            return True
+
+                        def subsRefFlt(schema, path) -> bool:
+                            if isinstance(schema, dict) and "$ref" in schema:
+                                ref = schema["$ref"]
+                                assert isinstance(ref, str)
+                                # log.warning(f"handling $ref to {ref} at {path} with {local_ids}")
+                                if ref in local_ids:
+                                    schema["$ref"] = local_ids[ref]
+
+                        for name, ndef in js[defs].items():
+                            recurseSchema(ndef, init_url, flt=collectIdFlt, path=(defs, name))
+                        for name, ndef in js[defs].items():
+                            recurseSchema(ndef, init_url, flt=subsRefFlt, path=(defs, name))
+                        # log.warning(f"js = {js}")
+                        # log.warning(f"schema = {js}")
 
                 # update external reference to local destination
                 if path:
@@ -730,7 +759,7 @@ def resolveExternalRefs(
                             if spath in url_path:
                                 dest = url_path[spath]
                             else:
-                                log.warning(f"undefined anchor #{path}")
+                                log.warning(f"undefined path anchor #{path}")
                                 dest = "#" + path
                     elif dest[0] == "#":
                         if path[0] == "/":
@@ -742,7 +771,7 @@ def resolveExternalRefs(
                             if spath in url_path:
                                 dest = url_path[spath]
                             else:
-                                log.warning(f"undefined anchor #{path}")
+                                log.warning(f"undefined id anchor #{path}")
                                 dest = "#" + path
                         # else ignore
                     else:
