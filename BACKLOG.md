@@ -2,6 +2,7 @@
 
 - [x] jsts: rewrite runner for new JSTS common tests
 - [x] jsts: adapt script for handling formats
+- [x] runner: allow to test a single case object
 - [ ] convert: multi-file schemas id/ref not handled, eg `{"$ref":"http://remote.host/bla#foo"}`
 - [ ] pr: coverage?
 - [ ] model: handle predef collisions gracefully?

@@ -863,6 +863,14 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
         try:
             # load and sanity check
             holder = json.loads(open(fname).read())
+
+            # promote simple case as a file
+            if "schema" in holder and "description" in holder and "tests" in holder:
+                holder = {
+                    "description": "inlined case",
+                    "tests": [ holder ]
+                }
+
             cases = holder["tests"]
             issues = []
             assert check_cases(cases, "", issues), f"oops: {issues}"
