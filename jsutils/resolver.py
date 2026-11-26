@@ -30,14 +30,14 @@ class Resolver:
         return hashlib.sha3_256(url.encode()).hexdigest()[:16]
 
     def put(self, url: str, schema: JsonSchema):
-        assert self._cache
+        assert self._cache, "put requires a cache!"
         uh = self._urlHash(url)
         cfn = f"{self._cache}/{uh}.json"
         with open(cfn, "w") as f:
             f.write(json.dumps(schema))
 
     def delete(self, url: str):
-        assert self._cache
+        assert self._cache, "delete requires a cache!"
         uh = self._urlHash(url)
         cpath = Path(f"{self._cache}/{uh}.json")
         cpath.unlink(missing_ok=True)

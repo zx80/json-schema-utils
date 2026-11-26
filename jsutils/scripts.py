@@ -893,21 +893,21 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
                     n_cases_skip += 1
                     continue
 
-                n_cases += 1
+                assert "tests" in case and "description" in case, f"check {scase} mandatory props"
                 n_tests_raw += len(case["tests"])
                 description = case["description"]
+                n_cases += 1
 
                 log.info(f"considering {scase}: {description}")
 
-                resolver = Resolver(cache=args.cache, mapping=args.map)
-
-                # TODO remove?
-                if "externalSchemas" in case:
-                    schemas = case["externalSchemas"]
-                    for url, schema in schemas.items():
-                        resolver.put(url, schema)
-
                 try:
+                    resolver = Resolver(cache=args.cache, mapping=args.map)
+
+                    # TODO remove?
+                    if "externalSchemas" in case:
+                        schemas = case["externalSchemas"]
+                        for url, schema in schemas.items():
+                            resolver.put(url, schema)
 
                     # get checker for case schema
                     checker = json_schema_to_python_checker(
