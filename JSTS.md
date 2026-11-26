@@ -3,7 +3,7 @@
 Versions:
 
 - JSTS: `e2a68a15cd490750fd6b95e604e4054d7d978d1f`
-- JSU: `1.0.2 (jmc backend 2.0.67.dev44+dirty)` (Python backend)
+- JSU: `1.0.2.dev5 (jmc backend 2.0.67.dev44)` (Python backend)
 
 Note about `format` with the Python backend:
 
@@ -194,7 +194,7 @@ Format annotations:
 
 - `additionalProperties.json`: errors=0 cases=8/8 skipped=2 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `allOf.json`: errors=0 cases=12/12 skipped=0 (100.0%) tests=30/30 (100.0%, 0 fails, 0 skips)
-- `anchor-legacy.json`: errors=0 cases=6/7 skipped=7 (85.7%) tests=13/14 (92.9%, 1 fails, 0 skips)
+- `anchor-legacy.json`: errors=0 cases=7/7 skipped=7 (100.0%) tests=14/14 (100.0%, 0 fails, 0 skips)
 - `anyOf.json`: errors=0 cases=8/8 skipped=0 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `boolean_schema.json`: errors=0 cases=2/2 skipped=0 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `const.json`: errors=0 cases=17/17 skipped=0 (100.0%) tests=54/54 (100.0%, 0 fails, 0 skips)
@@ -246,7 +246,7 @@ Format annotations:
 - `required.json`: errors=0 cases=5/5 skipped=2 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=12/12 skipped=4 (100.0%) tests=80/80 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=283/285 skipped=328 (99.3%) tests=970/972 (99.8%, 2 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=284/285 skipped=328 (99.6%) tests=971/972 (99.9%, 1 fails, 0 skips)
 
 Format assertions:
 
@@ -275,7 +275,7 @@ Format annotations:
 
 - `additionalProperties.json`: errors=0 cases=8/8 skipped=2 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `allOf.json`: errors=0 cases=12/12 skipped=0 (100.0%) tests=30/30 (100.0%, 0 fails, 0 skips)
-- `anchor-legacy.json`: errors=0 cases=6/7 skipped=7 (85.7%) tests=13/14 (92.9%, 1 fails, 0 skips)
+- `anchor-legacy.json`: errors=0 cases=7/7 skipped=7 (100.0%) tests=14/14 (100.0%, 0 fails, 0 skips)
 - `anyOf.json`: errors=0 cases=8/8 skipped=0 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `boolean_schema.json`: errors=0 cases=2/2 skipped=0 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `const.json`: errors=0 cases=17/17 skipped=0 (100.0%) tests=54/54 (100.0%, 0 fails, 0 skips)
@@ -318,7 +318,7 @@ Format annotations:
 - `required.json`: errors=0 cases=5/5 skipped=2 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=12/12 skipped=4 (100.0%) tests=80/80 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=251/253 skipped=360 (99.2%) tests=876/878 (99.8%, 2 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=252/253 skipped=360 (99.6%) tests=877/878 (99.9%, 1 fails, 0 skips)
 
 Format assertions:
 
@@ -339,7 +339,7 @@ Format annotations:
 
 - `additionalProperties.json`: errors=0 cases=7/7 skipped=3 (100.0%) tests=16/16 (100.0%, 0 fails, 0 skips)
 - `allOf.json`: errors=0 cases=9/9 skipped=3 (100.0%) tests=27/27 (100.0%, 0 fails, 0 skips)
-- `anchor-legacy.json`: errors=0 cases=6/7 skipped=7 (85.7%) tests=13/14 (92.9%, 1 fails, 0 skips)
+- `anchor-legacy.json`: errors=0 cases=7/7 skipped=7 (100.0%) tests=14/14 (100.0%, 0 fails, 0 skips)
 - `anyOf.json`: errors=0 cases=5/5 skipped=3 (100.0%) tests=15/15 (100.0%, 0 fails, 0 skips)
 - `default.json`: errors=0 cases=3/3 skipped=0 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `dependentRequired.json`: errors=0 cases=3/3 skipped=6 (100.0%) tests=17/17 (100.0%, 0 fails, 0 skips)
@@ -374,7 +374,7 @@ Format annotations:
 - `required.json`: errors=0 cases=4/4 skipped=3 (100.0%) tests=17/17 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=11/11 skipped=5 (100.0%) tests=79/79 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=185/187 skipped=426 (98.9%) tests=670/672 (99.7%, 2 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=186/187 skipped=426 (99.5%) tests=671/672 (99.9%, 1 fails, 0 skips)
 
 Format assertions:
 
@@ -391,7 +391,7 @@ Format assertions:
 Format annotations:
 
 - `additionalProperties.json`: errors=0 cases=7/7 skipped=3 (100.0%) tests=16/16 (100.0%, 0 fails, 0 skips)
-- `anchor-legacy.json`: errors=0 cases=6/7 skipped=7 (85.7%) tests=13/14 (92.9%, 1 fails, 0 skips)
+- `anchor-legacy.json`: errors=0 cases=7/7 skipped=7 (100.0%) tests=14/14 (100.0%, 0 fails, 0 skips)
 - `default.json`: errors=0 cases=3/3 skipped=0 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `dependentRequired.json`: errors=0 cases=4/4 skipped=5 (100.0%) tests=24/24 (100.0%, 0 fails, 0 skips)
 - `dependentSchemas.json`: errors=0 cases=2/2 skipped=6 (100.0%) tests=9/9 (100.0%, 0 fails, 0 skips)
@@ -427,7 +427,7 @@ Format annotations:
 - `required.json`: errors=0 cases=3/3 skipped=4 (100.0%) tests=4/4 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=15/15 skipped=1 (100.0%) tests=99/99 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=167/169 skipped=444 (98.8%) tests=611/613 (99.7%, 2 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=168/169 skipped=444 (99.4%) tests=612/613 (99.8%, 1 fails, 0 skips)
 
 Format assertions:
 
