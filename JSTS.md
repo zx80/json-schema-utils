@@ -3,7 +3,7 @@
 Versions:
 
 - JSTS: `e2a68a15cd490750fd6b95e604e4054d7d978d1f`
-- JSU: `1.0.2.dev5 (jmc backend 2.0.67.dev44)` (Python backend)
+- JSU: `1.0.2.dev6+dirty (jmc backend 2.0.67.dev44+dirty)` (Python backend)
 
 Note about `format` with the Python backend:
 
@@ -48,7 +48,7 @@ Format annotations:
 - `format-uri-reference.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-uri-template.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-uuid.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
-- `id.json`: errors=0 cases=24/25 skipped=0 (96.0%) tests=51/52 (98.1%, 1 fails, 0 skips)
+- `id.json`: errors=0 cases=25/25 skipped=0 (100.0%) tests=52/52 (100.0%, 0 fails, 0 skips)
 - `if-then-else.json`: errors=0 cases=12/12 skipped=0 (100.0%) tests=30/30 (100.0%, 0 fails, 0 skips)
 - `infinite-loop-detection.json`: errors=0 cases=1/1 skipped=0 (100.0%) tests=2/2 (100.0%, 0 fails, 0 skips)
 - `items.json`: errors=0 cases=14/14 skipped=14 (100.0%) tests=40/40 (100.0%, 0 fails, 0 skips)
@@ -74,7 +74,7 @@ Format annotations:
 - `unevaluatedProperties.json`: errors=0 cases=32/44 skipped=2 (72.7%) tests=115/129 (89.1%, 14 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
 - `vocabulary.json`: errors=0 cases=2/2 skipped=2 (100.0%) tests=5/5 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=362/409 skipped=204 (88.5%) tests=1261/1319 (95.6%, 58 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=363/409 skipped=204 (88.8%) tests=1262/1319 (95.7%, 57 fails, 0 skips)
 
 Format assertions:
 
@@ -135,7 +135,7 @@ Format annotations:
 - `format-uri-reference.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-uri-template.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-uuid.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
-- `id.json`: errors=0 cases=24/25 skipped=0 (96.0%) tests=51/52 (98.1%, 1 fails, 0 skips)
+- `id.json`: errors=0 cases=25/25 skipped=0 (100.0%) tests=52/52 (100.0%, 0 fails, 0 skips)
 - `if-then-else.json`: errors=0 cases=12/12 skipped=0 (100.0%) tests=30/30 (100.0%, 0 fails, 0 skips)
 - `infinite-loop-detection.json`: errors=0 cases=1/1 skipped=0 (100.0%) tests=2/2 (100.0%, 0 fails, 0 skips)
 - `items.json`: errors=0 cases=18/18 skipped=10 (100.0%) tests=45/45 (100.0%, 0 fails, 0 skips)
@@ -163,7 +163,7 @@ Format annotations:
 - `unevaluatedProperties.json`: errors=0 cases=32/44 skipped=2 (72.7%) tests=115/129 (89.1%, 14 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
 - `vocabulary.json`: errors=0 cases=2/2 skipped=2 (100.0%) tests=5/5 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=362/396 skipped=217 (91.4%) tests=1251/1292 (96.8%, 41 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=363/396 skipped=217 (91.7%) tests=1252/1292 (96.9%, 40 fails, 0 skips)
 
 Format assertions:
 
@@ -222,7 +222,7 @@ Format annotations:
 - `format-uri-reference.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-uri-template.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `id.json`: errors=0 cases=5/5 skipped=20 (100.0%) tests=10/10 (100.0%, 0 fails, 0 skips)
-- `id-legacy.json`: errors=0 cases=17/18 skipped=22 (94.4%) tests=37/38 (97.4%, 1 fails, 0 skips)
+- `id-legacy.json`: errors=0 cases=18/18 skipped=22 (100.0%) tests=38/38 (100.0%, 0 fails, 0 skips)
 - `if-then-else.json`: errors=0 cases=12/12 skipped=0 (100.0%) tests=30/30 (100.0%, 0 fails, 0 skips)
 - `infinite-loop-detection-legacy.json`: errors=0 cases=1/1 skipped=1 (100.0%) tests=2/2 (100.0%, 0 fails, 0 skips)
 - `items.json`: errors=0 cases=18/18 skipped=10 (100.0%) tests=45/45 (100.0%, 0 fails, 0 skips)
@@ -246,7 +246,7 @@ Format annotations:
 - `required.json`: errors=0 cases=5/5 skipped=2 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=12/12 skipped=4 (100.0%) tests=80/80 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=284/285 skipped=328 (99.6%) tests=971/972 (99.9%, 1 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=285/285 skipped=328 (100.0%) tests=972/972 (100.0%, 0 fails, 0 skips)
 
 Format assertions:
 
@@ -295,7 +295,7 @@ Format annotations:
 - `format-uri-reference.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-uri-template.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `id.json`: errors=0 cases=5/5 skipped=20 (100.0%) tests=10/10 (100.0%, 0 fails, 0 skips)
-- `id-legacy.json`: errors=0 cases=17/18 skipped=22 (94.4%) tests=37/38 (97.4%, 1 fails, 0 skips)
+- `id-legacy.json`: errors=0 cases=18/18 skipped=22 (100.0%) tests=38/38 (100.0%, 0 fails, 0 skips)
 - `infinite-loop-detection-legacy.json`: errors=0 cases=1/1 skipped=1 (100.0%) tests=2/2 (100.0%, 0 fails, 0 skips)
 - `items.json`: errors=0 cases=18/18 skipped=10 (100.0%) tests=45/45 (100.0%, 0 fails, 0 skips)
 - `maximum.json`: errors=0 cases=3/3 skipped=2 (100.0%) tests=12/12 (100.0%, 0 fails, 0 skips)
@@ -318,7 +318,7 @@ Format annotations:
 - `required.json`: errors=0 cases=5/5 skipped=2 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=12/12 skipped=4 (100.0%) tests=80/80 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=252/253 skipped=360 (99.6%) tests=877/878 (99.9%, 1 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=253/253 skipped=360 (100.0%) tests=878/878 (100.0%, 0 fails, 0 skips)
 
 Format assertions:
 
@@ -352,7 +352,7 @@ Format annotations:
 - `format-ipv6.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-unknown.json`: errors=0 cases=1/1 skipped=0 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-uri.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
-- `id-legacy.json`: errors=0 cases=21/22 skipped=18 (95.5%) tests=45/46 (97.8%, 1 fails, 0 skips)
+- `id-legacy.json`: errors=0 cases=22/22 skipped=18 (100.0%) tests=46/46 (100.0%, 0 fails, 0 skips)
 - `infinite-loop-detection-legacy.json`: errors=0 cases=1/1 skipped=1 (100.0%) tests=2/2 (100.0%, 0 fails, 0 skips)
 - `items.json`: errors=0 cases=15/15 skipped=13 (100.0%) tests=38/38 (100.0%, 0 fails, 0 skips)
 - `maximum.json`: errors=0 cases=4/4 skipped=1 (100.0%) tests=14/14 (100.0%, 0 fails, 0 skips)
@@ -374,7 +374,7 @@ Format annotations:
 - `required.json`: errors=0 cases=4/4 skipped=3 (100.0%) tests=17/17 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=11/11 skipped=5 (100.0%) tests=79/79 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=186/187 skipped=426 (99.5%) tests=671/672 (99.9%, 1 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=187/187 skipped=426 (100.0%) tests=672/672 (100.0%, 0 fails, 0 skips)
 
 Format assertions:
 
@@ -409,7 +409,7 @@ Format annotations:
 - `format-time.json`: errors=0 cases=2/2 skipped=5 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-unknown.json`: errors=0 cases=1/1 skipped=0 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-uri.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
-- `id-legacy.json`: errors=0 cases=19/20 skipped=20 (95.0%) tests=39/40 (97.5%, 1 fails, 0 skips)
+- `id-legacy.json`: errors=0 cases=20/20 skipped=20 (100.0%) tests=40/40 (100.0%, 0 fails, 0 skips)
 - `infinite-loop-detection-legacy.json`: errors=0 cases=1/1 skipped=1 (100.0%) tests=2/2 (100.0%, 0 fails, 0 skips)
 - `items.json`: errors=0 cases=14/14 skipped=14 (100.0%) tests=37/37 (100.0%, 0 fails, 0 skips)
 - `maximum.json`: errors=0 cases=4/4 skipped=1 (100.0%) tests=14/14 (100.0%, 0 fails, 0 skips)
@@ -427,7 +427,7 @@ Format annotations:
 - `required.json`: errors=0 cases=3/3 skipped=4 (100.0%) tests=4/4 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=15/15 skipped=1 (100.0%) tests=99/99 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=168/169 skipped=444 (99.4%) tests=612/613 (99.8%, 1 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=169/169 skipped=444 (100.0%) tests=613/613 (100.0%, 0 fails, 0 skips)
 
 Format assertions:
 
@@ -479,7 +479,7 @@ Format annotations:
 - `format-uri-reference.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-uri-template.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
 - `format-uuid.json`: errors=0 cases=2/2 skipped=1 (100.0%) tests=7/7 (100.0%, 0 fails, 0 skips)
-- `id.json`: errors=0 cases=24/25 skipped=0 (96.0%) tests=51/52 (98.1%, 1 fails, 0 skips)
+- `id.json`: errors=0 cases=25/25 skipped=0 (100.0%) tests=52/52 (100.0%, 0 fails, 0 skips)
 - `if-then-else.json`: errors=0 cases=12/12 skipped=0 (100.0%) tests=30/30 (100.0%, 0 fails, 0 skips)
 - `infinite-loop-detection.json`: errors=0 cases=1/1 skipped=0 (100.0%) tests=2/2 (100.0%, 0 fails, 0 skips)
 - `items.json`: errors=0 cases=14/14 skipped=14 (100.0%) tests=40/40 (100.0%, 0 fails, 0 skips)
@@ -504,7 +504,7 @@ Format annotations:
 - `unevaluatedItems.json`: errors=0 cases=15/29 skipped=19 (51.7%) tests=52/71 (73.2%, 19 fails, 0 skips)
 - `unevaluatedProperties.json`: errors=0 cases=32/44 skipped=2 (72.7%) tests=115/129 (89.1%, 14 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=358/397 skipped=216 (90.2%) tests=1241/1290 (96.2%, 49 fails, 0 skips)
+- **summary**: files=69 errors=0 cases=359/397 skipped=216 (90.4%) tests=1242/1290 (96.3%, 48 fails, 0 skips)
 
 Format assertions:
 

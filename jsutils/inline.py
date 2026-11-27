@@ -1,4 +1,5 @@
 from typing import Any
+from dataclasses import dataclass
 import copy
 import math
 import re
@@ -481,6 +482,15 @@ def inlineRefs(schema: JsonSchema, url: str, schemas: Schemas) -> JsonSchema:
 
     return recurseSchema(schema, url, rwt=rwtRef)
 
+#
+# EXTERNAL REFERENCES HANDLING
+#
+
+@dataclass
+class Id:
+    url: str
+    path: SchemaPath
+
 def resolveExternalRefs(
         schema: JsonSchema, *,
         url: str = ".",
@@ -534,6 +544,7 @@ def resolveExternalRefs(
     if modernize:
         modernizeOldDraft(schema, version=version, level=level)
 
+    # local definitions
     defs = ("$defs" if "$defs" in schema else
             "definitions" if "definitions" in schema else
             "$defs" if version and version >= 8 else
@@ -541,27 +552,28 @@ def resolveExternalRefs(
     if defs not in schema:
         schema[defs] = {}
     else:
-        assert isinstance(schema[defs], dict)
+        assert isinstance(schema[defs], dict), "$defs is an object"
 
+    # id at the root is a check, possibly override
     if "$id" in schema:
         assert isinstance(schema["$id"], str), "schema $id must be a string"
         if url and schema["$id"] != url:
             log.warning(f"inconsistent $id: {schema['$id']} vs {url}")
         url = schema["$id"]
 
-    # url -> local name in outer scope
+    # we will have to re-scope internal references
+    # url -> name in outer scope
     resolved: dict[str, str] = {}
-    # url -> path in outer scope
+    # url -> path in global outer scope
     url_path: dict[str, str] = {}
 
-    # counter when creating new names
+    # counter when creating new names for inlining
     externs: int = 0
 
     # url $id stack
-    pushed: list[tuple] = [ () ]
-    urls: list[str] = [ url ]
+    id_stack = [ Id(url=url, path=()) ]
 
-    # whether to cleanup ids
+    # whether to cleanup ids on this phase
     keep_id: bool = True
 
     # defs already processed
@@ -587,27 +599,31 @@ def resolveExternalRefs(
                 if re.match(r"#[^/]", url):  # local identifier case ???
                     # FIXME is this actually the case
                     pass
-                elif not is_abs_url(url):
-                    url = urljoin(urls[-1], url)
+                elif not is_abs_url(url):  # not http/file/urn…
+                    # FIXME stack url may be a urn:... which is ignored by urljoin
+                    url = urljoin(id_stack[-1].url, url)
+                # else kept as is
                 if anchor is not None:  # one more step…
                     url = urljoin(url, "#" + anchor)
                 # else url kept as-is
-                pushed.append(tuple(p))
-                urls.append(url)
                 # BTW this may be a local resolution in passing!
                 # FIXME this is not true
                 # resolved[url] = urls[0] + "#/" + schemapath_to_urlpath(p)
                 url_path[url] = "#/" + schemapath_to_urlpath(p)
                 if url.endswith("#"):
-                    rurl = url[:-1]
-                    urls.append(rurl)
-                    url_path[rurl] = "#/" + schemapath_to_urlpath(p)
+                    nurl = url[:-1]
+                    url_path[nurl] = url_path[url]
+                else:
+                    nurl = url
+                # log.debug(f"id_stack push {p}")
+                id_stack.append(Id(url=nurl, path=p))
         return True
 
     def rwtScanPop(local: JsonSchema, p: SchemaPath) -> JsonSchema:
-        if isinstance(local, dict) and pushed and tuple(p) == pushed[-1]:
-            pushed.pop()
-            urls.pop()
+        # NOTE do not pop the root which was manually set
+        if isinstance(local, dict) and p and p == id_stack[-1].path:
+            # log.debug(f"id_stack pop {p} [{id_stack}]")
+            id_stack.pop()
             if not keep_id:
                 if level == logging.DEBUG:
                     local["$comment"] = local["$id"]
@@ -624,41 +640,57 @@ def resolveExternalRefs(
             return local
         assert isinstance(local, dict)
 
-        # handle a $ref
-        # TODO ref
+        # extract $ref value
         if "$ref" in local:
-            dest = local["$ref"]
-            assert isinstance(dest, str) and dest
-            log.debug(f"$ref={dest} ({urls} / {resolved} / {url_path})")
 
+            # get reference destination
+            dest = local["$ref"]
+            assert isinstance(dest, str) and dest, "non empty $ref"
+            log.debug(f"$ref={dest} ({id_stack} / {resolved} / {url_path})")
+
+            # normalize to root
             if dest.endswith("#"):
                 dest += "/"
 
-            # reference patterns:
+            # reference patterns, with path = /...:
             # { "$ref": "<full-url>" }
-            # { "$ref": "<full-url>#<path>" } # path = /xxx/yyy
+            # { "$ref": "<full-url>#<path>" }
             # { "$ref": "<partial-url>" }
             # { "$ref": "<partial-url>#<path>" }
             # { "$ref": "#<path>" }
             # { "$ref": "#<name>" }
 
-            if is_abs_url(dest):  # full url with optional json path
+            if is_abs_url(dest):  # full url (http, file, urn) with optional json path
+                # log.debug("absolute url")
                 pass
             elif "#/" in dest or "#" not in dest:  # relative url with optional json path
-                # this is kind of strange, if there is a $id it is for subschemas only,
-                # not for here, so we have to skip it ?!
-                # NOTE wtf, it seems to depend on the version :-(
-                if urls:
-                    if version and version >= 8:
-                        idx = -1
-                    else:
-                        idx = -2 if "$id" in local else -1
-                    dest = urljoin(urls[idx], dest)
+                # Oops, what a mess
+                # if $id and $ref are together, $ref is NOT relative to this $id up to 7?
+                # however the stack is with the local id...
+                if version and version <= 7 and "$id" in local:
+                    idx = -2
+                else:
+                    idx = -1
+                # switch to full url
+                # log.debug("switching to full url")
+                base = id_stack[idx]
+                if base.url.startswith(("http:", "https:", "file:")):
+                    dest = urljoin(base.url, dest)
+                elif dest.startswith("#/"):
+                    # eg base is urn:...
+                    if base.path:
+                        dest = "#/" + schemapath_to_urlpath(base.path) + dest[1:]
+                        url_path[dest] = dest
+                    # else this is the root, dest is fine
+                else:
+                    log.error(f"cannot handle $ref {dest} at {p}")
                 # log.debug(f"join: {local['$ref']} -> {dest}")
             elif dest and dest[0] == "#":  # name? maybe with a path??
+                # log.debug("name?")
                 pass
             else:
                 log.error(f"cannot handle $ref: {dest}")
+            # log.debug(f"$ref is now {dest}")
         else:
             dest = None
 
@@ -666,30 +698,30 @@ def resolveExternalRefs(
         if not dest:
             pass
         elif dest in url_path:
+            # substitute with a path
             local["$ref"] = url_path[dest]
-        else:
-            if is_abs_url(dest):
-                if "#" in dest:
-                    url, path = dest.split("#", 1)
-                else:
-                    url, path = dest, None
+        elif is_abs_url(dest):
+            # split as url + path
+            # TODO path -> anchor
+            if "#" in dest:
+                url, path = dest.split("#", 1)
             else:
-                url, path = None, None
-            init_url = url
+                url, path = dest, None
 
             log.debug(f"url={url} path={path}")
 
-            local_ids: dict[str, str] = {}
-            local_ids_path: dict[str, str] = {}
+            # this is the real url part of the reference, without anchor stuff
+            init_url = url
 
             if url is not None:
+                assert isinstance(init_url, str)
 
                 # local url mapping for some JSTS tests
                 if url in url_path:
                     dest = url_path[url]
                 elif url in resolved:  # retrieve local name or path
                     dest = f"#/{defs}/{resolved[url]}"
-                else:  # or create one
+                else:  # or create a new name for the remote
                     js = resolver.get(url)
                     assert isinstance(js, dict)  # pyright
 
@@ -697,7 +729,9 @@ def resolveExternalRefs(
                     while (name := f"_extern_{externs}_") in schema[defs]:  # type: ignore
                         externs += 1
 
-                    # upgrade schema for later processing
+                    assert isinstance(name, str)
+
+                    # upgrade schema for later processing, eg id -> $id
                     if modernize:
                         modernizeOldDraft(js, version=version, level=level)
 
@@ -712,50 +746,17 @@ def resolveExternalRefs(
                         # consistent
                         pass
 
-                    assert isinstance(name, str) and isinstance(init_url, str)
-
                     # dest = urls[0] + f"#/{defs}/{name}"
+                    # store retrieved url as a local definition
                     resolved[init_url] = name
-                    dest = f"#/{defs}/{name}"
                     schema[defs][name] = js  # type: ignore
+
+                    dest = f"#/{defs}/{name}"
                     log.warning(f"url_path: {init_url} -> {dest}")
-                    url_path[init_url] = str(dest)
-
-                    # handle local "$id" and "$ref"
-                    # FIXME probably partially redundant with the existing machinery?
-                    if defs in js:
-
-                        def collectIdFlt(schema, path) -> bool:
-                            if isinstance(schema, dict) and "$id" in schema:
-                                lid = schema.pop("$id")
-                                assert isinstance(lid, str)  # FIXME escaping
-                                # loc_url = f"{dest}/{'/'.join(path)}"
-                                if lid.startswith(("http:", "https:", "file:")):
-                                    resolver.put(lid, schema)
-                                else:
-                                    # NOTE still relative to js
-                                    loc_url = f"#/{'/'.join(path)}"
-                                    log.debug(f"{init_url} + {lid} -> {loc_url}")
-                                    url_path[init_url + lid] = loc_url
-                                    local_ids[lid] = loc_url
-                                    local_ids_path[lid] = f"{dest}{loc_url[1:]}"
-                            return True
-
-                        def subsRefFlt(schema, path) -> bool:
-                            if isinstance(schema, dict) and "$ref" in schema:
-                                ref = schema["$ref"]
-                                assert isinstance(ref, str)
-                                # log.debug(f"handling $ref to {ref} at {path} with {local_ids}")
-                                if ref in local_ids:
-                                    schema["$ref"] = local_ids[ref]
-                            return True
-
-                        for name, ndef in js[defs].items():
-                            recurseSchema(ndef, init_url, flt=collectIdFlt, path=(defs, name))
-                        for name, ndef in js[defs].items():
-                            recurseSchema(ndef, init_url, flt=subsRefFlt, path=(defs, name))
+                    url_path[init_url] = dest
 
                 # update external reference to local destination
+                # FIXME is this is a local id from the imported schema we do not know it yet!
                 if path:
                     log.debug(f"adding path {path} to dest {dest}")
                     if dest in ("#", "#/"):
@@ -766,7 +767,7 @@ def resolveExternalRefs(
                             if spath in url_path:
                                 dest = url_path[spath]
                             else:
-                                log.warning(f"undefined path anchor #{path}")
+                                log.warning(f"undefined path #{path}")
                                 dest = "#" + path
                     elif dest[0] == "#":
                         if path[0] == "/":
@@ -777,19 +778,38 @@ def resolveExternalRefs(
                             spath = "#" + path
                             if spath in url_path:
                                 dest = url_path[spath]
-                            elif spath in local_ids_path:
-                                dest = local_ids_path[spath]
                             else:
-                                log.warning(f"undefined id anchor #{path}")
                                 dest = "#" + path
-                        # else ignore
+                                jpath = None
+
+                                # fish from within js
+                                # FIXME maybe the recursion should stop on absolute $id?
+                                # we look for mere equality, but should be based on the full url
+                                def collectFlt(j, p) -> bool:
+                                    nonlocal jpath
+                                    if isinstance(j, dict) and "$id" in j:
+                                        if j["$id"] == dest:
+                                            jpath = p
+                                            return False
+                                    # shortcut once done
+                                    return jpath is None
+
+                                recurseSchema(js, init_url, path=(defs, name), flt=collectFlt)
+
+                                if jpath is None:
+                                    log.warning(f"undefined $id {dest}")
+                                else:
+                                    dest = "#/" + schemapath_to_urlpath(jpath)
                     else:
                         dest = urljoin(dest, "#" + path)
+
                 local["$ref"] = dest
+            else:
+                log.error(f"cannot handle $ref to {dest}")
 
         return rwtScanPop(local, p)
 
-    log.debug("initial scan")
+    # root
     # first pass to populate url_path
     keep_id = True
     schema = recurseSchema(schema, ".", flt=fltExtRef, rwt=rwtScanPop, def_first=True)
