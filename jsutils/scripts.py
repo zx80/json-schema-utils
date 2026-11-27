@@ -853,13 +853,13 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
     check_cases = json_model.model_checker_from_json(CASES_MODEL)
 
     # stats counters
+    n_files, n_files_skip = 0, 0
     n_cases, n_cases_passed, n_cases_skip = 0, 0, 0
     n_tests_raw, n_tests_passed, n_tests_skip = 0, 0, 0
     n_errors, n_unsafe = 0, 0
 
-    n_args = 0
     for fname in args.cases:
-        n_args += 1
+        n_files += 1
         try:
             # load and sanity check
             holder = json.loads(open(fname).read())
@@ -875,6 +875,7 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
             issues = []
             assert check_cases(cases, "", issues), f"oops: {issues}"
 
+            n_file_cases = 0
             for ic, case in enumerate(cases):
 
                 scase = f"{fname}[{ic}]"
@@ -905,6 +906,7 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
                 n_tests_raw += len(case["tests"])
                 description = case["description"]
                 n_cases += 1
+                n_file_cases += 1
 
                 log.info(f"considering {scase}: {description}")
 
@@ -960,6 +962,9 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
                         log.error(e, exc_info=True)
                     log.error(f"case {scase} ({description}): FAILED")
 
+            if n_file_cases == 0:
+                n_files_skip += 1
+
         except BaseException as e:  # invalid case file
             n_errors += 1
             if args.level == logging.DEBUG:
@@ -970,7 +975,8 @@ def jsu_runner(xargs: list[str]|None = None) -> int:
     n_tests_failed = n_tests_raw - n_tests_passed - n_tests_skip
 
     report = (
-        f"files={n_args} errors={n_errors} cases={n_cases_passed}/{n_cases} skipped={n_cases_skip}"
+        f"files={n_files - n_files_skip} errors={n_errors}"
+        f" cases={n_cases_passed}/{n_cases} skipped={n_cases_skip}"
         f" ({100.0 * n_cases_passed / max(n_cases, 1):.1f}%)"
         f" tests={n_tests_passed}/{n_tests_raw - n_tests_skip}"
         f" ({100.0 * n_tests_passed / max(n_tests_raw - n_tests_skip, 1):.1f}%,"

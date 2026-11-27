@@ -3,7 +3,7 @@
 Versions:
 
 - JSTS: `e2a68a15cd490750fd6b95e604e4054d7d978d1f`
-- JSU: `1.0.2.dev6+dirty (jmc backend 2.0.67.dev44+dirty)` (Python backend)
+- JSU: `1.0.2.dev7+dirty (jmc backend 2.0.67.dev44+dirty)` (Python backend)
 
 Note about `format` with the Python backend:
 
@@ -74,7 +74,7 @@ Format annotations:
 - `unevaluatedProperties.json`: errors=0 cases=32/44 skipped=2 (72.7%) tests=115/129 (89.1%, 14 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
 - `vocabulary.json`: errors=0 cases=2/2 skipped=2 (100.0%) tests=5/5 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=363/409 skipped=204 (88.8%) tests=1262/1319 (95.7%, 57 fails, 0 skips)
+- **summary**: files=59 errors=0 cases=363/409 skipped=204 (88.8%) tests=1262/1319 (95.7%, 57 fails, 0 skips)
 
 Format assertions:
 
@@ -97,7 +97,7 @@ Format assertions:
 - `format-uri-reference.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=13/25 (52.0%, 12 fails, 0 skips)
 - `format-uri-template.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=22/42 (52.4%, 20 fails, 0 skips)
 - `format-uuid.json`: errors=0 cases=1/1 skipped=2 (100.0%) tests=23/23 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=9/22 skipped=591 (40.9%) tests=618/763 (81.0%, 145 fails, 0 skips)
+- **summary**: files=19 errors=0 cases=9/22 skipped=591 (40.9%) tests=618/763 (81.0%, 145 fails, 0 skips)
 
 ## Results for _draft2019-09_
 
@@ -163,7 +163,7 @@ Format annotations:
 - `unevaluatedProperties.json`: errors=0 cases=32/44 skipped=2 (72.7%) tests=115/129 (89.1%, 14 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
 - `vocabulary.json`: errors=0 cases=2/2 skipped=2 (100.0%) tests=5/5 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=363/396 skipped=217 (91.7%) tests=1252/1292 (96.9%, 40 fails, 0 skips)
+- **summary**: files=60 errors=0 cases=363/396 skipped=217 (91.7%) tests=1252/1292 (96.9%, 40 fails, 0 skips)
 
 Format assertions:
 
@@ -186,7 +186,7 @@ Format assertions:
 - `format-uri-reference.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=13/25 (52.0%, 12 fails, 0 skips)
 - `format-uri-template.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=22/42 (52.4%, 20 fails, 0 skips)
 - `format-uuid.json`: errors=0 cases=1/1 skipped=2 (100.0%) tests=23/23 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=8/21 skipped=592 (38.1%) tests=606/751 (80.7%, 145 fails, 0 skips)
+- **summary**: files=19 errors=0 cases=8/21 skipped=592 (38.1%) tests=606/751 (80.7%, 145 fails, 0 skips)
 
 ## Results for _draft7_
 
@@ -246,7 +246,7 @@ Format annotations:
 - `required.json`: errors=0 cases=5/5 skipped=2 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=12/12 skipped=4 (100.0%) tests=80/80 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=285/285 skipped=328 (100.0%) tests=972/972 (100.0%, 0 fails, 0 skips)
+- **summary**: files=54 errors=0 cases=285/285 skipped=328 (100.0%) tests=972/972 (100.0%, 0 fails, 0 skips)
 
 Format assertions:
 
@@ -267,7 +267,7 @@ Format assertions:
 - `format-uri.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=32/42 (76.2%, 10 fails, 0 skips)
 - `format-uri-reference.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=13/25 (52.0%, 12 fails, 0 skips)
 - `format-uri-template.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=22/42 (52.4%, 20 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=6/19 skipped=594 (31.6%) tests=538/683 (78.8%, 145 fails, 0 skips)
+- **summary**: files=17 errors=0 cases=6/19 skipped=594 (31.6%) tests=538/683 (78.8%, 145 fails, 0 skips)
 
 ## Results for _draft6_
 
@@ -318,7 +318,7 @@ Format annotations:
 - `required.json`: errors=0 cases=5/5 skipped=2 (100.0%) tests=18/18 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=12/12 skipped=4 (100.0%) tests=80/80 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=253/253 skipped=360 (100.0%) tests=878/878 (100.0%, 0 fails, 0 skips)
+- **summary**: files=45 errors=0 cases=253/253 skipped=360 (100.0%) tests=878/878 (100.0%, 0 fails, 0 skips)
 
 Format assertions:
 
@@ -331,7 +331,7 @@ Format assertions:
 - `format-uri.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=32/42 (76.2%, 10 fails, 0 skips)
 - `format-uri-reference.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=13/25 (52.0%, 12 fails, 0 skips)
 - `format-uri-template.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=22/42 (52.4%, 20 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=4/10 skipped=603 (40.0%) tests=279/340 (82.1%, 61 fails, 0 skips)
+- **summary**: files=9 errors=0 cases=4/10 skipped=603 (40.0%) tests=279/340 (82.1%, 61 fails, 0 skips)
 
 ## Results for _draft4_
 
@@ -374,7 +374,7 @@ Format annotations:
 - `required.json`: errors=0 cases=4/4 skipped=3 (100.0%) tests=17/17 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=11/11 skipped=5 (100.0%) tests=79/79 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=187/187 skipped=426 (100.0%) tests=672/672 (100.0%, 0 fails, 0 skips)
+- **summary**: files=37 errors=0 cases=187/187 skipped=426 (100.0%) tests=672/672 (100.0%, 0 fails, 0 skips)
 
 Format assertions:
 
@@ -384,7 +384,7 @@ Format assertions:
 - `format-ipv4.json`: errors=0 cases=1/1 skipped=2 (100.0%) tests=35/35 (100.0%, 0 fails, 0 skips)
 - `format-ipv6.json`: errors=0 cases=1/1 skipped=2 (100.0%) tests=45/45 (100.0%, 0 fails, 0 skips)
 - `format-uri.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=32/42 (76.2%, 10 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=3/7 skipped=606 (42.9%) tests=210/239 (87.9%, 29 fails, 0 skips)
+- **summary**: files=6 errors=0 cases=3/7 skipped=606 (42.9%) tests=210/239 (87.9%, 29 fails, 0 skips)
 
 ## Results for _draft3_
 
@@ -427,7 +427,7 @@ Format annotations:
 - `required.json`: errors=0 cases=3/3 skipped=4 (100.0%) tests=4/4 (100.0%, 0 fails, 0 skips)
 - `type.json`: errors=0 cases=15/15 skipped=1 (100.0%) tests=99/99 (100.0%, 0 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=169/169 skipped=444 (100.0%) tests=613/613 (100.0%, 0 fails, 0 skips)
+- **summary**: files=37 errors=0 cases=169/169 skipped=444 (100.0%) tests=613/613 (100.0%, 0 fails, 0 skips)
 
 Format assertions:
 
@@ -441,7 +441,7 @@ Format assertions:
 - `format-regex.json`: errors=0 cases=1/1 skipped=2 (100.0%) tests=12/12 (100.0%, 0 fails, 0 skips)
 - `format-time.json`: errors=0 cases=0/1 skipped=6 (0.0%) tests=2/3 (66.7%, 1 fails, 0 skips)
 - `format-uri.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=32/42 (76.2%, 10 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=5/10 skipped=603 (50.0%) tests=304/334 (91.0%, 30 fails, 0 skips)
+- **summary**: files=10 errors=0 cases=5/10 skipped=603 (50.0%) tests=304/334 (91.0%, 30 fails, 0 skips)
 
 ## Results for _draft-next_
 
@@ -504,7 +504,7 @@ Format annotations:
 - `unevaluatedItems.json`: errors=0 cases=15/29 skipped=19 (51.7%) tests=52/71 (73.2%, 19 fails, 0 skips)
 - `unevaluatedProperties.json`: errors=0 cases=32/44 skipped=2 (72.7%) tests=115/129 (89.1%, 14 fails, 0 skips)
 - `uniqueItems.json`: errors=0 cases=6/6 skipped=4 (100.0%) tests=65/65 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=359/397 skipped=216 (90.4%) tests=1242/1290 (96.3%, 48 fails, 0 skips)
+- **summary**: files=57 errors=0 cases=359/397 skipped=216 (90.4%) tests=1242/1290 (96.3%, 48 fails, 0 skips)
 
 Format assertions:
 
@@ -527,5 +527,5 @@ Format assertions:
 - `format-uri-reference.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=13/25 (52.0%, 12 fails, 0 skips)
 - `format-uri-template.json`: errors=0 cases=0/1 skipped=2 (0.0%) tests=22/42 (52.4%, 20 fails, 0 skips)
 - `format-uuid.json`: errors=0 cases=1/1 skipped=2 (100.0%) tests=23/23 (100.0%, 0 fails, 0 skips)
-- **summary**: files=69 errors=0 cases=10/24 skipped=589 (41.7%) tests=612/745 (82.1%, 133 fails, 0 skips)
+- **summary**: files=19 errors=0 cases=10/24 skipped=589 (41.7%) tests=612/745 (82.1%, 133 fails, 0 skips)
 
