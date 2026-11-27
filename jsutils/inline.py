@@ -791,6 +791,8 @@ def resolveExternalRefs(
                                         if j["$id"] == dest:
                                             jpath = p
                                             return False
+                                        else:
+                                            return True
                                     # shortcut once done
                                     return jpath is None
 
