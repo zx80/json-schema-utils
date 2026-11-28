@@ -1,5 +1,6 @@
 # JSON Schema Utils Backlog
 
+- [ ] jsts: consider running some/all `validation/tests/optional/*.json`?
 - [ ] pr: coverage?
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
