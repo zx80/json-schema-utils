@@ -1,2 +1,4 @@
+# use internal "jsu" from "jmc" docker image
 FROM docker.io/zx80/jmc
+LABEL description="JSON Schema Utils"
 ENTRYPOINT ["/app/venv/bin/jsu"]
