@@ -1,11 +1,5 @@
 # JSON Schema Utils Backlog
 
-- [x] jsts: rewrite runner for new JSTS common tests
-- [x] jsts: adapt script for handling formats
-- [x] runner: allow to test a single case object
-- [x] inline: better handle inlined references with internal ids
-- [x] runner: report file count with actual cases
-- [x] resolver: add intermediate memory cache
 - [ ] pr: coverage?
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)

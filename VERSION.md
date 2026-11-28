@@ -1,15 +1,24 @@
 # JSON Schema Utils Versions
 
-# JSU 1.0.2 on 2026-11-25
+## JSU 1.0.3 on 2026-11-28
+
+- jsts: rewrite runner for new JSTS common tests
+- jsts: adapt script for handling formats
+- runner: allow to test a single case object
+- inline: better handle inlined references with internal ids
+- runner: report file count with actual cases
+- resolver: add intermediate memory cache
+
+## JSU 1.0.2 on 2026-11-25
 
 - various adjustements for github CI and git versioning
 - pr: add test count
 
-# JSU 1.0.1 on 2026-11-24
+## JSU 1.0.1 on 2026-11-24
 
 - attempt at fixing the CI on main
 
-# JSU 1.0.0 on 2026-11-24
+## JSU 1.0.0 on 2026-11-24
 
 - front: add `--no-download` option
 - python: please ruff, flake8
