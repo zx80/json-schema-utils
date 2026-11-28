@@ -5,6 +5,7 @@
 - [x] runner: allow to test a single case object
 - [x] inline: better handle inlined references with internal ids
 - [x] runner: report file count with actual cases
+- [x] resolver: add intermediate memory cache
 - [ ] pr: coverage?
 - [ ] model: handle predef collisions gracefully?
 - [ ] format: uri-template (RFC6570)
