@@ -157,7 +157,7 @@ jsu jtd -o foo.model.json foo.jtd.json
 Run a JSON Schema Test Suite case.
 
 ```sh
-jsu runner --debug --resilient --map http://localhost:1234/=file://$JSTS_HOME/remotes/ -V 7 $JSTS_HOME/tests/draft7/ref.json
+jsu runner --quiet --schema-version 7 $JSTS_HOME/validation/tests/const.json
 ```
 
 ## TODO
